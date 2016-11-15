@@ -1,67 +1,20 @@
-<div class='content-box right5'>
+<div class='content-box right5 left5' ng-repeat='item in detail.content  track by $index'>
 
   <div class='chart'>
     <div class='statistic'>
-      <label >统计时间：</label>
-      <div>
-        <p class="input-group">
-          <input type="text" class="form-control input-time" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn-time" ng-click="open1()">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
-        </p>
-      </div>
-      <div class='from-dept'>
-        <label>统计来源：</label>统计局
-      </div>
-    </div>
-    <div class='graph'>
-    </div>
-  </div>
-  <table class="table  table-striped top10 table-hover text-center">
-    <thead>
-      <tr>
-        <th></th>
-        <th>累计增加值
-          <span>（亿元）</span>
-        </th>
-        <th>累积贡献率
-          <span>（%）</span>
-        </th>
-      </tr>
-    </thead>
-    <tr>
-      <td>第一产业</td>
-      <td>38.5</td>
-      <td>16.7</td>
-    </tr>
-    <tr>
-      <td>第二产业</td>
-      <td>105.3</td>
-      <td>45.6</td>
-    </tr>
-    <tr>
-      <td>第三产业</td>
-      <td>87</td>
-      <td>37.7</td>
-    </tr>
-  </table>
-</div>
-<div class='content-box left5'>
-  <div class='chart'>
-    <div class='statistic'>
-      <label >统计时间：</label>
-      <div>
-        <p class="input-group">
-          <input type="text" class="form-control input-time" uib-datepicker-popup="{{format}}" ng-model="dt2" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" clear-text="清除"  close-text='关闭' alt-input-formats="altInputFormats"/>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn-time" ng-click="open1()">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
-        </p>
+      <div ng-show='item.queryTime'>
+        <label >统计时间：</label>
+        <div class='time-pick'>
+          <p class="input-group">
+            <input type="text" class="form-control input-time" uib-datepicker-popup="{{popups[$index].format}}" ng-model="popups[$index].model" is-open="popups[$index].opened"
+            datepicker-options="popups[$index].dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default btn-time" ng-click="open($index)">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+          </p>
+        </div>
       </div>
       <div class='from-dept'>
         <label>统计来源：</label>统计局

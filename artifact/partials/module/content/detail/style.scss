@@ -12,20 +12,26 @@
       @include flex-flow(row);
       label {
         line-height: 1rem;
+        display: inline-block;
+        vertical-align: top;
       }
-      .input-group {
-        max-width: 140px;
-        .input-time {
-          height: 26px;
-        }
-        .btn-time {
-          line-height: 1;
-          padding: 4px 6px;
-          font-size: 14px;
+      .time-pick {
+        display: inline-block;
+        .input-group {
+          max-width: 140px;
+          .input-time {
+            height: 26px;
+          }
+          .btn-time {
+            line-height: 1;
+            padding: 4px 6px;
+            font-size: 14px;
+          }
         }
       }
       .from-dept {
         text-align: right;
+        line-height: 1rem;
         @include flex-num(1);
       }
     }
@@ -69,8 +75,8 @@
     &.active {
       background-color: #31b0d5;
       border-color: #269abc;
-      .text-info{
-        color:$white;
+      .text-info {
+        color: $white;
       }
     }
   }

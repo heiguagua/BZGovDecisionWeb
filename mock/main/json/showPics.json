@@ -8,6 +8,10 @@
   "body": [{
     "picCode": "1",
     "url": "/main/detail",
-    "queryTime": "month/year"
+    "queryTime": "month"
+  },{
+    "picCode": "2",
+    "url": "/main/detail",
+    "queryTime": "year"
   }]
 }
