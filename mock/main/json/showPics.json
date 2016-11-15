@@ -1,0 +1,13 @@
+{
+  "head": {
+    "status": 200,
+    "token": null,
+    "message": null,
+    "total": 0
+  },
+  "body": [{
+    "picCode": "1",
+    "url": "/main/detail",
+    "queryTime": "month/year"
+  }]
+}

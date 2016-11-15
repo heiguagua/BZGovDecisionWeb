@@ -1,0 +1,158 @@
+.dashboard {
+  width: 100%;
+  height: 100%;
+  padding: 35px;
+  // background: $dashboard_bg;
+  background: url("../assets/images/bg.png");
+  background-size: 100% 100%;
+  .outer-line {
+    height: 100%;
+    // border: 1px solid $outerline;
+    padding: 4px;
+    .inner-line {
+      height: 100%;
+      //border: 1px solid $innerline;
+      @include flex-flow(column);
+      .header {
+        h3 {
+          background: url("../assets/images/header.png") no-repeat center;
+          height: 60px;
+          margin-top: 0;
+        }
+      }
+      .main {
+        @include flex-flow(row);
+        @include flex-num(1);
+        padding: 15px 20px;
+        .nav-menu {
+          .menu-list {
+            list-style: none;
+            height: 100%;
+            @include flex-flow(column);
+            @include flex-align(stretch);
+            li {
+              display: block;
+              color: $white;
+              background: url("../assets/images/nav_bg.png") no-repeat center;
+              background-size: 100% 100%;
+              margin-top: 15px;
+              @include flex-num(1);
+              @include flex-flow(row);
+              @include flex-align(center);
+              @include flex-justify(center);
+              a {
+                padding: 0 20px;
+                @include font($fontSize:1rem);
+              }
+            }
+          }
+        }
+        .center {
+          padding: 15px 10px 0;
+          @include flex-align(stretch);
+          @include flex-num(4);
+          @include flex-flow(column);
+          .center-top {
+            background: rgba(0,120,255,.1);
+            margin-bottom: 15px;
+            border: 1px solid $innerline;
+            color: $white;
+            @include flex-num(1);
+          }
+          .center-down {
+            @include flex-num(1);
+            @include flex-flow(row);
+            >div {
+              @include flex-num(1);
+            }
+            .center-left,
+            .center-right {
+              height: 100%;
+              border: 1px solid $innerline;
+              background: rgba(0, 120, 215, 0.1);
+            }
+          }
+        }
+        .right {
+          padding-top: 15px;
+          @include flex-flow(column);
+          @include flex-align(stretch);
+          @include flex-num(2);
+          .right-bottom {
+            border: 1px solid $innerline;
+            background: rgba(0, 120, 215, 0.1);
+            @include flex-num(1);
+          }
+          .right-top {
+            margin-bottom: 15px;
+            background: rgba(0, 120, 215, 0.1);
+            @extend .right-bottom;
+          }
+        }
+        .box-title {
+          padding: 14px 19px 14px 10px;
+          margin: 0;
+          background: url("../assets/images/title_bg.png") no-repeat left;
+          background-size: 100% 100%;
+          margin-top: -2px;
+          margin-left: -2px;
+          @include font($fontSize:0.8rem,$textAlign:left);
+        }
+        .box-sub-title {
+          padding: 15px 2px 15px 0;
+          color: rgb(213,226,223);
+          font-size: 0.6rem;
+        }
+      }
+      .box {
+        position: relative;
+        @include flex-flow(column);
+        .top-wrap {
+          overflow: hidden;
+        }
+        .box-content {
+          @include flex-num(1);
+          @include flex-flow(row);
+          .chart {
+            @include flex-num(1);
+          }
+        }
+        .box-border {
+          position: absolute;
+          content: '';
+          display: inline-block;
+          width: 15px;
+          height: 11px;
+        }
+        .box-left-top {
+          @extend .box-border;
+          border-top: 2px solid rgb(0,127,203);
+          border-left: 2px solid rgb(0,127,203);
+          left: -3px;
+          top: -3px;
+        }
+        .box-left-bottom {
+          @extend .box-border;
+          border-bottom: 2px solid rgb(0,127,203);
+          left: -2px;
+          bottom: -2px;
+          border-left: 2px solid rgb(0,127,203);
+        }
+        .box-right-top {
+          @extend .box-border;
+          border-top: 2px solid rgb(0,127,203);
+          right: -2px;
+          top: -2px;
+          border-right: 2px solid rgb(0,127,203);
+        }
+        .box-right-bottom {
+          @extend .box-border;
+          border-bottom: 2px solid rgb(0,127,203);
+          right: -2px;
+          bottom: -2px;
+          border-right: 2px solid rgb(0,127,203);
+        }
+      }
+    }
+  }
+}

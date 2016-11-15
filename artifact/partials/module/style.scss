@@ -1,0 +1,20 @@
+.menu-tabs {
+  >li {
+    &.active {
+      >a {
+        background-color: nth($linkColor,1) !important;
+        color: $white !important;
+      }
+    }
+    >a {
+      background-color: $white;
+      color: nth($linkColor,1);
+      border: 1px solid nth($linkColor,1);
+      padding: 10px;
+    }
+  }
+}
+.tab-content {
+  @include flex-flow(column);
+  @include flex-num(1);
+}

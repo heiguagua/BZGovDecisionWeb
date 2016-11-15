@@ -1,0 +1,64 @@
+﻿1、左侧菜单栏
+url：serverName/main/menu
+params：{parentId:"0"}
+response：
+[{
+  "name": "经济形势分析",
+  "id": "1"
+}, {
+  "name": "工业管理",
+  "id": "2"
+}, {
+  "name": "农业管理",
+  "id": "3"
+}, {
+  "name": "服务业管理",
+  "id": "4"
+}, {
+  "name": "旅游业管理",
+  "id": "5"
+}, {
+  "name": "政策文件主页",
+  "id": "6"
+}]
+
+2、二级菜单
+url:serverName/main/menu
+params:{parentId:"123"} //一级菜单id
+response:
+[{
+  "name": "地区生产总值",
+  "id": "1"
+}, {
+  "name": "固定资产投资",
+  "id": "2"
+}, {
+  "name": "财政金融",
+  "id": "3"
+}, {
+  "name": "居民生活",
+  "id": "4"
+}, {
+  "name": "消费物价进出口",
+  "id": "5"
+}, {
+  "name": "招商引资",
+  "id": "6"
+}]
+
+
+
+3、三级菜单
+url:serverName/main/showPics
+params:{menuId:"123"} //三级菜单id
+response:
+[{
+  "picCode": "1",
+  "url": "/xx/xx/xx/x"
+   "queryTime":"month/year"  //month就返回本月的前一个月的值，year就返回本年
+}, ....]
+
+
+
+
+

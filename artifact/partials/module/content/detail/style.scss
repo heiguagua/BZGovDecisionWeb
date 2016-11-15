@@ -1,0 +1,89 @@
+.content-box {
+  @include flex-num(1);
+  @include flex-flow(column);
+  .chart {
+    border: 1px solid #DDD;
+    margin-bottom: 10px;
+    min-height: 480px;
+    @include flex-num(1);
+    @include flex-flow(column);
+    .statistic {
+      padding: 10px;
+      @include flex-flow(row);
+      label {
+        line-height: 1rem;
+      }
+      .input-group {
+        max-width: 140px;
+        .input-time {
+          height: 26px;
+        }
+        .btn-time {
+          line-height: 1;
+          padding: 4px 6px;
+          font-size: 14px;
+        }
+      }
+      .from-dept {
+        text-align: right;
+        @include flex-num(1);
+      }
+    }
+    .graph {
+      padding: 5px 15px;
+      @include flex-num(1);
+    }
+  }
+  .table {
+    font-size: 16px;
+    font-family: 黑体;
+    >tbody {
+      >tr {
+        &:nth-of-type(even) {
+          background-color: nth($linkColor,4);
+        }
+        &:nth-of-type(odd) {
+          background-color: $white;
+        }
+        >td {
+          border-top: none;
+        }
+      }
+    }
+    >thead {
+      >tr {
+        background: nth($linkColor,3);
+        color: $white;
+        >th {
+          border-bottom: none;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+.uib-datepicker {
+  .btn-default {
+    background-color: #f8f8f8;
+    border-color: #e1e1e1;
+    &.active {
+      background-color: #31b0d5;
+      border-color: #269abc;
+      .text-info{
+        color:$white;
+      }
+    }
+  }
+}
+.uib-button-bar {
+  .btn-info {
+    display: none;
+  }
+  .btn-success {
+    background-color: #20b3a9;
+  }
+  .btn-danger {
+    background-color: #f66850;
+    border-color: #d5614e;
+  }
+}

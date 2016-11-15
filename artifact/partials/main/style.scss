@@ -1,0 +1,85 @@
+$fontSize: 14px;
+$baseLineHeight: 1.5 !default;
+$linkColor: #0078d7 #333 #20b3a9 #cdf1ec!default;
+$sidebarWidth: 225px;
+$contentPadding: 298px;
+$headerHeight: 62px;
+$white: #FFF;
+$tablet-width: 1024px;
+$desktop-width: 1366px;
+$chartHeightSmall: 380px;
+$chartHeightBig: 540px;
+.page-wrap {
+  padding-right: 40px;
+  @include flex-flow(row);
+  @include flex-num(1);
+}
+.page-header-fixed {
+
+}
+.header {
+  &.navbar {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: 微软雅黑;
+    margin-bottom: 0;
+    border-bottom: 1px solid #DDD;
+    background: $white;
+    .navbar-right {
+      font-size: 16px;
+      >li {
+        >a {
+          color: #949494;
+        }
+      }
+    }
+    .navbar-brand {
+      color: nth($linkColor,1);
+      font-size: 28px;
+      font-weight: bold;
+      font-family: 微软雅黑;
+    }
+  }
+}
+.main-content {
+  padding-top: $headerHeight;
+  @include flex-flow(row);
+  @include flex-num(1);
+  .side-nav {
+    width: $sidebarWidth;
+    border: none;
+    border-radius: 0;
+    overflow-y: auto;
+    background-color: nth($linkColor,1);
+    bottom: 0;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+    @include flex-align(stretch);
+    >li {
+      border-bottom: 1px solid #0063b1;
+      border-bottom-style: inset;
+      box-shadow: 0 1px 0.5px 0 #2d98ed;
+      a {
+        width: $sidebarWidth;
+        color: #70e9fc;
+        text-align: center;
+        font-size: 16px;
+        padding: 16px 10px;
+        &:hover{
+          background: #2554a4;
+          color: $white;
+        }
+      }
+      &.active{
+        a {
+          background: #2554a4;
+          color: $white;
+        }
+      }
+    }
+  }
+  .content-main {
+    @include flex-num(1);
+    @include flex-flow(column);
+  }
+}

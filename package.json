@@ -1,0 +1,31 @@
+{
+  "name": "web-base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xulan",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.14.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^5.0.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-less": "^3.2.0",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-replace": "^0.5.4",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^2.0.0",
+    "sass": "^0.5.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "gulp": "^3.9.1"
+  }
+}
