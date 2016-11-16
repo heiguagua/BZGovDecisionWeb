@@ -7,6 +7,9 @@
     '$scope', 'dashboardService',
     function($scope, dashboardService) {
       var vm = this;
+      dashboardService.getMenus({parentId:"0"}).then(function(result) {
+        vm.menus = (result && result.data) ? result.data.body : "";
+      });
     }
   ]);
 
@@ -14,12 +17,14 @@
   dashboard.factory('dashboardService', ['$http', 'URL',
     function($http, URL) {
       return {
-        getDashboardData: getDashboardData
+        getMenus: getMenus
       }
 
-      function getDashboardData() {
+      function getMenus(params) {
         return $http.get(
-          URL + '/dashboard/data'
+          URL + '/main/menu',{
+            params: params
+          }
         )
       }
     }]);

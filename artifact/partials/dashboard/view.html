@@ -7,23 +7,8 @@
       <div class='main'>
         <nav class='nav-menu'>
           <ul class='menu-list'>
-            <li>
-              <a ui-sref='main'>经济形势分析</a>
-            </li>
-            <li>
-              <a>工业管理</a>
-            </li>
-            <li>
-              <a>农业管理</a>
-            </li>
-            <li>
-              <a>服务业管理</a>
-            </li>
-            <li>
-              <a>旅游业管理</a>
-            </li>
-            <li>
-              <a>目标工作管理</a>
+            <li ng-repeat='menu in dashboard.menus' ui-sref-active="active">
+              <a ui-sref='main({mid:menu.id})'>{{menu.name}}</a>
             </li>
           </ul>
         </nav>

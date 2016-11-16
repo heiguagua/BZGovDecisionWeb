@@ -27,7 +27,7 @@
         controllerAs: 'dashboard',
       })
       .state('main', {
-        url: '/main',
+        url: '/main/:mid',
         templateUrl: 'partials/main/view.html',
         controller: 'mainController',
         controllerAs: 'main',

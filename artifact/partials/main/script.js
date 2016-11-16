@@ -3,13 +3,13 @@
   var main = angular.module('app.main', []);
   /** Controller */
   main.controller('mainController', [
-    '$scope', 'mainService','$state',
-    function($scope, mainService,$state) {
+    '$scope', 'mainService','$state','$stateParams',
+    function($scope, mainService,$state,$stateParams) {
       var vm = this;
       // get menu list
       mainService.getMenus({parentId:"0"}).then(function(result) {
         vm.menus = (result && result.data) ? result.data.body : "";
-        $state.go('main.module',{id:vm.menus[0].id});
+        $state.go('main.module',{id:$stateParams.mid});
       });
     }
   ]);

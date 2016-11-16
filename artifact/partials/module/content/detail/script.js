@@ -44,7 +44,7 @@
       $scope.open = function(index) {
         $scope.popups[index].opened = true;
       };
-      $scope.altInputFormats = ['M!/d!/yyyy'];
+      // $scope.altInputFormats = ['M!/d!/yyyy'];
 
     }
   ]);
