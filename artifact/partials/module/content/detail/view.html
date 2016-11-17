@@ -20,35 +20,21 @@
         <label>统计来源：</label>统计局
       </div>
     </div>
-    <div class='graph'>
+    <div class='graph' wiserv-chart content=popups[$index] >
     </div>
   </div>
   <table class="table  table-striped top10 table-hover text-center">
     <thead>
       <tr>
         <th></th>
-        <th>累计增加值
-          <span>（亿元）</span>
-        </th>
-        <th>累积贡献率
-          <span>（%）</span>
+        <th ng-repeat='column in popups[$index].columnNames'>
+          {{column}}
         </th>
       </tr>
     </thead>
-    <tr>
-      <td>第一产业</td>
-      <td>38.5</td>
-      <td>16.7</td>
-    </tr>
-    <tr>
-      <td>第二产业</td>
-      <td>105.3</td>
-      <td>45.6</td>
-    </tr>
-    <tr>
-      <td>第三产业</td>
-      <td>87</td>
-      <td>37.7</td>
+    <tr ng-repeat='row in popups[$index].rowData'>
+      <td>{{row.name}}</td>
+      <td ng-repeat='data in row.data track by $index'>{{data}}</td>
     </tr>
   </table>
 </div>

@@ -1,0 +1,15 @@
+{
+  "head": {
+    "status": 200,
+    "token": null,
+    "message": null,
+    "total": 0
+  },
+  "body": [{
+    "column": ["累计总量", "同比增速", "全省增速"],
+    "series": [{
+      "name": "2016年06月",
+      "data": [11.6, 4.6, 9.6]
+    }]
+  }]
+}

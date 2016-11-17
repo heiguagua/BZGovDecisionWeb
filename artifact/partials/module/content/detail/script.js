@@ -10,45 +10,34 @@
       $scope.popups = [];
 
       detailService.getContent({
-          menuId: $stateParams.pid
-        }).then(function(result) {
-          vm.content = (result && result.data) ? result.data.body : "";
-          _.forEach(vm.content, function(item) {
-            var popup = {};
-            popup.opened = false;
-            popup.url = item.url;
-            popup.model = new Date();
+        menuId: $stateParams.pid
+      }).then(function(result) {
+        vm.content = (result && result.data) ? result.data.body : "";
+        _.forEach(vm.content, function(item) {
+          var popup = {};
+          popup.opened = false;
+          popup.url = item.url;
+          popup.picCode = item.picCode;
+          popup.model = new Date(item.time);
 
-            var dateOptions = {};
-            dateOptions.formatYear = 'yyyy';
-            if (item.queryTime == 'year') {
-              popup.format = 'yyyy';
-              dateOptions.minMode = 'year';
-              dateOptions.datepickerMode = 'year';
-            }
-            if (item.queryTime == 'month') {
-              popup.format = 'yyyy-MM';
-              dateOptions.minMode = 'month';
-              dateOptions.datepickerMode = 'month';
-              popup.model.setMonth(popup.model.getMonth() - 1);
-            }
-            popup.dateOptions = dateOptions;
-            // get detail content
-            $scope.popups.push(popup);
+          var dateOptions = {};
+          dateOptions.formatYear = 'yyyy';
+          if (item.queryTime == 'year') {
+            popup.format = 'yyyy';
+            dateOptions.minMode = 'year';
+            dateOptions.datepickerMode = 'year';
+          }
+          if (item.queryTime == 'month') {
+            popup.format = 'yyyy-MM';
+            dateOptions.minMode = 'month';
+            dateOptions.datepickerMode = 'month';
+            popup.model.setMonth(popup.model.getMonth() - 1);
+          }
+          popup.dateOptions = dateOptions;
+          $scope.popups.push(popup);
 
-            getDetail(item.url, {
-              queryTime: getDateFormat(popup.model, popup.format)
-            }).then(function(result) {
-            });
-          });
-        })
-        //
-        // $scope.dateOptions = {
-        //   minMode: 'month',
-        //   datepickerMode: 'month',
-        //   formatYear: 'yyyy',
-        //   startingDay: 1
-        // };
+        });
+      })
 
       $scope.open = function(index) {
         $scope.popups[index].opened = true;
@@ -59,17 +48,8 @@
           alert('请输入正确的日期格式！');
           return;
         }
-        else{
-          getDetail($scope.popups[index].url, {
-            queryTime: getDateFormat($scope.popups[index].model, $scope.popups[index].format)
-          });
-        }
       }
       $scope.altInputFormats = ['M!/d!/yyyy'];
-
-      function getDetail(url, params) {
-        return detailService.getDetail(url, params);
-      }
 
       function getDateFormat(parseDate, format) {
         var date = angular.copy(parseDate);
@@ -105,7 +85,8 @@
     function($http, URL) {
       return {
         getContent: getContent,
-        getDetail: getDetail
+        getDetail: getDetail,
+        getTableData: getTableData
       }
 
       function getContent(params) {
@@ -123,7 +104,118 @@
           }
         )
       }
+
+      function getTableData(tableUrl,params){
+        return $http.get(
+          URL + tableUrl, {
+            params: params
+          }
+        )
+      }
     }
   ]);
+
+  detail.directive('wiservChart', ['detailService', '$window',
+    function(detailService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          content: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          function getDateFormat(parseDate, format) {
+            var date = angular.copy(parseDate);
+            if (angular.isDate(date) && !isNaN(date.getTime())) {
+              return date.Format(format);
+            } else {
+              return '';
+            }
+          }
+          scope.$watch('content.model', function(newValue, oldValue) {
+            if (newValue === oldValue) {
+              return;
+            } // AKA first run
+            drawChart();
+          });
+          var chartInstance = null;
+          var option = {};
+          drawChart();
+
+          // draw chart
+          function drawChart(){
+            detailService.getDetail(scope.content.url, {
+              queryTime: getDateFormat(scope.content.model, scope.content.format)
+            }).then(function(result) {
+              var opt = result.data.body[0];
+              opt.yAxis = [];
+              _.forEach(opt.y_name, function(item) {
+                var yAxis = {};
+                yAxis.type = 'value';
+                yAxis.name = item;
+                yAxis.axisTick = {};
+                yAxis.axisTick.inside = true;
+                opt.yAxis.push(yAxis);
+              });
+              var colors = ['#0070c0', '#20b3a9', '#ff0000'];
+
+              option = {
+                color: colors,
+                tooltip: {
+                  trigger: 'axis'
+                },
+                legend: {
+                  top: 'bottom',
+                  bottom: 20,
+                  data: opt.legend
+                },
+                xAxis: [{
+                  type: 'category',
+                  axisTick: {
+                    show: false
+                  },
+                  data: opt.x_data
+                }],
+                yAxis: opt.yAxis,
+                series: opt.series
+              };
+
+              if(opt.table_type == 'same'){
+                scope.content.columnNames = opt.x_data;
+                scope.content.rowData = opt.series;
+              }
+              else if(opt.table_type == 'reverse') {
+                scope.content.columnNames = opt.legend;
+                scope.content.rowData = opt.series;
+              }
+              else{
+                detailService.getTableData(opt.table_url,{queryTime:scope.content.queryTime}).then(function(res){
+                  scope.content.columnNames = res.data.body[0].column;
+                  scope.content.rowData = res.data.body[0].series;
+                })
+              }
+              setTimeout(function() {
+                chartInstance = echarts.init((element.find('div'))[0]);
+                chartInstance.clear();
+                chartInstance.resize();
+                chartInstance.setOption(option);
+              }, 1000);
+            });
+          }
+
+          scope.onResize = function() {
+            chartInstance.resize();
+          }
+
+          angular.element($window).bind('resize', function() {
+            scope.onResize();
+          })
+
+
+        }
+      }
+    }
+  ]);
+
 
 })();
