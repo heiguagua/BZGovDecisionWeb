@@ -18,20 +18,20 @@
           popup.opened = false;
           popup.url = item.url;
           popup.picCode = item.picCode;
-          popup.model = new Date(item.time);
+          popup.model = new Date(item.init_query_time);
+          console.log(popup.model);
 
           var dateOptions = {};
           dateOptions.formatYear = 'yyyy';
-          if (item.queryTime == 'year') {
+          if (item.time_scope == 'year') {
             popup.format = 'yyyy';
             dateOptions.minMode = 'year';
             dateOptions.datepickerMode = 'year';
           }
-          if (item.queryTime == 'month') {
+          if (item.time_scope == 'month') {
             popup.format = 'yyyy-MM';
             dateOptions.minMode = 'month';
             dateOptions.datepickerMode = 'month';
-            popup.model.setMonth(popup.model.getMonth() - 1);
           }
           popup.dateOptions = dateOptions;
           $scope.popups.push(popup);
@@ -145,7 +145,7 @@
           // draw chart
           function drawChart(){
             detailService.getDetail(scope.content.url, {
-              queryTime: getDateFormat(scope.content.model, scope.content.format)
+              time_scope: getDateFormat(scope.content.model, scope.content.format)
             }).then(function(result) {
               var opt = result.data.body[0];
               opt.yAxis = [];
@@ -158,27 +158,41 @@
                 opt.yAxis.push(yAxis);
               });
               var colors = ['#0070c0', '#20b3a9', '#ff0000'];
-
-              option = {
-                color: colors,
-                tooltip: {
-                  trigger: 'axis'
-                },
-                legend: {
-                  top: 'bottom',
-                  bottom: 20,
-                  data: opt.legend
-                },
-                xAxis: [{
-                  type: 'category',
-                  axisTick: {
-                    show: false
+              if(opt.series[0].type == 'pie'){
+                option.series = opt.series;
+                option.series[0].radius =  [0, '30%'];
+                option.series[0].label = {};
+                option.series[0].label.normal={};
+                option.series[0].label.normal.position='center';
+                option.series[0].label.normal.textStyle = {color:"#FFF"};
+                option.series[1].label = {};
+                option.series[1].label.normal={};
+                option.series[1].label.normal.position='inner';
+                option.series[1].radius =  ['30%', '60%'];
+              }
+              else{
+                option = {
+                  color: colors,
+                  tooltip: {
+                    trigger: 'axis'
                   },
-                  data: opt.x_data
-                }],
-                yAxis: opt.yAxis,
-                series: opt.series
-              };
+                  legend: {
+                    top: 'bottom',
+                    bottom: 20,
+                    data: opt.legend
+                  },
+                  xAxis: [{
+                    type: 'category',
+                    axisTick: {
+                      show: false
+                    },
+                    data: opt.x_data
+                  }],
+                  yAxis: opt.yAxis,
+                  series: opt.series
+                };
+              }
+
 
               if(opt.table_type == 'same'){
                 scope.content.columnNames = opt.x_data;
@@ -189,13 +203,14 @@
                 scope.content.rowData = opt.series;
               }
               else{
-                detailService.getTableData(opt.table_url,{queryTime:scope.content.queryTime}).then(function(res){
+                detailService.getTableData(opt.table_url,{time_scope:scope.content.time_scope}).then(function(res){
                   scope.content.columnNames = res.data.body[0].column;
                   scope.content.rowData = res.data.body[0].series;
                 })
               }
               setTimeout(function() {
                 chartInstance = echarts.init((element.find('div'))[0]);
+                console.log(option);
                 chartInstance.clear();
                 chartInstance.resize();
                 chartInstance.setOption(option);

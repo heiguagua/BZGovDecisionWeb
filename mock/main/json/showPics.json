@@ -8,12 +8,12 @@
   "body": [{
     "picCode": "1",
     "url": "/main/detail",
-    "queryTime": "month",
-    "time":"2016-06"
+    "time_scope": "month",
+    "init_query_time":"2016-06"
   },{
     "picCode": "2",
     "url": "/main/detail",
-    "queryTime": "year",
-    "time":"2016"
+    "time_scope": "year",
+    "init_query_time":"2016"
   }]
 }

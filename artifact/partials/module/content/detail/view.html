@@ -2,7 +2,7 @@
 
   <div class='chart'>
     <div class='statistic'>
-      <div ng-show='item.queryTime'>
+      <div ng-show='item.time_scope'>
         <label >统计时间：</label>
         <div class='time-pick'>
           <p class="input-group">
@@ -34,7 +34,7 @@
     </thead>
     <tr ng-repeat='row in popups[$index].rowData'>
       <td>{{row.name}}</td>
-      <td ng-repeat='data in row.data track by $index'>{{data}}</td>
+      <td ng-repeat='data in row.data track by $index'>{{data.value}}</td>
     </tr>
   </table>
 </div>

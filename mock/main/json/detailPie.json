@@ -1,0 +1,36 @@
+{
+  "head": {
+    "status": 200,
+    "token": null,
+    "message": null,
+    "total": 0
+  },
+  "body": [{
+    "code": "1",
+    "need_group": "0",
+    "table_type": "same",
+    "table_url": "/table/data",
+    "title": "全市产业增加值",
+    "series": [{
+      "name": "全市产业增加值",
+      "type": "pie",
+      "data": [{
+        "name": "地区生产总值",
+        "value": 238.8
+      }]
+    },{
+      "name": "全市产业增加值",
+      "type": "pie",
+      "data": [{
+        "name": "第一产业",
+        "value": 38.5
+      },{
+        "name": "第二产业",
+        "value": 105.5
+      }, {
+        "name": "第三产业",
+        "value": 87
+      }]
+    }]
+  }]
+}
