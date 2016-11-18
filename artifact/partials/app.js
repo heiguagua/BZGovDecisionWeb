@@ -8,6 +8,7 @@
     'common.http',
     'app.dashboard',
     'app.main',
+    'app.file',
     'app.main.module',
     'app.main.module.content',
     'app.main.module.content.detail'
@@ -33,10 +34,16 @@
         controllerAs: 'main',
       })
       .state('main.module', {
-        url: '/module/:id',
+        url: '/module/:id/:url',
         templateUrl: 'partials/module/view.html',
         controller: 'moduleController',
         controllerAs: 'module',
+      })
+      .state('main.module.file', {
+        url: '/file/:furl',
+        templateUrl: 'partials/file/view.html',
+        controller: 'fileController',
+        controllerAs: 'file',
       })
       .state('main.module.content', {
         url: '/content/:tid',

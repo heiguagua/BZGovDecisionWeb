@@ -105,7 +105,7 @@
         )
       }
 
-      function getTableData(tableUrl,params){
+      function getTableData(tableUrl, params) {
         return $http.get(
           URL + tableUrl, {
             params: params
@@ -143,7 +143,7 @@
           drawChart();
 
           // draw chart
-          function drawChart(){
+          function drawChart() {
             detailService.getDetail(scope.content.url, {
               time_scope: getDateFormat(scope.content.model, scope.content.format)
             }).then(function(result) {
@@ -158,19 +158,26 @@
                 opt.yAxis.push(yAxis);
               });
               var colors = ['#0070c0', '#20b3a9', '#ff0000'];
-              if(opt.series[0].type == 'pie'){
+              if (opt.series[0].type == 'pie') {
+                option.tooltip = {
+                  trigger: 'item',
+                  formatter: '{b} <br/>'+opt.legend[0]+': {c}'+opt.y_name[0]+'<br/>'+opt.legend[1]+': {d}%'
+                };
                 option.series = opt.series;
-                option.series[0].radius =  [0, '30%'];
+                option.series[0].radius = [0, '30%'];
                 option.series[0].label = {};
-                option.series[0].label.normal={};
-                option.series[0].label.normal.position='center';
-                option.series[0].label.normal.textStyle = {color:"#FFF"};
+                option.series[0].label.normal = {};
+                option.series[0].label.normal.position = 'center';
+                option.series[0].label.normal.formatter = '{b}\n {c}'+opt.y_name[0];
+                option.series[0].label.normal.textStyle = {
+                  color: "#FFF"
+                };
                 option.series[1].label = {};
-                option.series[1].label.normal={};
-                option.series[1].label.normal.position='inner';
-                option.series[1].radius =  ['30%', '60%'];
-              }
-              else{
+                option.series[1].label.normal = {};
+                option.series[1].label.normal.position = 'inner';
+                option.series[1].label.normal.formatter = '{b}\n {c}'+opt.y_name[1];
+                option.series[1].radius = ['30%', '60%'];
+              } else {
                 option = {
                   color: colors,
                   tooltip: {
@@ -194,16 +201,16 @@
               }
 
 
-              if(opt.table_type == 'same'){
+              if (opt.table_type == 'same') {
                 scope.content.columnNames = opt.x_data;
                 scope.content.rowData = opt.series;
-              }
-              else if(opt.table_type == 'reverse') {
+              } else if (opt.table_type == 'reverse') {
                 scope.content.columnNames = opt.legend;
                 scope.content.rowData = opt.series;
-              }
-              else{
-                detailService.getTableData(opt.table_url,{time_scope:scope.content.time_scope}).then(function(res){
+              } else {
+                detailService.getTableData(opt.table_url, {
+                  time_scope: scope.content.time_scope
+                }).then(function(res) {
                   scope.content.columnNames = res.data.body[0].column;
                   scope.content.rowData = res.data.body[0].series;
                 })

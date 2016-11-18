@@ -13,6 +13,10 @@ Router.route('/main/detail')
   .get(function(request, response) {
     response.json(Util.json('/main/json/detailPie.json'));
 });
+Router.route('/file/list')
+  .get(function(request, response) {
+    response.json(Util.json('/main/json/file.json'));
+});
 Router.route('/table/data')
   .get(function(request, response) {
     response.json(Util.json('/main/json/tableData.json'));

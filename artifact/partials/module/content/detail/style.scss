@@ -21,7 +21,8 @@
           max-width: 140px;
           .input-time {
             height: 26px;
-            &.ng-invalid{
+            padding: 0 10px;
+            &.ng-invalid {
               border: 1px solid red !important;
             }
           }
@@ -39,7 +40,7 @@
       }
     }
     .graph {
-      padding: 5px 15px 15px 15px;
+      padding: 5px 15px 15px;
       @include flex-num(1);
     }
   }

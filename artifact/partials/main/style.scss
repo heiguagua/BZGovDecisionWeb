@@ -10,7 +10,6 @@ $desktop-width: 1366px;
 $chartHeightSmall: 380px;
 $chartHeightBig: 540px;
 .page-wrap {
-  padding-right: 40px;
   @include flex-flow(row);
   @include flex-num(1);
 }

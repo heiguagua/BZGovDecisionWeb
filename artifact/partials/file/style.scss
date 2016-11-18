@@ -1,0 +1,25 @@
+.article {
+  padding: 15px 15px 0 10px;
+  cursor: pointer;
+  .art-title {
+    font-weight: bold;
+    font-size: 0.7rem;
+    .create-time {
+      font-weight: normal;
+      padding: 0 15px;
+      color: #9E9E9E;
+    }
+  }
+  .art-desc {
+    font-size: 0.5rem;
+    color: #505050;
+  }
+}
+.file-preview {
+  width: 100%;
+  height: 600px;
+  overflow: auto;
+}
+.pagination {
+  padding: 15px 40px 10px 0;
+}

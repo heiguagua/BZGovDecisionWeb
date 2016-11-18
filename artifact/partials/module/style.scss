@@ -18,3 +18,16 @@
   @include flex-flow(column);
   @include flex-num(1);
 }
+.search-box {
+  padding: 15px 10px;
+  background: #f7f7f7;
+  .input-group {
+    width: 50%;
+    .btn-search{
+      background:#20b3a9;
+      color:$white;
+      font-family:'微软雅黑'
+    }
+
+  }
+}

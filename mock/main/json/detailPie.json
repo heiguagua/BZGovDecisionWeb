@@ -11,6 +11,9 @@
     "table_type": "same",
     "table_url": "/table/data",
     "title": "全市产业增加值",
+    "legend": ["累计增加值", "累计贡献率"],
+    "x_data": ["第一产业", "第二产业", "第三产业"],
+    "y_name": ["亿", "亿元"],
     "series": [{
       "name": "全市产业增加值",
       "type": "pie",
@@ -18,13 +21,13 @@
         "name": "地区生产总值",
         "value": 238.8
       }]
-    },{
+    }, {
       "name": "全市产业增加值",
       "type": "pie",
       "data": [{
         "name": "第一产业",
         "value": 38.5
-      },{
+      }, {
         "name": "第二产业",
         "value": 105.5
       }, {
