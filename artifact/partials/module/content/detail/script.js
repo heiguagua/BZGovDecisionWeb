@@ -157,27 +157,68 @@
                 yAxis.axisTick.inside = true;
                 opt.yAxis.push(yAxis);
               });
-              var colors = ['#0070c0', '#20b3a9', '#ff0000'];
+              var colors = ['#0070c0', '#20b3a9', '#CC6600', '#ff0000'];
               if (opt.series[0].type == 'pie') {
                 option.tooltip = {
                   trigger: 'item',
-                  formatter: '{b} <br/>'+opt.legend[0]+': {c}'+opt.y_name[0]+'<br/>'+opt.legend[1]+': {d}%'
+                  formatter: '{b} <br/>' + opt.legend[0] + ': {c}' + opt.y_name[0] + '<br/>' + opt.legend[1] + ': {d}%'
                 };
                 option.series = opt.series;
                 option.series[0].radius = [0, '30%'];
                 option.series[0].label = {};
                 option.series[0].label.normal = {};
                 option.series[0].label.normal.position = 'center';
-                option.series[0].label.normal.formatter = '{b}\n {c}'+opt.y_name[0];
+                option.series[0].label.normal.formatter = '{b}\n {c}' + opt.y_name[0];
                 option.series[0].label.normal.textStyle = {
                   color: "#FFF"
                 };
                 option.series[1].label = {};
                 option.series[1].label.normal = {};
                 option.series[1].label.normal.position = 'inner';
-                option.series[1].label.normal.formatter = '{b}\n {c}'+opt.y_name[1];
+                option.series[1].label.normal.formatter = '{b}\n {c}' + opt.y_name[1];
                 option.series[1].radius = ['30%', '60%'];
+              } else if (opt.series[0].type == 'radar') {
+                var indicators = [];
+                _.forEach(opt.x_data, function(item,index) {
+                  var indicator = {};
+                  indicator.name = item;
+                  var dataArray = _.map(opt.series[0].data,'value');
+                  var max = opt.series[0].data[0].value[index];
+                  _.forEach(dataArray,function(data,index2){
+                    if(opt.series[0].data[index2].value[index] > max){
+                      max = opt.series[0].data[index2].value[index];
+                    }
+                  });
+                  indicator.max = max + 100;
+                  indicators.push(indicator);
+                });
+                console.log(indicators);
+                option.tooltip = {};
+                option.radar = {};
+                option.radar.indicator = indicators;
+                option.series = opt.series;
               } else {
+                var stack_name = '';
+                var labelPos = 'top';
+                if (opt.need_group == "1") {
+                  stack_name = 'group';
+                  labelPos = 'inside';
+                }
+                _.forEach(opt.series, function(item) {
+                  item.barWidth = '30%';
+                  var label = {
+                    normal: {
+                      show: true,
+                      position: labelPos,
+                      textStyle: {
+                        color: '#333',
+                        fontSize: 12
+                      }
+                    }
+                  };
+                  item.label = label;
+                  item.stack = stack_name;
+                });
                 option = {
                   color: colors,
                   tooltip: {
@@ -199,7 +240,6 @@
                   series: opt.series
                 };
               }
-
 
               if (opt.table_type == 'same') {
                 scope.content.columnNames = opt.x_data;

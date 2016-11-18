@@ -17,7 +17,6 @@
     "series": [{
       "name": "累计总量",
       "type": "bar",
-      "barWidth":30,
       "yAxisIndex": "0",
       "data": [{
         "name": "巴中",
