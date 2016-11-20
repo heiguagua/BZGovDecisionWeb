@@ -9,6 +9,7 @@
     'app.dashboard',
     'app.main',
     'app.file',
+    'app.main.preview',
     'app.main.module',
     'app.main.module.content',
     'app.main.module.content.detail'
@@ -32,6 +33,12 @@
         templateUrl: 'partials/main/view.html',
         controller: 'mainController',
         controllerAs: 'main',
+      })
+      .state('main.preview', {
+        url: '/preview',
+        templateUrl: 'partials/preview/view.html',
+        controller: 'previewController',
+        controllerAs: 'preview',
       })
       .state('main.module', {
         url: '/module/:id/:url',

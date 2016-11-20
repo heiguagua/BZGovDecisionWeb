@@ -6,9 +6,8 @@
     '$scope', 'contentService','$stateParams','$state',
     function($scope, contentService,$stateParams,$state) {
       var vm = this;
-
       contentService.getSubMenus({parentId:$stateParams.tid}).then(function(result){
-        vm.subMenus = (result && result.data) ? result.data.body : "";
+        vm.subMenus = result.data;
         $state.go('main.module.content.detail',{pid:vm.subMenus[0].id});
       })
     }

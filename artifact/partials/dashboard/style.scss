@@ -104,55 +104,56 @@
           font-size: 0.6rem;
         }
       }
-      .box {
-        position: relative;
-        @include flex-flow(column);
-        .top-wrap {
-          overflow: hidden;
-        }
-        .box-content {
-          @include flex-num(1);
-          @include flex-flow(row);
-          .chart {
-            @include flex-num(1);
-          }
-        }
-        .box-border {
-          position: absolute;
-          content: '';
-          display: inline-block;
-          width: 15px;
-          height: 11px;
-        }
-        .box-left-top {
-          @extend .box-border;
-          border-top: 2px solid rgb(0,127,203);
-          border-left: 2px solid rgb(0,127,203);
-          left: -3px;
-          top: -3px;
-        }
-        .box-left-bottom {
-          @extend .box-border;
-          border-bottom: 2px solid rgb(0,127,203);
-          left: -2px;
-          bottom: -2px;
-          border-left: 2px solid rgb(0,127,203);
-        }
-        .box-right-top {
-          @extend .box-border;
-          border-top: 2px solid rgb(0,127,203);
-          right: -2px;
-          top: -2px;
-          border-right: 2px solid rgb(0,127,203);
-        }
-        .box-right-bottom {
-          @extend .box-border;
-          border-bottom: 2px solid rgb(0,127,203);
-          right: -2px;
-          bottom: -2px;
-          border-right: 2px solid rgb(0,127,203);
-        }
-      }
+
     }
+  }
+}
+.box {
+  position: relative;
+  @include flex-flow(column);
+  .top-wrap {
+    overflow: hidden;
+  }
+  .box-content {
+    @include flex-num(1);
+    @include flex-flow(row);
+    .chart {
+      @include flex-num(1);
+    }
+  }
+  .box-border {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    width: 15px;
+    height: 11px;
+  }
+  .box-left-top {
+    @extend .box-border;
+    border-top: 2px solid rgb(0,127,203);
+    border-left: 2px solid rgb(0,127,203);
+    left: -3px;
+    top: -3px;
+  }
+  .box-left-bottom {
+    @extend .box-border;
+    border-bottom: 2px solid rgb(0,127,203);
+    left: -2px;
+    bottom: -2px;
+    border-left: 2px solid rgb(0,127,203);
+  }
+  .box-right-top {
+    @extend .box-border;
+    border-top: 2px solid rgb(0,127,203);
+    right: -2px;
+    top: -2px;
+    border-right: 2px solid rgb(0,127,203);
+  }
+  .box-right-bottom {
+    @extend .box-border;
+    border-bottom: 2px solid rgb(0,127,203);
+    right: -2px;
+    bottom: -2px;
+    border-right: 2px solid rgb(0,127,203);
   }
 }

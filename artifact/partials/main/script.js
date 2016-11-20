@@ -8,7 +8,7 @@
       var vm = this;
       // get menu list
       mainService.getMenus({parentId:"0"}).then(function(result) {
-        vm.menus = (result && result.data) ? result.data.body : "";
+        vm.menus = result.data;
         $state.go('main.module',{id:$stateParams.mid});
       });
     }

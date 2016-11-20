@@ -1,0 +1,102 @@
+.preview {
+  @include flex-flow(row);
+  @include flex-num(1);
+  padding: 0 15px 20px 0;
+  .panel-heading {
+    padding: 8px 15px;
+  }
+  .nav-menu {
+    .menu-list {
+      list-style: none;
+      height: 100%;
+      @include flex-flow(column);
+      @include flex-align(stretch);
+      li {
+        display: block;
+        color: $white;
+        background: url("../assets/images/nav_bg.png") no-repeat center;
+        background-size: 100% 100%;
+        margin-top: 15px;
+        @include flex-num(1);
+        @include flex-flow(row);
+        @include flex-align(center);
+        @include flex-justify(center);
+        a {
+          padding: 0 20px;
+          @include font($fontSize:1rem);
+        }
+      }
+    }
+  }
+  .center {
+    padding: 0 10px;
+    @include flex-align(stretch);
+    @include flex-num(4);
+    @include flex-flow(column);
+    .center-top {
+      margin-bottom: 15px;
+      border: 1px solid #DDD;
+      @include flex-num(1);
+    }
+    .center-down {
+      @include flex-num(1);
+      @include flex-flow(row);
+      >div {
+        @include flex-num(1);
+      }
+      .center-left,
+      .center-right {
+        height: 100%;
+      }
+    }
+  }
+  .right {
+    padding-top: 0;
+    @include flex-flow(column);
+    @include flex-align(stretch);
+    @include flex-num(2);
+    .right-bottom {
+      margin-bottom: 0;
+      @include flex-num(1);
+    }
+    .right-top {
+      margin-bottom: 15px;
+      @extend .right-bottom;
+    }
+  }
+  .box-title {
+    margin: 0;
+    @include font($color:#000,$fontSize:0.7rem,$textAlign:left);
+  }
+  .box-sub-title {
+    padding: 0;
+    color: #333;
+    font-size: 0.5rem;
+  }
+}
+.data-items {
+  display: table;
+width: 100%;
+padding: 3px 10px;
+border-bottom: 1px solid #DDD;
+font-size: 12px;
+  .data-item {
+    display: table-cell;
+    vertical-align: bottom;
+    &.iname {
+      width: 50%;
+    }
+    label{
+      margin:0;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: $white;
+      &.increase {
+        background: #00b5a5;
+      }
+      &.decrease {
+        background: #f26370;
+      }
+    }
+  }
+}

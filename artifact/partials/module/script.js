@@ -16,7 +16,7 @@
         moduleService.getMenuTabs({
           parentId: $stateParams.id
         }).then(function(result) {
-          vm.menuTabs = (result && result.data) ? result.data.body : "";
+          vm.menuTabs = result.data;
           $state.go('main.module.content', {
             tid: vm.menuTabs[0].id
           });

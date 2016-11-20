@@ -1,39 +1,37 @@
 {
-  "head": {
-    "status": 200,
-    "token": null,
-    "message": null,
-    "total": 0
-  },
-  "body": [{
-    "code": "1",
-    "need_group": "0",
-    "table_type": "same",
-    "table_url": "/table/data",
-    "title": "全市产业增加值",
-    "legend": ["累计增加值", "累计贡献率"],
-    "x_data": ["第一产业", "第二产业", "第三产业"],
-    "y_name": ["亿", "亿元"],
-    "series": [{
-      "name": "全市产业增加值",
-      "type": "pie",
-      "data": [{
-        "name": "地区生产总值",
-        "value": 238.8
-      }]
+  "series": [{
+    "level": "0",
+    "yAxisIndex": "0",
+    "name": "地区生产总值",
+    "data": [{
+      "name": "地区生产总值",
+      "value": ""
+    }],
+    "type": "pie"
+  }, {
+    "level": "1",
+    "yAxisIndex": "1",
+    "name": "三次产业增加值",
+    "data": [{
+      "name": "第一产业增加值",
+      "value": ""
     }, {
-      "name": "全市产业增加值",
-      "type": "pie",
-      "data": [{
-        "name": "第一产业",
-        "value": 38.5
-      }, {
-        "name": "第二产业",
-        "value": 105.5
-      }, {
-        "name": "第三产业",
-        "value": 87
-      }]
-    }]
-  }]
+      "name": "第二产业增加值",
+      "value": ""
+    }, {
+      "name": "第三产业增加值",
+      "value": ""
+    }],
+    "type": "pie"
+  }],
+  "title": "全市产业增加值",
+  "x_data": ["地区生产总值"],
+  "init_query_time": "2016",
+  "legend": ["地区生产总值", "三次产业增加值"],
+  "need_group": "0",
+  "table_type": "reverse",
+  "code": "1131",
+  "table_url": "",
+  "y_name": ["亿元", "%"],
+  "time_scope": "year"
 }

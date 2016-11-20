@@ -8,7 +8,7 @@
     function($scope, dashboardService) {
       var vm = this;
       dashboardService.getMenus({parentId:"0"}).then(function(result) {
-        vm.menus = (result && result.data) ? result.data.body : "";
+        vm.menus = result.data;
       });
     }
   ]);

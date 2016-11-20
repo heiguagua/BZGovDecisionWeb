@@ -38,6 +38,9 @@
 
       <div class="main-content">
           <ul class="nav navbar-nav side-nav">
+            <li ui-sref-active="active">
+              <a ui-sref='main.preview'>首页</a>
+            </li>
             <li ng-repeat='menu in main.menus' ui-sref-active="active">
               <a ui-sref='main.module({id:menu.id,url:menu.url})'>{{menu.name}}</a>
             </li>
