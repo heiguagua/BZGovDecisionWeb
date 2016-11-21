@@ -4,7 +4,7 @@
 
   module.constant('URL',
     //'http://localhost:5353'
-    'http://172.16.7.52:8080'
+  'http://172.16.7.52:8080'
     //location.protocol + '//' + location.host + '/BigScreenShow/data'
   );
 

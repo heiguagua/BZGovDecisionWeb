@@ -1,19 +1,16 @@
-{
-  "head": {
-    "status": 200,
-    "token": null,
-    "message": null,
-    "total": 0
-  },
-  "body": [{
-    "picCode": "1",
-    "url": "/main/detail",
-    "time_scope": "month",
-    "init_query_time":"2016-06"
-  },{
-    "picCode": "2",
-    "url": "/main/detail",
-    "time_scope": "year",
-    "init_query_time":"2016"
-  }]
-}
+[{
+ "picCode": "1",
+ "url": "/main/detail"
+},{
+ "picCode": "2",
+ "url": "/main/detail"
+},{
+ "picCode": "3",
+ "url": "/main/detail"
+},{
+ "picCode": "4",
+ "url": "/main/detail"
+},{
+ "picCode": "5",
+ "url": "/main/detail"
+}]

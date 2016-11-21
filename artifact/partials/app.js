@@ -35,7 +35,7 @@
         controllerAs: 'main',
       })
       .state('main.preview', {
-        url: '/preview',
+        url: '/preview/:preid',
         templateUrl: 'partials/preview/view.html',
         controller: 'previewController',
         controllerAs: 'preview',

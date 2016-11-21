@@ -6,73 +6,99 @@
       </li>
     </ul>
   </nav>
-  <div class='center'>
-    <div class='center-top box panel panel-default'>
-      <div class='top-wrap panel-heading'>
-        <div class='pull-left'>
-          <h5 class='box-title'>全市经济总体情况</h5>
-        </div>
-        <div class='pull-right box-sub-title'>第二季度数据来源：统计局</div>
-      </div>
-      <div class='box-content panel-body'>
-        <div class='chart'></div>
-        <div class='chart'></div>
-      </div>
-    </div>
-    <div class='center-down'>
-      <div class='left15 right5'>
-        <div class='center-left box panel panel-default'>
+  <div ng-repeat='item in preview.content  track by $index' ng-class="{'wrap':  $index == 0 }">
+    <div ng-if='$index == 0' class='inner-wrap'>
+      <div class='center'>
+        <div class='center-top box panel panel-default'>
           <div class='top-wrap panel-heading'>
             <div class='pull-left'>
-              <h5 class='box-title'>全社会固定资产投资情况</h5>
+              <h5 class='box-title'>全市经济总体情况</h5>
+            </div>
+            <div class='pull-right box-sub-title'>
+              <!-- <div class='statistic'>
+            <div ng-show='chartlist[0].model'>
+              <label >统计时间：</label>
+              <div class='time-pick'>
+                <p class="input-group">
+                  <input type="text" ng-change='changed(0)' class="form-control input-time" uib-datepicker-popup="{{chartlist[0].format}}" ng-model="chartlist[0].model" is-open="chartlist[0].opened"
+                  datepicker-options="chartlist[0].dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭'   alt-input-formats="altInputFormats" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-time" ng-click="open(0)">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class='from-dept'>
+              <label>统计来源：</label>统计局
+            </div>
+          </div>-->
+              第二季度数据来源：统计局
+            </div>
+          </div>
+          <div class='box-content panel-body'>
+
+            <div class='chart ' wiserv-chart-etotal econtent=chartlist[0]></div>
+            <div class='chart ' wiserv-chart-increase icontent=chartlist[1]></div>
+          </div>
+        </div>
+        <div class='center-down'>
+          <div class='left15 right5'>
+            <div class='center-left box panel panel-default'>
+              <div class='top-wrap panel-heading'>
+                <div class='pull-left'>
+                  <h5 class='box-title'>全社会固定资产投资情况</h5>
+                </div>
+                <div class='pull-right box-sub-title'>6月数据来源：统计局</div>
+              </div>
+              <div class='panel-body chart' wiserv-chart-invest vcontent=chartlist[2]></div>
+            </div>
+          </div>
+          <div class='right15 left5'>
+            <div class='center-right box panel panel-default'>
+              <div class='top-wrap panel-heading'>
+                <div class='pull-left'>
+                  <h5 class='box-title'>巴中市居民消费价格指数CPI</h5>
+                </div>
+                <div class='pull-right box-sub-title'>近一年数据来源：调查队</div>
+              </div>
+              <div class='panel-body chart ' wiserv-chart-cpi ccontent=chartlist[3]></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='right'>
+        <div class='right-top box panel panel-default'>
+          <div class='pull-left panel-heading'>
+            <h5 class='box-title'>主要经济指标6月数据</h5>
+          </div>
+          <div class='panel-body'>
+            <div class='data-items'>
+              <div class='data-item iname'>规上工业增加值（万美元）</div>
+              <div class='data-item'>3576</div>
+              <div class='data-item text-right'>
+                <label class='increase'>+9.8%</label>
+              </div>
+            </div>
+            <div class='data-items'>
+              <div class='data-item iname'>规上工业增加值（万美元）</div>
+              <div class='data-item'>3576</div>
+              <div class='data-item text-right'>
+                <label class='decrease'>-9.8%</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='right-bottom box panel panel-default'>
+          <div class='top-wrap panel-heading'>
+            <div class='pull-left'>
+              <h5 class='box-title'>全市社会消费品零售额情况</h5>
             </div>
             <div class='pull-right box-sub-title'>6月数据来源：统计局</div>
           </div>
-          <div class='panel-body'>
-          </div>
+          <div class='panel-body chart ' wiserv-chart-consume scontent=chartlist[4]></div>
         </div>
-      </div>
-      <div class='right15 left5'>
-        <div class='center-right box panel panel-default'>
-          <div class='top-wrap panel-heading'>
-            <div class='pull-left'>
-              <h5 class='box-title'>巴中市居民消费价格指数CPI</h5>
-            </div>
-            <div class='pull-right box-sub-title'>近一年数据来源：调查队</div>
-          </div>
-          <div class='panel-body'>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class='right'>
-    <div class='right-top box panel panel-default'>
-      <div class='pull-left panel-heading'>
-        <h5 class='box-title'>主要经济指标6月数据</h5>
-      </div>
-      <div class='panel-body'>
-        <div class='data-items'>
-          <div class='data-item iname'>规上工业增加值（万美元）</div>
-          <div class='data-item'>3576</div>
-          <div class='data-item text-right'><label class='increase'>+9.8%</label></div>
-        </div>
-        <div class='data-items'>
-          <div class='data-item iname'>规上工业增加值（万美元）</div>
-          <div class='data-item'>3576</div>
-          <div class='data-item text-right'><label class='decrease'>-9.8%</label></div>
-        </div>
-      </div>
-    </div>
-    <div class='right-bottom box panel panel-default'>
-      <div class='top-wrap panel-heading'>
-        <div class='pull-left'>
-          <h5 class='box-title'>全市社会消费品零售额情况</h5>
-        </div>
-        <div class='pull-right box-sub-title'>6月数据来源：统计局</div>
-      </div>
-      <div class='panel-body'>
-
       </div>
     </div>
   </div>

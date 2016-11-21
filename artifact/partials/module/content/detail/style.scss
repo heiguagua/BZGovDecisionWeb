@@ -7,38 +7,7 @@
     min-height: 480px;
     @include flex-num(1);
     @include flex-flow(column);
-    .statistic {
-      padding: 10px;
-      @include flex-flow(row);
-      label {
-        line-height: 1rem;
-        display: inline-block;
-        vertical-align: top;
-      }
-      .time-pick {
-        display: inline-block;
-        .input-group {
-          max-width: 140px;
-          .input-time {
-            height: 26px;
-            padding: 0 10px;
-            &.ng-invalid {
-              border: 1px solid red !important;
-            }
-          }
-          .btn-time {
-            line-height: 1;
-            padding: 4px 6px;
-            font-size: 14px;
-          }
-        }
-      }
-      .from-dept {
-        text-align: right;
-        line-height: 1rem;
-        @include flex-num(1);
-      }
-    }
+
     .graph {
       padding: 5px 15px 15px;
       @include flex-num(1);
@@ -95,5 +64,37 @@
   .btn-danger {
     background-color: #f66850;
     border-color: #d5614e;
+  }
+}
+.statistic {
+  padding: 10px;
+  @include flex-flow(row);
+  label {
+    line-height: 1rem;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .time-pick {
+    display: inline-block;
+    .input-group {
+      max-width: 140px;
+      .input-time {
+        height: 26px;
+        padding: 0 10px;
+        &.ng-invalid {
+          border: 1px solid red !important;
+        }
+      }
+      .btn-time {
+        line-height: 1;
+        padding: 4px 6px;
+        font-size: 14px;
+      }
+    }
+  }
+  .from-dept {
+    text-align: right;
+    line-height: 1rem;
+    @include flex-num(1);
   }
 }

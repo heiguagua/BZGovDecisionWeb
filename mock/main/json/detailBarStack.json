@@ -1,58 +1,50 @@
 {
-  "head": {
-    "status": 200,
-    "token": null,
-    "message": null,
-    "total": 0
-  },
-  "body": [{
-    "code": "1",
-    "need_group": "1",
-    "table_type": "same",
-    "table_url": "/table/data",
-    "title": "近三年全市产业结构",
-    "legend": ["第一产业", "第二产业","第三产业"],
-    "x_data": ["2013年", "2014年", "2015年"],
-    "y_name": ["%"],
-    "series": [{
-      "name": "第一产业",
-      "type": "bar",
-      "data": [{
-        "name": "2013年",
-        "value": 18.5
-      }, {
-        "name": "2014年",
-        "value": 15.5
-      }, {
-        "name": "2015年",
-        "value": 17
-      }]
-    },{
-      "name": "第二产业",
-      "type": "bar",
-      "data": [{
-        "name": "2013年",
-        "value": 18.5
-      }, {
-        "name": "2014年",
-        "value": 29.7
-      }, {
-        "name": "2015年",
-        "value": 28.8
-      }]
-    },{
-      "name": "第三产业",
-      "type": "bar",
-      "data": [{
-        "name": "2013年",
-        "value": 19.6
-      }, {
-        "name": "2014年",
-        "value": 15.5
-      }, {
-        "name": "2015年",
-        "value": 11.3
-      }]
+  "code": "1",
+  "need_group": "1",
+  "table_type": "same",
+  "table_url": "/table/data",
+  "title": "近三年全市产业结构",
+  "legend": ["第一产业", "第二产业","第三产业"],
+  "x_data": ["2013年", "2014年", "2015年"],
+  "y_name": ["%"],
+  "series": [{
+    "name": "第一产业",
+    "type": "bar",
+    "data": [{
+      "name": "2013年",
+      "value": 18.5
+    }, {
+      "name": "2014年",
+      "value": 15.5
+    }, {
+      "name": "2015年",
+      "value": 17
+    }]
+  },{
+    "name": "第二产业",
+    "type": "bar",
+    "data": [{
+      "name": "2013年",
+      "value": 18.5
+    }, {
+      "name": "2014年",
+      "value": 29.7
+    }, {
+      "name": "2015年",
+      "value": 28.8
+    }]
+  },{
+    "name": "第三产业",
+    "type": "bar",
+    "data": [{
+      "name": "2013年",
+      "value": 19.6
+    }, {
+      "name": "2014年",
+      "value": 15.5
+    }, {
+      "name": "2015年",
+      "value": 11.3
     }]
   }]
 }

@@ -5,22 +5,25 @@
     "name": "地区生产总值",
     "data": [{
       "name": "地区生产总值",
-      "value": ""
+      "value": "230.8"
     }],
     "type": "pie"
   }, {
     "level": "1",
     "yAxisIndex": "1",
-    "name": "三次产业增加值",
+    "name": "三次产业",
     "data": [{
-      "name": "第一产业增加值",
-      "value": ""
+      "name": "第一产业",
+      "value": "",
+      "other":[{"name":"增加值","value":38.5,"unit":"亿"},{"name":"贡献","value":16,"unit":"%"}]
     }, {
-      "name": "第二产业增加值",
-      "value": ""
+      "name": "第二产业",
+      "value": "",
+      "other":[{"name":"增加值","value":105.5,"unit":"亿"},{"name":"贡献","value":45.6,"unit":"%"}]
     }, {
-      "name": "第三产业增加值",
-      "value": ""
+      "name": "第三产业",
+      "value": "",
+      "other":[{"name":"增加值","value":87,"unit":"亿"},{"name":"贡献","value":45.6,"unit":"%"}]
     }],
     "type": "pie"
   }],

@@ -2,6 +2,10 @@
   @include flex-flow(row);
   @include flex-num(1);
   padding: 0 15px 20px 0;
+  .wrap,.inner-wrap{
+    @include flex-num(1);
+    @include flex-flow(row);
+  }
   .panel-heading {
     padding: 8px 15px;
   }
@@ -27,6 +31,7 @@
         }
       }
     }
+
   }
   .center {
     padding: 0 10px;
@@ -47,6 +52,9 @@
       .center-left,
       .center-right {
         height: 100%;
+        .chart{
+          @include flex-num(1);
+        }
       }
     }
   }
@@ -58,6 +66,9 @@
     .right-bottom {
       margin-bottom: 0;
       @include flex-num(1);
+      .chart{
+        @include flex-num(1);
+      }
     }
     .right-top {
       margin-bottom: 15px;
@@ -76,18 +87,18 @@
 }
 .data-items {
   display: table;
-width: 100%;
-padding: 3px 10px;
-border-bottom: 1px solid #DDD;
-font-size: 12px;
+  width: 100%;
+  padding: 3px 10px;
+  border-bottom: 1px solid #DDD;
+  font-size: 12px;
   .data-item {
     display: table-cell;
     vertical-align: bottom;
     &.iname {
       width: 50%;
     }
-    label{
-      margin:0;
+    label {
+      margin: 0;
       padding: 2px 8px;
       border-radius: 4px;
       color: $white;

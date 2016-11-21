@@ -18,7 +18,18 @@ ul{
   margin:0;
   padding:0;
 }
-
+$chartHeightSmall: 380px;
+$chartHeightBig: 540px;
+@mixin smallscreen {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+@mixin bigscreen {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
 @mixin font($color:$white,$fontWeight:100,$fontSize:1.3rem,$textAlign:center,$fontFamily:'黑体') {
   color: $color;
   text-align: $textAlign;

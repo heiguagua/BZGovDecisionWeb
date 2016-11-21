@@ -12,28 +12,12 @@
       detailService.getContent({
         menuId: $stateParams.pid
       }).then(function(result) {
-        vm.content = _.sortBy(result.data, ['picCode']);
-        _.forEach(vm.content, function(item) {
+        vm.dcontent = _.sortBy(result.data, ['picCode']);
+        _.forEach(vm.dcontent, function(item) {
           var popup = {};
           popup.opened = false;
           popup.url = item.url;
           popup.picCode = item.picCode;
-          // popup.model = new Date(item.init_query_time);
-          // console.log(popup.model);
-          //
-          // var dateOptions = {};
-          // dateOptions.formatYear = 'yyyy';
-          // if (item.time_scope == 'year') {
-          //   popup.format = 'yyyy';
-          //   dateOptions.minMode = 'year';
-          //   dateOptions.datepickerMode = 'year';
-          // }
-          // if (item.time_scope == 'month') {
-          //   popup.format = 'yyyy-MM';
-          //   dateOptions.minMode = 'month';
-          //   dateOptions.datepickerMode = 'month';
-          // }
-          // popup.dateOptions = dateOptions;
           $scope.popups.push(popup);
 
         });
@@ -124,6 +108,7 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
+          console.log(scope.content);
           function getDateFormat(parseDate, format) {
             var date = angular.copy(parseDate);
             if (angular.isDate(date) && !isNaN(date.getTime())) {
@@ -136,7 +121,6 @@
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             } // AKA first run
-
             drawChart();
           });
           var chartInstance = null;
@@ -187,12 +171,25 @@
                   option.series[1].label = {};
                   option.series[1].label.normal = {};
                   option.series[1].label.normal.position = 'inner';
-                  option.series[1].label.normal.formatter = '{b}\n {c}' + opt.y_name[1];
+                //  option.series[1].label.normal.formatter = '{b}\n {c}' + opt.y_name[1];
+                option.series[1].label.normal.formatter = function(obj) {
+                  var labelShow = obj.data.name + '\n';
+                  for(var i=0; i<obj.data.other.length; i++) {
+                    labelShow += obj.data.other[i].name + ":"+ obj.data.other[i].value +'\n';
+                  }
+                  return labelShow;
+                }
                   option.series[1].radius = ['30%', '60%'];
                 }
                 option.tooltip = {
                   trigger: 'item',
-                  formatter: '{b} <br/>' + opt.legend[0] + ': {c}' + opt.y_name[0] + '<br/>' + opt.legend[1] + ': {d}%'
+                  formatter: function(obj) {
+                    var labelShow = obj.data.name + '\n';
+                    for(var i=0; i<obj.data.other.length; i++) {
+                      labelShow += obj.data.other[i].name + ":"+ obj.data.other[i].value +'\n';
+                    }
+                    return labelShow;
+                  }
                 };
                 option.title = {
                   text: opt.title,
@@ -335,7 +332,9 @@
           }
 
           scope.onResize = function() {
-            chartInstance.resize();
+            if(chartInstance) {
+              chartInstance.resize();
+            }
           }
 
           angular.element($window).bind('resize', function() {
