@@ -174,6 +174,7 @@
                     option.series[1].label.normal.position = 'inner';
                   //  option.series[1].label.normal.formatter = '{b}\n {c}' + opt.y_name[1];
                   option.series[1].label.normal.formatter = function(obj) {
+                    console.log(obj);
                     var labelShow = obj.data.name + '\n';
                     if(obj.data.other && obj.data.other.length > 1) {
                       for(var i=0; i<obj.data.other.length; i++) {
@@ -181,7 +182,7 @@
                       }
                     }
                     else{
-                      labelShow += obj.data[0].name + ":"+ obj.data[0].value ;
+                      labelShow = obj.data.name + ":"+ obj.data.value ;
                     }
 
                     return labelShow;
