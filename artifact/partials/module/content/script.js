@@ -8,7 +8,9 @@
       var vm = this;
       contentService.getSubMenus({parentId:$stateParams.tid}).then(function(result){
         vm.subMenus = result.data;
-        $state.go('main.module.content.detail',{pid:vm.subMenus[0].id});
+        if(vm.subMenus && vm.subMenus[0] && vm.subMenus[0].id) {
+          $state.go('main.module.content.detail',{pid:vm.subMenus[0].id});
+        }
       })
     }
   ]);

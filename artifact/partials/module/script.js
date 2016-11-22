@@ -17,9 +17,11 @@
           parentId: $stateParams.id
         }).then(function(result) {
           vm.menuTabs = result.data;
-          $state.go('main.module.content', {
-            tid: vm.menuTabs[0].id
-          });
+          if(vm.menuTabs && vm.menuTabs[0] && vm.menuTabs[0].id) {
+            $state.go('main.module.content', {
+              tid: vm.menuTabs[0].id
+            });
+          }
         })
       }
 

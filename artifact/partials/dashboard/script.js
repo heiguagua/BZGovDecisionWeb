@@ -13,18 +13,21 @@
         parentId: "0"
       }).then(function(result) {
         vm.menus = result.data;
-        dashboardService.getContent({
-          menuId: vm.menus[0].id
-        }).then(function(result) {
-          vm.dashcontent = _.sortBy(result.data, ['picCode']);
-          _.forEach(vm.dashcontent, function(item) {
-            var chart = {};
-            chart.opened = false;
-            chart.url = item.url;
-            chart.picCode = item.picCode;
-            $scope.chartlist.push(chart);
+        if(vm.menus && vm.menus[0] && vm.menus[0].id) {
+          dashboardService.getContent({
+            menuId: vm.menus[0].id
+          }).then(function(result) {
+            vm.dashcontent = _.sortBy(result.data, ['picCode']);
+            _.forEach(vm.dashcontent, function(item) {
+              var chart = {};
+              chart.opened = false;
+              chart.url = item.url;
+              chart.picCode = item.picCode;
+              $scope.chartlist.push(chart);
+            });
           });
-        });
+        }
+
       });
 
 
@@ -124,7 +127,9 @@
             picCode: scope.econtent.picCode
           }).then(function(result) {
             var opt = result.data;
-            console.log(opt);
+            if(!opt || !opt.series) {
+              return;
+            }
             if (!scope.econtent.model && opt.init_query_time != '') {
               scope.econtent.model = new Date(opt.init_query_time);
             }
@@ -236,6 +241,9 @@
             picCode: scope.icontent.picCode
           }).then(function(result) {
             var opt = result.data;
+            if(!opt || !opt.series) {
+              return;
+            }
             var colors = ['rgb(0,204,200)', 'rgb(232,175,64)', 'rgb(0,168,228)'];
             var option = {
               color: colors,
@@ -322,6 +330,9 @@
             picCode: scope.vcontent.picCode
           }).then(function(result) {
             var opt = result.data;
+            if(!opt || !opt.series) {
+              return;
+            }
             var indicators = [];
             _.forEach(opt.x_data, function(item, index) {
               var indicator = {};
@@ -426,6 +437,9 @@
             picCode: scope.ccontent.picCode
           }).then(function(result) {
             var opt = result.data;
+            if(!opt || !opt.series) {
+              return;
+            }
             _.forEach(opt.series, function(item) {
               item.label = {
                 normal: {
@@ -532,6 +546,9 @@
             picCode: scope.scontent.picCode
           }).then(function(result) {
             var opt = result.data;
+            if(!opt || !opt.series) {
+              return;
+            }
             var colors = ['rgb(107,217,95)', 'rgb(0,168,228)', 'rgb(14, 83, 108)', 'rgb(0,204,200)'];
             var option = {
               color: colors,

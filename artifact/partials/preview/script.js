@@ -107,7 +107,9 @@
             picCode: scope.econtent.picCode
           }).then(function(result) {
             var opt = result.data;
-            console.log(opt);
+            if(!opt || !opt.series) {
+              return;
+            }
             if (!scope.econtent.model && opt.init_query_time != '') {
               scope.econtent.model = new Date(opt.init_query_time);
             }
@@ -225,6 +227,9 @@
             picCode: scope.icontent.picCode
           }).then(function(result) {
             var opt = result.data;
+            if(!opt || !opt.series) {
+              return;
+            }
             var colors = ['rgb(0,204,200)', 'rgb(232,175,64)', 'rgb(0,168,228)'];
             var option = {
               color:colors,
@@ -317,6 +322,9 @@
             picCode: scope.vcontent.picCode
           }).then(function(result) {
             var opt = result.data;
+            if(!opt || !opt.series) {
+              return;
+            }
             var indicators = [];
             _.forEach(opt.x_data, function(item, index) {
               var indicator = {};
@@ -418,6 +426,9 @@
             picCode: scope.ccontent.picCode
           }).then(function(result) {
             var opt = result.data;
+            if(!opt || !opt.series) {
+              return;
+            }
             var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)'];
             var option = {
               color:colors,
@@ -476,6 +487,9 @@
             picCode: scope.scontent.picCode
           }).then(function(result) {
             var opt = result.data;
+            if(!opt || !opt.series) {
+              return;
+            }
             var colors = ['rgb(107,217,95)', 'rgb(0,168,228)'];
             var option = {
               color:colors,
