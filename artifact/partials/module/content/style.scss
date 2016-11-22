@@ -23,4 +23,6 @@
 .box-wrap {
   @include flex-flow(row);
   @include flex-num(1);
+  -webkit-flex-wrap:wrap;
+	flex-wrap:wrap;
 }

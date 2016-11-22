@@ -245,7 +245,10 @@
                     labelPos = 'inside';
                   }
                   _.forEach(opt.series, function(item) {
-                    item.barWidth = '24%';
+                    console.log(item);
+                    if(item.data.length>5){
+                      $('.box-wrap').css({'-webkit-flex-flow':'column','flex-flow':'column'});
+                    }
                     var label = {
                       normal: {
                         show: true,

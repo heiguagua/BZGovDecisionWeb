@@ -6,22 +6,23 @@
     min-height: 480px;
     @include flex-flow(column);
     @include smallscreen {
-      height:480px;
+      height: 480px;
     }
     @include bigscreen {
-      height:600px;
+      height: 600px;
     }
     .graph {
       padding: 5px 15px 15px;
       @include flex-num(1);
     }
   }
-  .table-data{
+  .table-data {
     @include flex-num(1);
   }
   .table {
     font-size: 16px;
     font-family: 黑体;
+    table-layout: fixed;
     >tbody {
       >tr {
         &:nth-of-type(even) {
