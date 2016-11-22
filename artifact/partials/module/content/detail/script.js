@@ -283,17 +283,21 @@
               if (opt.table_type == 'same') {
                 scope.content.columnNames = opt.x_data;
                 var rowDatas = [];
-                _.forEach(opt.legend, function(legendData, index) {
-                  var dataObj = [];
-                  dataObj.rowName = legendData;
-                  dataObj.rowValue = opt.series[index].data;
-                  rowDatas.push(dataObj);
-                });
+
                 if(opt.series[0].type == 'radar') {
+                  console.log(opt.series[0].data);
                   _.forEach(opt.series[0].data, function(serData, index) {
-                    var dataObj = [];
+                    var dataObj = {};
                     dataObj.rowName = serData.name;
                     dataObj.rowValue = serData.value;
+                    rowDatas.push(dataObj);
+                  });
+                }
+                else{
+                  _.forEach(opt.legend, function(legendData, index) {
+                    var dataObj = {};
+                    dataObj.rowName = legendData;
+                    dataObj.rowValue = opt.series[index].data;
                     rowDatas.push(dataObj);
                   });
                 }
