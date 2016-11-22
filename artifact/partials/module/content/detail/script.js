@@ -245,7 +245,7 @@
                     labelPos = 'inside';
                   }
                   _.forEach(opt.series, function(item) {
-                    item.barWidth = '30%';
+                    item.barWidth = '24%';
                     var label = {
                       normal: {
                         show: true,
