@@ -289,6 +289,14 @@
                   dataObj.rowValue = opt.series[index].data;
                   rowDatas.push(dataObj);
                 });
+                if(opt.series[0].type == 'radar') {
+                  _.forEach(opt.series[0].data, function(serData, index) {
+                    var dataObj = [];
+                    dataObj.rowName = serData.name;
+                    dataObj.rowValue = serData.value;
+                    rowDatas.push(dataObj);
+                  });
+                }
                 scope.content.rowData = rowDatas;
               } else if (opt.table_type == 'reverse') {
 
