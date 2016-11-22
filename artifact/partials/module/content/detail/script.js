@@ -174,9 +174,15 @@
                 //  option.series[1].label.normal.formatter = '{b}\n {c}' + opt.y_name[1];
                 option.series[1].label.normal.formatter = function(obj) {
                   var labelShow = obj.data.name + '\n';
-                  for(var i=0; i<obj.data.other.length; i++) {
-                    labelShow += obj.data.other[i].name + ":"+ obj.data.other[i].value +'\n';
+                  if(obj.data.other && obj.data.other.length > 1) {
+                    for(var i=0; i<obj.data.other.length; i++) {
+                      labelShow += obj.data.other[i].name + ":"+ obj.data.other[i].value +'\n';
+                    }
                   }
+                  else{
+                    labelShow += obj.data[0].name + ":"+ obj.data[0].value ;
+                  }
+
                   return labelShow;
                 }
                   option.series[1].radius = ['30%', '60%'];
@@ -184,9 +190,9 @@
                 option.tooltip = {
                   trigger: 'item',
                   formatter: function(obj) {
-                    var labelShow = obj.data.name + '\n';
+                    var labelShow = obj.data.name + '<br/>';
                     for(var i=0; i<obj.data.other.length; i++) {
-                      labelShow += obj.data.other[i].name + ":"+ obj.data.other[i].value +'\n';
+                      labelShow += obj.data.other[i].name + ":"+ obj.data.other[i].value +'<br/>';
                     }
                     return labelShow;
                   }

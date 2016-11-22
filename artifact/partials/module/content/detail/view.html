@@ -6,8 +6,7 @@
         <label >统计时间：</label>
         <div class='time-pick'>
           <p class="input-group">
-            <input type="text" ng-change='changed($index)' class="form-control input-time" uib-datepicker-popup="{{popups[$index].format}}" ng-model="popups[$index].model" is-open="popups[$index].opened"
-            datepicker-options="popups[$index].dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭'   alt-input-formats="altInputFormats" />
+            <input type="text" ng-change='changed($index)' class="form-control input-time" uib-datepicker-popup="{{popups[$index].format}}" ng-model="popups[$index].model" is-open="popups[$index].opened" datepicker-options="popups[$index].dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
             <span class="input-group-btn">
               <button type="button" class="btn btn-default btn-time" ng-click="open($index)">
                 <i class="glyphicon glyphicon-calendar"></i>
@@ -20,21 +19,22 @@
         <label>统计来源：</label>统计局
       </div>
     </div>
-    <div class='graph' wiserv-chart content=popups[$index] >
-    </div>
+    <div class='graph' wiserv-chart content=popups[$index]></div>
   </div>
-  <table class="table  table-striped top10 table-hover text-center">
-    <thead>
-      <tr>
-        <th></th>
-        <th ng-repeat='column in popups[$index].columnNames'>
-          {{column}}
-        </th>
+  <div class='table-data'>
+    <table class="table  table-striped top10 table-hover text-center">
+      <thead>
+        <tr>
+          <th></th>
+          <th ng-repeat='column in popups[$index].columnNames'>
+            {{column}}
+          </th>
+        </tr>
+      </thead>
+      <tr ng-repeat='row in popups[$index].rowData'>
+        <td>{{row.rowName}}</td>
+        <td ng-repeat='data in row.rowValue track by $index'>{{data.value}}</td>
       </tr>
-    </thead>
-    <tr ng-repeat='row in popups[$index].rowData'>
-      <td>{{row.rowName}}</td>
-      <td ng-repeat='data in row.rowValue track by $index'>{{data.value}}</td>
-    </tr>
-  </table>
+    </table>
+  </div>
 </div>

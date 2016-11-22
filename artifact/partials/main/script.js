@@ -9,7 +9,12 @@
       // get menu list
       mainService.getMenus({parentId:"0"}).then(function(result) {
         vm.menus = result.data;
-        $state.go('main.module',{id:$stateParams.mid});
+        if($stateParams.typeid == 0) { // 首页
+          $state.go('main.preview',{preid:$stateParams.mid});
+        }
+        else{
+          $state.go('main.module',{id:$stateParams.mid});
+        }
       });
     }
   ]);

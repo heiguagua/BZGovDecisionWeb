@@ -3,9 +3,9 @@
   var module = angular.module('common.http', []);
 
   module.constant('URL',
-    //'http://localhost:5353'
-  'http://172.16.7.52:8080'
-    //location.protocol + '//' + location.host + '/BigScreenShow/data'
+  //  'http://localhost:5353'
+  //'http://192.168.9.112:8080'
+    location.protocol + '//' + location.host
   );
 
   module.factory('validate', [
