@@ -2,24 +2,36 @@ html {
   margin: 0;
   padding: 0;
   font: normal 100% Helvetica, Arial, sans-serif;
-  height:100%;
+  height: 100%;
 }
 body {
   margin: 0;
   padding: 0;
   font-size: 14px;
-  height:100%;
+  height: 100%;
 }
-a{
-  text-decoration:none;
-  cursor:pointer;
+a {
+  text-decoration: none;
+  cursor: pointer;
 }
-ul{
-  margin:0;
-  padding:0;
+ul {
+  margin: 0;
+  padding: 0;
 }
 $chartHeightSmall: 380px;
 $chartHeightBig: 540px;
+$tablet-width: 1024px;
+$desktop-width: 1400px;
+@mixin normalratio {
+  @media screen and (device-aspect-ratio: 16/9) {
+    @content;
+  }
+}
+@mixin widerratio {
+  @media screen and (device-aspect-ratio: 16/10) {
+    @content;
+  }
+}
 @mixin smallscreen {
   @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
     @content;
@@ -30,28 +42,28 @@ $chartHeightBig: 540px;
     @content;
   }
 }
-@mixin font($color:$white,$fontWeight:100,$fontSize:1.3rem,$textAlign:center,$fontFamily:'黑体') {
+@mixin font($color:$white, $fontWeight:100, $fontSize:1.3rem, $textAlign:center, $fontFamily:'黑体') {
   color: $color;
   text-align: $textAlign;
   font-weight: $fontWeight;
   font-size: $fontSize;
   font-family: $fontFamily;
 }
-@mixin flex-flow ($flow:row){
+@mixin flex-flow ($flow:row) {
   display: -webkit-flex;
   display: flex;
   -webkit-flex-flow: $flow;
   flex-flow: $flow;
 }
-@mixin flex-align($align:center){
+@mixin flex-align($align:center) {
   -webkit-align-items: $align;
   align-items: $align;
 }
-@mixin flex-justify($justify:center){
-  -webkit-justify-content:$justify;
-	justify-content:$justify;
+@mixin flex-justify($justify:center) {
+  -webkit-justify-content: $justify;
+  justify-content: $justify;
 }
-@mixin flex-num($num:1){
+@mixin flex-num($num:1) {
   -webkit-flex: $num;
   flex: $num;
 }
@@ -75,13 +87,13 @@ $chartHeightBig: 540px;
     font-size: 12px;
   }
 }
-#ui-view-index{
-  height:100%;
+#ui-view-index {
+  height: 100%;
   @include flex-flow(row);
 }
-.right5{
-  padding-right:5px;
+.right5 {
+  padding-right: 5px;
 }
-.left5{
-  padding-left:5px;
+.left5 {
+  padding-left: 5px;
 }

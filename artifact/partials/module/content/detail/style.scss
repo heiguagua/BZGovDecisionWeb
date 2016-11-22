@@ -1,13 +1,16 @@
 .content-box {
   @include flex-num(1);
-  @include flex-flow(column);
   .chart {
     border: 1px solid #DDD;
     margin-bottom: 10px;
     min-height: 480px;
-    @include flex-num(3);
     @include flex-flow(column);
-
+    @include smallscreen {
+      height:480px;
+    }
+    @include bigscreen {
+      height:600px;
+    }
     .graph {
       padding: 5px 15px 15px;
       @include flex-num(1);
