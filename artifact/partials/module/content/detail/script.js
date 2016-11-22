@@ -299,10 +299,10 @@
                   dataObj.rowName = item;
                   var cellDatas = [];
                   if(opt.series[0].type == 'radar') {
-                    _.forEach(opt.series, function(serData, index2) {
+                    _.forEach(opt.series[0].data, function(serData, index2) {
                       var cellData = {};
-                      cellData.name = opt.series[0].data[index2].name;
-                      cellData.value = opt.series[0].data[index2].value[index];
+                      cellData.name = serData.name;
+                      cellData.value = serData.value[index];
                       cellDatas.push(cellData);
                     });
                   }
