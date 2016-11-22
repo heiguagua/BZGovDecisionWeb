@@ -217,12 +217,13 @@
                     var indicator = {};
                     indicator.name = item;
                     var dataArray = _.map(opt.series[0].data, 'value');
-                    var max = opt.series[0].data[0].value[index];
+                    var max = Number(opt.series[0].data[0].value[index]);
                     _.forEach(dataArray, function(data, index2) {
-                      if (opt.series[0].data[index2].value[index] > max) {
-                        max = opt.series[0].data[index2].value[index];
+                      if (Number(opt.series[0].data[index2].value[index]) > max) {
+                        max = Number(opt.series[0].data[index2].value[index]);
                       }
                     });
+                    console.log(max);
                     indicator.max = max + 100;
                     indicators.push(indicator);
                   });
@@ -231,6 +232,7 @@
                     text: opt.title,
                     left: 'center'
                   };
+                  console.log(indicators);
                   option.radar = {};
                   option.radar.indicator = indicators;
                   option.series = opt.series;
