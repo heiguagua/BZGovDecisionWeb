@@ -108,10 +108,8 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          console.log($('.content-main'));
-          console.log($('.content-main').height());
-          console.log($('.content-main').scrollTop());
-          console.log($('.content-main')[0].scrollHeight);
+          var mainHeightFst = $('.content-main')[0].scrollHeight;
+          $('.side-nav').css({'height':mainHeightFst + "px"});
 
           function getDateFormat(parseDate, format) {
             var date = angular.copy(parseDate);

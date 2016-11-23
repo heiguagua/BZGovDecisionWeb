@@ -4,8 +4,8 @@
 
   module.constant('URL',
   //  'http://localhost:5353'
-  // 'http://localhost:8080/govDecision'
   // 'http://172.16.7.52:8080'
+  // 'http://localhost:8080/govDecision'
     location.protocol + '//' + location.host
   );
 
