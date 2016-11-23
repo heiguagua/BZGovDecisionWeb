@@ -169,6 +169,7 @@
 
                 if (opt.series[0].type == 'pie') {
                   option.series = opt.series;
+
                   if (opt.series.length > 1) {
                     option.series[0].radius = [0, '26%'];
                     option.series[1].label = {};
@@ -176,14 +177,20 @@
                     //  option.series[1].label.normal.formatter = '{b}\n {c}' + opt.y_name[1];
                     option.series[1].label.normal.formatter = function(obj) {
                       console.log(obj);
+                      var percentShow = '';
+
                       var labelShow = '\n\n' + obj.data.name + '\n';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
                           labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
                         }
                       } else {
-                        labelShow = obj.data.name + ":" + obj.data.value;
+                        labelShow = obj.data.name + ":" + obj.data.value + '\n';
+                        if(opt.auto_count && opt.auto_count =='percent') {
+                          labelShow += '占比：'+obj.percent+'%';
+                        }
                       }
+
 
                       return labelShow;
                     }
@@ -193,9 +200,18 @@
                     trigger: 'item',
                     formatter: function(obj) {
                       var labelShow = obj.data.name + '<br/>';
-                      for (var i = 0; i < obj.data.other.length; i++) {
-                        labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                      if (obj.data.other && obj.data.other.length > 1) {
+                        for (var i = 0; i < obj.data.other.length; i++) {
+                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                        }
                       }
+                      else{
+                        labelShow = obj.data.name + ":" + obj.data.value + '\n';
+                        if(opt.auto_count && opt.auto_count =='percent') {
+                          labelShow += '占比：'+obj.percent+'%';
+                        }
+                      }
+
                       return labelShow;
                     }
                   };
