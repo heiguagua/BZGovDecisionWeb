@@ -379,7 +379,14 @@
                     picCode: scope.content.picCode,
                     queryTime: getDateFormat(scope.content.model, scope.content.format)
                   }).then(function(res) {
+                    if (res.data.columnName.length > 5) {
+                      $('.box-wrap').css({
+                        '-webkit-flex-flow': 'column',
+                        'flex-flow': 'column'
+                      });
+                    }
                     scope.content.columnNames = res.data.columnName;
+
                     scope.content.rowData = res.data.rowData;
                   })
                 }
