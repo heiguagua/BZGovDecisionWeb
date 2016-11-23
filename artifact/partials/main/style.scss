@@ -13,9 +13,7 @@ $chartHeightBig: 540px;
   @include flex-flow(row);
   @include flex-num(1);
 }
-.page-header-fixed {
-
-}
+.page-header-fixed {}
 .header {
   &.navbar {
     font-size: 28px;
@@ -53,6 +51,8 @@ $chartHeightBig: 540px;
     bottom: 0;
     overflow-x: hidden;
     padding-bottom: 40px;
+    position: fixed;
+    top: 62px;
     @include flex-align(stretch);
     >li {
       border-bottom: 1px solid #0063b1;
@@ -64,12 +64,12 @@ $chartHeightBig: 540px;
         text-align: center;
         font-size: 16px;
         padding: 16px 10px;
-        &:hover{
+        &:hover {
           background: #2554a4;
           color: $white;
         }
       }
-      &.active{
+      &.active {
         a {
           background: #2554a4;
           color: $white;
@@ -80,5 +80,6 @@ $chartHeightBig: 540px;
   .content-main {
     @include flex-num(1);
     @include flex-flow(column);
+    padding-left: 234px;
   }
 }
