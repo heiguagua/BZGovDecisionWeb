@@ -4,9 +4,9 @@
 
   module.constant('URL',
   //  'http://localhost:5353'
+  // 'http://localhost:8080/govDecision'
   // 'http://172.16.7.52:8080'
     location.protocol + '//' + location.host
-  // 'http://localhost:8080/govDecision'
   );
 
   module.factory('validate', [

@@ -337,7 +337,17 @@
                     rowDatas.push(dataObj);
                   });
                   scope.content.rowData = rowDatas;
-                } else {
+                }
+                else if(opt.table_type == 'form') {
+                  scope.content.formTable = true;
+                  detailService.getTableData(opt.table_url, {
+                    picCode: scope.content.picCode,
+                    queryTime: getDateFormat(scope.content.model, scope.content.format)
+                  }).then(function(res) {
+                    scope.content.rowData = res.data;
+                  })
+                }
+                else {
                   detailService.getTableData(opt.table_url, {
                     picCode: scope.content.picCode,
                     queryTime: getDateFormat(scope.content.model, scope.content.format)
