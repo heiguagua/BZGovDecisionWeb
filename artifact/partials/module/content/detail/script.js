@@ -390,7 +390,7 @@
                   chartInstance.setOption(option);
                   var mainHeight = $('.content-main')[0].scrollHeight;
                   $('.side-nav').css({'height':mainHeight + "px"});
-                }, 1000);
+                }, 300);
               }
 
             });
