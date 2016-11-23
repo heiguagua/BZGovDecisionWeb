@@ -176,7 +176,6 @@
                     option.series[1].label.normal = {};
                     //  option.series[1].label.normal.formatter = '{b}\n {c}' + opt.y_name[1];
                     option.series[1].label.normal.formatter = function(obj) {
-                      console.log(obj);
                       var percentShow = '';
 
                       var labelShow = '\n\n' + obj.data.name + '\n';
@@ -240,7 +239,6 @@
                         max = Number(opt.series[0].data[index2].value[index]);
                       }
                     });
-                    console.log(max);
                     indicator.max = max + 100;
                     indicators.push(indicator);
                   });
@@ -249,7 +247,6 @@
                     text: opt.title,
                     left: 'center'
                   };
-                  console.log(indicators);
                   option.radar = {};
                   option.radar.indicator = indicators;
                   option.series = opt.series;
@@ -268,7 +265,6 @@
                     }
                   }
                   _.forEach(opt.series, function(item) {
-                    console.log(item);
                     if (item.data.length > 5) {
                       $('.box-wrap').css({
                         '-webkit-flex-flow': 'column',
@@ -320,11 +316,16 @@
                   var rowDatas = [];
 
                   if (opt.series[0].type == 'radar') {
-                    console.log(opt.series[0].data);
                     _.forEach(opt.series[0].data, function(serData, index) {
                       var dataObj = {};
                       dataObj.rowName = serData.name;
-                      dataObj.rowValue = serData.value;
+                      var cellDatas = [];
+                      _.forEach(serData.value, function(data) {
+                        var cellData = {};
+                        cellData.value = data;
+                        cellDatas.push(cellData);
+                      })
+                      dataObj.rowValue = cellDatas;
                       rowDatas.push(dataObj);
                     });
                   } else {
@@ -336,6 +337,7 @@
                     });
                   }
                   scope.content.rowData = rowDatas;
+                  console.log(scope.content.rowData);
                 } else if (opt.table_type == 'reverse') {
 
                   scope.content.columnNames = opt.legend;
