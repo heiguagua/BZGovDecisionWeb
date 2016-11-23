@@ -109,6 +109,7 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           console.log(scope.content);
+
           function getDateFormat(parseDate, format) {
             var date = angular.copy(parseDate);
             if (angular.isDate(date) && !isNaN(date.getTime())) {
@@ -134,7 +135,7 @@
               picCode: scope.content.picCode
             }).then(function(result) {
               var opt = result.data;
-              if(opt && opt.series && opt.series[0]) {
+              if (opt && opt.series && opt.series[0]) {
                 if (!scope.content.model && opt.init_query_time != '') {
                   scope.content.model = new Date(opt.init_query_time);
                 }
@@ -171,29 +172,28 @@
                     option.series[0].radius = [0, '26%'];
                     option.series[1].label = {};
                     option.series[1].label.normal = {};
-                  //  option.series[1].label.normal.formatter = '{b}\n {c}' + opt.y_name[1];
-                  option.series[1].label.normal.formatter = function(obj) {
-                    console.log(obj);
-                    var labelShow = '\n\n' + obj.data.name + '\n';
-                    if(obj.data.other && obj.data.other.length > 1) {
-                      for(var i=0; i<obj.data.other.length; i++) {
-                        labelShow += obj.data.other[i].name + ":"+ obj.data.other[i].value +'\n';
+                    //  option.series[1].label.normal.formatter = '{b}\n {c}' + opt.y_name[1];
+                    option.series[1].label.normal.formatter = function(obj) {
+                      console.log(obj);
+                      var labelShow = '\n\n' + obj.data.name + '\n';
+                      if (obj.data.other && obj.data.other.length > 1) {
+                        for (var i = 0; i < obj.data.other.length; i++) {
+                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
+                        }
+                      } else {
+                        labelShow = obj.data.name + ":" + obj.data.value;
                       }
-                    }
-                    else{
-                      labelShow = obj.data.name + ":"+ obj.data.value ;
-                    }
 
-                    return labelShow;
-                  }
+                      return labelShow;
+                    }
                     option.series[1].radius = ['26%', '48%'];
                   }
                   option.tooltip = {
                     trigger: 'item',
                     formatter: function(obj) {
                       var labelShow = obj.data.name + '<br/>';
-                      for(var i=0; i<obj.data.other.length; i++) {
-                        labelShow += obj.data.other[i].name + ":"+ obj.data.other[i].value +'<br/>';
+                      for (var i = 0; i < obj.data.other.length; i++) {
+                        labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
                       }
                       return labelShow;
                     }
@@ -239,14 +239,24 @@
                 } else {
                   var stack_name = '';
                   var labelPos = 'top';
+                  var axisLabel = {};
                   if (opt.need_group == "1") {
                     stack_name = 'group';
                     labelPos = 'inside';
                   }
+                  if (opt.series[0].data.length > 10) {
+                    axisLabel = {
+                      interval: 0,
+                      rotate: 45
+                    }
+                  }
                   _.forEach(opt.series, function(item) {
                     console.log(item);
-                    if(item.data.length>5){
-                      $('.box-wrap').css({'-webkit-flex-flow':'column','flex-flow':'column'});
+                    if (item.data.length > 5) {
+                      $('.box-wrap').css({
+                        '-webkit-flex-flow': 'column',
+                        'flex-flow': 'column'
+                      });
                     }
                     var label = {
                       normal: {
@@ -258,6 +268,7 @@
                         }
                       }
                     };
+                    item.connectNulls = true;
                     item.label = label;
                     item.stack = stack_name;
                   });
@@ -280,6 +291,7 @@
                       axisTick: {
                         show: false
                       },
+                      axisLabel: axisLabel,
                       data: opt.x_data
                     }],
                     yAxis: opt.yAxis,
@@ -290,7 +302,7 @@
                   scope.content.columnNames = opt.x_data;
                   var rowDatas = [];
 
-                  if(opt.series[0].type == 'radar') {
+                  if (opt.series[0].type == 'radar') {
                     console.log(opt.series[0].data);
                     _.forEach(opt.series[0].data, function(serData, index) {
                       var dataObj = {};
@@ -298,8 +310,7 @@
                       dataObj.rowValue = serData.value;
                       rowDatas.push(dataObj);
                     });
-                  }
-                  else{
+                  } else {
                     _.forEach(opt.legend, function(legendData, index) {
                       var dataObj = {};
                       dataObj.rowName = legendData;
@@ -316,15 +327,14 @@
                     var dataObj = {};
                     dataObj.rowName = item;
                     var cellDatas = [];
-                    if(opt.series[0].type == 'radar') {
+                    if (opt.series[0].type == 'radar') {
                       _.forEach(opt.series[0].data, function(serData, index2) {
                         var cellData = {};
                         cellData.name = serData.name;
                         cellData.value = serData.value[index];
                         cellDatas.push(cellData);
                       });
-                    }
-                    else{
+                    } else {
                       _.forEach(opt.series, function(serData, index2) {
                         var cellData = {};
                         cellData.name = serData.name;
@@ -337,8 +347,7 @@
                     rowDatas.push(dataObj);
                   });
                   scope.content.rowData = rowDatas;
-                }
-                else if(opt.table_type == 'form') {
+                } else if (opt.table_type == 'form') {
                   scope.content.formTable = true;
                   detailService.getTableData(opt.table_url, {
                     picCode: scope.content.picCode,
@@ -346,8 +355,7 @@
                   }).then(function(res) {
                     scope.content.rowData = res.data;
                   })
-                }
-                else {
+                } else {
                   detailService.getTableData(opt.table_url, {
                     picCode: scope.content.picCode,
                     queryTime: getDateFormat(scope.content.model, scope.content.format)
@@ -368,7 +376,7 @@
           }
 
           scope.onResize = function() {
-            if(chartInstance) {
+            if (chartInstance) {
               chartInstance.resize();
             }
           }
