@@ -108,7 +108,10 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          console.log(scope.content);
+          console.log($('.content-main'));
+          console.log($('.content-main').height());
+          console.log($('.content-main').scrollTop());
+          console.log($('.content-main')[0].scrollHeight);
 
           function getDateFormat(parseDate, format) {
             var date = angular.copy(parseDate);
@@ -369,6 +372,8 @@
                   chartInstance.clear();
                   chartInstance.resize();
                   chartInstance.setOption(option);
+                  var mainHeight = $('.content-main')[0].scrollHeight;
+                  $('.side-nav').css({'height':mainHeight + "px"});
                 }, 1000);
               }
 
