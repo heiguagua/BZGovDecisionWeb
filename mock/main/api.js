@@ -11,7 +11,7 @@ Router.route('/main/showPics')
 });
 Router.route('/main/detail')
   .get(function(request, response) {
-    response.json(Util.json('/main/json/detailPie.json'));
+    response.json(Util.json('/main/json/detail.json'));
 });
 Router.route('/file/list')
   .get(function(request, response) {
