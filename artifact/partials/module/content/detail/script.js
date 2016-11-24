@@ -165,11 +165,11 @@
                   opt.yAxis.push(yAxis);
                 });
 
-                var colors = ['#0070c0', '#20b3a9', '#CC6600', '#ff0000'];
-
+                var colors = ['rgb(91,192,222)', 'rgb(0,215,185)', 'rgb(221,127,141)', 'rgb(71,190,121)'];
+                var pie_colors = ['#FFF','rgb(46,200,202)', 'rgb(221,127,141)', 'rgb(49,167,229)'];
                 if (opt.series[0].type == 'pie') {
                   option.series = opt.series;
-
+                  option.color = pie_colors;
                   if (opt.series.length > 1) {
                     option.series[0].radius = [0, '26%'];
                     option.series[1].label = {};
@@ -223,7 +223,7 @@
                   option.series[0].label.normal.position = 'center';
                   option.series[0].label.normal.formatter = '{b}\n {c}' + opt.y_name[0];
                   option.series[0].label.normal.textStyle = {
-                    color: "#FFF"
+                    color: "#333"
                   };
 
                 } else
@@ -242,6 +242,7 @@
                     indicator.max = max + 100;
                     indicators.push(indicator);
                   });
+                  option.color = colors;
                   option.tooltip = {};
                   option.title = {
                     text: opt.title,

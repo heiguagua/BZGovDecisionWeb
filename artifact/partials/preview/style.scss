@@ -2,7 +2,8 @@
   @include flex-flow(row);
   @include flex-num(1);
   padding: 0 15px 20px 0;
-  .wrap,.inner-wrap{
+  .wrap,
+  .inner-wrap {
     @include flex-num(1);
     @include flex-flow(row);
   }
@@ -31,7 +32,6 @@
         }
       }
     }
-
   }
   .center {
     padding: 0 10px;
@@ -52,7 +52,7 @@
       .center-left,
       .center-right {
         height: 100%;
-        .chart{
+        .chart {
           @include flex-num(1);
         }
       }
@@ -66,7 +66,7 @@
     .right-bottom {
       margin-bottom: 0;
       @include flex-num(1);
-      .chart{
+      .chart {
         @include flex-num(1);
       }
     }
@@ -78,6 +78,7 @@
   .box-title {
     margin: 0;
     @include font($color:#000,$fontSize:0.7rem,$textAlign:left);
+    line-height: 1.4;
   }
   .box-sub-title {
     padding: 0;
