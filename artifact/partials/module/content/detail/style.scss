@@ -33,6 +33,8 @@
         }
         >td {
           border-top: none;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }
@@ -43,7 +45,7 @@
         >th {
           border-bottom: none;
           text-align: center;
-          vertical-align:top;
+          vertical-align: top;
         }
       }
     }
@@ -62,10 +64,10 @@
       padding: 8px;
       line-height: 1.4;
     }
-    span{
+    span {
       padding: 8px;
-line-height: 1.4;
-text-align: center;
+      line-height: 1.4;
+      text-align: center;
     }
   }
 }

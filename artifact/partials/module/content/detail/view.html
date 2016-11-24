@@ -33,7 +33,7 @@
       </thead>
       <tr ng-repeat='row in popups[$index].rowData'>
         <td>{{row.rowName}}</td>
-        <td ng-repeat='data in row.rowValue track by $index'>{{data.value}}</td>
+        <td ng-repeat='data in row.rowValue track by $index' title='{{data.value}}'>{{data.value}}</td>
       </tr>
     </table>
     <div ng-hide='!popups[$index].formTable'>
