@@ -38,8 +38,6 @@
 
       function getFileList() {
         fileService.getFileList($stateParams.furl,{fileType:'pdf',offset:(vm.Paging.currentPage-1)*vm.Paging.itemsPerPage,limit:vm.Paging.itemsPerPage}).then(function(res) {
-          console.log(res);
-          console.log(res.data);
           vm.fileList = res.data.data;
           vm.Paging.totalItems = res.data.total;
         });

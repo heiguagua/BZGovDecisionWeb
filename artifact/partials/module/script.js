@@ -6,13 +6,11 @@
     '$scope', 'moduleService', '$stateParams', '$state',
     function($scope, moduleService, $stateParams, $state) {
       var vm = this;
-      vm.showNav = false;
       if ($stateParams.url != '') {
         $state.go('main.module.file', {
           furl: $stateParams.url
         });
       } else {
-        vm.showNav = true;
         moduleService.getMenuTabs({
           parentId: $stateParams.id
         }).then(function(result) {

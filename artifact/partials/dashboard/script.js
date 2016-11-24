@@ -122,6 +122,9 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance1 = null;
+          if(!scope.econtent.url) {
+              return;
+          }
           dashboardService.getDetail(scope.econtent.url, {
             queryTime: dashboardService.getDateFormat(scope.econtent.model, scope.econtent.format),
             picCode: scope.econtent.picCode
@@ -236,6 +239,9 @@
         link: function(scope, element, attrs) {
           console.log(scope);
           var chartInstance2 = null;
+          if(!scope.icontent.url) {
+              return;
+          }
           dashboardService.getDetail(scope.icontent.url, {
             queryTime: dashboardService.getDateFormat(scope.icontent.model, scope.icontent.format),
             picCode: scope.icontent.picCode
@@ -325,6 +331,9 @@
         link: function(scope, element, attrs) {
           console.log(scope);
           var chartInstance3 = null;
+          if(!scope.vcontent.url) {
+              return;
+          }
           dashboardService.getDetail(scope.vcontent.url, {
             queryTime: dashboardService.getDateFormat(scope.vcontent.model, scope.vcontent.format),
             picCode: scope.vcontent.picCode
@@ -432,6 +441,9 @@
         link: function(scope, element, attrs) {
           console.log(scope);
           var chartInstance4 = null;
+          if(!scope.ccontent.url) {
+              return;
+          }
           dashboardService.getDetail(scope.ccontent.url, {
             queryTime: dashboardService.getDateFormat(scope.ccontent.model, scope.ccontent.format),
             picCode: scope.ccontent.picCode
@@ -541,6 +553,9 @@
         link: function(scope, element, attrs) {
           console.log(scope);
           var chartInstance5 = null;
+          if(!scope.scontent.url) {
+              return;
+          }
           dashboardService.getDetail(scope.scontent.url, {
             queryTime: dashboardService.getDateFormat(scope.scontent.model, scope.scontent.format),
             picCode: scope.scontent.picCode

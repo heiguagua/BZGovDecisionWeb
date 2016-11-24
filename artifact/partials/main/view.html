@@ -38,7 +38,7 @@
             <li ng-repeat='menu in main.menus' ui-sref-active="active" >
               <a ng-if='menu.type == 0' ui-sref='main.preview({preid:menu.id})' ui-sref-opts="{reload:'main.preview'}">{{menu.name}}</a>
               <a ng-if='(menu.type != 0 && menu.type != 2)' ui-sref='main.module({id:menu.id,url:menu.url})' ui-sref-opts="{reload:'main.module'}">{{menu.name}}</a>
-              <a ng-if='menu.type == 2' ui-sref='main.module.file({furl:menu.url})' ui-sref-opts="{reload:'main.module.file'}">{{menu.name}}</a>
+              <a ng-if='menu.type == 2' ui-sref='main.file({furl:menu.url})' ui-sref-opts="{reload:'main.file'}">{{menu.name}}</a>
             </li>
           </ul>
           <div class='content-main left5' ui-view>

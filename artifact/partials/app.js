@@ -30,13 +30,13 @@
         controllerAs: 'dashboard',
       })
       .state('main', {
-        url: '/main/:mid/:typeid',
+        url: '/main/:mid/:typeid/:murl',
         templateUrl: 'partials/main/view.html',
         controller: 'mainController',
         controllerAs: 'main',
       })
       .state('login', {
-        url: '/main',
+        url: '/login',
         templateUrl: 'partials/login/view.html',
         controller: 'loginController',
         controllerAs: 'login',
@@ -53,7 +53,7 @@
         controller: 'moduleController',
         controllerAs: 'module',
       })
-      .state('main.module.file', {
+      .state('main.file', {
         url: '/file/:furl',
         templateUrl: 'partials/file/view.html',
         controller: 'fileController',
@@ -80,8 +80,6 @@
           'request': function(config) {
             var screen_width = screen.width;
             var screen_height = screen.height;
-            console.log(screen_width);
-            console.log(screen_height);
             $('.content-box .chart').css({'height':'70%'});
             return config;
 
@@ -96,19 +94,19 @@
       };
   };
 
-// runState.$inject = ['$rootScope'];
-//   function  runState($rootScope){
-//     $rootScope.$on('$stateChangeStart',
-//       function(event, toState, toParams, fromState, fromParams){
-//         console.log(toState.name);
-//       if(toState.name!=='dashboard'){
-//         if(toState.name!=='login'){
-//         if(!sessionStorage.token){
-//           window.location.href='./#/login';
-//         };
-//         };
-//       }
-//       });
-//   }
+  //runState.$inject = ['$rootScope'];
+  function  runState($rootScope){
+    // $rootScope.$on('$stateChangeStart',
+    //   function(event, toState, toParams, fromState, fromParams){
+    //     console.log(toState.name);
+    //   if(toState.name!=='dashboard'){
+    //     if(toState.name!=='login'){
+    //     if(!sessionStorage.token){
+    //       window.location.href='./#/login';
+    //     };
+    //     };
+    //   }
+    //   });
+  }
 
 })();
