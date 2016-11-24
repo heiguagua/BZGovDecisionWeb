@@ -137,9 +137,18 @@
               tooltip: {
                 trigger: 'item',
                 formatter: function(obj) {
-                  var labelShow = obj.data.name + '<br/>';
-                  for(var i=0; i<obj.data.other.length; i++) {
-                    labelShow += obj.data.other[i].name + obj.data.other[i].value +'<br/>';
+                  var percentShow = '';
+
+                  var labelShow =  obj.data.name + '<br/>';
+                  if (obj.data.other && obj.data.other.length > 1) {
+                    for (var i = 0; i < obj.data.other.length; i++) {
+                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                    }
+                  } else {
+                    labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
+                    if(opt.auto_count && opt.auto_count =='percent') {
+                      labelShow += '占比：'+obj.percent+'%';
+                    }
                   }
                   return labelShow;
                 }
@@ -183,9 +192,18 @@
                 label: {
                   normal: {
                     formatter: function(obj) {
-                      var labelShow = obj.data.name + '\n';
-                      for(var i=0; i<obj.data.other.length; i++) {
-                        labelShow += obj.data.other[i].name + obj.data.other[i].value +'\n';
+                      var percentShow = '';
+
+                      var labelShow = '\n\n' + obj.data.name + '\n';
+                      if (obj.data.other && obj.data.other.length > 1) {
+                        for (var i = 0; i < obj.data.other.length; i++) {
+                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
+                        }
+                      } else {
+                        labelShow = obj.data.name + ":" + obj.data.value + '\n';
+                        if(opt.auto_count && opt.auto_count =='percent') {
+                          labelShow += '占比：'+obj.percent+'%';
+                        }
                       }
                       return labelShow;
                     }
@@ -241,9 +259,18 @@
               tooltip: {
                 trigger: 'item',
                 formatter: function(obj) {
+                  var percentShow = '';
+
                   var labelShow = obj.data.name + '<br/>';
-                  for(var i=0; i<obj.data.other.length; i++) {
-                    labelShow += obj.data.other[i].name + obj.data.other[i].value +'<br/>';
+                  if (obj.data.other && obj.data.other.length > 1) {
+                    for (var i = 0; i < obj.data.other.length; i++) {
+                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                    }
+                  } else {
+                    labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
+                    if(opt.auto_count && opt.auto_count =='percent') {
+                      labelShow += '占比：'+obj.percent+'%';
+                    }
                   }
                   return labelShow;
                 }
@@ -257,7 +284,7 @@
                 label: {
                   normal: {
                     position: 'center',
-                    formatter: '{b}\n {c}%',
+                    formatter: '{b}\n {c}',
                     textStyle:{
                       color:'#333'
                     }
@@ -280,9 +307,18 @@
                 label: {
                   normal: {
                     formatter: function(obj) {
-                      var labelShow = obj.data.name + '\n';
-                      for(var i=0; i<obj.data.other.length; i++) {
-                        labelShow += obj.data.other[i].name + obj.data.other[i].value + obj.data.other[i].unit +'\n';
+                      var percentShow = '';
+
+                      var labelShow = '\n\n' + obj.data.name + '\n';
+                      if (obj.data.other && obj.data.other.length > 1) {
+                        for (var i = 0; i < obj.data.other.length; i++) {
+                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
+                        }
+                      } else {
+                        labelShow = obj.data.name + ":" + obj.data.value + '\n';
+                        if(opt.auto_count && opt.auto_count =='percent') {
+                          labelShow += '占比：'+obj.percent+'%';
+                        }
                       }
                       return labelShow;
                     }
@@ -507,9 +543,18 @@
               tooltip: {
                 trigger: 'item',
                 formatter: function(obj) {
-                  var labelShow = obj.data.name + '<br/>';
-                  for(var i=0; i<obj.data.other.length; i++) {
-                    labelShow += obj.data.other[i].name + obj.data.other[i].value +'<br/>';
+                  var percentShow = '';
+
+                  var labelShow =  obj.data.name + '<br/>';
+                  if (obj.data.other && obj.data.other.length > 1) {
+                    for (var i = 0; i < obj.data.other.length; i++) {
+                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                    }
+                  } else {
+                    labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
+                    if(opt.auto_count && opt.auto_count =='percent') {
+                      labelShow += '占比：'+obj.percent+'%';
+                    }
                   }
                   return labelShow;
                 }
