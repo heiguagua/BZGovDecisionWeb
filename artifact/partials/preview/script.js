@@ -102,7 +102,7 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance1 = null;
-          if(!scope.econtent.url) {
+          if(!scope.econtent || !scope.econtent.url) {
               return;
           }
           previewService.getDetail(scope.econtent.url,{
@@ -225,7 +225,7 @@
         link: function(scope, element, attrs) {
           console.log(scope);
           var chartInstance2 = null;
-          if(!scope.icontent.url) {
+          if(!scope.icontent || !scope.icontent.url) {
               return;
           }
           previewService.getDetail(scope.icontent.url,{
@@ -323,7 +323,7 @@
         link: function(scope, element, attrs) {
           console.log(scope);
           var chartInstance3 = null;
-          if(!scope.vcontent.url) {
+          if(!scope.vcontent || !scope.vcontent.url) {
               return;
           }
           previewService.getDetail(scope.vcontent.url,{
@@ -430,7 +430,7 @@
         link: function(scope, element, attrs) {
           console.log(scope);
           var chartInstance4 = null;
-          if(!scope.ccontent.url) {
+          if(!scope.ccontent || !scope.ccontent.url) {
               return;
           }
           previewService.getDetail(scope.ccontent.url,{
@@ -494,7 +494,7 @@
         link: function(scope, element, attrs) {
           console.log(scope);
           var chartInstance5 = null;
-          if(!scope.scontent.url) {
+          if(!scope.scontent || !scope.scontent.url) {
               return;
           }
           previewService.getDetail(scope.scontent.url,{
