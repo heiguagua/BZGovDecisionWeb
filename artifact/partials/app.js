@@ -80,7 +80,8 @@
           'request': function(config) {
             var screen_width = screen.width;
             var screen_height = screen.height;
-            $('.content-box .chart').css({'height':'70%'});
+            var box_height = screen_height*0.56 + 'px';
+            $('.content-box .chart').css({'height':box_height});
             return config;
 
           },
