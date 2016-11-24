@@ -337,7 +337,6 @@
                     });
                   }
                   scope.content.rowData = rowDatas;
-                  console.log(scope.content.rowData);
                 } else if (opt.table_type == 'reverse') {
 
                   scope.content.columnNames = opt.legend;

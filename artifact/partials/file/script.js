@@ -25,8 +25,6 @@
           size: 'lg'
         });
         $scope.file_url = URL + url;
-    //  $scope.file_url = 'http://www.baidu.com';
-        console.log($scope.file_url);
         $scope.Modal.close = function() {
           modalInstance.close();
         };

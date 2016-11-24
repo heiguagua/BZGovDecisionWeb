@@ -237,7 +237,6 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          console.log(scope);
           var chartInstance2 = null;
           if(!scope.icontent || !scope.icontent.url) {
               return;
@@ -329,7 +328,6 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          console.log(scope);
           var chartInstance3 = null;
           if(!scope.vcontent || !scope.vcontent.url) {
               return;
@@ -439,7 +437,6 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          console.log(scope);
           var chartInstance4 = null;
           if(!scope.ccontent || !scope.ccontent.url) {
               return;
@@ -551,7 +548,6 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          console.log(scope);
           var chartInstance5 = null;
           if(!scope.scontent || !scope.scontent.url) {
               return;
