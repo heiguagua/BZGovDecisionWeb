@@ -7,6 +7,7 @@
     'ui.router',
     'common.http',
     'app.dashboard',
+    'app.login',
     'app.main',
     'app.file',
     'app.main.preview',
@@ -20,7 +21,7 @@
 
   function config($stateProvider, $urlRouterProvider, $httpProvider) {
     /** UI-Router Config */
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/login');
     $stateProvider
       .state('dashboard', {
         url: '/dashboard',
@@ -33,6 +34,12 @@
         templateUrl: 'partials/main/view.html',
         controller: 'mainController',
         controllerAs: 'main',
+      })
+      .state('login', {
+        url: '/main',
+        templateUrl: 'partials/login/view.html',
+        controller: 'loginController',
+        controllerAs: 'login',
       })
       .state('main.preview', {
         url: '/preview/:preid',
@@ -71,6 +78,11 @@
       function interceptor($q, $location) {
         return {
           'request': function(config) {
+            var screen_width = screen.width;
+            var screen_height = screen.height;
+            console.log(screen_width);
+            console.log(screen_height);
+            $('.content-box .chart').css({'height':'70%'});
             return config;
 
           },
@@ -83,5 +95,20 @@
         };
       };
   };
+
+// runState.$inject = ['$rootScope'];
+//   function  runState($rootScope){
+//     $rootScope.$on('$stateChangeStart',
+//       function(event, toState, toParams, fromState, fromParams){
+//         console.log(toState.name);
+//       if(toState.name!=='dashboard'){
+//         if(toState.name!=='login'){
+//         if(!sessionStorage.token){
+//           window.location.href='./#/login';
+//         };
+//         };
+//       }
+//       });
+//   }
 
 })();

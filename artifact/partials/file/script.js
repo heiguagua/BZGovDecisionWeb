@@ -3,8 +3,8 @@
   var file = angular.module('app.file', []);
   /** Controller */
   file.controller('fileController', [
-    '$scope', 'fileService', '$state', '$stateParams', '$uibModal',
-    function($scope, fileService, $state, $stateParams, $uibModal) {
+    '$scope', 'fileService', '$state', '$stateParams', '$uibModal','URL',
+    function($scope, fileService, $state, $stateParams, $uibModal,URL) {
       var vm = this;
       $scope.Modal = {};
       vm.Paging = {};
@@ -24,7 +24,9 @@
           scope: $scope,
           size: 'lg'
         });
-        $scope.file_url = url;
+        $scope.file_url = URL + url;
+    //  $scope.file_url = 'http://www.baidu.com';
+        console.log($scope.file_url);
         $scope.Modal.close = function() {
           modalInstance.close();
         };
@@ -36,14 +38,20 @@
 
       function getFileList() {
         fileService.getFileList($stateParams.furl,{fileType:'pdf',offset:(vm.Paging.currentPage-1)*vm.Paging.itemsPerPage,limit:vm.Paging.itemsPerPage}).then(function(res) {
-          vm.fileList = (res && res.data) ? res.data.body[0].data : "";
-          vm.Paging.totalItems = res.data.body[0].total;
+          console.log(res);
+          console.log(res.data);
+          vm.fileList = res.data.data;
+          vm.Paging.totalItems = res.data.total;
         });
       }
 
     }
   ]);
-
+  file.filter('trustUrl', ['$sce',function ($sce) {
+      return function(url) {
+        return $sce.trustAsResourceUrl(url);
+      };
+    }]);
   /** Service */
   file.factory('fileService', ['$http', 'URL',
     function($http, URL) {
