@@ -213,7 +213,7 @@
                     // },
                     formatter: '{b}\n {c}亿',
                     textStyle: {
-                      color: colors[0]
+                      color: '#FFF'
                     }
                   }
                 },
@@ -328,7 +328,7 @@
                     position: 'center',
                     formatter: '{b}\n {c}',
                     textStyle: {
-                      color: colors[0]
+                      color:'#FFF'
                     }
                   }
                 },
@@ -478,6 +478,7 @@
               radar: {
                 // shape: 'circle',
                 indicator: indicators,
+                radius:'70%',
                 name: {
                   formatter: '{value}',
                   textStyle: {
