@@ -7,7 +7,7 @@
   // 'http://172.16.7.52:8080'
   // 'http://192.168.9.103:8080'
   // 'http://localhost:8080/govDecision'
-    location.protocol + '//' + location.host
+    location.protocol + '//' + location.host + "/govDecisionServer"
   );
 
   module.factory('validate', [
