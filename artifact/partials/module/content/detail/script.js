@@ -255,6 +255,7 @@
                   var stack_name = '';
                   var labelPos = 'top';
                   var axisLabel = {};
+                  var grid_btm = 60;
                   if (opt.need_group == "1") {
                     stack_name = 'group';
                     labelPos = 'inside';
@@ -271,6 +272,12 @@
                         '-webkit-flex-flow': 'column',
                         'flex-flow': 'column'
                       });
+
+                      _.forEach(item.data, function(data) {
+                        if(data.name && data.name.length > 5 && item.data.length > 12) { // 字符长度大于5
+                            grid_btm = 150;
+                        }
+                      })
                     }
                     var label = {
                       normal: {
@@ -285,6 +292,9 @@
                     item.connectNulls = true;
                     item.label = label;
                     item.stack = stack_name;
+
+
+
                   });
                   option = {
                     color: colors,
@@ -299,6 +309,9 @@
                       top: 'bottom',
                       bottom: 20,
                       data: opt.legend
+                    },
+                    grid:{
+                      bottom:grid_btm
                     },
                     xAxis: [{
                       type: 'category',
