@@ -478,7 +478,7 @@
               radar: {
                 // shape: 'circle',
                 indicator: indicators,
-                radius:'70%',
+                radius:'68%',
                 name: {
                   formatter: '{value}',
                   textStyle: {
