@@ -224,6 +224,9 @@
                   option.series[0].label = {};
                   option.series[0].label.normal = {};
                   option.series[0].label.normal.position = 'center';
+                  if(  option.series.length == 1) {
+                    option.series[0].label.normal.position = 'outside';
+                  }
                   option.series[0].label.normal.formatter = '{b}\n {c}' + opt.y_name[0];
                   option.series[0].label.normal.textStyle = {
                     color: "#333"
