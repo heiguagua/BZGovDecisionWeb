@@ -53,7 +53,11 @@ $desktop-width: 1400px;
 }
 @mixin flex-flow ($flow:row) {
   display: -webkit-flex;
+  display: -moz-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+ display: -ms-flexbox;	  /* TWEENER - IE 10 */
+  display: -webkit-flex;
   display: flex;
+
   -webkit-flex-flow: $flow;
   flex-flow: $flow;
 }

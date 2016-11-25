@@ -439,7 +439,7 @@
                   fontWeight:'border'
                 },
                 itemGap:10,
-                padding:6,
+                padding:4,
                 borderColor:'#DDD',
                 borderWidth:1
               },
@@ -607,6 +607,7 @@
               title:{
                 text:text.name + "：" + text.value + text.unit ,
                 subtext: subtext.name + "：" + subtext.value + subtext.unit ,
+                left:'right',
                 textStyle:{
                   fontSize:12
                 },
@@ -616,7 +617,7 @@
                   fontWeight:'border'
                 },
                 itemGap:10,
-                padding:6,
+                padding:4,
                 borderColor:'#DDD',
                 borderWidth:1
               },

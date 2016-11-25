@@ -119,6 +119,8 @@
   }
   .datalist {
     padding: 5px 10px;
+    @include flex-num(1);
+    overflow-y: auto;
     .mdata-items {
       display: table;
       width: 100%;

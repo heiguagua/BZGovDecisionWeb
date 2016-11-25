@@ -11,7 +11,7 @@ App.use('/pro', Express.static('./release'));
 App.use(Cors({
   origin: 'http://localhost:5252',
   methods: 'GET, POST, PUT, DELETE, OPTIONS',
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization','Accept-Ranges'],
   credentials: true,
   maxAge: 1728000
 }));
