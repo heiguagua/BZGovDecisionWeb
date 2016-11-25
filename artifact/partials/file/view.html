@@ -7,7 +7,7 @@
     </span>
   </div>
 </div>
-<div ng-repeat='article in file.fileList' class='article' ng-click='file.showDetail(article.url)'>
+<div ng-repeat='article in file.fileList' class='article' ng-click='file.showDetail(article.url,article.id)'>
   <h5 class='art-title'>{{article.title}}
     <span class='create-time'>{{article.time}}</span>
   </h5>
@@ -21,8 +21,9 @@
   <div class="modal-header">
     <h3 class="modal-title" id="modal-title"></h3>
   </div>
-  <div class="modal-body" id="modal-body">
+  <div class="modal-body" id="modal-body" style='padding:0;'>
     <iframe ng-src='{{file_url | trustUrl}}' class='file-preview'></iframe>
+    <!-- <canvas id="the-canvas" ></canvas> -->
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="Modal.close()">关闭</button>
