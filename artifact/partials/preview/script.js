@@ -668,6 +668,8 @@
             chartInstance5 = echarts.init((element.find('div'))[0]);
             chartInstance5.setOption(option);
 
+            
+
             scope.onResize5 = function() {
               if(chartInstance5) {
                 chartInstance5.resize();

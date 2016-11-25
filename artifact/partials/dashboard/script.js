@@ -735,6 +735,9 @@
               }
             }
 
+            var dashboardHeight = $('.dashboard')[0].scrollHeight;
+            console.log(dashboardHeight);
+            $('.dashboard').css({'height':dashboardHeight  + "px"});
             angular.element($window).bind('resize', function() {
               scope.onResize5();
             })
