@@ -132,17 +132,30 @@
         &.iname {
           width: 60%;
         }
+        span {
+          padding: 3px 6px;
+          color: #FFF;
+          border-radius: 4px;
+          display: inline-block;
+          width: 55%;
+          text-align: center;
+          min-width: 60px;
+        }
+        &.increase {
+          span {
+            background: #00b5a5;
+          }
+        }
+        &.decrease {
+          span {
+            background: #f26370;
+          }
+        }
         label {
           margin: 0;
           padding: 2px 8px;
           border-radius: 4px;
           color: $white;
-          &.increase {
-            background: #00b5a5;
-          }
-          &.decrease {
-            background: #f26370;
-          }
         }
       }
     }

@@ -30,6 +30,18 @@
 
       });
 
+      dashboardService.getEcoData({
+        picCode: 7117
+      }).then(function(result) {
+        vm.ecoData = result.data;
+      })
+
+      dashboardService.getEcoData({
+        picCode: 7118
+      }).then(function(result) {
+        vm.ecoDataDown = result.data;
+      })
+
 
 
       $scope.open = function(index) {
@@ -74,7 +86,8 @@
         getMenus: getMenus,
         getDetail: getDetail,
         getContent: getContent,
-        getDateFormat: getDateFormat
+        getDateFormat: getDateFormat,
+        getEcoData: getEcoData
       }
 
       function getMenus(params) {
@@ -108,6 +121,14 @@
         } else {
           return '';
         }
+      }
+
+      function getEcoData(params) {
+        return $http.get(
+          URL + '/identity/table', {
+            params: params
+          }
+        )
       }
     }
   ]);
