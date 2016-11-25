@@ -21,5 +21,9 @@ Router.route('/table/data')
   .get(function(request, response) {
     response.json(Util.json('/main/json/tableData.json'));
 });
+Router.route('/identity/table')
+  .get(function(request, response) {
+    response.json(Util.json('/main/json/dataList.json'));
+});
 /** Module export */
 module.exports = Router;

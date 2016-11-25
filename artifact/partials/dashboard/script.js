@@ -13,7 +13,7 @@
         parentId: "0"
       }).then(function(result) {
         vm.menus = result.data;
-        if(vm.menus && vm.menus[0] && vm.menus[0].id) {
+        if (vm.menus && vm.menus[0] && vm.menus[0].id) {
           dashboardService.getContent({
             menuId: vm.menus[0].id
           }).then(function(result) {
@@ -123,15 +123,15 @@
         link: function(scope, element, attrs) {
           var chartInstance1 = null;
           console.log(scope.econtent);
-          if(!scope.econtent || !scope.econtent.url) {
-              return;
+          if (!scope.econtent || !scope.econtent.url) {
+            return;
           }
           dashboardService.getDetail(scope.econtent.url, {
             queryTime: dashboardService.getDateFormat(scope.econtent.model, scope.econtent.format),
             picCode: scope.econtent.picCode
           }).then(function(result) {
             var opt = result.data;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
             }
             if (!scope.econtent.model && opt.init_query_time != '') {
@@ -157,7 +157,22 @@
               color: colors,
               tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                formatter: function(obj) {
+                  var percentShow = '';
+
+                  var labelShow =  obj.data.name + '<br/>';
+                  if (obj.data.other && obj.data.other.length > 1) {
+                    for (var i = 0; i < obj.data.other.length; i++) {
+                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                    }
+                  } else {
+                    labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
+                    if(opt.auto_count && opt.auto_count =='percent') {
+                      labelShow += '占比：'+obj.percent+'%';
+                    }
+                  }
+                  return labelShow;
+                }
               },
               series: [{
                 name: opt.series[0].name,
@@ -207,8 +222,8 @@
                         }
                       } else {
                         labelShow = obj.data.name + ":" + obj.data.value + '\n';
-                        if(opt.auto_count && opt.auto_count =='percent') {
-                          labelShow += '占比：'+obj.percent+'%';
+                        if (opt.auto_count && opt.auto_count == 'percent') {
+                          labelShow += '占比：' + obj.percent + '%';
                         }
                       }
                       return labelShow;
@@ -248,15 +263,15 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance2 = null;
-          if(!scope.icontent || !scope.icontent.url) {
-              return;
+          if (!scope.icontent || !scope.icontent.url) {
+            return;
           }
           dashboardService.getDetail(scope.icontent.url, {
             queryTime: dashboardService.getDateFormat(scope.icontent.model, scope.icontent.format),
             picCode: scope.icontent.picCode
           }).then(function(result) {
             var opt = result.data;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
             }
             var colors = ['rgb(0,204,200)', 'rgb(232,175,64)', 'rgb(0,168,228)'];
@@ -264,7 +279,22 @@
               color: colors,
               tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)"
+                formatter: function(obj) {
+                  var percentShow = '';
+
+                  var labelShow =  obj.data.name + '<br/>';
+                  if (obj.data.other && obj.data.other.length > 1) {
+                    for (var i = 0; i < obj.data.other.length; i++) {
+                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                    }
+                  } else {
+                    labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
+                    if(opt.auto_count && opt.auto_count =='percent') {
+                      labelShow += '占比：'+obj.percent+'%';
+                    }
+                  }
+                  return labelShow;
+                }
               },
               series: [{
                 name: opt.series[0].name,
@@ -307,8 +337,8 @@
                         }
                       } else {
                         labelShow = obj.data.name + ":" + obj.data.value + '\n';
-                        if(opt.auto_count && opt.auto_count =='percent') {
-                          labelShow += '占比：'+obj.percent+'%';
+                        if (opt.auto_count && opt.auto_count == 'percent') {
+                          labelShow += '占比：' + obj.percent + '%';
                         }
                       }
                       return labelShow;
@@ -348,26 +378,34 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance3 = null;
-          if(!scope.vcontent || !scope.vcontent.url) {
-              return;
+          if (!scope.vcontent || !scope.vcontent.url) {
+            return;
           }
           dashboardService.getDetail(scope.vcontent.url, {
             queryTime: dashboardService.getDateFormat(scope.vcontent.model, scope.vcontent.format),
             picCode: scope.vcontent.picCode
           }).then(function(result) {
             var opt = result.data;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
+            }
+            var text = {};
+            var subtext = {};
+            if (opt.dataItems && opt.dataItems[0]) {
+              text = opt.dataItems[0];
+            }
+            if (opt.dataItems && opt.dataItems[1]) {
+              subtext = opt.dataItems[1];
             }
             var indicators = [];
             _.forEach(opt.x_data, function(item, index) {
               var indicator = {};
               indicator.name = item;
               var dataArray = _.map(opt.series[0].data, 'value');
-              var max = opt.series[0].data[0].value[index];
+              var max = Number(opt.series[0].data[0].value[index]);
               _.forEach(dataArray, function(data, index2) {
-                if (opt.series[0].data[index2].value[index] > max) {
-                  max = opt.series[0].data[index2].value[index];
+                if (Number(opt.series[0].data[index2].value[index]) > max) {
+                  max = Number(opt.series[0].data[index2].value[index]);
                 }
               });
               indicator.max = max + 100;
@@ -393,8 +431,8 @@
             var option = {
               tooltip: {},
               title: {
-                text: "总投资：" + "608.31" + "亿元",
-                subtext: "增速：" + "17.5" + "%",
+                text: text.name + "：" + text.value + text.unit,
+                subtext: subtext.name + "：" + subtext.value + subtext.unit,
                 textStyle: {
                   fontSize: 12,
                   color: colors[3],
@@ -412,13 +450,22 @@
                 orient: 'vertical',
                 left: 'right',
                 data: opt.legend,
+                textStyle:{
+                  color:'#d5e2df'
+                }
               },
               radar: {
                 // shape: 'circle',
-                indicator: indicators
+                indicator: indicators,
+                name: {
+                  formatter: '{value}',
+                  textStyle: {
+                    color: '#d5e2df'
+                  }
+                }
               },
               series: [{
-                name: ' 全社会固定资产投资情况',
+                name: opt.title,
                 type: 'radar',
                 symbol: 'circle',
                 symbolSize: 2,
@@ -457,15 +504,15 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance4 = null;
-          if(!scope.ccontent || !scope.ccontent.url) {
-              return;
+          if (!scope.ccontent || !scope.ccontent.url) {
+            return;
           }
           dashboardService.getDetail(scope.ccontent.url, {
             queryTime: dashboardService.getDateFormat(scope.ccontent.model, scope.ccontent.format),
             picCode: scope.ccontent.picCode
           }).then(function(result) {
             var opt = result.data;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
             }
             _.forEach(opt.series, function(item) {
@@ -484,7 +531,10 @@
               },
               legend: {
                 top: 'bottom',
-                data: opt.legend
+                data: opt.legend,
+                textStyle:{
+                  color:'#d5e2df'
+                }
               },
               xAxis: {
                 type: 'category',
@@ -568,16 +618,24 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance5 = null;
-          if(!scope.scontent || !scope.scontent.url) {
-              return;
+          if (!scope.scontent || !scope.scontent.url) {
+            return;
           }
           dashboardService.getDetail(scope.scontent.url, {
             queryTime: dashboardService.getDateFormat(scope.scontent.model, scope.scontent.format),
             picCode: scope.scontent.picCode
           }).then(function(result) {
             var opt = result.data;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
+            }
+            var text = {};
+            var subtext = {};
+            if (opt.dataItems && opt.dataItems[0]) {
+              text = opt.dataItems[0];
+            }
+            if (opt.dataItems && opt.dataItems[1]) {
+              subtext = opt.dataItems[1];
             }
             var colors = ['rgb(107,217,95)', 'rgb(0,168,228)', 'rgb(14, 83, 108)', 'rgb(0,204,200)'];
             var option = {
@@ -587,8 +645,8 @@
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
               },
               title: {
-                text: "社消零售总额：" + "136.2" + "亿元",
-                subtext: "同比增速：" + "12.9" + "%",
+                text: text.name + "：" + text.value + text.unit,
+                subtext: subtext.name + "：" + subtext.value + subtext.unit,
                 textStyle: {
                   fontSize: 12,
                   color: colors[3],
@@ -621,7 +679,22 @@
                     label: {
                       show: true,
                       //	                            position:'inside',
-                      formatter: '{b} : {c}亿 \n占比 :{d}%'
+                      formatter: function(obj) {
+                        var percentShow = '';
+
+                        var labelShow = '\n';
+                        if (obj.data.other && obj.data.other.length > 1) {
+                          for (var i = 0; i < obj.data.other.length; i++) {
+                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
+                          }
+                        } else {
+                          labelShow = obj.data.name + ":" + obj.data.value + '\n';
+                          if (opt.auto_count && opt.auto_count == 'percent') {
+                            labelShow += '占比：' + obj.percent + '%';
+                          }
+                        }
+                        return labelShow;
+                      }
                     }
                   },
                   labelLine: {

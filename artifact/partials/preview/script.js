@@ -20,6 +20,18 @@
         });
       });
 
+      previewService.getEcoData({
+        picCode: 7117
+      }).then(function(result) {
+        vm.ecoData = result.data;
+      })
+
+      previewService.getEcoData({
+        picCode: 7118
+      }).then(function(result) {
+        vm.ecoDataDown = result.data;
+      })
+
       $scope.open = function(index) {
         $scope.chartlist[index].opened = true;
       };
@@ -62,7 +74,8 @@
       return {
         getDetail: getDetail,
         getContent: getContent,
-        getDateFormat:getDateFormat
+        getDateFormat:getDateFormat,
+        getEcoData: getEcoData
       }
 
       function getDetail(detailUrl, params) {
@@ -88,6 +101,14 @@
         } else {
           return '';
         }
+      }
+
+      function getEcoData(params) {
+        return $http.get(
+          URL + '/identity/table', {
+            params: params
+          }
+        )
       }
     }
   ]);
@@ -368,21 +389,29 @@
             if(!opt || !opt.series) {
               return;
             }
+            scope.vcontent.query_time = opt.init_query_time;
+            var text = {};
+            var subtext = {};
+            if(opt.dataItems && opt.dataItems[0]) {
+              text = opt.dataItems[0];
+            }
+            if(opt.dataItems && opt.dataItems[1]) {
+              subtext = opt.dataItems[1];
+            }
             var indicators = [];
             _.forEach(opt.x_data, function(item, index) {
               var indicator = {};
               indicator.name = item;
               var dataArray = _.map(opt.series[0].data, 'value');
-              var max = opt.series[0].data[0].value[index];
+              var max = Number(opt.series[0].data[0].value[index]);
               _.forEach(dataArray, function(data, index2) {
-                if (opt.series[0].data[index2].value[index] > max) {
-                  max = opt.series[0].data[index2].value[index];
+                if (Number(opt.series[0].data[index2].value[index]) > max) {
+                  max = Number(opt.series[0].data[index2].value[index]);
                 }
               });
               indicator.max = max + 100;
               indicators.push(indicator);
             });
-
             var colors = ['rgb(232, 215, 64)','rgb(154, 253, 138)','rgb(14, 83, 108)'];
             var areaColors = ['rgba(232, 215, 64, 0.5)','rgba(154, 253, 138, 0.5)','rgba(14, 83, 108, 0.5)'];
             _.forEach(opt.series[0].data, function(item, index) {
@@ -399,8 +428,8 @@
             var option = {
               tooltip: {},
               title:{
-                text:"总投资：" + "608.31" + "亿元" ,
-                subtext: "增速：" + "17.5" +"%",
+                text:text.name + "：" + text.value + text.unit ,
+                subtext:subtext.name + "：" + subtext.value + subtext.unit ,
                 textStyle:{
                   fontSize:12
                 },
@@ -421,10 +450,16 @@
               },
               radar: {
                 // shape: 'circle',
-                indicator: indicators
+                indicator: indicators,
+                name: {
+                  formatter: '{value}',
+                  textStyle: {
+                    color: '#333'
+                  }
+                }
               },
               series: [{
-                name: ' 全社会固定资产投资情况',
+                name: opt.title,
                 type: 'radar',
                 symbol: 'circle',
                 symbolSize: 2,
@@ -534,8 +569,18 @@
             picCode: scope.scontent.picCode
           }).then(function(result) {
             var opt = result.data;
+            scope.scontent.query_time = opt.init_query_time;
+
             if(!opt || !opt.series) {
               return;
+            }
+            var text = {};
+            var subtext = {};
+            if(opt.dataItems && opt.dataItems[0]) {
+              text = opt.dataItems[0];
+            }
+            if(opt.dataItems && opt.dataItems[1]) {
+              subtext = opt.dataItems[1];
             }
             var colors = ['rgb(107,217,95)', 'rgb(0,168,228)'];
             var option = {
@@ -560,8 +605,8 @@
                 }
               },
               title:{
-                text:"社消零售总额：" + "136.2" + "亿元" ,
-                subtext: "同比增速：" + "12.9" +"%",
+                text:text.name + "：" + text.value + text.unit ,
+                subtext: subtext.name + "：" + subtext.value + subtext.unit ,
                 textStyle:{
                   fontSize:12
                 },
@@ -594,7 +639,22 @@
                     label: {
                       show: true,
                       //	                            position:'inside',
-                      formatter: '{b} : {c}亿 \n占比 :{d}%'
+                      formatter: function(obj) {
+                        var percentShow = '';
+
+                        var labelShow = '';
+                        if (obj.data.other && obj.data.other.length > 1) {
+                          for (var i = 0; i < obj.data.other.length; i++) {
+                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
+                          }
+                        } else {
+                          labelShow = obj.data.name + ":" + obj.data.value + '\n';
+                          if(opt.auto_count && opt.auto_count =='percent') {
+                            labelShow += '占比：'+obj.percent+'%';
+                          }
+                        }
+                        return labelShow;
+                      }
                     }
                   },
                   labelLine: {
