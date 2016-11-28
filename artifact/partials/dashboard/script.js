@@ -158,7 +158,7 @@
             if (!scope.econtent.model && opt.init_query_time != '') {
               scope.econtent.model = new Date(opt.init_query_time);
             }
-
+            scope.econtent.dep_name = opt.dep_name;
             var dateOptions = {};
             dateOptions.formatYear = 'yyyy';
             if (opt.time_scope == 'year') {
@@ -295,6 +295,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.icontent.dep_name = opt.dep_name;
             var colors = ['rgb(0,204,200)', 'rgb(232,175,64)', 'rgb(0,168,228)'];
             var option = {
               color: colors,
@@ -410,6 +411,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.vcontent.dep_name = opt.dep_name;
             var text = {};
             var subtext = {};
             if (opt.dataItems && opt.dataItems[0]) {
@@ -537,6 +539,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.ccontent.dep_name = opt.dep_name;
             _.forEach(opt.series, function(item) {
               item.label = {
                 normal: {
@@ -651,6 +654,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.scontent.dep_name = opt.dep_name;
             var text = {};
             var subtext = {};
             if (opt.dataItems && opt.dataItems[0]) {
