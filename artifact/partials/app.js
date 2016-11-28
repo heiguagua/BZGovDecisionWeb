@@ -3,19 +3,19 @@
 (function() {
 
   angular.module('app', [
-    'ngAnimate',
-    'ui.router',
-    'common.http',
-    'app.dashboard',
-    'app.login',
-    'app.main',
-    'app.file',
-    'app.main.preview',
-    'app.main.module',
-    'app.main.module.content',
-    'app.main.module.content.detail'
-  ])
-  .config(config);
+      'ngAnimate',
+      'ui.router',
+      'common.http',
+      'app.dashboard',
+      'app.login',
+      'app.main',
+      'app.file',
+      'app.main.preview',
+      'app.main.module',
+      'app.main.module.content',
+      'app.main.module.content.detail'
+    ])
+    .config(config).run(runState);
 
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
 
@@ -72,42 +72,55 @@
         controllerAs: 'detail',
       })
 
-      /** HTTP Interceptor */
-      $httpProvider.interceptors.push(interceptor);
-      interceptor.$inject = ['$q', '$location'];
-      function interceptor($q, $location) {
-        return {
-          'request': function(config) {
-            var screen_width = screen.width;
-            var screen_height = screen.height;
-            var box_height = screen_height*0.56 + 'px';
-            $('.content-box .chart').css({'height':box_height});
-            return config;
+    /** HTTP Interceptor */
+    $httpProvider.interceptors.push(interceptor);
+    interceptor.$inject = ['$q', '$location'];
 
-          },
-          'response': function(response) {
-            $q.when(response, function(result){
+    function interceptor($q, $location) {
+      return {
+        'request': function(config) {
+          config.withCredentials = true;
+          var screen_width = screen.width;
+          var screen_height = screen.height;
+          var box_height = screen_height * 0.56 + 'px';
+          $('.content-box .chart').css({
+            'height': box_height
+          });
+          return config;
 
-            });
-            return response;
-          }
-        };
+        },
+        'requestError': function(rejection) {
+          return rejection;
+        },
+        'response': function(response) {
+          $q.when(response, function(result) {
+
+          });
+          return response;
+        },
+        'responseError': function(rejection) {
+          return rejection;
+        }
       };
+    };
   };
 
-  //runState.$inject = ['$rootScope'];
-  function  runState($rootScope){
-    // $rootScope.$on('$stateChangeStart',
-    //   function(event, toState, toParams, fromState, fromParams){
-    //     console.log(toState.name);
-    //   if(toState.name!=='dashboard'){
-    //     if(toState.name!=='login'){
-    //     if(!sessionStorage.token){
-    //       window.location.href='./#/login';
-    //     };
-    //     };
-    //   }
-    //   });
+  runState.$inject = ['$rootScope'];
+
+  function runState($rootScope) {
+    $rootScope.$on('$stateChangeStart',
+      function(event, toState, toParams, fromState, fromParams) {
+        console.log(toState.name);
+
+        if (toState.name !== 'dashboard') {
+          if (toState.name !== 'login') {
+            if (!sessionStorage.token) {
+              event.preventDefault();
+              window.location.href = './#/login';
+            }
+          };
+        }
+      });
   }
 
 })();

@@ -30,3 +30,4 @@ console.info(Color.blue('Production  started on http://localhost:5353/pro'));
 /** Routers */
 App.use('/', require('./dashboard/api'));
 App.use('/', require('./main/api'));
+App.use('/', require('./login/api'));
