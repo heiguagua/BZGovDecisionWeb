@@ -153,6 +153,11 @@
                   dateOptions.minMode = 'month';
                   dateOptions.datepickerMode = 'month';
                 }
+                if (opt.time_scope == 'quater') {
+                  scope.content.format = 'yyyy-MM';
+                  dateOptions.minMode = 'month';
+                  dateOptions.datepickerMode = 'month';
+                }
                 scope.content.dateOptions = dateOptions;
 
                 opt.yAxis = [];
@@ -267,8 +272,7 @@
                   }
                   if (opt.series[0].data.length > 10) {
                     axisLabel = {
-                      interval: 0,
-                      rotate: 45
+                      interval: 0
                     }
                   }
                   _.forEach(opt.series, function(item) {

@@ -182,15 +182,15 @@
                 formatter: function(obj) {
                   var percentShow = '';
 
-                  var labelShow =  obj.data.name + '<br/>';
+                  var labelShow = obj.data.name + '<br/>';
                   if (obj.data.other && obj.data.other.length > 1) {
                     for (var i = 0; i < obj.data.other.length; i++) {
-                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                      labelShow += obj.data.other[i].name.substring(0,obj.data.other[i].name.indexOf('(')) + ":" + obj.data.other[i].value + obj.data.other[i].unit +'<br/>';
                     }
                   } else {
                     labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
-                    if(opt.auto_count && opt.auto_count =='percent') {
-                      labelShow += '占比：'+obj.percent+'%';
+                    if (opt.auto_count && opt.auto_count == 'percent') {
+                      labelShow += '占比：' + obj.percent + '%';
                     }
                   }
                   return labelShow;
@@ -212,7 +212,7 @@
                     //   }
                     //   return labelShow;
                     // },
-                    formatter: '{b}\n {c}亿',
+                    formatter: '{b}\n {c}亿元',
                     textStyle: {
                       color: '#FFF'
                     }
@@ -240,7 +240,7 @@
                       var labelShow = '\n\n' + obj.data.name + '\n';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
-                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
+                          labelShow += obj.data.other[i].name.substring(0,obj.data.other[i].name.indexOf('(')) + ":" + obj.data.other[i].value + obj.data.other[i].unit +'\n';
                         }
                       } else {
                         labelShow = obj.data.name + ":" + obj.data.value + '\n';
@@ -306,15 +306,15 @@
                 formatter: function(obj) {
                   var percentShow = '';
 
-                  var labelShow =  obj.data.name + '<br/>';
+                  var labelShow = obj.data.name + '<br/>';
                   if (obj.data.other && obj.data.other.length > 1) {
                     for (var i = 0; i < obj.data.other.length; i++) {
-                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                      labelShow += obj.data.other[i].name.substring(0,obj.data.other[i].name.indexOf('(')) + ":" + obj.data.other[i].value + obj.data.other[i].unit +'<br/>';
                     }
                   } else {
                     labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
-                    if(opt.auto_count && opt.auto_count =='percent') {
-                      labelShow += '占比：'+obj.percent+'%';
+                    if (opt.auto_count && opt.auto_count == 'percent') {
+                      labelShow += '占比：' + obj.percent + '%';
                     }
                   }
                   return labelShow;
@@ -357,7 +357,7 @@
                       var labelShow = '\n\n' + obj.data.name + '\n';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
-                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
+                          labelShow += obj.data.other[i].name.substring(0,obj.data.other[i].name.indexOf('(')) + ":" + obj.data.other[i].value + obj.data.other[i].unit +'\n';
                         }
                       } else {
                         labelShow = obj.data.name + ":" + obj.data.value + '\n';
@@ -746,7 +746,6 @@
             }
 
             var dashboardHeight = $('.dashboard')[0].scrollHeight;
-            console.log(dashboardHeight);
             $('.dashboard').css({'height':dashboardHeight  + "px"});
             angular.element($window).bind('resize', function() {
               scope.onResize5();
