@@ -273,6 +273,9 @@
                     }
                   }
                   _.forEach(opt.series, function(item) {
+                    if(item.type =='bar') {
+                      item.barWidth = '50%';
+                    }
                     if (item.data.length > 5) {
                       $('.box-wrap').css({
                         '-webkit-flex-flow': 'column',
@@ -298,8 +301,6 @@
                     item.connectNulls = true;
                     item.label = label;
                     item.stack = stack_name;
-
-
 
                   });
                   option = {

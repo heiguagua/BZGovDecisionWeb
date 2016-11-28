@@ -15,7 +15,7 @@
       'app.main.module.content',
       'app.main.module.content.detail'
     ])
-    .config(config).run(runState);
+    .config(config);
 
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
 
@@ -105,22 +105,22 @@
     };
   };
 
-  runState.$inject = ['$rootScope'];
+//  runState.$inject = ['$rootScope'];
 
-  function runState($rootScope) {
-    $rootScope.$on('$stateChangeStart',
-      function(event, toState, toParams, fromState, fromParams) {
-        console.log(toState.name);
-
-        if (toState.name !== 'dashboard') {
-          if (toState.name !== 'login') {
-            if (!sessionStorage.token) {
-              event.preventDefault();
-              window.location.href = './#/login';
-            }
-          };
-        }
-      });
-  }
+  //function runState($rootScope) {
+    // $rootScope.$on('$stateChangeStart',
+    //   function(event, toState, toParams, fromState, fromParams) {
+    //     console.log(toState.name);
+    //
+    //     if (toState.name !== 'dashboard') {
+    //       if (toState.name !== 'login') {
+    //         if (!sessionStorage.token) {
+    //           event.preventDefault();
+    //           window.location.href = './#/login';
+    //         }
+    //       };
+    //     }
+    //   });
+  //}
 
 })();
