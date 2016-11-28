@@ -74,7 +74,7 @@
       return {
         getDetail: getDetail,
         getContent: getContent,
-        getDateFormat:getDateFormat,
+        getDateFormat: getDateFormat,
         getEcoData: getEcoData
       }
 
@@ -117,27 +117,27 @@
     function(previewService, $window) {
       return {
         restrict: 'ACE',
-        scope:{
-          econtent:'='
+        scope: {
+          econtent: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance1 = null;
-          if(!scope.econtent || !scope.econtent.url) {
-              return;
+          if (!scope.econtent || !scope.econtent.url) {
+            return;
           }
-          previewService.getDetail(scope.econtent.url,{
+          previewService.getDetail(scope.econtent.url, {
             queryTime: previewService.getDateFormat(scope.econtent.model, scope.econtent.format),
             picCode: scope.econtent.picCode
           }).then(function(result) {
             var opt = result.data;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
             }
             if (!scope.econtent.model && opt.init_query_time != '') {
               scope.econtent.model = new Date(opt.init_query_time);
             }
-
+            scope.econtent.query_time = opt.init_query_time;
             var dateOptions = {};
             dateOptions.formatYear = 'yyyy';
             if (opt.time_scope == 'year') {
@@ -155,21 +155,21 @@
 
             var colors = ['rgb(0,204,200)', 'rgb(240,119,129)', 'rgb(0,168,228)'];
             var option = {
-              color:colors,
+              color: colors,
               tooltip: {
                 trigger: 'item',
                 formatter: function(obj) {
                   var percentShow = '';
 
-                  var labelShow =  obj.data.name + '<br/>';
+                  var labelShow = obj.data.name + '<br/>';
                   if (obj.data.other && obj.data.other.length > 1) {
                     for (var i = 0; i < obj.data.other.length; i++) {
                       labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
                     }
                   } else {
                     labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
-                    if(opt.auto_count && opt.auto_count =='percent') {
-                      labelShow += '占比：'+obj.percent+'%';
+                    if (opt.auto_count && opt.auto_count == 'percent') {
+                      labelShow += '占比：' + obj.percent + '%';
                     }
                   }
                   return labelShow;
@@ -192,8 +192,8 @@
                     //   return labelShow;
                     // },
                     formatter: '{b}\n {c}亿',
-                    textStyle:{
-                      color:'#333'
+                    textStyle: {
+                      color: '#333'
                     }
                   }
                 },
@@ -202,9 +202,9 @@
                     show: false
                   }
                 },
-                itemStyle:{
-                  normal:{
-                    color:'#FFF'
+                itemStyle: {
+                  normal: {
+                    color: '#FFF'
                   }
                 },
                 data: opt.series[0].data
@@ -223,8 +223,8 @@
                         }
                       } else {
                         labelShow = obj.data.name + ":" + obj.data.value + '\n';
-                        if(opt.auto_count && opt.auto_count =='percent') {
-                          labelShow += '占比：'+obj.percent+'%';
+                        if (opt.auto_count && opt.auto_count == 'percent') {
+                          labelShow += '占比：' + obj.percent + '%';
                         }
                       }
                       return labelShow;
@@ -240,7 +240,7 @@
             chartInstance1.setOption(option);
 
             scope.onResize1 = function() {
-              if(chartInstance1) {
+              if (chartInstance1) {
                 chartInstance1.resize();
               }
             }
@@ -258,27 +258,28 @@
     function(previewService, $window) {
       return {
         restrict: 'ACE',
-        scope:{
-          icontent:'='
+        scope: {
+          icontent: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance2 = null;
-          if(!scope.icontent || !scope.icontent.url) {
-              return;
+          if (!scope.icontent || !scope.icontent.url) {
+            return;
           }
-          previewService.getDetail(scope.icontent.url,{
+          previewService.getDetail(scope.icontent.url, {
             queryTime: previewService.getDateFormat(scope.icontent.model, scope.icontent.format),
             picCode: scope.icontent.picCode
           }).then(function(result) {
             var opt = result.data;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
             }
+            scope.icontent.query_time =opt.init_query_time;
             scope.icontent.dep_name = opt.dep_name;
             var colors = ['rgb(0,204,200)', 'rgb(232,175,64)', 'rgb(0,168,228)'];
             var option = {
-              color:colors,
+              color: colors,
               tooltip: {
                 trigger: 'item',
                 formatter: function(obj) {
@@ -291,8 +292,8 @@
                     }
                   } else {
                     labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
-                    if(opt.auto_count && opt.auto_count =='percent') {
-                      labelShow += '占比：'+obj.percent+'%';
+                    if (opt.auto_count && opt.auto_count == 'percent') {
+                      labelShow += '占比：' + obj.percent + '%';
                     }
                   }
                   return labelShow;
@@ -308,8 +309,8 @@
                   normal: {
                     position: 'center',
                     formatter: '{b}\n {c}',
-                    textStyle:{
-                      color:'#333'
+                    textStyle: {
+                      color: '#333'
                     }
                   }
                 },
@@ -318,9 +319,9 @@
                     show: false
                   }
                 },
-                itemStyle:{
-                  normal:{
-                    color:'#FFF'
+                itemStyle: {
+                  normal: {
+                    color: '#FFF'
                   }
                 },
                 data: opt.series[0].data
@@ -339,8 +340,8 @@
                         }
                       } else {
                         labelShow = obj.data.name + ":" + obj.data.value + '\n';
-                        if(opt.auto_count && opt.auto_count =='percent') {
-                          labelShow += '占比：'+obj.percent+'%';
+                        if (opt.auto_count && opt.auto_count == 'percent') {
+                          labelShow += '占比：' + obj.percent + '%';
                         }
                       }
                       return labelShow;
@@ -348,7 +349,7 @@
                   }
                 },
                 radius: ['30%', '55%'],
-                data:opt.series[1].data
+                data: opt.series[1].data
               }]
             };
 
@@ -356,7 +357,7 @@
             chartInstance2.setOption(option);
 
             scope.onResize2 = function() {
-              if(chartInstance2){
+              if (chartInstance2) {
                 chartInstance2.resize();
               }
             }
@@ -374,31 +375,31 @@
     function(previewService, $window) {
       return {
         restrict: 'ACE',
-        scope:{
-          vcontent:'='
+        scope: {
+          vcontent: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance3 = null;
-          if(!scope.vcontent || !scope.vcontent.url) {
-              return;
+          if (!scope.vcontent || !scope.vcontent.url) {
+            return;
           }
-          previewService.getDetail(scope.vcontent.url,{
+          previewService.getDetail(scope.vcontent.url, {
             queryTime: previewService.getDateFormat(scope.vcontent.model, scope.vcontent.format),
             picCode: scope.vcontent.picCode
           }).then(function(result) {
             var opt = result.data;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
             }
             scope.vcontent.query_time = opt.init_query_time;
             scope.vcontent.dep_name = opt.dep_name;
             var text = {};
             var subtext = {};
-            if(opt.dataItems && opt.dataItems[0]) {
+            if (opt.dataItems && opt.dataItems[0]) {
               text = opt.dataItems[0];
             }
-            if(opt.dataItems && opt.dataItems[1]) {
+            if (opt.dataItems && opt.dataItems[1]) {
               subtext = opt.dataItems[1];
             }
             var indicators = [];
@@ -415,36 +416,40 @@
               indicator.max = max + 100;
               indicators.push(indicator);
             });
-            var colors = ['rgb(232, 215, 64)','rgb(154, 253, 138)','rgb(14, 83, 108)'];
-            var areaColors = ['rgba(232, 215, 64, 0.5)','rgba(154, 253, 138, 0.5)','rgba(14, 83, 108, 0.5)'];
+            var colors = ['rgb(232, 215, 64)', 'rgb(154, 253, 138)', 'rgb(14, 83, 108)'];
+            var areaColors = ['rgba(232, 215, 64, 0.5)', 'rgba(154, 253, 138, 0.5)', 'rgba(14, 83, 108, 0.5)'];
             _.forEach(opt.series[0].data, function(item, index) {
-              item.itemStyle = {normal: {
-                color: colors[index],
-                borderType: 'dashed'
-              }};
-              item.areaStyle = {normal: {
-                opacity: 0.9,
-                color: areaColors[index]
-              }}
+              item.itemStyle = {
+                normal: {
+                  color: colors[index],
+                  borderType: 'dashed'
+                }
+              };
+              item.areaStyle = {
+                normal: {
+                  opacity: 0.9,
+                  color: areaColors[index]
+                }
+              }
             });
 
             var option = {
               tooltip: {},
-              title:{
-                text:text.name + "：" + text.value + text.unit ,
-                subtext:subtext.name + "：" + subtext.value + subtext.unit ,
-                textStyle:{
-                  fontSize:12
+              title: {
+                text: text.name + "：" + text.value + text.unit,
+                subtext: subtext.name + "：" + subtext.value + subtext.unit,
+                textStyle: {
+                  fontSize: 12
                 },
-                subtextStyle:{
-                  fontSize:12,
-                  color:'#333',
-                  fontWeight:'border'
+                subtextStyle: {
+                  fontSize: 12,
+                  color: '#333',
+                  fontWeight: 'border'
                 },
-                itemGap:10,
-                padding:4,
-                borderColor:'#DDD',
-                borderWidth:1
+                itemGap: 10,
+                padding: 4,
+                borderColor: '#DDD',
+                borderWidth: 1
               },
               legend: {
                 orient: 'vertical',
@@ -477,7 +482,7 @@
             chartInstance3.setOption(option);
 
             scope.onResize3 = function() {
-              if(chartInstance3){
+              if (chartInstance3) {
                 chartInstance3.resize();
               }
             }
@@ -495,33 +500,34 @@
     function(previewService, $window) {
       return {
         restrict: 'ACE',
-        scope:{
-          ccontent:'='
+        scope: {
+          ccontent: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance4 = null;
-          if(!scope.ccontent || !scope.ccontent.url) {
-              return;
+          if (!scope.ccontent || !scope.ccontent.url) {
+            return;
           }
-          previewService.getDetail(scope.ccontent.url,{
+          previewService.getDetail(scope.ccontent.url, {
             queryTime: previewService.getDateFormat(scope.ccontent.model, scope.ccontent.format),
             picCode: scope.ccontent.picCode
           }).then(function(result) {
             var opt = result.data;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
             }
             scope.ccontent.dep_name = opt.dep_name;
+            scope.ccontent.query_time = opt.init_query_time;
             var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)'];
             var option = {
-              color:colors,
+              color: colors,
               tooltip: {
                 trigger: 'axis'
               },
-              legend:{
-                top:'bottom',
-                data:opt.legend
+              legend: {
+                top: 'bottom',
+                data: opt.legend
               },
               xAxis: {
                 type: 'category',
@@ -541,7 +547,7 @@
             chartInstance4.setOption(option);
 
             scope.onResize4 = function() {
-              if(chartInstance4){
+              if (chartInstance4) {
                 chartInstance4.resize();
               }
             }
@@ -559,79 +565,79 @@
     function(previewService, $window) {
       return {
         restrict: 'ACE',
-        scope:{
-          scontent:'='
+        scope: {
+          scontent: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance5 = null;
-          if(!scope.scontent || !scope.scontent.url) {
-              return;
+          if (!scope.scontent || !scope.scontent.url) {
+            return;
           }
-          previewService.getDetail(scope.scontent.url,{
+          previewService.getDetail(scope.scontent.url, {
             queryTime: previewService.getDateFormat(scope.scontent.model, scope.scontent.format),
             picCode: scope.scontent.picCode
           }).then(function(result) {
             var opt = result.data;
             scope.scontent.query_time = opt.init_query_time;
             scope.scontent.dep_name = opt.dep_name;
-            if(!opt || !opt.series) {
+            if (!opt || !opt.series) {
               return;
             }
             var text = {};
             var subtext = {};
-            if(opt.dataItems && opt.dataItems[0]) {
+            if (opt.dataItems && opt.dataItems[0]) {
               text = opt.dataItems[0];
             }
-            if(opt.dataItems && opt.dataItems[1]) {
+            if (opt.dataItems && opt.dataItems[1]) {
               subtext = opt.dataItems[1];
             }
             var colors = ['rgb(107,217,95)', 'rgb(0,168,228)'];
             var option = {
-              color:colors,
+              color: colors,
               tooltip: {
                 trigger: 'item',
                 formatter: function(obj) {
                   var percentShow = '';
 
-                  var labelShow =  obj.data.name + '<br/>';
+                  var labelShow = obj.data.name + '<br/>';
                   if (obj.data.other && obj.data.other.length > 1) {
                     for (var i = 0; i < obj.data.other.length; i++) {
                       labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
                     }
                   } else {
                     labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
-                    if(opt.auto_count && opt.auto_count =='percent') {
-                      labelShow += '占比：'+obj.percent+'%';
+                    if (opt.auto_count && opt.auto_count == 'percent') {
+                      labelShow += '占比：' + obj.percent + '%';
                     }
                   }
                   return labelShow;
                 }
               },
-              title:{
-                text:text.name + "：" + text.value + text.unit ,
-                subtext: subtext.name + "：" + subtext.value + subtext.unit ,
-                left:'right',
-                textStyle:{
-                  fontSize:12
+              title: {
+                text: text.name + "：" + text.value + text.unit,
+                subtext: subtext.name + "：" + subtext.value + subtext.unit,
+                left: 'right',
+                textStyle: {
+                  fontSize: 12
                 },
-                subtextStyle:{
-                  fontSize:12,
-                  color:'#333',
-                  fontWeight:'border'
+                subtextStyle: {
+                  fontSize: 12,
+                  color: '#333',
+                  fontWeight: 'border'
                 },
-                itemGap:10,
-                padding:4,
-                borderColor:'#DDD',
-                borderWidth:1
+                itemGap: 10,
+                padding: 4,
+                borderColor: '#DDD',
+                borderWidth: 1
               },
               series: [{
                 name: opt.series[0].name,
                 type: 'pie',
                 radius: '55%',
                 center: ['50%', '50%'],
-                startAngle:-230,
-                data:opt.series[0].data,
+                startAngle: -230,
+                data: opt.series[0].data,
                 itemStyle: {
                   emphasis: {
                     shadowBlur: 10,
@@ -654,8 +660,8 @@
                           }
                         } else {
                           labelShow = obj.data.name + ":" + obj.data.value + '\n';
-                          if(opt.auto_count && opt.auto_count =='percent') {
-                            labelShow += '占比：'+obj.percent+'%';
+                          if (opt.auto_count && opt.auto_count == 'percent') {
+                            labelShow += '占比：' + obj.percent + '%';
                           }
                         }
                         return labelShow;
@@ -675,7 +681,7 @@
 
 
             scope.onResize5 = function() {
-              if(chartInstance5) {
+              if (chartInstance5) {
                 chartInstance5.resize();
               }
             }

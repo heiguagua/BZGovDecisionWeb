@@ -34,7 +34,7 @@
               <label>统计来源：</label>统计局
             </div>
           </div>-->
-              第二季度数据：来源{{chartlist[0].dep_name}}
+              {{chartlist[0].query_time}}数据：来源{{chartlist[0].dep_name}}
             </div>
           </div>
           <div class='box-content panel-body'>
@@ -61,7 +61,7 @@
                 <div class='pull-left'>
                   <h5 class='box-title'>巴中市居民消费价格指数CPI</h5>
                 </div>
-                <div class='pull-right box-sub-title'>近一年数据：来源{{chartlist[3].dep_name}}</div>
+                <div class='pull-right box-sub-title'>{{chartlist[3].query_time}}数据：来源{{chartlist[3].dep_name}}</div>
               </div>
               <div class='panel-body chart ' wiserv-chart-cpi ccontent=chartlist[3]></div>
             </div>
