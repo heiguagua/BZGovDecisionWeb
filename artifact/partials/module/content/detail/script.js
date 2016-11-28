@@ -140,7 +140,7 @@
                 if (!scope.content.model && opt.init_query_time != '') {
                   scope.content.model = new Date(opt.init_query_time);
                 }
-
+                scope.content.dep_name = opt.dep_name;
                 var dateOptions = {};
                 dateOptions.formatYear = 'yyyy';
                 if (opt.time_scope == 'year') {

@@ -151,6 +151,7 @@
               dateOptions.datepickerMode = 'month';
             }
             scope.econtent.dateOptions = dateOptions;
+            scope.econtent.dep_name = opt.dep_name;
 
             var colors = ['rgb(0,204,200)', 'rgb(240,119,129)', 'rgb(0,168,228)'];
             var option = {
@@ -274,6 +275,7 @@
             if(!opt || !opt.series) {
               return;
             }
+            scope.icontent.dep_name = opt.dep_name;
             var colors = ['rgb(0,204,200)', 'rgb(232,175,64)', 'rgb(0,168,228)'];
             var option = {
               color:colors,
@@ -390,6 +392,7 @@
               return;
             }
             scope.vcontent.query_time = opt.init_query_time;
+            scope.vcontent.dep_name = opt.dep_name;
             var text = {};
             var subtext = {};
             if(opt.dataItems && opt.dataItems[0]) {
@@ -509,6 +512,7 @@
             if(!opt || !opt.series) {
               return;
             }
+            scope.ccontent.dep_name = opt.dep_name;
             var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)'];
             var option = {
               color:colors,
@@ -570,7 +574,7 @@
           }).then(function(result) {
             var opt = result.data;
             scope.scontent.query_time = opt.init_query_time;
-
+            scope.scontent.dep_name = opt.dep_name;
             if(!opt || !opt.series) {
               return;
             }
@@ -668,7 +672,7 @@
             chartInstance5 = echarts.init((element.find('div'))[0]);
             chartInstance5.setOption(option);
 
-            
+
 
             scope.onResize5 = function() {
               if(chartInstance5) {
