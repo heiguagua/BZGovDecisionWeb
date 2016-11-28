@@ -166,10 +166,10 @@
                 });
 
                 var colors = ['rgb(91,192,222)', 'rgb(0,215,185)', 'rgb(221,127,141)', 'rgb(71,190,121)'];
-                var pie_colors = ['#FFF','rgb(46,200,202)', 'rgb(221,127,141)', 'rgb(49,167,229)'];
+                var pie_colors = ['#FFF', 'rgb(46,200,202)', 'rgb(221,127,141)', 'rgb(49,167,229)'];
                 if (opt.series[0].type == 'pie') {
                   option.series = opt.series;
-                  if(option.series.length == 1) {
+                  if (option.series.length == 1) {
                     pie_colors = colors;
                   }
                   option.color = pie_colors;
@@ -188,8 +188,8 @@
                         }
                       } else {
                         labelShow = obj.data.name + ":" + obj.data.value + '\n';
-                        if(opt.auto_count && opt.auto_count =='percent') {
-                          labelShow += '占比：'+obj.percent+'%';
+                        if (opt.auto_count && opt.auto_count == 'percent') {
+                          labelShow += '占比：' + obj.percent + '%';
                         }
                       }
 
@@ -206,11 +206,10 @@
                         for (var i = 0; i < obj.data.other.length; i++) {
                           labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
                         }
-                      }
-                      else{
+                      } else {
                         labelShow = obj.data.name + ":" + obj.data.value + '\n';
-                        if(opt.auto_count && opt.auto_count =='percent') {
-                          labelShow += '占比：'+obj.percent+'%';
+                        if (opt.auto_count && opt.auto_count == 'percent') {
+                          labelShow += '占比：' + obj.percent + '%';
                         }
                       }
 
@@ -224,7 +223,7 @@
                   option.series[0].label = {};
                   option.series[0].label.normal = {};
                   option.series[0].label.normal.position = 'center';
-                  if(  option.series.length == 1) {
+                  if (option.series.length == 1) {
                     option.series[0].label.normal.position = 'outside';
                   }
                   option.series[0].label.normal.formatter = '{b}\n {c}' + opt.y_name[0];
@@ -273,8 +272,39 @@
                     }
                   }
                   _.forEach(opt.series, function(item) {
-                    if(item.type =='bar') {
+                    if (item.type == 'bar') {
                       item.barWidth = '50%';
+                    }
+                    if (item.type == 'line') {
+                      var datas = _.map(item.data, 'name');
+                      console.log(datas.length);
+                      console.log(_.uniq(datas).length);
+                      if (datas && datas.length > 1 && (_.uniq(datas).length == 1)) {
+                        item.symbol = 'roundCircle';
+                        item.symbolSize = 1;
+                        _.forEach(item.data, function(idata, dataIndex) {
+                          if (dataIndex == 0) {
+                            idata.label = {
+                              normal: {
+                                show: true,
+                                textStyle:{
+                                  color:colors[2]
+                                }
+                              }
+                            }
+                          }
+                          else{
+                            idata.label = {
+                              normal: {
+                                show: false,
+                                textStyle:{
+                                  color:colors[2]
+                                }
+                              }
+                            }
+                          }
+                        })
+                      }
                     }
                     if (item.data.length > 5) {
                       $('.box-wrap').css({
@@ -283,8 +313,8 @@
                       });
 
                       _.forEach(item.data, function(data) {
-                        if(data.name && data.name.length > 5 && item.data.length > 12) { // 字符长度大于5
-                            grid_btm = 150;
+                        if (data.name && data.name.length > 5 && item.data.length > 12) { // 字符长度大于5
+                          grid_btm = 150;
                         }
                       })
                     }
@@ -317,8 +347,8 @@
                       bottom: 20,
                       data: opt.legend
                     },
-                    grid:{
-                      bottom:grid_btm
+                    grid: {
+                      bottom: grid_btm
                     },
                     xAxis: [{
                       type: 'category',
