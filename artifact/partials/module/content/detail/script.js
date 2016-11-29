@@ -120,6 +120,7 @@
             }
           }
           scope.$watch('content.model', function(newValue, oldValue) {
+            console.log();
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             } // AKA first run
@@ -141,6 +142,7 @@
                   scope.content.model = new Date(opt.init_query_time);
                 }
                 scope.content.dep_name = opt.dep_name;
+                scope.content.time_scope = opt.time_scope;
                 var dateOptions = {};
                 dateOptions.formatYear = 'yyyy';
                 if (opt.time_scope == 'year') {
@@ -154,9 +156,9 @@
                   dateOptions.datepickerMode = 'month';
                 }
                 if (opt.time_scope == 'quater') {
-                  scope.content.format = 'yyyy-MM';
-                  dateOptions.minMode = 'month';
-                  dateOptions.datepickerMode = 'month';
+                  scope.content.format = 'yyyy';
+                  dateOptions.minMode = 'year';
+                  dateOptions.datepickerMode = 'year';
                 }
                 scope.content.dateOptions = dateOptions;
 
@@ -271,10 +273,14 @@
                     labelPos = 'inside';
                   }
                   if (opt.series[0].data.length > 10) {
-                    axisLabel = {
-                      interval: 0
+                  axisLabel = {
+                      interval: 0,
+                      formatter: function(val) {
+                        return val.split("").join("\n"); //横轴信息文字竖直显示
+                      }
+
+                    };
                     }
-                  }
                   _.forEach(opt.series, function(item) {
                     if (item.type == 'bar') {
                       item.barWidth = '50%';
@@ -291,18 +297,17 @@
                             idata.label = {
                               normal: {
                                 show: true,
-                                textStyle:{
-                                  color:colors[2]
+                                textStyle: {
+                                  color: colors[2]
                                 }
                               }
                             }
-                          }
-                          else{
+                          } else {
                             idata.label = {
                               normal: {
                                 show: false,
-                                textStyle:{
-                                  color:colors[2]
+                                textStyle: {
+                                  color: colors[2]
                                 }
                               }
                             }

@@ -107,11 +107,26 @@
   }
   .time-pick {
     display: inline-block;
+    max-width: 198px;
     .input-group {
-      max-width: 140px;
+      display: table;
+      .input-group-btn {
+        vertical-align: top;
+        width: 30px;
+      }
+      .quater {
+        display: table-cell;
+        bottom: 8px;
+        height: 26px;
+        position: relative;
+        left: 8px;
+        border: 1px solid #cccccc;
+        background:none;
+      }
       .input-time {
         height: 26px;
         padding: 0 10px;
+        width: 90px;
         &.ng-invalid {
           border: 1px solid red !important;
         }

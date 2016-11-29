@@ -12,6 +12,12 @@
                 <i class="glyphicon glyphicon-calendar"></i>
               </button>
             </span>
+            <select ng-model='quater' class='quater' ng-show='popups[$index].time_scope == "quater"'>
+              <option value='3' selected='selected'>第一季度</option>
+              <option value='6'>第二季度</option>
+              <option value='9'>第三季度</option>
+              <option value='12'>第四季度</option>
+            </select>
           </p>
         </div>
       </div>
