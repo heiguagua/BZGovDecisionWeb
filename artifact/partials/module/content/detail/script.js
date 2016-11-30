@@ -304,6 +304,9 @@
                   axisLabel = {
                       interval: 0,
                       formatter: function(val) {
+                        if(val.indexOf('月') > -1) {
+                          return val;
+                        }
                         return val.split("").join("\n"); //横轴信息文字竖直显示
                       }
 
@@ -311,7 +314,12 @@
                     }
                   _.forEach(opt.series, function(item) {
                     if (item.type == 'bar') {
-                      item.barWidth = '50%';
+                      if(item.data.length<3){
+                        item.barMaxWidth = '20%';
+                      }
+                      else{
+                        item.barMaxWidth = '40%';
+                      }
                     }
                     if (item.type == 'line') {
                       var datas = _.map(item.data, 'name');
