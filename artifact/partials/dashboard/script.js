@@ -200,7 +200,7 @@
                 name: opt.series[0].name,
                 type: 'pie',
                 selectedMode: 'single',
-                radius: [0, '30%'],
+                radius: [0, '20%'],
 
                 label: {
                   normal: {
@@ -252,7 +252,7 @@
                     }
                   }
                 },
-                radius: ['30%', '55%'],
+                radius: ['20%', '46%'],
                 data: opt.series[1].data
               }]
             };
@@ -324,7 +324,7 @@
                 name: opt.series[0].name,
                 type: 'pie',
                 selectedMode: 'single',
-                radius: [0, '30%'],
+                radius: [0, '20%'],
 
                 label: {
                   normal: {
@@ -371,7 +371,7 @@
                     }
                   }
                 },
-                radius: ['30%', '55%'],
+                radius: ['20%', '46%'],
                 data: opt.series[1].data
               }]
             };

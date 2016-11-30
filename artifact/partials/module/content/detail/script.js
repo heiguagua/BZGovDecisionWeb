@@ -187,12 +187,16 @@
                 scope.content.dateOptions = dateOptions;
 
                 opt.yAxis = [];
-                _.forEach(opt.y_name, function(item) {
+                _.forEach(opt.y_name, function(item,index) {
                   var yAxis = {};
                   yAxis.type = 'value';
                   yAxis.name = item;
                   yAxis.axisTick = {};
                   yAxis.axisTick.inside = true;
+                  if(opt.max_and_min){
+                    yAxis.min = Math.round(opt.max_and_min[index].minValue);
+                    yAxis.max = Math.round(opt.max_and_min[index].maxValue);
+                  }
                   opt.yAxis.push(yAxis);
                 });
 

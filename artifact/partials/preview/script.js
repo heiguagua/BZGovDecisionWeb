@@ -179,18 +179,11 @@
                 name: opt.series[0].name,
                 type: 'pie',
                 selectedMode: 'single',
-                radius: [0, '30%'],
+                radius: [0, '20%'],
 
                 label: {
                   normal: {
                     position: 'center',
-                    // formatter : function(obj) {
-                    //   var labelShow = obj.data.name + '\n';
-                    //   for(var i=0; i<obj.data.other.length; i++) {
-                    //     labelShow += obj.data.other[i].name + obj.data.other[i].value + obj.data.other[i].unit +'\n';
-                    //   }
-                    //   return labelShow;
-                    // },
                     formatter: '{b}\n {c}亿',
                     textStyle: {
                       color: '#333'
@@ -231,7 +224,7 @@
                     }
                   }
                 },
-                radius: ['30%', '55%'],
+                radius: ['20%', '46%'],
                 data: opt.series[1].data
               }]
             };
@@ -303,7 +296,7 @@
                 name: opt.series[0].name,
                 type: 'pie',
                 selectedMode: 'single',
-                radius: [0, '30%'],
+                radius: [0, '20%'],
 
                 label: {
                   normal: {
@@ -350,7 +343,7 @@
                     }
                   }
                 },
-                radius: ['30%', '55%'],
+                radius: ['20%', '46%'],
                 data: opt.series[1].data
               }]
             };
