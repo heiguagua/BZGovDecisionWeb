@@ -7,6 +7,9 @@
     @include flex-num(1);
     @include flex-flow(row);
   }
+  .box-content.panel-body {
+    padding: 15px 4px;
+  }
   .panel-heading {
     padding: 8px 15px;
   }
@@ -89,7 +92,7 @@
 .data-items {
   display: table;
   width: 100%;
-  padding:0.2rem 10px;
+  padding: 0.2rem 10px;
   border-bottom: 1px solid #efefef;
   font-size: 12px;
   .data-item {
@@ -119,7 +122,7 @@
         background: #f26370;
       }
     }
-    &:nth-child(2){
+    &:nth-child(2) {
       span {
         background: none;
         text-align: left;

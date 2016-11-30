@@ -152,7 +152,12 @@
             }
             scope.econtent.dateOptions = dateOptions;
             scope.econtent.dep_name = opt.dep_name;
-
+            opt.series[1].data[0].labelLine = {
+              normal:{
+                  length:24,
+                  length2:8
+              }
+            };
             var colors = ['rgb(0,204,200)', 'rgb(240,119,129)', 'rgb(0,168,228)'];
             var option = {
               color: colors,
@@ -179,7 +184,7 @@
                 name: opt.series[0].name,
                 type: 'pie',
                 selectedMode: 'single',
-                radius: [0, '20%'],
+                radius: [0, '25%'],
 
                 label: {
                   normal: {
@@ -221,10 +226,19 @@
                         }
                       }
                       return labelShow;
+                    },
+                    textStyle: {
+                      fontSize: '8'
                     }
                   }
                 },
-                radius: ['20%', '46%'],
+                labelLine:{
+                  normal:{
+                      length:10,
+                      length2:0
+                  }
+                },
+                radius: ['25%', '50%'],
                 data: opt.series[1].data
               }]
             };
@@ -296,7 +310,7 @@
                 name: opt.series[0].name,
                 type: 'pie',
                 selectedMode: 'single',
-                radius: [0, '20%'],
+                radius: [0, '25%'],
 
                 label: {
                   normal: {
@@ -343,7 +357,7 @@
                     }
                   }
                 },
-                radius: ['20%', '46%'],
+                radius: ['25%', '50%'],
                 data: opt.series[1].data
               }]
             };

@@ -6,7 +6,7 @@
   background: url("../assets/images/bg.png");
   background-size: 100% 100%;
   .chart {
-    padding: 4px 10px;
+    padding: 4px;
     @include flex-num(1);
     @include flex-flow(column);
   }
