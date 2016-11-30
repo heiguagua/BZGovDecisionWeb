@@ -567,6 +567,9 @@
                   color:'#d5e2df'
                 }
               },
+              grid:{
+                right:'3%'
+              },
               xAxis: {
                 type: 'category',
                 boundaryGap: false,
@@ -576,6 +579,11 @@
                     color: colors[2],
                     shadowColor: colors[2],
                     shadowBlur: 4
+                  }
+                },
+                axisLable:{
+                  textStyle:{
+                    fontSize:8
                   }
                 },
                 splitLine: {

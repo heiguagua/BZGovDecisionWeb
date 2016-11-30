@@ -155,10 +155,12 @@
                   dateOptions.minMode = 'month';
                   dateOptions.datepickerMode = 'month';
                 }
-                if (opt.time_scope == 'quater') {
+                if (opt.time_scope == 'quarter') {
                   scope.content.format = 'yyyy';
                   dateOptions.minMode = 'year';
                   dateOptions.datepickerMode = 'year';
+                  var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-'));
+                  console.log(quarterMonth);
                 }
                 scope.content.dateOptions = dateOptions;
 

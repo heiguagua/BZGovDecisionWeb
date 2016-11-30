@@ -531,10 +531,18 @@
                 top: 'bottom',
                 data: opt.legend
               },
+              grid:{
+                right:'3%'
+              },
               xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: opt.x_data
+                data: opt.x_data,
+                axisLable:{
+                  textStyle:{
+                    fontSize:8
+                  }
+                },
               },
               yAxis: {
                 type: 'value',
