@@ -8,7 +8,7 @@
       var vm = this;
 
       $scope.popups = [];
-
+      $scope.quarterOptions = [{'id':3,"name":"第一季度"},{'id':6,"name":"第二季度"},{'id':9,"name":"第三季度"},{'id':12,"name":"第四季度"}];
       detailService.getContent({
         menuId: $stateParams.pid
       }).then(function(result) {
@@ -31,6 +31,12 @@
         if (!angular.isDate($scope.popups[index].model) || isNaN($scope.popups[index].model.getTime())) {
           alert('请输入正确的日期格式！');
           return;
+        }
+        if($scope.popups[index].time_scope == 'quarter') {
+          if(!$scope.popups[index].quarter) {
+            alert('请选择季度！');
+            return;
+          }
         }
       }
       $scope.altInputFormats = ['M!/d!/yyyy'];
@@ -120,7 +126,13 @@
             }
           }
           scope.$watch('content.model', function(newValue, oldValue) {
-            console.log();
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            } // AKA first run
+            drawChart();
+          });
+
+          scope.$watch('content.quarter', function(newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             } // AKA first run
@@ -132,14 +144,24 @@
 
           // draw chart
           function drawChart() {
+            var timeParam = angular.copy(scope.content.model);
+            var timeFormatParam = angular.copy(scope.content.format);
+            if(scope.content.model && scope.content.time_scope == 'quarter') {
+              timeParam.setMonth(scope.content.quarter-1);
+              timeFormatParam = 'yyyy-MM';
+            }
             detailService.getDetail(scope.content.url, {
-              queryTime: getDateFormat(scope.content.model, scope.content.format),
+              queryTime: getDateFormat(timeParam, timeFormatParam),
               picCode: scope.content.picCode
             }).then(function(result) {
               var opt = result.data;
               if (opt && opt.series && opt.series[0]) {
                 if (!scope.content.model && opt.init_query_time != '') {
                   scope.content.model = new Date(opt.init_query_time);
+                  if(!scope.content.quarter) {
+                    var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-')+1);
+                    scope.content.quarter = Number(quarterMonth);
+                  }
                 }
                 scope.content.dep_name = opt.dep_name;
                 scope.content.time_scope = opt.time_scope;
@@ -159,8 +181,8 @@
                   scope.content.format = 'yyyy';
                   dateOptions.minMode = 'year';
                   dateOptions.datepickerMode = 'year';
-                  var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-'));
-                  console.log(quarterMonth);
+
+
                 }
                 scope.content.dateOptions = dateOptions;
 
@@ -289,8 +311,6 @@
                     }
                     if (item.type == 'line') {
                       var datas = _.map(item.data, 'name');
-                      console.log(datas.length);
-                      console.log(_.uniq(datas).length);
                       if (datas && datas.length > 1 && (_.uniq(datas).length == 1)) {
                         item.symbol = 'roundCircle';
                         item.symbolSize = 1;
@@ -431,14 +451,14 @@
                   scope.content.formTable = true;
                   detailService.getTableData(opt.table_url, {
                     picCode: scope.content.picCode,
-                    queryTime: getDateFormat(scope.content.model, scope.content.format)
+                    queryTime: getDateFormat(timeParam, timeFormatParam)
                   }).then(function(res) {
                     scope.content.rowData = res.data;
                   })
                 } else {
                   detailService.getTableData(opt.table_url, {
                     picCode: scope.content.picCode,
-                    queryTime: getDateFormat(scope.content.model, scope.content.format)
+                    queryTime: getDateFormat(timeParam, timeFormatParam)
                   }).then(function(res) {
                     if (res.data.columnName.length > 5) {
                       $('.box-wrap').css({
