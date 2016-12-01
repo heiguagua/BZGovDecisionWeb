@@ -53,6 +53,7 @@ $chartHeightBig: 540px;
     padding-bottom: 40px;
     position: fixed;
     top: 62px;
+    z-index: 999;
     @include flex-align(stretch);
     >li {
       border-bottom: 1px solid #0063b1;
