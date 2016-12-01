@@ -464,16 +464,22 @@
                 orient: 'vertical',
                 left: 'right',
                 data: opt.legend,
+                textStyle:{
+                  fontSize:14
+                }
               },
               radar: {
                 // shape: 'circle',
+                radius:'60%',
                 indicator: indicators,
                 name: {
                   formatter: '{value}',
                   textStyle: {
-                    color: '#333'
+                    color: '#333',
+                    fontSize:14
                   }
-                }
+                },
+                nameGap:4
               },
               series: [{
                 name: opt.title,
@@ -528,6 +534,12 @@
             }
             scope.ccontent.dep_name = opt.dep_name;
             scope.ccontent.query_time = opt.init_query_time;
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if(opt.max_and_min){
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
             var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)'];
             var option = {
               color: colors,
@@ -536,7 +548,10 @@
               },
               legend: {
                 top: 'bottom',
-                data: opt.legend
+                data: opt.legend,
+                textStyle:{
+                  fontSize:14
+                }
               },
               grid:{
                 right:'3%'
@@ -545,7 +560,7 @@
                 type: 'category',
                 boundaryGap: false,
                 data: opt.x_data,
-                axisLable:{
+                axisLabel:{
                   textStyle:{
                     fontSize:8
                   }
@@ -553,6 +568,8 @@
               },
               yAxis: {
                 type: 'value',
+                min:yAxis_min,
+                max:yAxis_max,
                 axisLabel: {
                   formatter: '{value}'
                 }

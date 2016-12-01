@@ -57,6 +57,7 @@
         height: 100%;
         .chart {
           @include flex-num(1);
+          padding: 15px 6px;
         }
       }
     }
@@ -80,13 +81,14 @@
   }
   .box-title {
     margin: 0;
-    @include font($color:#000,$fontSize:0.7rem,$textAlign:left);
+    @include font($color:#000,$fontSize:0.8rem,$textAlign:left);
     line-height: 1.4;
   }
   .box-sub-title {
     padding: 0;
     color: #333;
-    font-size: 0.5rem;
+    font-size: 0.6rem;
+    line-height: 1.1rem;
   }
 }
 .data-items {

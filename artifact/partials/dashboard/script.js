@@ -143,7 +143,6 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance1 = null;
-          console.log(scope.econtent);
           if (!scope.econtent || !scope.econtent.url) {
             return;
           }
@@ -263,7 +262,8 @@
                       return labelShow;
                     },
                     textStyle:{
-                      fontSize:8
+                      fontSize:8,
+                      color: '#FFF'
                     }
                   }
                 },
@@ -389,6 +389,9 @@
                         }
                       }
                       return labelShow;
+                    },
+                    textStyle: {
+                      color:'#FFF'
                     }
                   }
                 },
@@ -500,19 +503,22 @@
                 left: 'right',
                 data: opt.legend,
                 textStyle:{
-                  color:'#d5e2df'
+                  color:'#fbfbfb',
+                  fontSize:14
                 }
               },
               radar: {
                 // shape: 'circle',
                 indicator: indicators,
-                radius:'68%',
+                radius:'64%',
                 name: {
                   formatter: '{value}',
                   textStyle: {
-                    color: '#d5e2df'
+                    color: '#fbfbfb',
+                    fontSize:14
                   }
-                }
+                },
+                nameGap:8
               },
               series: [{
                 name: opt.title,
@@ -575,6 +581,12 @@
                 }
               };
             });
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if(opt.max_and_min){
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
             var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)'];
             var option = {
               color: colors,
@@ -585,11 +597,13 @@
                 top: 'bottom',
                 data: opt.legend,
                 textStyle:{
-                  color:'#d5e2df'
+                  color:'#d5e2df',
+                  fontSize:14
                 }
               },
               grid:{
-                right:'3%'
+                right:'3%',
+                top:'8%'
               },
               xAxis: {
                 type: 'category',
@@ -602,7 +616,7 @@
                     shadowBlur: 4
                   }
                 },
-                axisLable:{
+                axisLabel:{
                   textStyle:{
                     fontSize:8
                   }
@@ -626,6 +640,9 @@
                 axisLabel: {
                   formatter: '{value}'
                 },
+                min:yAxis_min,
+                max:yAxis_max,
+                interval:10,
                 axisLine: {
                   lineStyle: {
                     color: colors[2],
@@ -757,6 +774,9 @@
                           }
                         }
                         return labelShow;
+                      },
+                      textStyle: {
+                        color: "#FFF"
                       }
                     }
                   },

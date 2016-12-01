@@ -8,7 +8,19 @@
       var vm = this;
 
       $scope.popups = [];
-      $scope.quarterOptions = [{'id':3,"name":"第一季度"},{'id':6,"name":"第二季度"},{'id':9,"name":"第三季度"},{'id':12,"name":"第四季度"}];
+      $scope.quarterOptions = [{
+        'id': 3,
+        "name": "第一季度"
+      }, {
+        'id': 6,
+        "name": "第二季度"
+      }, {
+        'id': 9,
+        "name": "第三季度"
+      }, {
+        'id': 12,
+        "name": "第四季度"
+      }];
       detailService.getContent({
         menuId: $stateParams.pid
       }).then(function(result) {
@@ -32,8 +44,8 @@
           alert('请输入正确的日期格式！');
           return;
         }
-        if($scope.popups[index].time_scope == 'quarter') {
-          if(!$scope.popups[index].quarter) {
+        if ($scope.popups[index].time_scope == 'quarter') {
+          if (!$scope.popups[index].quarter) {
             alert('请选择季度！');
             return;
           }
@@ -150,8 +162,8 @@
           function drawChart() {
             var timeParam = angular.copy(scope.content.model);
             var timeFormatParam = angular.copy(scope.content.format);
-            if(scope.content.model && scope.content.time_scope == 'quarter') {
-              timeParam.setMonth(scope.content.quarter-1);
+            if (scope.content.model && scope.content.time_scope == 'quarter') {
+              timeParam.setMonth(scope.content.quarter - 1);
               timeFormatParam = 'yyyy-MM';
             }
             detailService.getDetail(scope.content.url, {
@@ -162,8 +174,8 @@
               if (opt && opt.series && opt.series[0]) {
                 if (!scope.content.model && opt.init_query_time != '') {
                   scope.content.model = new Date(opt.init_query_time);
-                  if(!scope.content.quarter) {
-                    var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-')+1);
+                  if (!scope.content.quarter) {
+                    var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-') + 1);
                     scope.content.quarter = Number(quarterMonth);
                   }
                 }
@@ -191,25 +203,27 @@
                 scope.content.dateOptions = dateOptions;
 
                 opt.yAxis = [];
-                _.forEach(opt.y_name, function(item,index) {
+                _.forEach(opt.y_name, function(item, index) {
                   var yAxis = {};
                   yAxis.type = 'value';
                   yAxis.name = item;
                   yAxis.axisTick = {};
                   yAxis.axisTick.inside = true;
-                  if(opt.max_and_min){
+                  if (opt.max_and_min) {
                     yAxis.min = Math.round(opt.max_and_min[index].minValue);
                     yAxis.max = Math.round(opt.max_and_min[index].maxValue);
                   }
                   opt.yAxis.push(yAxis);
                 });
 
-                var colors = ['rgb(91,192,222)', 'rgb(0,215,185)', 'rgb(221,127,141)', 'rgb(71,190,121)'];
-                var pie_colors = ['#FFF', 'rgb(46,200,202)', 'rgb(221,127,141)', 'rgb(49,167,229)'];
+                var colors = ['rgb(79,129,188)', 'rgb(2,170,66)', 'rgb(228,92,93)', 'rgb(71,190,121)'];
+                var pie_colors = ['#FFF', 'rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)','rgb(228,92,93)'];
+                var group_colors = [ 'rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)','rgb(228,92,93)'];
                 if (opt.series[0].type == 'pie') {
                   option.series = opt.series;
                   if (option.series.length == 1) {
-                    pie_colors = colors;
+                    pie_colors = group_colors;
+                    option.series[0].radius = [0, '50%'];
                   }
                   option.color = pie_colors;
                   if (opt.series.length > 1) {
@@ -293,33 +307,41 @@
                     left: 'center'
                   };
                   option.radar = {};
+                  option.radar.name = {
+                    textStyle: {
+                      color: '#333',
+                      fontSize: 14
+                    }
+                  };
+                  option.radar.radius ='70%';
                   option.radar.indicator = indicators;
                   option.series = opt.series;
                 } else {
                   var stack_name = '';
                   var labelPos = 'top';
                   var axisLabel = {};
-                  var grid_btm = 60;
+                  var grid_btm = 80;
                   if (opt.need_group == "1") {
                     stack_name = 'group';
                     labelPos = 'inside';
+                    colors = group_colors;
                   }
                   if (opt.series[0].data.length > 10) {
-                  axisLabel = {
+                    axisLabel = {
                       interval: 0,
                       formatter: function(val) {
-                        if(val.indexOf('月') > -1) {
+                        if (val.indexOf('月') > -1) {
                           return val;
                         }
                         return val.split("").join("\n"); //横轴信息文字竖直显示
                       }
 
                     };
-                    }
+                  }
                   _.forEach(opt.series, function(item) {
                     item.label = {
-                      normal:{
-                        show:true,
+                      normal: {
+                        show: true,
                         normal: {
                           position: labelPos,
                           textStyle: {
@@ -330,15 +352,14 @@
                       }
                     };
                     if (item.type == 'bar') {
-                      if(item.data.length<3){
+                      if (item.data.length < 3) {
                         item.barMaxWidth = '20%';
-                      }
-                      else{
+                      } else {
                         item.barMaxWidth = '40%';
-                        if(item.data.length > 10) {
-                          item.label =  {
-                            normal:{
-                              show:false
+                        if (item.data.length > 10) {
+                          item.label = {
+                            normal: {
+                              show: false
                             }
                           }
                         }
@@ -386,7 +407,7 @@
                     }
 
                     item.connectNulls = true;
-                  //  item.label = label;
+                    //  item.label = label;
                     item.stack = stack_name;
 
                   });
@@ -402,10 +423,14 @@
                     legend: {
                       top: 'bottom',
                       bottom: 20,
-                      data: opt.legend
+                      data: opt.legend,
+                      textStyle: {
+                        fontSize: 14
+                      }
                     },
                     grid: {
-                      bottom: grid_btm
+                      bottom: grid_btm,
+                      top:'10%'
                     },
                     xAxis: [{
                       type: 'category',
