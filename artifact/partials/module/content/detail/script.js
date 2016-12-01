@@ -41,7 +41,7 @@
 
       $scope.changed = function(index) {
         if (!angular.isDate($scope.popups[index].model) || isNaN($scope.popups[index].model.getTime())) {
-          alert('请输入正确的日期格式！');
+          //alert('请输入正确的日期格式！');
           return;
         }
         if ($scope.popups[index].time_scope == 'quarter') {
