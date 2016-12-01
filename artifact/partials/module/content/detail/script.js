@@ -116,6 +116,10 @@
         link: function(scope, element, attrs) {
           // var mainHeightFst = $('.content-main')[0].scrollHeight;
           // $('.side-nav').css({'height':mainHeightFst + "px"});
+          // var box_height = $('.content-box').height() * 0.8 + 'px';
+          // $('.content-box .chart').css({
+          //   'height': box_height
+          // });
 
           function getDateFormat(parseDate, format) {
             var date = angular.copy(parseDate);
@@ -313,12 +317,31 @@
                     };
                     }
                   _.forEach(opt.series, function(item) {
+                    item.label = {
+                      normal:{
+                        show:true,
+                        normal: {
+                          position: labelPos,
+                          textStyle: {
+                            color: '#333',
+                            fontSize: 12
+                          }
+                        }
+                      }
+                    };
                     if (item.type == 'bar') {
                       if(item.data.length<3){
                         item.barMaxWidth = '20%';
                       }
                       else{
                         item.barMaxWidth = '40%';
+                        if(item.data.length > 10) {
+                          item.label =  {
+                            normal:{
+                              show:false
+                            }
+                          }
+                        }
                       }
                     }
                     if (item.type == 'line') {
@@ -350,10 +373,10 @@
                       }
                     }
                     if (item.data.length > 5) {
-                      $('.box-wrap').css({
-                        '-webkit-flex-flow': 'column',
-                        'flex-flow': 'column'
-                      });
+                      // $('.box-wrap').css({
+                      //   '-webkit-flex-flow': 'column',
+                      //   'flex-flow': 'column'
+                      // });
 
                       _.forEach(item.data, function(data) {
                         if (data.name && data.name.length > 5 && item.data.length > 12) { // 字符长度大于5
@@ -361,18 +384,9 @@
                         }
                       })
                     }
-                    var label = {
-                      normal: {
-                        show: true,
-                        position: labelPos,
-                        textStyle: {
-                          color: '#333',
-                          fontSize: 12
-                        }
-                      }
-                    };
+
                     item.connectNulls = true;
-                    item.label = label;
+                  //  item.label = label;
                     item.stack = stack_name;
 
                   });
@@ -472,12 +486,12 @@
                     picCode: scope.content.picCode,
                     queryTime: getDateFormat(timeParam, timeFormatParam)
                   }).then(function(res) {
-                    if (res.data.columnName.length > 5) {
-                      $('.box-wrap').css({
-                        '-webkit-flex-flow': 'column',
-                        'flex-flow': 'column'
-                      });
-                    }
+                    // if (res.data.columnName.length > 5) {
+                    //   $('.box-wrap').css({
+                    //     '-webkit-flex-flow': 'column',
+                    //     'flex-flow': 'column'
+                    //   });
+                    // }
                     scope.content.columnNames = res.data.columnName;
 
                     scope.content.rowData = res.data.rowData;
@@ -485,6 +499,9 @@
                 }
                 setTimeout(function() {
                   chartInstance = echarts.init((element.find('div'))[0]);
+                  console.log(element.find('div')[0]);
+                  console.log($('.graph').height());
+                  //element.find('div')[0].style.height = $('.graph').height() + 'px';
                   chartInstance.clear();
                   chartInstance.resize();
                   chartInstance.setOption(option);

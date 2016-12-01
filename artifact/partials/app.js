@@ -82,10 +82,13 @@
           config.withCredentials = true;
           var screen_width = screen.width;
           var screen_height = screen.height;
-          var box_height = screen_height * 0.56 + 'px';
-          $('.content-box .chart').css({
-            'height': box_height
-          });
+          var box_height = $('.content-box').height() * 0.7 + 'px';
+          // $('.content-box .chart').css({
+          //   'height': box_height
+          // });
+          // $('.content-box .table-data').css({
+          //   'height': $('.content-box').height() * 0.3 + 'px'
+          // });
           return config;
 
         },
