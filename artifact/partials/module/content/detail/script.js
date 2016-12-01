@@ -401,7 +401,7 @@
 
                       _.forEach(item.data, function(data) {
                         if (data.name && data.name.length > 5 && item.data.length > 12) { // 字符长度大于5
-                          grid_btm = 150;
+                          grid_btm = 190;
                         }
                       })
                     }
@@ -524,8 +524,6 @@
                 }
                 setTimeout(function() {
                   chartInstance = echarts.init((element.find('div'))[0]);
-                  console.log(element.find('div')[0]);
-                  console.log($('.graph').height());
                   //element.find('div')[0].style.height = $('.graph').height() + 'px';
                   chartInstance.clear();
                   chartInstance.resize();
