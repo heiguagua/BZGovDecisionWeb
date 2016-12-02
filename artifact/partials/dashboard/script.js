@@ -199,7 +199,7 @@
                       labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'<br/>';
                     }
                   } else {
-                    labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
+                    labelShow = obj.data.name + ":" + obj.data.value + '亿元<br/>';
                     if (opt.auto_count && opt.auto_count == 'percent') {
                       labelShow += '占比：' + obj.percent + '%';
                     }

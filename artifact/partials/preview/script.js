@@ -172,7 +172,7 @@
                       labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'<br/>';
                     }
                   } else {
-                    labelShow = obj.data.name + ":" + obj.data.value + '<br/>';
+                    labelShow = obj.data.name + ":" + obj.data.value + '亿元<br/>';
                     if (opt.auto_count && opt.auto_count == 'percent') {
                       labelShow += '占比：' + obj.percent + '%';
                     }
@@ -189,7 +189,7 @@
                 label: {
                   normal: {
                     position: 'center',
-                    formatter: '{b}\n {c}亿',
+                    formatter: '{b}\n {c}亿元',
                     textStyle: {
                       color: '#333'
                     }
