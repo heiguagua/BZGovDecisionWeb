@@ -197,10 +197,10 @@
                   scope.content.format = 'yyyy';
                   dateOptions.minMode = 'year';
                   dateOptions.datepickerMode = 'year';
-
-
                 }
                 scope.content.dateOptions = dateOptions;
+
+
 
                 opt.yAxis = [];
                 _.forEach(opt.y_name, function(item, index) {
@@ -217,8 +217,8 @@
                 });
 
                 var colors = ['rgb(79,129,188)', 'rgb(2,170,66)', 'rgb(228,92,93)', 'rgb(71,190,121)'];
-                var pie_colors = ['#FFF', 'rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)','rgb(228,92,93)'];
-                var group_colors = [ 'rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)','rgb(228,92,93)'];
+                var pie_colors = ['#FFF', 'rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)', 'rgb(228,92,93)'];
+                var group_colors = ['rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)', 'rgb(228,92,93)'];
                 if (opt.series[0].type == 'pie') {
                   option.series = opt.series;
                   if (option.series.length == 1) {
@@ -313,7 +313,7 @@
                       fontSize: 14
                     }
                   };
-                  option.radar.radius ='70%';
+                  option.radar.radius = '70%';
                   option.radar.indicator = indicators;
                   option.series = opt.series;
                 } else {
@@ -430,7 +430,7 @@
                     },
                     grid: {
                       bottom: grid_btm,
-                      top:'10%'
+                      top: '10%'
                     },
                     xAxis: [{
                       type: 'category',
@@ -444,6 +444,7 @@
                     series: opt.series
                   };
                 }
+                // table data
                 if (opt.table_type == 'same') {
                   scope.content.columnNames = opt.x_data;
                   var rowDatas = [];
@@ -522,15 +523,27 @@
                     scope.content.rowData = res.data.rowData;
                   })
                 }
-                setTimeout(function() {
-                  chartInstance = echarts.init((element.find('div'))[0]);
-                  //element.find('div')[0].style.height = $('.graph').height() + 'px';
-                  chartInstance.clear();
-                  chartInstance.resize();
-                  chartInstance.setOption(option);
-                  // var mainHeight = $('.content-main')[0].scrollHeight;
-                  // $('.side-nav').css({'height':mainHeight + "px"});
-                }, 300);
+
+                if (scope.content.picCode == '4112') { // 全市服务业企业登记情况,特殊处理
+                var enTotal = opt.series[0].data;
+                var enNum = opt.series[1].data;
+                element.find('div')[0].innerHTML = '<div class="item-wrap">' +
+                  '<div class="chart-item"><div class="item"><div class="pic pic-home"><i class="fa fa-home"></i></div></div><div class="item"><div class="pic pic-home"><i class="fa fa-rmb"></i></div></div></div>' +
+                  '<div class="chart-item"><div class="item"><div class="content-item">'+enTotal[0].name+enTotal[0].value+enTotal[0].unit+'</div></div><div class="item"><div class="content-item">'+opt.series[1].name + "："+enNum[1].value+enNum[0].unit+'</div></div></div>' +
+                  '<div class="chart-item"><div class="item"><div class="content-item">'+enTotal[1].name+enTotal[1].value+enTotal[1].unit+'</div></div><div class="item"><div class="content-item">'+opt.series[1].name + "："+enNum[1].value+enNum[1].unit+'</div></div></div>' +
+                  '<div>';
+                } else {
+                  setTimeout(function() {
+                    chartInstance = echarts.init((element.find('div'))[0]);
+                    //element.find('div')[0].style.height = $('.graph').height() + 'px';
+                    chartInstance.clear();
+                    chartInstance.resize();
+                    chartInstance.setOption(option);
+                    // var mainHeight = $('.content-main')[0].scrollHeight;
+                    // $('.side-nav').css({'height':mainHeight + "px"});
+                  }, 300);
+                }
+
               }
 
             });

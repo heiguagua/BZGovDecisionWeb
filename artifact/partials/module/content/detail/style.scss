@@ -201,3 +201,42 @@
     @include flex-num(1);
   }
 }
+.item-wrap {
+  width: 100%;
+  height: 100%;
+  @include flex-flow(column);
+  .chart-item {
+    @include flex-num(1);
+    @include flex-flow(row);
+    .item {
+      @include flex-num(1);
+      @include flex-flow(row);
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      .pic {
+        background: #4ca3d8;
+        border-radius: 50%;
+        padding: 10px;
+        width: 6rem;
+        height: 6rem;
+        display: inline-block;
+        text-align: center;
+      }
+      .fa {
+        font-size: 5rem;
+        color: $white;
+      }
+      .content-item {
+        width: 86%;
+        display: inline-block;
+        text-align: center;
+        padding: 1.4rem 1rem;
+        background: rgba(0,176,80,1);
+        font-size:0.9rem;
+        color:$white;
+      }
+    }
+  }
+}

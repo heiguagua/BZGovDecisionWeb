@@ -12,9 +12,9 @@
         if($stateParams.typeid == 0) { // 首页
           $state.go('main.preview',{preid:$stateParams.mid});
         }
-        else if($stateParams.typeid == 2) { // 政策文件
-          $state.go('main.file',{furl:$stateParams.murl});
-        }
+        // else if($stateParams.typeid == 2) { // 政策文件
+        //   $state.go('main.file',{furl:$stateParams.murl});
+        // }
         else{
           $state.go('main.module',{id:$stateParams.mid});
         }

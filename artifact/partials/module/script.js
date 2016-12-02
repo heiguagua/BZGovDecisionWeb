@@ -7,9 +7,9 @@
     function($scope, moduleService, $stateParams, $state) {
       var vm = this;
       if ($stateParams.url != '') {
-        $state.go('main.module.file', {
-          furl: $stateParams.url
-        });
+        // $state.go('main.module.file', { // hide file for temporary
+        //   furl: $stateParams.url
+        // });
       } else {
         moduleService.getMenuTabs({
           parentId: $stateParams.id
