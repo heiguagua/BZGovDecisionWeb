@@ -210,13 +210,21 @@
                   yAxis.axisTick = {};
                   yAxis.axisTick.inside = true;
                   if (opt.max_and_min) {
+                    if(opt.max_and_min[index].minValue<0 || (opt.max_and_min[index].minValue>0 && opt.max_and_min[index].minValue<1)){
+                      opt.max_and_min[index].minValue = Number(opt.max_and_min[index].minValue)-1;
+                    }
+                    if(opt.max_and_min[index].maxValue<0 || (opt.max_and_min[index].maxValue>0 && opt.max_and_min[index].maxValue<1)) {
+                      console.log(opt.max_and_min[index].maxValue);
+                      opt.max_and_min[index].maxValue = 1 + Number(opt.max_and_min[index].maxValue);
+                    }
+                    console.log(opt.max_and_min[index].maxValue);
                     yAxis.min = Math.round(opt.max_and_min[index].minValue);
                     yAxis.max = Math.round(opt.max_and_min[index].maxValue);
                   }
                   opt.yAxis.push(yAxis);
                 });
 
-                var colors = ['rgb(79,129,188)', 'rgb(2,170,66)', 'rgb(228,92,93)', 'rgb(71,190,121)'];
+                var colors = ['rgb(79,129,188)', 'rgb(72,200,126)', 'rgb(228,92,93)', 'rgb(71,190,121)'];
                 var pie_colors = ['#FFF', 'rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)', 'rgb(228,92,93)'];
                 var group_colors = ['rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)', 'rgb(228,92,93)'];
                 if (opt.series[0].type == 'pie') {
@@ -320,7 +328,7 @@
                   var stack_name = '';
                   var labelPos = 'top';
                   var axisLabel = {};
-                  var grid_btm = 80;
+                  var grid_btm = 70;
                   if (opt.need_group == "1") {
                     stack_name = 'group';
                     labelPos = 'inside';
@@ -342,12 +350,9 @@
                     item.label = {
                       normal: {
                         show: true,
-                        normal: {
-                          position: labelPos,
-                          textStyle: {
-                            color: '#333',
-                            fontSize: 12
-                          }
+                        position: labelPos,
+                        textStyle: {
+                          fontSize: 12
                         }
                       }
                     };
@@ -362,6 +367,18 @@
                               show: false
                             }
                           }
+                        }
+                        else{
+                          item.label = {
+                            normal: {
+                              show: true,
+                              position: labelPos,
+                              textStyle: {
+                                color: '#333',
+                                fontSize: 12
+                              }
+                            }
+                          };
                         }
                       }
                     }
@@ -415,7 +432,8 @@
                     color: colors,
                     title: {
                       text: opt.title,
-                      left: 'center'
+                      left: 'center',
+                      top:-6
                     },
                     tooltip: {
                       trigger: 'axis'
@@ -430,7 +448,7 @@
                     },
                     grid: {
                       bottom: grid_btm,
-                      top: '10%'
+                      top: '12%'
                     },
                     xAxis: [{
                       type: 'category',
@@ -525,13 +543,13 @@
                 }
 
                 if (scope.content.picCode == '4112') { // 全市服务业企业登记情况,特殊处理
-                var enTotal = opt.series[0].data;
-                var enNum = opt.series[1].data;
-                element.find('div')[0].innerHTML = '<div class="item-wrap">' +
-                  '<div class="chart-item"><div class="item"><div class="pic pic-home"><i class="fa fa-home"></i></div></div><div class="item"><div class="pic pic-home"><i class="fa fa-rmb"></i></div></div></div>' +
-                  '<div class="chart-item"><div class="item"><div class="content-item">'+enTotal[0].name+enTotal[0].value+enTotal[0].unit+'</div></div><div class="item"><div class="content-item">'+opt.series[1].name + "："+enNum[1].value+enNum[0].unit+'</div></div></div>' +
-                  '<div class="chart-item"><div class="item"><div class="content-item">'+enTotal[1].name+enTotal[1].value+enTotal[1].unit+'</div></div><div class="item"><div class="content-item">'+opt.series[1].name + "："+enNum[1].value+enNum[1].unit+'</div></div></div>' +
-                  '<div>';
+                  var enTotal = opt.series[0].data;
+                  var enNum = opt.series[1].data;
+                  element.find('div')[0].innerHTML = '<div class="item-wrap">' +
+                    '<div class="chart-item"><div class="item"><div class="pic pic-home"><i class="fa fa-home"></i></div></div><div class="item"><div class="pic pic-home"><i class="fa fa-rmb"></i></div></div></div>' +
+                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[0].name + enTotal[0].value + enTotal[0].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：" + enNum[1].value + enNum[0].unit + '</div></div></div>' +
+                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[1].name + enTotal[1].value + enTotal[1].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：" + enNum[1].value + enNum[1].unit + '</div></div></div>' +
+                    '<div>';
                 } else {
                   setTimeout(function() {
                     chartInstance = echarts.init((element.find('div'))[0]);
