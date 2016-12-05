@@ -1,6 +1,8 @@
 .content-box {
   @include flex-flow(column);
   @include flex-num(1);
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
   .chart {
     border: 1px solid #DDD;
     margin-bottom: 10px;
@@ -14,11 +16,14 @@
     //   height: 600px;
     // }
     .graph {
-      padding: 5px 10px 5px 10px;
+      padding: 5px 10px;
       @include flex-num(1);
     }
   }
   .table-data {
+    @include smallscreen {
+      max-height: 100px;
+    }
     @include flex-num(1);
     @include flex-flow(column);
   }
@@ -74,6 +79,7 @@
     font-size: 16px;
     font-family: 黑体;
     table-layout: fixed;
+    @include flex-num(1);
     >tbody {
       >tr {
         &:nth-of-type(even) {
@@ -167,7 +173,7 @@
     max-width: 198px;
     .input-group {
       display: table;
-      margin-bottom:0;
+      margin-bottom: 0;
       .input-group-btn {
         vertical-align: top;
         width: 30px;
@@ -235,8 +241,8 @@
         text-align: center;
         padding: 1.4rem 0.7rem;
         background: rgba(0,176,80,1);
-        font-size:0.9rem;
-        color:$white;
+        font-size: 0.9rem;
+        color: $white;
       }
     }
   }
