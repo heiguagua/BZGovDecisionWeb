@@ -623,14 +623,6 @@
             }
             scope.ccontent.query_time = opt.init_query_time;
             scope.ccontent.dep_name = opt.dep_name;
-            _.forEach(opt.series, function(item) {
-              item.label = {
-                normal: {
-                  show: true,
-                  position: 'top'
-                }
-              };
-            });
             var yAxis_min = 0;
             var yAxis_max = 0;
             if(opt.max_and_min){
