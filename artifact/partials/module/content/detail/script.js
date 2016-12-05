@@ -441,7 +441,7 @@
                     title: {
                       text: opt.title,
                       left: 'center',
-                      top:-6
+                      top:-4
                     },
                     tooltip: {
                       trigger: 'axis'
@@ -456,7 +456,7 @@
                     },
                     grid: {
                       bottom: grid_btm,
-                      top: '12%'
+                      top: '15%'
                     },
                     xAxis: [{
                       type: 'category',
