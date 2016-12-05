@@ -605,8 +605,13 @@
                 boundaryGap: false,
                 data: opt.x_data,
                 axisLabel:{
+                  interval: 0,
                   textStyle:{
                     fontSize:8
+                  },
+                  formatter:function(value){
+                    var month = value.substring(value.indexOf('-')+1);
+                    return Number(month) + '月';
                   }
                 },
               },

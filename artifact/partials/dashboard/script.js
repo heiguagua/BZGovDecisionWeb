@@ -669,13 +669,18 @@
                   }
                 },
                 axisLabel:{
+                  interval: 0,
                   textStyle:{
                     fontSize:8
+                  },
+                  formatter:function(value){
+                    var month = value.substring(value.indexOf('-')+1);
+                    return Number(month) + '月';
                   }
                 },
                 splitLine: {
                   show: true,
-                  interval: 'auto',
+                  interval: 0,
                   lineStyle: {
                     color: colors[3]
                   }
