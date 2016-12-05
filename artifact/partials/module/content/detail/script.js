@@ -359,6 +359,11 @@
                         }
                       }
                     };
+                    if(scope.content.picCode == '4211' || scope.content.picCode == '4212') {
+                      item.label.normal = {
+                        show:false
+                      };
+                    }
                     if (item.type == 'bar') {
                       if (item.data.length < 3) {
                         item.barMaxWidth = '20%';
