@@ -210,9 +210,7 @@
                   yAxis.axisTick = {};
                   yAxis.axisTick.inside = true;
                   if (opt.max_and_min) {
-                    if(opt.max_and_min[index].minValue<0 || (opt.max_and_min[index].minValue>0 && opt.max_and_min[index].minValue<1)){
-                      opt.max_and_min[index].minValue = Number(opt.max_and_min[index].minValue)-1;
-                    }
+                    opt.max_and_min[index].minValue = opt.max_and_min[index].minValue-1;
                     if(opt.max_and_min[index].maxValue<0 || (opt.max_and_min[index].maxValue>0 && opt.max_and_min[index].maxValue<1)) {
                       console.log(opt.max_and_min[index].maxValue);
                       opt.max_and_min[index].maxValue = 1 + Number(opt.max_and_min[index].maxValue);
@@ -224,7 +222,7 @@
                   opt.yAxis.push(yAxis);
                 });
 
-                var colors = ['rgb(79,129,188)', 'rgb(72,200,126)', 'rgb(228,92,93)', 'rgb(71,190,121)'];
+                var colors = ['rgb(0,112,192)', 'rgb(72,200,126)', 'rgb(228,92,93)', 'rgb(71,190,121)'];
                 var pie_colors = ['#FFF', 'rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)', 'rgb(228,92,93)'];
                 var group_colors = ['rgb(90,177,239)', 'rgb(46,199,201)', 'rgb(182,162,222)', 'rgb(228,92,93)'];
                 if (opt.series[0].type == 'pie') {
@@ -352,6 +350,7 @@
                         show: true,
                         position: labelPos,
                         textStyle: {
+                          color: '#333',
                           fontSize: 12
                         }
                       }
@@ -418,7 +417,12 @@
 
                       _.forEach(item.data, function(data) {
                         if (data.name && data.name.length > 5 && item.data.length > 12) { // 字符长度大于5
-                          grid_btm = 190;
+                          if(scope.content.picCode == '2322') {
+                            grid_btm = 100;
+                          }
+                          else{
+                            grid_btm = 190;
+                          }
                         }
                       })
                     }

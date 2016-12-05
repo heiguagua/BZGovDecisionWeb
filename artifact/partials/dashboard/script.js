@@ -449,54 +449,89 @@
             if (opt.dataItems && opt.dataItems[1]) {
               subtext = opt.dataItems[1];
             }
-            var indicators = [];
-            _.forEach(opt.x_data, function(item, index) {
-              var indicator = {};
-              indicator.name = item;
-              var dataArray = _.map(opt.series[0].data, 'value');
-              var max = Number(opt.series[0].data[0].value[index]);
-              _.forEach(dataArray, function(data, index2) {
-                if (Number(opt.series[0].data[index2].value[index]) > max) {
-                  max = Number(opt.series[0].data[index2].value[index]);
-                }
-              });
-              indicator.max = max + 100;
-              indicators.push(indicator);
-            });
 
-            var colors = ['rgb(232, 215, 64)', 'rgb(154, 253, 138)', 'rgb(14, 83, 108)', 'rgb(0,204,200)'];
-            var areaColors = ['rgba(232, 215, 64, 0.5)', 'rgba(154, 253, 138, 0.5)', 'rgba(14, 83, 108, 0.5)', 'rgba(0,204,200,0.5)'];
-            _.forEach(opt.series[0].data, function(item, index) {
-              item.itemStyle = {
-                normal: {
-                  color: colors[index],
-                  borderType: 'dashed'
+
+            var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)'];
+            var areaColors = ['rgb(0,168,228)', 'rgb(107,217,95)', 'rgba(14, 83, 108, 0.5)', 'rgba(0,204,200,0.5)'];
+            opt.yAxis = [];
+            _.forEach(opt.y_name, function(item, index) {
+              var yAxis = {};
+              yAxis.type = 'value';
+              yAxis.name = item;
+              yAxis.axisLabel = {
+                textStyle:{
+                  color:'#FFF'
                 }
               };
-              item.areaStyle = {
-                normal: {
-                  opacity: 0.9,
-                  color: areaColors[index]
+              yAxis.axisTick = {};
+              yAxis.axisTick.inside = true;
+              yAxis.axisLine = {lineStyle: {
+                color: colors[2],
+                shadowColor: colors[2],
+                shadowBlur: 4
+              }};
+              yAxis.splitLine = {
+                show: true,
+                interval: 'auto',
+                lineStyle: {
+                  color: colors[3]
                 }
+              };
+              yAxis.splitArea = {
+                show: true,
+                areaStyle: {
+                  color: colors[4]
+                }
+              };
+              if (opt.max_and_min) {
+                if(opt.max_and_min[index].minValue<0 || (opt.max_and_min[index].minValue>0 && opt.max_and_min[index].minValue<1)){
+                  opt.max_and_min[index].minValue = Number(opt.max_and_min[index].minValue)-1;
+                }
+                if(opt.max_and_min[index].maxValue<0 || (opt.max_and_min[index].maxValue>0 && opt.max_and_min[index].maxValue<1)) {
+                  console.log(opt.max_and_min[index].maxValue);
+                  opt.max_and_min[index].maxValue = 1 + Number(opt.max_and_min[index].maxValue);
+                }
+                console.log(opt.max_and_min[index].maxValue);
+                yAxis.min = Math.round(opt.max_and_min[index].minValue);
+                yAxis.max = Math.round(opt.max_and_min[index].maxValue);
               }
+              opt.yAxis.push(yAxis);
+            });
+            _.forEach(opt.series, function(item) {
+              if (item.type == 'bar') {
+                item.barMaxWidth = '20%';
+              }
+              item.label = {
+                normal: {
+                  show: true,
+                  position: 'top',
+                  textStyle:{
+                    color:'#FFF'
+                  }
+                }
+              };
             });
             var option = {
-              tooltip: {},
+              color: areaColors,
               title: {
                 text: text.name + "：" + text.value + text.unit,
                 subtext: subtext.name + "：" + subtext.value + subtext.unit,
                 textStyle: {
                   fontSize: 12,
-                  color: colors[3],
+                  color: 'rgb(0,204,200)',
                 },
                 subtextStyle: {
                   fontSize: 12,
-                  color: colors[3],
+                  color: 'rgb(0,204,200)',
                   fontWeight: 'border'
                 },
                 itemGap: 10,
                 padding: 4,
                 backgroundColor: 'rgba(0, 120, 215, 0.5)'
+              },
+              grid:{
+                top:'24%',
+                bottom:30
               },
               legend: {
                 orient: 'vertical',
@@ -507,29 +542,44 @@
                   fontSize:14
                 }
               },
-              radar: {
-                // shape: 'circle',
-                indicator: indicators,
-                radius:'64%',
-                name: {
-                  formatter: '{value}',
-                  textStyle: {
-                    color: '#fbfbfb',
-                    fontSize:14
+              tooltip: {
+                trigger: 'axis'
+              },
+              xAxis: [{
+                type: 'category',
+                axisTick: {
+                  show: false
+                },
+                axisLine: {
+                  lineStyle: {
+                    color: colors[2],
+                    shadowColor: colors[2],
+                    shadowBlur: 4
                   }
                 },
-                nameGap:8
-              },
-              series: [{
-                name: opt.title,
-                type: 'radar',
-                symbol: 'circle',
-                symbolSize: 2,
-                areaStyle: {
-                  normal: {}
+                axisLabel:{
+                  interval: 0,
+                  textStyle:{
+                    fontSize:8
+                  }
                 },
-                data: opt.series[0].data
-              }]
+                splitLine: {
+                  show: true,
+                  interval: 'auto',
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                },
+                data: opt.x_data
+              }],
+              yAxis: opt.yAxis,
+              series: opt.series
             };
 
             chartInstance3 = echarts.init((element.find('div'))[0]);
@@ -594,7 +644,8 @@
                 trigger: 'axis'
               },
               legend: {
-                top: 'bottom',
+                orient: 'vertical',
+                left: 'right',
                 data: opt.legend,
                 textStyle:{
                   color:'#d5e2df',
@@ -602,8 +653,9 @@
                 }
               },
               grid:{
-                right:'3%',
-                top:'8%'
+                //right:'3%',
+                top:'24%',
+                bottom:30
               },
               xAxis: {
                 type: 'category',
@@ -640,6 +692,7 @@
                 axisLabel: {
                   formatter: '{value}'
                 },
+                name:opt.y_name,
                 min:yAxis_min,
                 max:yAxis_max,
                 interval:10,
