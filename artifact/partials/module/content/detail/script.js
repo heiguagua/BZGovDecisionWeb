@@ -319,8 +319,12 @@
                       fontSize: 14
                     }
                   };
-                  option.radar.radius = '70%';
+                  option.radar.nameGap = 8;
+                  option.radar.radius = '60%';
                   option.radar.indicator = indicators;
+                  if(scope.content.picCode == '2321') {
+                    option.radar.startAngle = 162;
+                  }
                   option.series = opt.series;
                 } else {
                   var stack_name = '';
