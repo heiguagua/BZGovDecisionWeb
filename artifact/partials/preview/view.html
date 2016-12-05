@@ -39,8 +39,8 @@
           </div>
           <div class='box-content panel-body'>
 
-            <div class='chart ' wiserv-chart1-etotal econtent=chartlist[0]></div>
-            <div class='chart ' wiserv-chart1-increase icontent=chartlist[1]></div>
+            <div class='chart ' wiserv-chart-etotal econtent=chartlist[0]></div>
+            <div class='chart ' wiserv-chart-increase icontent=chartlist[1]></div>
           </div>
         </div>
         <div class='center-down'>
@@ -52,7 +52,7 @@
                 </div>
                 <div class='pull-right box-sub-title'>{{chartlist[2].query_time}}数据：来源{{chartlist[2].dep_name}}</div>
               </div>
-              <div class='panel-body chart' wiserv-chart-invest1 vcontent=chartlist[2]></div>
+              <div class='panel-body chart' wiserv-chart-invest vcontent=chartlist[2]></div>
             </div>
           </div>
           <div class='right15 left5'>
@@ -63,7 +63,7 @@
                 </div>
                 <div class='pull-right box-sub-title'>{{chartlist[3].query_time}}数据：来源{{chartlist[3].dep_name}}</div>
               </div>
-              <div class='panel-body chart ' wiserv-chart-cpi1 ccontent=chartlist[3] style='padding: 8px 0 20px 0;'></div>
+              <div class='panel-body chart ' wiserv-chart-cpi ccontent=chartlist[3] style='padding: 8px 0 20px 0;'></div>
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@
             <div class='pull-right box-sub-title'></div>
           </div>
           <div class='panel-body' style='overflow-y: auto;padding:10px'>
-            <!-- <div class='data-items'>
+            <div class='data-items'>
               <div class='data-item iname' style='font-weight:bold'>{{preview.ecoData.init_query_time}}数据</div>
               <div class='data-item' style='width: 25%;padding: 2px 6px;' ng-repeat='colname in preview.ecoData.columnName'>{{colname}}</div>
             </div>
@@ -93,7 +93,7 @@
             <div class='data-items' ng-repeat='edata in preview.ecoDataDown.rowData'>
               <div class='data-item iname'>{{edata.rowName}}</div>
               <div class='data-item' style='width: 25%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]"><span ng-if='data.value == ""'>-</span><span ng-if='data.value != ""'>{{data.value}}</span></div>
-            </div> -->
+            </div>
           </div>
         </div>
         <div class='right-bottom box panel panel-default'>
@@ -103,7 +103,7 @@
             </div>
             <div class='pull-right box-sub-title'>{{chartlist[4].query_time}}数据：来源{{chartlist[4].dep_name}}</div>
           </div>
-          <div class='panel-body chart ' wiserv-chart-consume1 scontent=chartlist[4] style='min-height: 236px;'></div>
+          <div class='panel-body chart ' wiserv-chart-consume scontent=chartlist[4] style='min-height: 236px;'></div>
         </div>
       </div>
     </div>
