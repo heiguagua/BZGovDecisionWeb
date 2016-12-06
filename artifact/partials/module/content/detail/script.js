@@ -213,18 +213,19 @@
                   if (opt.max_and_min) {
                     opt.max_and_min[index].minValue = opt.max_and_min[index].minValue-1;
                     if(opt.max_and_min[index].maxValue<0 || (opt.max_and_min[index].maxValue>0 && opt.max_and_min[index].maxValue<1)) {
-                      console.log(opt.max_and_min[index].maxValue);
                       opt.max_and_min[index].maxValue = 1 + Number(opt.max_and_min[index].maxValue);
                     }
-                    console.log(opt.max_and_min[index].maxValue);
                     yAxis.min = Math.round(opt.max_and_min[index].minValue);
                     yAxis.max = Math.round(opt.max_and_min[index].maxValue);
                   }
+                  yAxis.splitBumber = 5;
+                  yAxis.interval = (yAxis.max-yAxis.min)/yAxis.splitBumber;
+                  yAxis.axisLine = {onZero:false};
                   if(index == 0) {
                     yAxis.splitLine = {show:true}
                   }
                   else{
-                    yAxis.splitLine = {show:false}
+                    yAxis.splitLine = {show:true,lineStyle:{type:'dashed'}}
                   }
                   opt.yAxis.push(yAxis);
                 });
@@ -354,7 +355,10 @@
                       }
 
                     };
-                  }
+                  };
+                  axisLabel.textStyle ={
+                    fontWeight:'bolder'
+                  };
                   _.forEach(opt.series, function(item,index) {
                     item.label = {
                       normal: {
@@ -390,7 +394,8 @@
                               position: labelPos,
                               textStyle: {
                                 color: '#333',
-                                fontSize: 12
+                                fontSize: 12,
+                                fontWeight:'bolder'
                               }
                             }
                           };
@@ -408,17 +413,15 @@
                               normal: {
                                 show: true,
                                 textStyle: {
-                                  color: colors[2]
+                                  color: colors[2],
+                                  fontWeight:'bolder'
                                 }
                               }
                             }
                           } else {
                             idata.label = {
                               normal: {
-                                show: false,
-                                textStyle: {
-                                  color: colors[2]
-                                }
+                                show: false
                               }
                             }
                           }
@@ -463,7 +466,8 @@
                       bottom: 20,
                       data: opt.legend,
                       textStyle: {
-                        fontSize: 14
+                        fontSize: 14,
+                        fontWeight:'bolder'
                       }
                     },
                     grid: {
