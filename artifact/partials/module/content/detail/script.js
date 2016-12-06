@@ -311,14 +311,37 @@
                   _.forEach(opt.x_data, function(item, index) {
                     var indicator = {};
                     indicator.name = item;
-                    var dataArray = _.map(opt.series[0].data, 'value');
-                    var max = Number(opt.series[0].data[0].value[index]);
-                    _.forEach(dataArray, function(data, index2) {
-                      if (Number(opt.series[0].data[index2].value[index]) > max) {
-                        max = Number(opt.series[0].data[index2].value[index]);
-                      }
-                    });
-                    indicator.max = max + 10;
+                      var max = 0;
+                      var min = 0;
+                    if(opt.series[0].data.length == 1) {
+                      var dataArray = _.map(opt.series[0].data, 'value')[0];
+                      max = Number(dataArray[index]);
+                      min = Number(dataArray[index]);
+                      _.forEach(dataArray[0], function(data, index2) {
+                        if (Number(dataArray[index2]) > max) {
+                          max = Number(dataArray[index2]);
+                        }
+                        if (Number(dataArray[index2]) < min) {
+                          min = Number(dataArray[index2]);
+                        }
+                      });
+                    }
+                    else{
+                      var dataArray = _.map(opt.series[0].data, 'value');
+                      max = Number(dataArray[0][0]);
+                      min = Number(dataArray[0][0]);
+                      _.forEach(dataArray[index], function(data) {
+                        if (Number(data) > max) {
+                          max = Number(data);
+                        }
+                        if (Number(data) < min) {
+                          min = Number(data);
+                        }
+                      });
+                    }
+
+                    indicator.max = max;
+                    indicator.min = min*0.8;
                     indicators.push(indicator);
                   });
                   option.color = colors;
