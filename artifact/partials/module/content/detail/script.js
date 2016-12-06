@@ -323,6 +323,15 @@
                   });
                   option.color = colors;
                   option.tooltip = {};
+                  option.legend = {
+                    top: 'bottom',
+                    bottom: 20,
+                    data: opt.legend,
+                    textStyle: {
+                      fontSize: 14,
+                      fontWeight:'bolder'
+                    }
+                  };
                   option.title = {
                     text: opt.title,
                     left: 'center'
