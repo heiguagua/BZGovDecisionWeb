@@ -204,6 +204,7 @@
 
                 opt.yAxis = [];
                 _.forEach(opt.y_name, function(item, index) {
+
                   var yAxis = {};
                   yAxis.type = 'value';
                   yAxis.name = item;
@@ -218,6 +219,12 @@
                     console.log(opt.max_and_min[index].maxValue);
                     yAxis.min = Math.round(opt.max_and_min[index].minValue);
                     yAxis.max = Math.round(opt.max_and_min[index].maxValue);
+                  }
+                  if(index == 0) {
+                    yAxis.splitLine = {show:true}
+                  }
+                  else{
+                    yAxis.splitLine = {show:false}
                   }
                   opt.yAxis.push(yAxis);
                 });
@@ -348,7 +355,7 @@
 
                     };
                   }
-                  _.forEach(opt.series, function(item) {
+                  _.forEach(opt.series, function(item,index) {
                     item.label = {
                       normal: {
                         show: true,
