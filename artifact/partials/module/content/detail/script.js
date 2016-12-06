@@ -210,23 +210,30 @@
                   yAxis.name = item;
                   yAxis.axisTick = {};
                   yAxis.axisTick.inside = true;
+
                   if (opt.max_and_min) {
-                    opt.max_and_min[index].minValue = opt.max_and_min[index].minValue-1;
-                    if(opt.max_and_min[index].maxValue<0 || (opt.max_and_min[index].maxValue>0 && opt.max_and_min[index].maxValue<1)) {
-                      opt.max_and_min[index].maxValue = 1 + Number(opt.max_and_min[index].maxValue);
+                    var minValue = Number(opt.max_and_min[index].minValue);
+                    var maxValue = Number(opt.max_and_min[index].maxValue);
+                    if(minValue>=0 && minValue < 1) {
+                      minValue = 0;
                     }
-                    yAxis.min = Math.round(opt.max_and_min[index].minValue);
-                    yAxis.max = Math.round(opt.max_and_min[index].maxValue);
+                    else{
+                      minValue = minValue-1;
+                    }
+                    maxValue = 1 + maxValue;
+                    yAxis.min = Math.round(minValue);
+                    yAxis.max = Math.round(maxValue);
                   }
                   yAxis.splitBumber = 5;
                   yAxis.interval = (yAxis.max-yAxis.min)/yAxis.splitBumber;
                   yAxis.axisLine = {onZero:false};
-                  if(index == 0) {
-                    yAxis.splitLine = {show:true}
-                  }
-                  else{
-                    yAxis.splitLine = {show:true,lineStyle:{type:'dashed'}}
-                  }
+                  yAxis.axisLabel = {};
+                  yAxis.axisLabel.formatter = function(value){
+                    if(((value + '').indexOf('.') != -1) ) {
+                      return value.toFixed(1);
+                    }
+                    return value;
+                  };
                   opt.yAxis.push(yAxis);
                 });
 

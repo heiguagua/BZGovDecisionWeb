@@ -34,6 +34,11 @@ $desktop-width: 1400px;
     @content;
   }
 }
+@mixin mobilescreen {
+  @media (max-width: #{$tablet-width - 1px}) {
+    @content;
+  }
+}
 @mixin smallscreen {
   @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
     @content;

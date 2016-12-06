@@ -2,10 +2,16 @@
   @include flex-flow(row);
   @include flex-num(1);
   padding: 0 15px 22px 0;
+  @include mobilescreen {
+    padding:0;
+  }
   .wrap,
   .inner-wrap {
     @include flex-num(1);
     @include flex-flow(row);
+    @include mobilescreen {
+      display:block;
+    }
   }
   .box-content.panel-body {
     padding: 15px 4px;
@@ -49,6 +55,9 @@
     .center-down {
       @include flex-num(1);
       @include flex-flow(row);
+      @include mobilescreen {
+        @include flex-flow(column);
+      }
       >div {
         @include flex-num(1);
       }
@@ -67,6 +76,9 @@
     @include flex-flow(column);
     @include flex-align(stretch);
     @include flex-num(2);
+    @include mobilescreen {
+      padding:0 10px;
+    }
     .right-bottom {
       margin-bottom: 0;
       @include flex-num(1);

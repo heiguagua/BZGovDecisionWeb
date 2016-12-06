@@ -2,66 +2,25 @@
   "series": [{
     "level": "0",
     "yAxisIndex": "0",
-    "name": "全国累计增速",
+    "name": "到位资金",
     "data": [{
-      "name": "2016-03-01 00:00:00",
-      "value": "6.70"
-    }, {
-      "name": "2016-06-01 00:00:00",
-      "value": "6.80"
-    }, {
-      "name": "2016-09-01 00:00:00",
-      "value": ""
-    }, {
-      "name": "2016-12-01 00:00:00",
-      "value": ""
+      "name": "到位资金",
+      "value": ["42.85", "50.17", "20.87", "185.41"]
     }],
-    "type": "line"
-  }, {
-    "level": "0",
-    "yAxisIndex": "0",
-    "name": "全省累计增速",
-    "data": [{
-      "name": "2016-03-01 00:00:00",
-      "value": "7.40"
-    }, {
-      "name": "2016-06-01 00:00:00",
-      "value": "7.50"
-    }, {
-      "name": "2016-09-01 00:00:00",
-      "value": ""
-    }, {
-      "name": "2016-12-01 00:00:00",
-      "value": ""
-    }],
-    "type": "line"
-  }, {
-    "level": "0",
-    "yAxisIndex": "0",
-    "name": "全市累计增速",
-    "data": [{
-      "name": "2016-03-01 00:00:00",
-      "value": "7.70"
-    }, {
-      "name": "2016-06-01 00:00:00",
-      "value": "7.80"
-    }, {
-      "name": "2016-09-01 00:00:00",
-      "value": ""
-    }, {
-      "name": "2016-12-01 00:00:00",
-      "value": ""
-    }],
-    "type": "line"
+    "type": "radar"
   }],
-  "title": "全国全省全市州地区生产总值增速比较",
-  "x_data": ["一季度", "二季度", "三季度", "四季度"],
-  "init_query_time": "2016",
-  "legend": ["全国累计增速", "全省累计增速", "全市累计增速"],
+  "init_query_time": "2016-09",
+  "dataItems": [],
   "need_group": "0",
-  "table_type": "reverse",
-  "code": "1112",
+  "code": "1641",
+  "table_type": "same",
   "table_url": "",
-  "y_name": ["%"],
-  "time_scope": "quater"
+  "title": "全市投资促进重点区域到位资金情况",
+  "x_data": ["长三角", "环渤海", "珠三角", "成渝"],
+  "dep_name": "投促委",
+  "legend": ["到位资金"],
+  "auto_count": "none",
+  "max_and_min": null,
+  "y_name": ["亿元"],
+  "time_scope": "quarter"
 }
