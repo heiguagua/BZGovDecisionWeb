@@ -458,6 +458,13 @@
                     item.stack = stack_name;
 
                   });
+                  var screen_width = screen.width;
+                  var grid_left = '10%';
+                  var grid_right = '10%';
+                  if(screen_width < 1600) {
+                    grid_left = '15%';
+                    grid_right = '15%';
+                  }
                   option = {
                     color: colors,
                     title: {
@@ -479,7 +486,9 @@
                     },
                     grid: {
                       bottom: grid_btm,
-                      top: '15%'
+                      top: '15%',
+                      left:grid_left,
+                      right:grid_right
                     },
                     xAxis: [{
                       type: 'category',
