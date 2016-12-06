@@ -1,23 +1,26 @@
 {
-  "code": "1",
-  "need_group": "0",
-  "table_type": "same",
-  "table_url": "/table/data",
-  "title": "固定资产投资结构",
-  "legend": ["累计投资额", "同比增速"],
-  "x_data": ["基础设施投资", "房地产投资", "产业投资", "民生及社会事业投资"],
-  "y_name": ["亿元", "%"],
   "series": [{
     "level": "0",
     "yAxisIndex": "0",
-    "name": "全市产业增加值",
-    "type": "radar",
+    "name": "到位资金",
     "data": [{
-      "name": "累计投资额",
-      "value": [238.8, 135.2, 126.4, 98.6]
-    }, {
-      "name": "同比增速",
-      "value": [168.8, 155.2, 114.4, 90.6]
-    }]
-  }]
+      "name": "到位资金",
+      "value": ["42.85", "50.17", "20.87", "185.41"]
+    }],
+    "type": "radar"
+  }],
+  "init_query_time": "2016-09",
+  "dataItems": [],
+  "need_group": "0",
+  "code": "1641",
+  "table_type": "same",
+  "table_url": "",
+  "title": "全市投资促进重点区域到位资金情况",
+  "x_data": ["长三角", "环渤海", "珠三角", "成渝"],
+  "dep_name": "投促委",
+  "legend": ["到位资金"],
+  "auto_count": "none",
+  "max_and_min": null,
+  "y_name": ["亿元"],
+  "time_scope": "quarter"
 }

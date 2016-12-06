@@ -318,7 +318,7 @@
                         max = Number(opt.series[0].data[index2].value[index]);
                       }
                     });
-                    indicator.max = max + 100;
+                    indicator.max = max + 10;
                     indicators.push(indicator);
                   });
                   option.color = colors;
