@@ -459,7 +459,7 @@
               yAxis.name = item;
               yAxis.axisLabel = {
                 textStyle:{
-                  color:'#FFF'
+                  color:'rgb(0,168,228)'
                 }
               };
               yAxis.axisTick = {};
@@ -573,7 +573,8 @@
                 axisLabel:{
                   interval: xAxis_interval,
                   textStyle:{
-                    fontSize:8
+                    fontSize:8,
+                    color:'rgb(0,168,228)'
                   }
                 },
                 splitLine: {
