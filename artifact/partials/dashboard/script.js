@@ -833,7 +833,7 @@
                             labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
                           }
                         } else {
-                          labelShow = obj.data.name + ":" + obj.data.value + obj.data.value +'\n';
+                          labelShow = obj.data.name + ":" + obj.data.value + obj.data.unit +'\n';
                           if (opt.auto_count && opt.auto_count == 'percent') {
                             labelShow += '占比：' + obj.percent + '%';
                           }
