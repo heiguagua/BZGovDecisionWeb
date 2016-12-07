@@ -262,7 +262,6 @@
                       return labelShow;
                     },
                     textStyle:{
-                      fontSize:8,
                       color: '#FFF'
                     }
                   }
@@ -484,17 +483,20 @@
                 }
               };
               if (opt.max_and_min) {
-                if(opt.max_and_min[index].minValue<0 || (opt.max_and_min[index].minValue>0 && opt.max_and_min[index].minValue<1)){
-                  opt.max_and_min[index].minValue = Number(opt.max_and_min[index].minValue)-1;
+                var minValue = Number(opt.max_and_min[index].minValue);
+                var maxValue = Number(opt.max_and_min[index].maxValue);
+                if(minValue>=0 && minValue < 1) {
+                  minValue = 0;
                 }
-                if(opt.max_and_min[index].maxValue<0 || (opt.max_and_min[index].maxValue>0 && opt.max_and_min[index].maxValue<1)) {
-                  console.log(opt.max_and_min[index].maxValue);
-                  opt.max_and_min[index].maxValue = 1 + Number(opt.max_and_min[index].maxValue);
+                else{
+                  minValue = minValue-1;
                 }
-                console.log(opt.max_and_min[index].maxValue);
-                yAxis.min = Math.round(opt.max_and_min[index].minValue);
-                yAxis.max = Math.round(opt.max_and_min[index].maxValue);
+                maxValue = 1 + maxValue;
+                yAxis.min = Math.round(minValue);
+                yAxis.max = Math.round(maxValue);
               }
+              yAxis.splitBumber = 5;
+              yAxis.interval = (yAxis.max-yAxis.min)/yAxis.splitBumber;
               opt.yAxis.push(yAxis);
             });
             _.forEach(opt.series, function(item) {
@@ -511,6 +513,15 @@
                 }
               };
             });
+            var screen_width = screen.width;
+            var xAxis_interval =  0;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if(screen_width < 1600) {
+              xAxis_interval = 'auto';
+              grid_top = '36%';
+              grid_left= '16%';
+            }
             var option = {
               color: areaColors,
               title: {
@@ -530,7 +541,9 @@
                 backgroundColor: 'rgba(0, 120, 215, 0.5)'
               },
               grid:{
-                top:'24%',
+                top:grid_top,
+                left:grid_left,
+                right:grid_left,
                 bottom:30
               },
               legend: {
@@ -558,7 +571,7 @@
                   }
                 },
                 axisLabel:{
-                  interval: 0,
+                  interval: xAxis_interval,
                   textStyle:{
                     fontSize:8
                   }
@@ -692,7 +705,8 @@
                 name:opt.y_name,
                 min:yAxis_min,
                 max:yAxis_max,
-                interval:10,
+                splitBumber:5,
+                interval:(yAxis_max-yAxis_min)/5,
                 axisLine: {
                   lineStyle: {
                     color: colors[2],

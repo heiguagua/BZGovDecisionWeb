@@ -418,7 +418,6 @@
             _.forEach(opt.y_name, function(item, index) {
               var yAxis = {};
               yAxis.scale = true;
-              yAxis.interval = 18;
               yAxis.type = 'value';
               yAxis.name = item;
               yAxis.axisLabel = {
@@ -436,23 +435,27 @@
                 interval: 'auto'
               };
               if (opt.max_and_min) {
-                if(opt.max_and_min[index].minValue<0 || (opt.max_and_min[index].minValue>0 && opt.max_and_min[index].minValue<1)){
-                  opt.max_and_min[index].minValue = Number(opt.max_and_min[index].minValue)-1;
+                var minValue = Number(opt.max_and_min[index].minValue);
+                var maxValue = Number(opt.max_and_min[index].maxValue);
+                if(minValue>=0 && minValue < 1) {
+                  minValue = 0;
                 }
-                if(opt.max_and_min[index].maxValue<0 || (opt.max_and_min[index].maxValue>0 && opt.max_and_min[index].maxValue<1)) {
-                  console.log(opt.max_and_min[index].maxValue);
-                  opt.max_and_min[index].maxValue = 1 + Number(opt.max_and_min[index].maxValue);
+                else{
+                  minValue = minValue-1;
                 }
-                console.log(opt.max_and_min[index].maxValue);
-                yAxis.min = Math.round(opt.max_and_min[index].minValue);
-                yAxis.max = Math.round(opt.max_and_min[index].maxValue);
+                maxValue = 1 + maxValue;
+                yAxis.min = Math.round(minValue);
+                yAxis.max = Math.round(maxValue);
               }
+              yAxis.splitBumber = 5;
+              yAxis.interval = (yAxis.max-yAxis.min)/yAxis.splitBumber;
               opt.yAxis.push(yAxis);
             });
             _.forEach(opt.series, function(item) {
               if (item.type == 'bar') {
                 item.barMaxWidth = '20%';
               }
+
               item.label = {
                 normal: {
                   show: true,
@@ -463,6 +466,15 @@
                 }
               };
             });
+            var screen_width = screen.width;
+            var xAxis_interval =  0;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if(screen_width < 1600) {
+              xAxis_interval = 'auto';
+              grid_top = '32%';
+              grid_left= '16%';
+            }
             var option = {
               color: areaColors,
               title: {
@@ -483,7 +495,9 @@
                 borderWidth: 1
               },
               grid:{
-                top:'24%',
+                top:grid_top,
+                left:grid_left,
+                right:grid_left,
                 bottom:30
               },
               legend: {
@@ -509,7 +523,7 @@
                   }
                 },
                 axisLabel:{
-                  interval: 0,
+                  interval: xAxis_interval,
                   textStyle:{
                     fontSize:8,
                     color:'#333'
@@ -581,6 +595,15 @@
               yAxis_min = Math.round(opt.max_and_min[0].minValue);
               yAxis_max = Math.round(opt.max_and_min[0].maxValue);
             }
+            var screen_width = screen.width;
+            var xAxis_interval =  0;
+            var grid_top = '24%';
+            var grid_left = 'auto';
+            if(screen_width < 1600) {
+              xAxis_interval = 'auto';
+              grid_top = '32%';
+              grid_left= '16%';
+            }
             var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)'];
             var option = {
               color: colors,
@@ -597,7 +620,7 @@
                 }
               },
               grid:{
-                top:'24%',
+                top:grid_top,
                 bottom:30
               },
               xAxis: {
@@ -617,8 +640,11 @@
               },
               yAxis: {
                 type: 'value',
+                name:opt.y_name,
                 min:yAxis_min,
                 max:yAxis_max,
+                splitBumber:5,
+                interval:(yAxis_max-yAxis_min)/5,
                 axisLabel: {
                   formatter: '{value}'
                 }
