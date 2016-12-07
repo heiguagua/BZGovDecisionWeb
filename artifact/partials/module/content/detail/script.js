@@ -612,7 +612,8 @@
                     //     'flex-flow': 'column'
                     //   });
                     // }
-                    scope.content.columnNames = res.data.columnName;
+                    console.log(_.map(res.data.rowData[0].rowValue,'name'));
+                    scope.content.columnNames = _.map(res.data.rowData[0].rowValue,'name');
 
                     scope.content.rowData = res.data.rowData;
                   })

@@ -78,7 +78,7 @@
     function interceptor($q, $location) {
       return {
         'request': function(config) {
-          config.withCredentials = true;
+          //config.withCredentials = true;
           var screen_width = screen.width;
           var screen_height = screen.height;
           var box_height = $('.content-box').height() * 0.7 + 'px';
