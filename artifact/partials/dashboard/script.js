@@ -643,6 +643,15 @@
               yAxis_min = Math.round(opt.max_and_min[0].minValue);
               yAxis_max = Math.round(opt.max_and_min[0].maxValue);
             }
+            var screen_width = screen.width;
+            var xAxis_interval =  0;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if(screen_width < 1600) {
+              xAxis_interval = 'auto';
+              grid_top = '32%';
+              grid_left= '16%';
+            }
             var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)'];
             var option = {
               color: colors,
@@ -661,6 +670,7 @@
               grid:{
                 //right:'3%',
                 top:'24%',
+                left:grid_left,
                 bottom:30
               },
               xAxis: {

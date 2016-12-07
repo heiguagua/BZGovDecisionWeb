@@ -607,7 +607,7 @@
             var screen_width = screen.width;
             var xAxis_interval =  0;
             var grid_top = '24%';
-            var grid_left = 'auto';
+            var grid_left = '10%';
             if(screen_width < 1600) {
               xAxis_interval = 'auto';
               grid_top = '32%';
@@ -630,6 +630,7 @@
               },
               grid:{
                 top:grid_top,
+                left:grid_left,
                 bottom:30
               },
               xAxis: {
