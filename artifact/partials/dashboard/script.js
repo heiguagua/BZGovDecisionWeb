@@ -192,7 +192,7 @@
                       labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'<br/>';
                     }
                   } else {
-                    labelShow = obj.data.name + ":" + obj.data.value + '亿元<br/>';
+                    labelShow = obj.data.name + ":" + obj.data.value + opt.y_name[0] +'<br/>';
                     if (opt.auto_count && opt.auto_count == 'percent') {
                       labelShow += '占比：' + obj.percent + '%';
                     }
@@ -209,14 +209,10 @@
                 label: {
                   normal: {
                     position: 'center',
-                    // formatter : function(obj) {
-                    //   var labelShow = obj.data.name + '\n';
-                    //   for(var i=0; i<obj.data.other.length; i++) {
-                    //     labelShow += obj.data.other[i].name + obj.data.other[i].value + obj.data.other[i].unit +'\n';
-                    //   }
-                    //   return labelShow;
-                    // },
-                    formatter: '{b}\n {c}亿元',
+                    formatter: function(obj) {
+                      return obj.data.name + '\n' + obj.data.value + opt.y_name[0];
+                    },
+                    //formatter: '{b}\n {c}亿元',
                     textStyle: {
                       color: '#FFF'
                     }
@@ -845,7 +841,7 @@
                             labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
                           }
                         } else {
-                          var unit = obj.data.unit?obj.data.unit:'';
+                          var unit = opt.y_name[0]?opt.y_name[0]:'';
                           labelShow = obj.data.name + ":" + obj.data.value + unit +'\n';
                           if (opt.auto_count && opt.auto_count == 'percent') {
                             labelShow += '占比：' + obj.percent + '%';
