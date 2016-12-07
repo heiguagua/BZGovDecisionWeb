@@ -765,7 +765,7 @@
                 type: 'pie',
                 radius: '55%',
                 center: ['50%', '50%'],
-                startAngle: -230,
+                startAngle: 120,
                 data: opt.series[0].data,
                 itemStyle: {
                   emphasis: {
@@ -797,11 +797,18 @@
                         return labelShow;
                       }
                     }
+
                   },
-                  labelLine: {
-                    show: true
+
+                },
+                labelLine: {
+                  show: true,
+                  normal:{
+                    length:14,
+                    length2:8
                   }
                 }
+
               }]
             };
 

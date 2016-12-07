@@ -853,9 +853,13 @@
                         color: "#FFF"
                       }
                     }
-                  },
-                  labelLine: {
-                    show: true
+                  }
+                },
+                labelLine: {
+                  show: true,
+                  normal:{
+                    length:14,
+                    length2:8
                   }
                 }
               }]
