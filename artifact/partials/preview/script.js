@@ -152,12 +152,6 @@
             }
             scope.econtent.dateOptions = dateOptions;
             scope.econtent.dep_name = opt.dep_name;
-            opt.series[1].data[0].labelLine = {
-              normal:{
-                  length:24,
-                  length2:8
-              }
-            };
             var colors = ['rgb(0,204,200)', 'rgb(240,119,129)', 'rgb(0,168,228)'];
             var option = {
               color: colors,
@@ -227,9 +221,6 @@
                       }
                       return labelShow;
                     },
-                    textStyle: {
-                      fontSize: '8'
-                    }
                   }
                 },
                 labelLine:{
@@ -320,7 +311,7 @@
                   normal: {
                     position: 'center',
                     formatter: function(obj) {
-                      return obj.data.name + "\n" + obj.data.value+ obj.data.unit + '\n';
+                      return "\n" + obj.data.name + "\n" + obj.data.value+ obj.data.unit + '\n';
                     },
                     textStyle: {
                       color: '#333'
@@ -359,6 +350,12 @@
                       }
                       return labelShow;
                     }
+                  }
+                },
+                labelLine:{
+                  normal:{
+                      length:10,
+                      length2:8
                   }
                 },
                 radius: ['25%', '50%'],
@@ -784,7 +781,7 @@
                             labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
                           }
                         } else {
-                          labelShow = obj.data.name + ":" + obj.data.value + '\n';
+                          labelShow = obj.data.name + ":" + obj.data.value +  obj.data.value +'\n';
                           if (opt.auto_count && opt.auto_count == 'percent') {
                             labelShow += '占比：' + obj.percent + '%';
                           }

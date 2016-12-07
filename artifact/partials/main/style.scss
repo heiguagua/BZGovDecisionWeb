@@ -45,8 +45,18 @@ $chartHeightBig: 540px;
 }
 .main-content {
   padding-top: $headerHeight;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   @include flex-flow(column);
   @include flex-num(1);
+  @include mobilescreen {
+    padding-left: 0;
+    &.sidebar-collapse {
+      padding-left: 225px;
+    }
+  }
   .side-nav {
     width: $sidebarWidth;
     border: none;
@@ -73,7 +83,6 @@ $chartHeightBig: 540px;
       transition: all 0.5s ease-in-out;
       &.sidebar-collapse {
         opacity: 1;
-        margin-left: 0;
       }
     }
     >li {
@@ -110,9 +119,6 @@ $chartHeightBig: 540px;
       padding: 15px 10px;
       border-bottom: 1px solid #DDD;
       margin-bottom: 5px;
-      &.sidebar-collapse {
-        margin-left: 225px;
-      }
     }
   }
   .content-main {
@@ -125,10 +131,8 @@ $chartHeightBig: 540px;
     padding-left: 234px;
     @include mobilescreen {
       padding-left: 0;
-      &.sidebar-collapse {
-        padding-left: 225px;
-      }
     }
+
   }
   @include mobilescreen {
     padding-top: 0;

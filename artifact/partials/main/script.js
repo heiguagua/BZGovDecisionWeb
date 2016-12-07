@@ -9,7 +9,7 @@
       vm.showMenu = function() {
         $('.side-nav').toggleClass('sidebar-collapse');
         $('.m-header').toggleClass('sidebar-collapse');
-        $('.content-main').toggleClass('sidebar-collapse');
+        $('.main-content').toggleClass('sidebar-collapse');
       }
       // get menu list
       mainService.getMenus({parentId:"0"}).then(function(result) {
