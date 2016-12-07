@@ -177,7 +177,6 @@
 
             });
 
-            // set data[0] labelLine style
 
             var colors = ['rgb(0,204,200)', 'rgb(240,119,129)', 'rgb(0,168,228)'];
             var option = {
@@ -260,16 +259,18 @@
                     }
                   }
                 },
-                labelLine:{
-                  normal:{
-                      length:6,
-                      length2:0
-                  }
-                },
                 radius: ['25%', '50%'],
                 data: opt.series[1].data
               }]
             };
+            // set labelLine style
+            var screen_width = screen.width;
+            if(screen_width < 1600) {
+              option.series[1].labelLine = {normal:{
+                  length:6,
+                  length2:4
+              }};
+            }
 
             chartInstance1 = echarts.init((element.find('div'))[0]);
             chartInstance1.setOption(option);
@@ -388,17 +389,18 @@
                     }
                   }
                 },
-                labelLine:{
-                  normal:{
-                      length:10,
-                      length2:8
-                  }
-                },
                 radius: ['25%', '50%'],
                 data: opt.series[1].data
               }]
             };
-
+            // set labelLine style
+            var screen_width = screen.width;
+            if(screen_width < 1600) {
+              option.series[1].labelLine = {normal:{
+                  length:10,
+                  length2:8
+              }};
+            }
             chartInstance2 = echarts.init((element.find('div'))[0]);
             chartInstance2.setOption(option);
 

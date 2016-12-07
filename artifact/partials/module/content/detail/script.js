@@ -211,7 +211,7 @@
                   yAxis.axisTick = {};
                   yAxis.axisTick.inside = true;
 
-                  if (opt.max_and_min) {
+                  if (opt.max_and_min && opt.max_and_min[index]) {
                     var minValue = Number(opt.max_and_min[index].minValue);
                     var maxValue = Number(opt.max_and_min[index].maxValue);
                     if(minValue>=0 && minValue < 1) {

@@ -223,16 +223,18 @@
                     },
                   }
                 },
-                labelLine:{
-                  normal:{
-                      length:10,
-                      length2:0
-                  }
-                },
                 radius: ['25%', '50%'],
                 data: opt.series[1].data
               }]
             };
+            // set labelLine style
+            var screen_width = screen.width;
+            if(screen_width < 1600) {
+              option.series[1].labelLine = {normal:{
+                  length:6,
+                  length2:4
+              }};
+            }
 
             setTimeout(function() {
               chartInstance1 = echarts.init((element.find('div'))[0]);
@@ -352,17 +354,18 @@
                     }
                   }
                 },
-                labelLine:{
-                  normal:{
-                      length:10,
-                      length2:8
-                  }
-                },
                 radius: ['25%', '50%'],
                 data: opt.series[1].data
               }]
             };
-
+            // set labelLine style
+            var screen_width = screen.width;
+            if(screen_width < 1600) {
+              option.series[1].labelLine = {normal:{
+                  length:10,
+                  length2:8
+              }};
+            }
             setTimeout(function() {
               chartInstance2 = echarts.init((element.find('div'))[0]);
               chartInstance2.clear();
