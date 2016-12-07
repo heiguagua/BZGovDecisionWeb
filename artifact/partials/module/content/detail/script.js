@@ -328,9 +328,13 @@
                     }
                     else{
                       var dataArray = _.map(opt.series[0].data, 'value');
-                      max = Number(dataArray[0][0]);
-                      min = Number(dataArray[0][0]);
-                      _.forEach(dataArray[index], function(data) {
+                      var dataAll = [];
+                      _.forEach(dataArray, function(data, index2) {
+                        dataAll = _.concat(data,dataAll);
+                      });
+                      max = Number(dataAll[0]);
+                      min = Number(dataAll[0]);
+                      _.forEach(dataAll, function(data) {
                         if (Number(data) > max) {
                           max = Number(data);
                         }
