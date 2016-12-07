@@ -243,8 +243,12 @@
               }]
             };
 
-            chartInstance1 = echarts.init((element.find('div'))[0]);
-            chartInstance1.setOption(option);
+            setTimeout(function() {
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
+            }, 400);
 
             scope.onResize1 = function() {
               if (chartInstance1) {
@@ -362,8 +366,12 @@
               }]
             };
 
-            chartInstance2 = echarts.init((element.find('div'))[0]);
-            chartInstance2.setOption(option);
+            setTimeout(function() {
+              chartInstance2 = echarts.init((element.find('div'))[0]);
+              chartInstance2.clear();
+              chartInstance2.resize();
+              chartInstance2.setOption(option);
+            }, 400);
 
             scope.onResize2 = function() {
               if (chartInstance2) {
@@ -548,8 +556,12 @@
               series: opt.series
             };
 
-            chartInstance3 = echarts.init((element.find('div'))[0]);
-            chartInstance3.setOption(option);
+            setTimeout(function() {
+              chartInstance3 = echarts.init((element.find('div'))[0]);
+              chartInstance3.clear();
+              chartInstance3.resize();
+              chartInstance3.setOption(option);
+            }, 400);
 
             scope.onResize3 = function() {
               if (chartInstance3) {
@@ -652,8 +664,12 @@
               series: opt.series
             };
 
-            chartInstance4 = echarts.init((element.find('div'))[0]);
-            chartInstance4.setOption(option);
+            setTimeout(function() {
+              chartInstance4 = echarts.init((element.find('div'))[0]);
+              chartInstance4.clear();
+              chartInstance4.resize();
+              chartInstance4.setOption(option);
+            }, 400);
 
             scope.onResize4 = function() {
               if (chartInstance4) {
@@ -784,8 +800,12 @@
               }]
             };
 
-            chartInstance5 = echarts.init((element.find('div'))[0]);
-            chartInstance5.setOption(option);
+            setTimeout(function() {
+              chartInstance5 = echarts.init((element.find('div'))[0]);
+              chartInstance5.clear();
+              chartInstance5.resize();
+              chartInstance5.setOption(option);
+            }, 400);
 
 
 

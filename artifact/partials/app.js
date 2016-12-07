@@ -3,7 +3,6 @@
 (function() {
 
   angular.module('app', [
-      'ngAnimate',
       'ui.router',
       'common.http',
       'app.dashboard',
