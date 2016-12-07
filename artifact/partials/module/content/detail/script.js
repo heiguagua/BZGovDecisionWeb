@@ -409,7 +409,7 @@
                         }
                       }
                     };
-                    if(scope.content.picCode == '4211' || scope.content.picCode == '4212') {
+                    if(scope.content.picCode == '4211' || scope.content.picCode == '4221') {
                       item.label.normal = {
                         show:false
                       };
