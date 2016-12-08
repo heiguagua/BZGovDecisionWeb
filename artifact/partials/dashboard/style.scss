@@ -25,6 +25,9 @@
           margin-top: 0;
           margin-bottom: 0;
           background-size: auto 100%;
+          @media (min-width: #{$desktop-width}) {
+            margin-top: 10px;
+          }
         }
       }
       .main {
