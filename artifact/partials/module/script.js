@@ -23,7 +23,13 @@
         })
       }
 
+      vm.toggleMenus = function(){
+        $('.menu-tabs').toggleClass('m-collapse');
+      }
 
+      vm.toggleSecMenus = function(){
+        $('.menu-label').toggleClass('m-collapse');
+      }
     }
   ]);
 

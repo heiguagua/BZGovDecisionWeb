@@ -18,7 +18,7 @@
   @include flex-flow(column);
   @include flex-num(1);
   @include mobilescreen {
-    display:block;
+    display: block;
   }
 }
 .search-box {
@@ -26,11 +26,56 @@
   background: #f7f7f7;
   .input-group {
     width: 50%;
-    .btn-search{
-      background:#20b3a9;
-      color:$white;
-      font-family:'微软雅黑'
+    .btn-search {
+      background: #20b3a9;
+      color: $white;
+      font-family: '微软雅黑';
     }
-
+  }
+}
+.menu-tool {
+  display: none;
+  @include mobilescreen {
+    display: block;
+    overflow: hidden;
+    border-bottom: 1px solid #DDD;
+    background: #f4f4f4;
+    .item {
+      float: left;
+      width: 50%;
+      text-align: center;
+      padding: 10px;
+      border-right: 1px solid #DDD;
+      .fa-sort-desc {
+        padding: 0 10px;
+        vertical-align: top;
+        color: #5d5d5d;
+        font-size: 16px;
+      }
+    }
+  }
+}
+.menu-tabs {
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  @include mobilescreen {
+    position: absolute;
+    display:block;
+    opacity: 0;
+    top:36px;
+    >li {
+      float: none;
+      z-index: 999;
+      a {
+        border: none;
+        border-bottom: 1px solid #DDD;
+      }
+    }
+    &.m-collapse {
+      opacity: 1;
+      top:42px;
+    }
   }
 }
