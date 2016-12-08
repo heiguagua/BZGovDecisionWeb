@@ -794,7 +794,22 @@
               color: colors,
               tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: function(obj) {
+                  var percentShow = '';
+
+                  var labelShow = obj.data.name + '<br/>';
+                  if (obj.data.other && obj.data.other.length > 1) {
+                    for (var i = 0; i < obj.data.other.length; i++) {
+                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '<br/>';
+                    }
+                  } else {
+                    labelShow = obj.data.name + ":" + obj.data.value + opt.y_name[0] + '<br/>';
+                    if (opt.auto_count && opt.auto_count == 'percent') {
+                      labelShow += '占比：' + obj.percent + '%';
+                    }
+                  }
+                  return labelShow;
+                }
               },
               title: {
                 text: text.name + "：" + text.value + text.unit,
