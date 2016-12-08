@@ -11,8 +11,9 @@ $chartHeightBig: 540px;
   @include flex-flow(row);
   @include flex-num(1);
   @include mobilescreen {
-    overflow-x:hidden;
-    overflow-y:auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: block;
   }
 }
 .page-header-fixed {}
@@ -52,9 +53,11 @@ $chartHeightBig: 540px;
   @include flex-flow(column);
   @include flex-num(1);
   @include mobilescreen {
-    padding-left: 0;
+    left: 0;
+    position: relative;
+    display: block;
     &.sidebar-collapse {
-      padding-left: 225px;
+      left: 225px;
     }
   }
   .side-nav {
@@ -69,7 +72,6 @@ $chartHeightBig: 540px;
     position: fixed;
     top: 62px;
     z-index: 999;
-
     @include flex-align(stretch);
     @include mobilescreen {
       position: absolute;
@@ -131,8 +133,8 @@ $chartHeightBig: 540px;
     padding-left: 234px;
     @include mobilescreen {
       padding-left: 0;
+      display: block;
     }
-
   }
   @include mobilescreen {
     padding-top: 0;

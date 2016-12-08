@@ -4,6 +4,7 @@
   padding: 0 15px 22px 0;
   @include mobilescreen {
     padding:0;
+    display: block;
   }
   .wrap,
   .inner-wrap {
@@ -47,6 +48,9 @@
     @include flex-align(stretch);
     @include flex-num(4);
     @include flex-flow(column);
+    @include mobilescreen {
+      padding:0;
+    }
     .center-top {
       margin-bottom: 15px;
       border: 1px solid #DDD;
@@ -57,9 +61,13 @@
       @include flex-flow(row);
       @include mobilescreen {
         @include flex-flow(column);
+        padding:0;
       }
       >div {
         @include flex-num(1);
+        @include mobilescreen {
+          padding:0;
+        }
       }
       .center-left,
       .center-right {
@@ -67,6 +75,11 @@
         .chart {
           @include flex-num(1);
           padding: 15px 6px;
+          >div{
+            @include mobilescreen {
+              min-height: 300px;
+            }
+          }
         }
       }
     }
@@ -77,13 +90,18 @@
     @include flex-align(stretch);
     @include flex-num(2);
     @include mobilescreen {
-      padding:0 10px;
+      padding:0;
     }
     .right-bottom {
       margin-bottom: 0;
       @include flex-num(1);
       .chart {
         @include flex-num(1);
+        >div{
+          @include mobilescreen {
+            min-height: 300px;
+          }
+        }
       }
     }
     .right-top {

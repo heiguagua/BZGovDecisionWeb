@@ -183,8 +183,16 @@
   .box-content {
     @include flex-num(1);
     @include flex-flow(row);
+    @include mobilescreen {
+      @include flex-flow(column);
+    }
     .chart {
       @include flex-num(1);
+      >div{
+        @include mobilescreen {
+          min-height: 300px;
+        }
+      }
     }
   }
   .box-border {

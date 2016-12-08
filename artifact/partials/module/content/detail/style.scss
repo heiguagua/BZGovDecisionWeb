@@ -5,6 +5,8 @@
   flex-wrap: wrap;
   @include mobilescreen {
     display: block;
+    padding: 0;
+    background: #f6f6f6;
   }
   .chart {
     border: 1px solid #DDD;
@@ -12,6 +14,11 @@
     @include flex-num(3);
     //min-height: 480px;
     @include flex-flow(column);
+    @include mobilescreen {
+      display: block;
+      background: #FFF;
+      margin-bottom: 0;
+    }
     // @include smallscreen {
     //   height: 480px;
     // }
@@ -22,8 +29,8 @@
       padding: 5px;
       @include flex-num(1);
       @include mobilescreen {
-        &>div{
-          min-height:300px;
+        &>div {
+          min-height: 300px;
         }
       }
     }
@@ -88,6 +95,9 @@
     font-family: 黑体;
     table-layout: fixed;
     @include flex-num(1);
+    @include mobilescreen {
+      border-bottom: 1px solid #DDD;
+    }
     >tbody {
       >tr {
         &:nth-of-type(even) {

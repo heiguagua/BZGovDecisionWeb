@@ -27,5 +27,6 @@
 	flex-wrap:nowrap;
   @include mobilescreen {
     @include flex-flow(column);
+    display:block;
   }
 }

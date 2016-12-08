@@ -98,12 +98,15 @@ $desktop-width: 1400px;
 }
 @media only screen and (max-width: 1200px) {
   html {
-    font-size: 12px;
+    font-size: 16px;
   }
 }
 #ui-view-index {
   height: 100%;
   @include flex-flow(row);
+  @include mobilescreen {
+    display: block;
+  }
 }
 .right5 {
   padding-right: 5px;

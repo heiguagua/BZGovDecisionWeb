@@ -17,6 +17,9 @@
 .tab-content {
   @include flex-flow(column);
   @include flex-num(1);
+  @include mobilescreen {
+    display:block;
+  }
 }
 .search-box {
   padding: 15px 10px;
