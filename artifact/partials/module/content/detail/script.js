@@ -1,6 +1,6 @@
 (function() {
   /** Module */
-  var detail = angular.module('app.main.module.content.detail', ['ui.bootstrap']);
+  var detail = angular.module('app.main.module.content.detail', ['ui.bootstrap','cgBusy']);
   /** Controller */
   detail.controller('detailController', [
     '$scope', 'detailService', '$stateParams', 'uibDateParser',
@@ -21,7 +21,7 @@
         'id': 12,
         "name": "第四季度"
       }];
-      detailService.getContent({
+      $scope.promiseMain = detailService.getContent({
         menuId: $stateParams.pid
       }).then(function(result) {
         vm.dcontent = _.sortBy(result.data, ['picCode']);
@@ -166,7 +166,7 @@
               timeParam.setMonth(scope.content.quarter - 1);
               timeFormatParam = 'yyyy-MM';
             }
-            detailService.getDetail(scope.content.url, {
+            scope.content.promise = detailService.getDetail(scope.content.url, {
               queryTime: getDateFormat(timeParam, timeFormatParam),
               picCode: scope.content.picCode
             }).then(function(result) {
@@ -214,22 +214,23 @@
                   if (opt.max_and_min && opt.max_and_min[index]) {
                     var minValue = Number(opt.max_and_min[index].minValue);
                     var maxValue = Number(opt.max_and_min[index].maxValue);
-                    if(minValue>=0 && minValue < 1) {
+                    if (minValue >= 0 && minValue < 1) {
                       minValue = 0;
-                    }
-                    else{
-                      minValue = minValue-1;
+                    } else {
+                      minValue = minValue - 1;
                     }
                     maxValue = 1 + maxValue;
                     yAxis.min = Math.round(minValue);
                     yAxis.max = Math.round(maxValue);
                   }
                   yAxis.splitBumber = 5;
-                  yAxis.interval = (yAxis.max-yAxis.min)/yAxis.splitBumber;
-                  yAxis.axisLine = {onZero:false};
+                  yAxis.interval = (yAxis.max - yAxis.min) / yAxis.splitBumber;
+                  yAxis.axisLine = {
+                    onZero: false
+                  };
                   yAxis.axisLabel = {};
-                  yAxis.axisLabel.formatter = function(value){
-                    if(((value + '').indexOf('.') != -1) ) {
+                  yAxis.axisLabel.formatter = function(value) {
+                    if (((value + '').indexOf('.') != -1)) {
                       return value.toFixed(1);
                     }
                     return value;
@@ -278,10 +279,10 @@
                       var labelShow = obj.data.name + '<br/>';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
-                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value +  obj.data.other[i].unit +'<br/>';
+                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit + '<br/>';
                         }
                       } else {
-                        labelShow = obj.data.name + ":" + obj.data.value + opt.y_name[0]+ '<br/>';
+                        labelShow = obj.data.name + ":" + obj.data.value + opt.y_name[0] + '<br/>';
                         if (opt.auto_count && opt.auto_count == 'percent') {
                           labelShow += '占比：' + obj.percent + '%';
                         }
@@ -301,9 +302,9 @@
                     option.series[0].label.normal.position = 'outside';
                   }
                   option.series[0].label.normal.formatter = '{b}\n {c}' + opt.y_name[0];
-                  option.series[0].label.normal.textStyle = {
-                    color: "#333"
-                  };
+                  // option.series[0].label.normal.textStyle = {
+                  //   color: "#333"
+                  // };
 
                 } else
                 if (opt.series[0].type == 'radar') {
@@ -311,9 +312,9 @@
                   _.forEach(opt.x_data, function(item, index) {
                     var indicator = {};
                     indicator.name = item;
-                      var max = 0;
-                      var min = 0;
-                    if(opt.series[0].data.length == 1) {
+                    var max = 0;
+                    var min = 0;
+                    if (opt.series[0].data.length == 1) {
                       var dataArray = _.map(opt.series[0].data, 'value')[0];
                       max = Number(dataArray[index]);
                       min = Number(dataArray[index]);
@@ -325,12 +326,11 @@
                           min = Number(dataArray[index2]);
                         }
                       });
-                    }
-                    else{
+                    } else {
                       var dataArray = _.map(opt.series[0].data, 'value');
                       var dataAll = [];
                       _.forEach(dataArray, function(data, index2) {
-                        dataAll = _.concat(data,dataAll);
+                        dataAll = _.concat(data, dataAll);
                       });
                       max = Number(dataAll[0]);
                       min = Number(dataAll[0]);
@@ -345,7 +345,7 @@
                     }
 
                     indicator.max = max;
-                    indicator.min = min*0.8;
+                    indicator.min = min * 0.8;
                     indicators.push(indicator);
                   });
                   option.color = colors;
@@ -356,7 +356,7 @@
                     data: opt.legend,
                     textStyle: {
                       fontSize: 14,
-                      fontWeight:'bolder'
+                      fontWeight: 'bolder'
                     }
                   };
                   option.title = {
@@ -373,7 +373,7 @@
                   option.radar.nameGap = 8;
                   option.radar.radius = '60%';
                   option.radar.indicator = indicators;
-                  if(scope.content.picCode == '2321') {
+                  if (scope.content.picCode == '2321') {
                     option.radar.startAngle = 162;
                   }
                   option.series = opt.series;
@@ -399,23 +399,23 @@
 
                     };
                   };
-                  axisLabel.textStyle ={
-                    fontWeight:'bolder'
+                  axisLabel.textStyle = {
+                    fontWeight: 'bolder'
                   };
-                  _.forEach(opt.series, function(item,index) {
+                  _.forEach(opt.series, function(item, index) {
                     item.label = {
                       normal: {
                         show: true,
                         position: labelPos,
                         textStyle: {
-                          color: '#333',
+                          // color: '#333',
                           fontSize: 12
                         }
                       }
                     };
-                    if(scope.content.picCode == '4211' || scope.content.picCode == '4221') {
+                    if (scope.content.picCode == '4211' || scope.content.picCode == '4221') {
                       item.label.normal = {
-                        show:false
+                        show: false
                       };
                     }
                     if (item.type == 'bar') {
@@ -429,16 +429,15 @@
                               show: false
                             }
                           }
-                        }
-                        else{
+                        } else {
                           item.label = {
                             normal: {
                               show: true,
                               position: labelPos,
                               textStyle: {
-                                color: '#333',
+                                // color: '#333',
                                 fontSize: 12,
-                                fontWeight:'bolder'
+                                fontWeight: 'bolder'
                               }
                             }
                           };
@@ -456,8 +455,8 @@
                               normal: {
                                 show: true,
                                 textStyle: {
-                                  color: colors[2],
-                                  fontWeight:'bolder'
+                                  // color: colors[2],
+                                  fontWeight: 'bolder'
                                 }
                               }
                             }
@@ -479,10 +478,9 @@
 
                       _.forEach(item.data, function(data) {
                         if (data.name && data.name.length > 5 && item.data.length > 12) { // 字符长度大于5
-                          if(scope.content.picCode == '2322') {
+                          if (scope.content.picCode == '2322') {
                             grid_btm = 100;
-                          }
-                          else{
+                          } else {
                             grid_btm = 190;
                           }
                         }
@@ -497,7 +495,7 @@
                   var screen_width = screen.width;
                   var grid_left = '10%';
                   var grid_right = '10%';
-                  if(screen_width < 1600) {
+                  if (screen_width < 1600) {
                     grid_left = '15%';
                     grid_right = '15%';
                   }
@@ -506,7 +504,7 @@
                     title: {
                       text: opt.title,
                       left: 'center',
-                      top:-4
+                      top: -4
                     },
                     tooltip: {
                       trigger: 'axis'
@@ -517,14 +515,14 @@
                       data: opt.legend,
                       textStyle: {
                         fontSize: 14,
-                        fontWeight:'bolder'
+                        fontWeight: 'bolder'
                       }
                     },
                     grid: {
                       bottom: grid_btm,
                       top: '15%',
-                      left:grid_left,
-                      right:grid_right
+                      left: grid_left,
+                      right: grid_right
                     },
                     xAxis: [{
                       type: 'category',
@@ -612,8 +610,8 @@
                     //     'flex-flow': 'column'
                     //   });
                     // }
-                    console.log(_.map(res.data.rowData[0].rowValue,'name'));
-                    scope.content.columnNames = _.map(res.data.rowData[0].rowValue,'name');
+                    console.log(_.map(res.data.rowData[0].rowValue, 'name'));
+                    scope.content.columnNames = _.map(res.data.rowData[0].rowValue, 'name');
 
                     scope.content.rowData = res.data.rowData;
                   })
