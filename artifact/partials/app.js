@@ -8,6 +8,8 @@
       'app.dashboard',
       'app.login',
       'app.main',
+      'app.profile',
+      'app.profile.menu',
       'app.file',
       'app.main.preview',
       'app.main.module',
@@ -27,6 +29,18 @@
         templateUrl: 'partials/dashboard/view.html',
         controller: 'dashboardController',
         controllerAs: 'dashboard',
+      })
+      .state('profile', {
+        url: '/profile/:mid/:typeid/:murl',
+        templateUrl: 'partials/profile/view.html',
+        controller: 'profileController',
+        controllerAs: 'profile',
+      })
+      .state('profile.menu', {
+        url: '/menu',
+        templateUrl: 'partials/profile/menu/view.html',
+        controller: 'menuController',
+        controllerAs: 'menu',
       })
       .state('main', {
         url: '/main/:mid/:typeid/:murl',
