@@ -279,9 +279,10 @@
         },
         template: "<div id='bzmap' style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
+          var chart = {};
           scope.$applyAsync(function() {
             console.log(scope.content);
-            var chart = echarts.init(document.getElementById('bzmap'));
+            chart = echarts.init(document.getElementById('bzmap'));
             setTimeout(function() {
               chart.clear();
               chart.resize();
@@ -314,86 +315,86 @@
                   },
                   showLegendSymbol: true,
                   data: [{
-                      name: '通江县',
-                      itemStyle: {
-                        normal: {
-                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'rgb(18,126,215)' // 0% 处的颜色
-                          }, {
-                            offset: 1,
-                            color: 'rgb(17,80,201)' // 100% 处的颜色
-                          }], false),
-                          borderColor: 'rgba(42,180,238,1)',
-                          borderWidth: 3,
-                          borderType: 'solid',
-                        }
+                    name: '通江县',
+                    itemStyle: {
+                      normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 0,
+                          color: 'rgb(18,126,215)' // 0% 处的颜色
+                        }, {
+                          offset: 1,
+                          color: 'rgb(17,80,201)' // 100% 处的颜色
+                        }], false),
+                        borderColor: 'rgba(42,180,238,1)',
+                        borderWidth: 3,
+                        borderType: 'solid',
                       }
-                    }, {
-                      name: '南江县',
-                      itemStyle: {
-                        normal: {
-                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'rgb(18,126,215)' // 0% 处的颜色
-                          }, {
-                            offset: 1,
-                            color: 'rgb(17,80,201)' // 100% 处的颜色
-                          }], false),
-                          borderColor: 'rgba(42,180,238,1)',
-                          borderWidth: 3,
-                          borderType: 'solid',
-                        }
+                    }
+                  }, {
+                    name: '南江县',
+                    itemStyle: {
+                      normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 0,
+                          color: 'rgb(18,126,215)' // 0% 处的颜色
+                        }, {
+                          offset: 1,
+                          color: 'rgb(17,80,201)' // 100% 处的颜色
+                        }], false),
+                        borderColor: 'rgba(42,180,238,1)',
+                        borderWidth: 3,
+                        borderType: 'solid',
                       }
-                    }, {
-                      name: '巴州区',
-                      itemStyle: {
-                        normal: {
-                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'rgb(19,162,226)' // 0% 处的颜色
-                          }, {
-                            offset: 1,
-                            color: 'rgb(18,132,217)' // 100% 处的颜色
-                          }], false),
-                          borderColor: 'rgba(42,180,238,1)',
-                          borderWidth: 3,
-                          borderType: 'solid',
-                        }
+                    }
+                  }, {
+                    name: '巴州区',
+                    itemStyle: {
+                      normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 0,
+                          color: 'rgb(19,162,226)' // 0% 处的颜色
+                        }, {
+                          offset: 1,
+                          color: 'rgb(18,132,217)' // 100% 处的颜色
+                        }], false),
+                        borderColor: 'rgba(42,180,238,1)',
+                        borderWidth: 3,
+                        borderType: 'solid',
                       }
-                    }, {
-                      name: '平昌县',
-                      itemStyle: {
-                        normal: {
-                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'rgb(19,164,227)' // 0% 处的颜色
-                          }, {
-                            offset: 1,
-                            color: 'rgb(18,112,210)' // 100% 处的颜色
-                          }], false),
-                          borderColor: 'rgba(42,180,238,1)',
-                          borderWidth: 3,
-                          borderType: 'solid',
-                        }
+                    }
+                  }, {
+                    name: '平昌县',
+                    itemStyle: {
+                      normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 0,
+                          color: 'rgb(19,164,227)' // 0% 处的颜色
+                        }, {
+                          offset: 1,
+                          color: 'rgb(18,112,210)' // 100% 处的颜色
+                        }], false),
+                        borderColor: 'rgba(42,180,238,1)',
+                        borderWidth: 3,
+                        borderType: 'solid',
                       }
-                    }, {
-                      name: '恩阳区',
-                      itemStyle: {
-                        normal: {
-                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'rgb(19,175,230)' // 0% 处的颜色
-                          }, {
-                            offset: 1,
-                            color: 'rgb(19,164,227)' // 100% 处的颜色
-                          }], false),
-                          borderColor: 'rgba(42,180,238,1)',
-                          borderWidth: 3,
-                          borderType: 'solid',
-                        }
+                    }
+                  }, {
+                    name: '恩阳区',
+                    itemStyle: {
+                      normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 0,
+                          color: 'rgb(19,175,230)' // 0% 处的颜色
+                        }, {
+                          offset: 1,
+                          color: 'rgb(19,164,227)' // 100% 处的颜色
+                        }], false),
+                        borderColor: 'rgba(42,180,238,1)',
+                        borderWidth: 3,
+                        borderType: 'solid',
                       }
-                    }]
+                    }
+                  }]
 
                 }]
               });
@@ -405,9 +406,22 @@
               _.forEach(scope.all, function(item) {
                 if (selectedName && selectedName == item.qxname) {
                   scope.content = item;
+                  scope.$apply(function() {
+                    scope.content = item;
+                  });
                 }
               })
             })
+          })
+
+          scope.onResize = function() {
+            if (chart) {
+              chart.resize();
+            }
+          }
+
+          angular.element($window).bind('resize', function() {
+            scope.onResize();
           })
         }
       }
