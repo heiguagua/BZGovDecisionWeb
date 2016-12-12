@@ -33,7 +33,7 @@
   .center {
     padding: 15px 10px 0;
     @include flex-align(stretch);
-    @include flex-num(4);
+    @include flex-num(5);
     @include flex-flow(column);
     .center-top {
       background: rgba(0,120,255,.1);

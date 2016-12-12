@@ -36,10 +36,10 @@
 
         .wrap,.inner-wrap {
           &.menu{
-            padding: 3rem 0;
-            @include bigscreen {
-              padding: 2rem 0;
-            }
+            padding: 3rem 0 2rem 0;
+            // @include bigscreen {
+            //   padding: 2rem 0;
+            // }
           }
 
           @include flex-num(1);

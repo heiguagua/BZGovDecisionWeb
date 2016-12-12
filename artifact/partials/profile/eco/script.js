@@ -255,13 +255,24 @@
             var screen_width = screen.width;
             if(screen_width < 1600) {
               option.series[1].labelLine = {normal:{
-                  length:6,
+                  length:14,
                   length2:4
               }};
+              option.series[1].label.normal.textStyle = {
+                color: '#FFF',
+                fontSize:10
+              };
             }
 
-            chartInstance1 = echarts.init((element.find('div'))[0]);
-            chartInstance1.setOption(option);
+            //chartInstance1 = echarts.init((element.find('div'))[0]);
+          //  chartInstance1.setOption(option);
+            setTimeout(function() {
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              //element.find('div')[0].style.height = $('.graph').height() + 'px';
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
+            }, 600);
 
             scope.onResize1 = function() {
               if (chartInstance1) {
@@ -388,9 +399,20 @@
                   length:10,
                   length2:8
               }};
+              option.series[1].label.normal.textStyle = {
+                color: '#FFF',
+                fontSize:10
+              };
             }
-            chartInstance2 = echarts.init((element.find('div'))[0]);
-            chartInstance2.setOption(option);
+            // chartInstance2 = echarts.init((element.find('div'))[0]);
+            // chartInstance2.setOption(option);
+            setTimeout(function() {
+              chartInstance2 = echarts.init((element.find('div'))[0]);
+              //element.find('div')[0].style.height = $('.graph').height() + 'px';
+              chartInstance2.clear();
+              chartInstance2.resize();
+              chartInstance2.setOption(option);
+            }, 600);
 
             scope.onResize2 = function() {
               if (chartInstance2) {
@@ -504,13 +526,11 @@
               };
             });
             var screen_width = screen.width;
-            var xAxis_interval =  0;
             var grid_top = '24%';
             var grid_left = '10%';
             if(screen_width < 1600) {
-              xAxis_interval = 'auto';
               grid_top = '36%';
-              grid_left= '16%';
+              grid_left= '12%';
             }
             var option = {
               color: areaColors,
@@ -519,11 +539,11 @@
                 subtext: subtext.name + "：" + subtext.value + subtext.unit,
                 textStyle: {
                   fontSize: 12,
-                  color: 'rgb(0,204,200)',
+                  color: 'rgb(200,254,200)',
                 },
                 subtextStyle: {
                   fontSize: 12,
-                  color: 'rgb(0,204,200)',
+                  color: 'rgb(200,254,200)',
                   fontWeight: 'border'
                 },
                 itemGap: 10,
@@ -542,7 +562,7 @@
                 data: opt.legend,
                 textStyle:{
                   color:'#fbfbfb',
-                  fontSize:14
+                  fontSize:12
                 }
               },
               tooltip: {
@@ -561,9 +581,9 @@
                   }
                 },
                 axisLabel:{
-                  interval: xAxis_interval,
+                  interval: 0,
                   textStyle:{
-                    fontSize:8,
+                    fontSize:10,
                     color:'rgb(0,168,228)'
                   }
                 },
@@ -586,8 +606,16 @@
               series: opt.series
             };
 
-            chartInstance3 = echarts.init((element.find('div'))[0]);
-            chartInstance3.setOption(option);
+            // chartInstance3 = echarts.init((element.find('div'))[0]);
+            // chartInstance3.setOption(option);
+
+            setTimeout(function() {
+              chartInstance3 = echarts.init((element.find('div'))[0]);
+              //element.find('div')[0].style.height = $('.graph').height() + 'px';
+              chartInstance3.clear();
+              chartInstance3.resize();
+              chartInstance3.setOption(option);
+            }, 600);
 
             scope.onResize3 = function() {
               if (chartInstance3) {
@@ -634,11 +662,9 @@
               yAxis_max = Math.round(opt.max_and_min[0].maxValue);
             }
             var screen_width = screen.width;
-            var xAxis_interval =  0;
             var grid_top = '24%';
             var grid_left = '10%';
             if(screen_width < 1600) {
-              xAxis_interval = 'auto';
               grid_top = '32%';
               grid_left= '16%';
             }
@@ -654,7 +680,7 @@
                 data: opt.legend,
                 textStyle:{
                   color:'#d5e2df',
-                  fontSize:14
+                  fontSize:12
                 }
               },
               grid:{
@@ -677,7 +703,7 @@
                 axisLabel:{
                   interval: 0,
                   textStyle:{
-                    fontSize:8
+                    fontSize:10
                   },
                   formatter:function(value){
                     var month = value.substring(value.indexOf('-')+1);
@@ -732,8 +758,16 @@
               series: opt.series
             };
 
-            chartInstance4 = echarts.init((element.find('div'))[0]);
-            chartInstance4.setOption(option);
+            // chartInstance4 = echarts.init((element.find('div'))[0]);
+            // chartInstance4.setOption(option);
+
+            setTimeout(function() {
+              chartInstance4 = echarts.init((element.find('div'))[0]);
+              //element.find('div')[0].style.height = $('.graph').height() + 'px';
+              chartInstance4.clear();
+              chartInstance4.resize();
+              chartInstance4.setOption(option);
+            }, 600);
 
             scope.onResize4 = function() {
               if (chartInstance4) {
@@ -809,11 +843,11 @@
                 left:'right',
                 textStyle: {
                   fontSize: 12,
-                  color: colors[3],
+                  color: 'rgb(200,254,200)',
                 },
                 subtextStyle: {
                   fontSize: 12,
-                  color: colors[3],
+                  color: 'rgb(200,254,200)',
                   fontWeight: 'border'
                 },
                 itemGap: 10,
@@ -872,8 +906,18 @@
               }]
             };
 
-            chartInstance5 = echarts.init((element.find('div'))[0]);
-            chartInstance5.setOption(option);
+            // chartInstance5 = echarts.init((element.find('div'))[0]);
+            // chartInstance5.setOption(option);
+
+            setTimeout(function() {
+              var ecoHeight = $('.profile')[0].scrollHeight;
+              $('.profile').css({'height':ecoHeight  + "px"});
+              chartInstance5 = echarts.init((element.find('div'))[0]);
+              //element.find('div')[0].style.height = $('.graph').height() + 'px';
+              chartInstance5.clear();
+              chartInstance5.resize();
+              chartInstance5.setOption(option);
+            }, 600);
 
             scope.onResize5 = function() {
               if (chartInstance5) {
@@ -881,11 +925,11 @@
               }
             }
 
-            var ecoHeight = $('.eco')[0].scrollHeight;
-            $('.eco').css({'height':ecoHeight  + "px"});
-            angular.element($window).bind('resize', function() {
-              scope.onResize5();
-            })
+            // var ecoHeight = $('.profile')[0].scrollHeight;
+            // $('.profile').css({'height':ecoHeight  + "px"});
+            // angular.element($window).bind('resize', function() {
+            //   scope.onResize5();
+            // })
           })
         }
       }
