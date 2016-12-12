@@ -287,17 +287,19 @@
               chart.clear();
               chart.resize();
               chart.setOption({
+                // color:['rgb(195,211,234)','rgb(2,230,239)'],
+                legend: {
+                  orient: 'vertical',
+                  left: 'left'
+                },
                 series: [{
+                  name:'巴中市经济概况',
                   type: 'map',
                   map: 'bz',
                   left: 10,
                   top: 10,
                   right: 10,
                   bottom: 10,
-                  legend: {
-                    orient: 'vertical',
-                    left: 'left'
-                  },
                   selectedMode: 'single',
                   label: {
                     normal: {
@@ -313,14 +315,17 @@
                   },
                   itemStyle: {
                     normal: {
-                      areaColor: 'rgba(18,98,206,1)',
-                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: 'rgb(18,126,215)' // 0% 处的颜色
-                      }, {
-                        offset: 1,
-                        color: 'rgb(17,80,201)' // 100% 处的颜色
-                      }], false),
+                      areaColor: '#FFF',
+                      // color: 'rgb(195,211,234)',
+                      color:new echarts.graphic.RadialGradient(0, 0, 8, [
+                        {  offset: 0,
+                          color: 'rgb(195,211,234)' // 0% 处的颜色
+                        },
+                        {
+                          offset: 1,
+                          color: 'rgb(195,211,234)' // 0% 处的颜色
+                        }
+                      ], false),
                       borderColor: 'rgba(42,180,238,1)',
                       borderType: 'solid',
                     }
