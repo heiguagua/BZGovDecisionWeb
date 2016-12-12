@@ -425,6 +425,7 @@
 
                 }]
               });
+              $('#bzmap').css({'background-image':'url(assets/images/map_bg.png)'});
             }, 500);
             scope.content = scope.all[0];
 

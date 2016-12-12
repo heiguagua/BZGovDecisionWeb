@@ -15,8 +15,10 @@
     }
     #bzmap {
       width: 100%;
-      background: url("../assets/images/map_bg.png") no-repeat center !important;
+      // background: url("../assets/images/map_bg.png") no-repeat center !important;
       background-size: 100% 100% !important;
+      background-repeat:no-repeat !important;
+      background-position:center !important;
     }
     div {
       width: 100% !important;
