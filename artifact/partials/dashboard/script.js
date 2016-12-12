@@ -4,8 +4,8 @@
   dashboard.$inject = ['$location'];
   /** Controller */
   dashboard.controller('dashboardController', [
-    '$scope', 'dashboardService',
-    function($scope, dashboardService) {
+    '$scope', 'dashboardService','$state',
+    function($scope, dashboardService,$state) {
       var vm = this;
       $scope.chartlist = [];
 
@@ -14,18 +14,20 @@
       }).then(function(result) {
         vm.menus = result.data;
         if (vm.menus && vm.menus[0] && vm.menus[0].id) {
-          dashboardService.getContent({
-            menuId: vm.menus[0].id
-          }).then(function(result) {
-            vm.dashcontent = _.sortBy(result.data, ['picCode']);
-            _.forEach(vm.dashcontent, function(item) {
-              var chart = {};
-              chart.opened = false;
-              chart.url = item.url;
-              chart.picCode = item.picCode;
-              $scope.chartlist.push(chart);
-            });
-          });
+          $state.go('profile');
+
+          // dashboardService.getContent({
+          //   menuId: vm.menus[0].id
+          // }).then(function(result) {
+          //   vm.dashcontent = _.sortBy(result.data, ['picCode']);
+          //   _.forEach(vm.dashcontent, function(item) {
+          //     var chart = {};
+          //     chart.opened = false;
+          //     chart.url = item.url;
+          //     chart.picCode = item.picCode;
+          //     $scope.chartlist.push(chart);
+          //   });
+          // });
         }
 
       });
