@@ -4,15 +4,15 @@
   profile.$inject = ['$location'];
   /** Controller */
   profile.controller('profileController', [
-    '$scope', 'profileService',
-    function($scope, profileService) {
+    '$scope', 'profileService','$state',
+    function($scope, profileService,$state) {
       var vm = this;
       profileService.getMenus({
         parentId: "0"
       }).then(function(result) {
         vm.menus = result.data;
         if (vm.menus && vm.menus[0] && vm.menus[0].id) {
-
+          $state.go('profile.menu');
         }
 
       });

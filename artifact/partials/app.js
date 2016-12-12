@@ -22,7 +22,7 @@
 
   function config($stateProvider, $urlRouterProvider, $httpProvider) {
     /** UI-Router Config */
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/profile');
     $stateProvider
       .state('dashboard', {
         url: '/dashboard',

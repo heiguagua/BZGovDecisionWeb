@@ -294,12 +294,17 @@
                   top: 10,
                   right: 10,
                   bottom: 10,
+                  legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                  },
                   selectedMode: 'single',
                   label: {
                     normal: {
                       show: true,
                       textStyle: {
-                        color: '#FFF'
+                        color: '#FFF',
+                        fontSize: 16
                       }
                     },
                     emphasis: {
@@ -309,13 +314,24 @@
                   itemStyle: {
                     normal: {
                       areaColor: 'rgba(18,98,206,1)',
+                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgb(18,126,215)' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: 'rgb(17,80,201)' // 100% 处的颜色
+                      }], false),
                       borderColor: 'rgba(42,180,238,1)',
                       borderType: 'solid',
                     }
                   },
-                  showLegendSymbol: true,
+                  markPoint: {
+                    symbol: 'pin',
+                    symbolSize: 50
+                  },
                   data: [{
                     name: '通江县',
+                    value:123,
                     itemStyle: {
                       normal: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -332,6 +348,7 @@
                     }
                   }, {
                     name: '南江县',
+                    value:223,
                     itemStyle: {
                       normal: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -348,6 +365,7 @@
                     }
                   }, {
                     name: '巴州区',
+                    value:123,
                     itemStyle: {
                       normal: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -364,6 +382,7 @@
                     }
                   }, {
                     name: '平昌县',
+                    value:123,
                     itemStyle: {
                       normal: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -380,6 +399,7 @@
                     }
                   }, {
                     name: '恩阳区',
+                    value:123,
                     itemStyle: {
                       normal: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{

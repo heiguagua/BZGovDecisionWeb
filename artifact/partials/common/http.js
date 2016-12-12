@@ -6,7 +6,7 @@
   //  'http://localhost:5353'
   // 'http://172.16.7.52:8080'
   // 'http://192.168.9.103:8080'
-  // 'http://172.16.0.52:8080/govDecisionServer'
+  // 'http://172.16.0.60:8080/govDecisionServer'
     location.protocol + '//' + location.host + "/govDecisionServer"
   );
 
