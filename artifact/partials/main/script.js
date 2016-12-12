@@ -19,16 +19,8 @@
           if(item && item.type == 3) { // 经济概况
             vm.menus.splice(index, 1);
           }
-        })
-        if($stateParams.typeid == 3) { // 首页
-          //$state.go('main.preview',{preid:$stateParams.mid});
-        }
-        // else if($stateParams.typeid == 2) { // 政策文件
-        //   $state.go('main.file',{furl:$stateParams.murl});
-        // }
-        else{
-          $state.go('main.module',{id:$stateParams.mid});
-        }
+        });
+        $state.go('main.module',{id:vm.menus[0].id});
       });
     }
   ]);
