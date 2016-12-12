@@ -4,8 +4,8 @@
   profile.$inject = ['$location'];
   /** Controller */
   profile.controller('profileController', [
-    '$scope', 'profileService','$state',
-    function($scope, profileService,$state) {
+    '$scope', 'profileService','$state','$stateParams',
+    function($scope, profileService,$state,$stateParams) {
       var vm = this;
       profileService.getMenus({
         parentId: "0"
@@ -13,9 +13,20 @@
         vm.menus = result.data;
         if (vm.menus && vm.menus[0] && vm.menus[0].id) {
           $state.go('profile.menu');
+          // if()
+          // if($stateParams.proid == 8) {
+          //   $state.go('profile.menu');
+          // }
+          // else{
+          //   $state.go('profile.eco');
+          // }
         }
 
       });
+
+      vm.toIndex = function(mid){
+        $state.go('profile.eco',{proid:mid});
+      }
     }
   ]);
 

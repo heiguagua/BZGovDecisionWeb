@@ -14,8 +14,14 @@
       // get menu list
       mainService.getMenus({parentId:"0"}).then(function(result) {
         vm.menus = result.data;
-        if($stateParams.typeid == 0) { // 首页
-          $state.go('main.preview',{preid:$stateParams.mid});
+        _.forEach(vm.menus,function(item,index) {
+          console.log(item);
+          if(item && item.type == 3) { // 经济概况
+            vm.menus.splice(index, 1);
+          }
+        })
+        if($stateParams.typeid == 3) { // 首页
+          //$state.go('main.preview',{preid:$stateParams.mid});
         }
         // else if($stateParams.typeid == 2) { // 政策文件
         //   $state.go('main.file',{furl:$stateParams.murl});

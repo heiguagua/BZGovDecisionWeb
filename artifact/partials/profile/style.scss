@@ -35,10 +35,13 @@
         @include flex-num(1);
 
         .wrap,.inner-wrap {
-          padding: 3rem 0;
-          @include bigscreen {
-            padding: 2rem 0;
+          &.menu{
+            padding: 3rem 0;
+            @include bigscreen {
+              padding: 2rem 0;
+            }
           }
+
           @include flex-num(1);
           @include flex-flow(row);
         }

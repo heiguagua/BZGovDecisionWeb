@@ -10,6 +10,7 @@
       'app.main',
       'app.profile',
       'app.profile.menu',
+      'app.profile.eco',
       'app.file',
       'app.main.preview',
       'app.main.module',
@@ -31,7 +32,7 @@
         controllerAs: 'dashboard',
       })
       .state('profile', {
-        url: '/profile/:mid/:typeid/:murl',
+        url: '/profile/:proid/:typeid/:murl',
         templateUrl: 'partials/profile/view.html',
         controller: 'profileController',
         controllerAs: 'profile',
@@ -41,6 +42,12 @@
         templateUrl: 'partials/profile/menu/view.html',
         controller: 'menuController',
         controllerAs: 'menu',
+      })
+      .state('profile.eco', {
+        url: '/eco/:proid',
+        templateUrl: 'partials/profile/eco/view.html',
+        controller: 'ecoController',
+        controllerAs: 'eco',
       })
       .state('main', {
         url: '/main/:mid/:typeid/:murl',
