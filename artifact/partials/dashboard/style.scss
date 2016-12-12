@@ -19,6 +19,7 @@
       //border: 1px solid $innerline;
       @include flex-flow(column);
       .header {
+        cursor:pointer;
         h3 {
           background: url("../assets/images/header.png") no-repeat center;
           height: 50px;
