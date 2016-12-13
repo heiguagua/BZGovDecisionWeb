@@ -12,6 +12,7 @@
       }).then(function(result) {
         vm.menus = result.data;
         if (vm.menus && vm.menus[0] && vm.menus[0].id) {
+          $('.profile').css({'background':'url(assets/images/bg_profile.png)'});
           $state.go('profile.menu');
           // if()
           // if($stateParams.proid == 8) {
@@ -24,9 +25,6 @@
 
       });
 
-      vm.toIndex = function(mid){
-        $state.go('profile.eco',{proid:mid});
-      }
     }
   ]);
 

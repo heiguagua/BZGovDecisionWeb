@@ -7,6 +7,7 @@
     '$scope', 'ecoService','$state','$stateParams',
     function($scope, ecoService,$state,$stateParams) {
       var vm = this;
+      $('.profile').css({'background':'url(assets/images/bg.png)'});
       $scope.chartlist = [];
 
       ecoService.getContent({
@@ -910,8 +911,8 @@
             // chartInstance5.setOption(option);
 
             setTimeout(function() {
-              var ecoHeight = $('.profile')[0].scrollHeight;
-              $('.profile').css({'height':ecoHeight  + "px"});
+              // var ecoHeight = $('.profile')[0].scrollHeight;
+              // $('.profile').css({'height':ecoHeight  + "px"});
               chartInstance5 = echarts.init((element.find('div'))[0]);
               //element.find('div')[0].style.height = $('.graph').height() + 'px';
               chartInstance5.clear();

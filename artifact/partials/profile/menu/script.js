@@ -286,8 +286,8 @@
             setTimeout(function() {
               chart.clear();
               chart.resize();
-              var ecoHeight = $('.profile')[0].scrollHeight;
-              $('.profile').css({'height':ecoHeight  + "px"});
+              // var ecoHeight = $('.profile')[0].scrollHeight;
+              // $('.profile').css({'height':ecoHeight  + "px"});
               chart.setOption({
                 // color:['rgb(195,211,234)','rgb(2,230,239)'],
                 legend: {

@@ -4,7 +4,9 @@
   padding: 24px 35px 35px;
   // background: $dashboard_bg;
   background: url("../assets/images/bg_profile.png");
-  background-size: 100% 102%;
+  background-size: 100% 102% !important;
+  background-repeat:no-repeat !important;
+  background-position:center !important;
   .chart {
     padding: 4px;
     @include flex-num(1);
