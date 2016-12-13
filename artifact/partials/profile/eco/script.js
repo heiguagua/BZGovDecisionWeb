@@ -4,10 +4,13 @@
   eco.$inject = ['$location'];
   /** Controller */
   eco.controller('ecoController', [
-    '$scope', 'ecoService','$state','$stateParams',
-    function($scope, ecoService,$state,$stateParams) {
+    '$scope', 'ecoService', '$state', '$stateParams','$window',
+    function($scope, ecoService, $state, $stateParams,$window) {
       var vm = this;
-      $('.profile').css({'background':'url(assets/images/bg.png)'});
+      $('.profile').css({
+        'background': 'url(assets/images/bg.png)'
+      });
+
       $scope.chartlist = [];
 
       ecoService.getContent({
@@ -166,7 +169,7 @@
             }
             scope.econtent.dateOptions = dateOptions;
 
-            _.forEach(opt.series[1].data,function(data){
+            _.forEach(opt.series[1].data, function(data) {
 
             });
 
@@ -182,10 +185,10 @@
                   var labelShow = obj.data.name + '<br/>';
                   if (obj.data.other && obj.data.other.length > 1) {
                     for (var i = 0; i < obj.data.other.length; i++) {
-                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'<br/>';
+                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit + '<br/>';
                     }
                   } else {
-                    labelShow = obj.data.name + ":" + obj.data.value + opt.y_name[0] +'<br/>';
+                    labelShow = obj.data.name + ":" + obj.data.value + opt.y_name[0] + '<br/>';
                     if (opt.auto_count && opt.auto_count == 'percent') {
                       labelShow += '占比：' + obj.percent + '%';
                     }
@@ -208,7 +211,7 @@
                     //formatter: '{b}\n {c}亿元',
                     textStyle: {
                       color: '#FFF',
-                      fontSize:14
+                      fontSize: 14
                     }
                   }
                 },
@@ -234,11 +237,10 @@
                       var labelShow = '\n' + obj.data.name + '\n\n';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
-                          if( i == obj.data.other.length-1) {
-                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit ;
-                          }
-                          else{
-                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'\n\n';
+                          if (i == obj.data.other.length - 1) {
+                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit;
+                          } else {
+                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit + '\n\n';
                           }
                         }
                       } else {
@@ -249,9 +251,9 @@
                       }
                       return labelShow;
                     },
-                    textStyle:{
+                    textStyle: {
                       color: '#FFF',
-                      fontSize:14
+                      fontSize: 14
                     }
                   }
                 },
@@ -261,23 +263,25 @@
             };
             // set labelLine style
             var screen_width = screen.width;
-            if(screen_width < 1600) {
-              option.series[1].labelLine = {normal:{
-                  length:14,
-                  length2:8
-              }};
+            if (screen_width < 1600) {
+              option.series[1].labelLine = {
+                normal: {
+                  length: 14,
+                  length2: 8
+                }
+              };
               option.series[0].label.normal.textStyle = {
                 color: '#FFF',
-                fontSize:10
+                fontSize: 10
               };
               option.series[1].label.normal.textStyle = {
                 color: '#FFF',
-                fontSize:10
+                fontSize: 10
               };
             }
 
             //chartInstance1 = echarts.init((element.find('div'))[0]);
-          //  chartInstance1.setOption(option);
+            //  chartInstance1.setOption(option);
             setTimeout(function() {
               chartInstance1 = echarts.init((element.find('div'))[0]);
               //element.find('div')[0].style.height = $('.graph').height() + 'px';
@@ -335,10 +339,10 @@
                   var labelShow = obj.data.name + '<br/>';
                   if (obj.data.other && obj.data.other.length > 1) {
                     for (var i = 0; i < obj.data.other.length; i++) {
-                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'<br/>';
+                      labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit + '<br/>';
                     }
                   } else {
-                    labelShow = obj.data.name + ":" + obj.data.value + obj.data.unit+ '<br/>';
+                    labelShow = obj.data.name + ":" + obj.data.value + obj.data.unit + '<br/>';
                     if (opt.auto_count && opt.auto_count == 'percent') {
                       labelShow += '占比：' + obj.percent + '%';
                     }
@@ -356,11 +360,11 @@
                   normal: {
                     position: 'center',
                     formatter: function(obj) {
-                      return "\n" + obj.data.name + "\n" + obj.data.value+ obj.data.unit + '\n';
+                      return "\n" + obj.data.name + "\n" + obj.data.value + obj.data.unit + '\n';
                     },
                     textStyle: {
-                      color:'#FFF',
-                      fontSize:14
+                      color: '#FFF',
+                      fontSize: 14
                     }
                   }
                 },
@@ -386,10 +390,10 @@
                       var labelShow = '\n\n' + obj.data.name + '\n\n';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
-                          labelShow += obj.data.other[i].name + "\n\n" + obj.data.other[i].value + obj.data.other[i].unit +'\n\n';
+                          labelShow += obj.data.other[i].name + "\n\n" + obj.data.other[i].value + obj.data.other[i].unit + '\n\n';
                         }
                       } else {
-                        labelShow = obj.data.name + "\n\n" + obj.data.value + obj.data.unit+ '\n\n';
+                        labelShow = obj.data.name + "\n\n" + obj.data.value + obj.data.unit + '\n\n';
                         if (opt.auto_count && opt.auto_count == 'percent') {
                           labelShow += '占比：' + obj.percent + '%';
                         }
@@ -397,8 +401,8 @@
                       return labelShow;
                     },
                     textStyle: {
-                      color:'#FFF',
-                      fontSize:14
+                      color: '#FFF',
+                      fontSize: 14
                     }
                   }
                 },
@@ -408,18 +412,20 @@
             };
             // set labelLine style
             var screen_width = screen.width;
-            if(screen_width < 1600) {
-              option.series[1].labelLine = {normal:{
-                  length:10,
-                  length2:8
-              }};
+            if (screen_width < 1600) {
+              option.series[1].labelLine = {
+                normal: {
+                  length: 10,
+                  length2: 8
+                }
+              };
               option.series[0].label.normal.textStyle = {
                 color: '#FFF',
-                fontSize:10
+                fontSize: 10
               };
               option.series[1].label.normal.textStyle = {
                 color: '#FFF',
-                fontSize:10
+                fontSize: 10
               };
             }
             // chartInstance2 = echarts.init((element.find('div'))[0]);
@@ -488,17 +494,19 @@
               yAxis.type = 'value';
               yAxis.name = item;
               yAxis.axisLabel = {
-                textStyle:{
-                  color:'rgb(0,168,228)'
+                textStyle: {
+                  color: 'rgb(0,168,228)'
                 }
               };
               yAxis.axisTick = {};
               yAxis.axisTick.inside = true;
-              yAxis.axisLine = {lineStyle: {
-                color: colors[2],
-                shadowColor: colors[2],
-                shadowBlur: 4
-              }};
+              yAxis.axisLine = {
+                lineStyle: {
+                  color: colors[2],
+                  shadowColor: colors[2],
+                  shadowBlur: 4
+                }
+              };
               yAxis.splitLine = {
                 show: true,
                 interval: 'auto',
@@ -515,18 +523,17 @@
               if (opt.max_and_min) {
                 var minValue = Number(opt.max_and_min[index].minValue);
                 var maxValue = Number(opt.max_and_min[index].maxValue);
-                if(minValue>=0 && minValue < 1) {
+                if (minValue >= 0 && minValue < 1) {
                   minValue = 0;
-                }
-                else{
-                  minValue = minValue-1;
+                } else {
+                  minValue = minValue - 1;
                 }
                 maxValue = 1 + maxValue;
                 yAxis.min = Math.round(minValue);
                 yAxis.max = Math.round(maxValue);
               }
               yAxis.splitBumber = 5;
-              yAxis.interval = (yAxis.max-yAxis.min)/yAxis.splitBumber;
+              yAxis.interval = (yAxis.max - yAxis.min) / yAxis.splitBumber;
               opt.yAxis.push(yAxis);
             });
             _.forEach(opt.series, function(item) {
@@ -537,8 +544,8 @@
                 normal: {
                   show: true,
                   position: 'top',
-                  textStyle:{
-                    color:'#FFF'
+                  textStyle: {
+                    color: '#FFF'
                   }
                 }
               };
@@ -546,9 +553,9 @@
             var screen_width = screen.width;
             var grid_top = '24%';
             var grid_left = '10%';
-            if(screen_width < 1600) {
+            if (screen_width < 1600) {
               grid_top = '36%';
-              grid_left= '12%';
+              grid_left = '12%';
             }
             var option = {
               color: areaColors,
@@ -568,19 +575,19 @@
                 padding: 4,
                 backgroundColor: 'rgba(0, 120, 215, 0.5)'
               },
-              grid:{
-                top:grid_top,
-                left:grid_left,
-                right:grid_left,
-                bottom:30
+              grid: {
+                top: grid_top,
+                left: grid_left,
+                right: grid_left,
+                bottom: 30
               },
               legend: {
                 orient: 'vertical',
                 left: 'right',
                 data: opt.legend,
-                textStyle:{
-                  color:'#fbfbfb',
-                  fontSize:12
+                textStyle: {
+                  color: '#fbfbfb',
+                  fontSize: 12
                 }
               },
               tooltip: {
@@ -598,11 +605,11 @@
                     shadowBlur: 4
                   }
                 },
-                axisLabel:{
+                axisLabel: {
                   interval: 0,
-                  textStyle:{
-                    fontSize:10,
-                    color:'rgb(0,168,228)'
+                  textStyle: {
+                    fontSize: 10,
+                    color: 'rgb(0,168,228)'
                   }
                 },
                 splitLine: {
@@ -675,16 +682,16 @@
             scope.ccontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
-            if(opt.max_and_min){
+            if (opt.max_and_min) {
               yAxis_min = Math.round(opt.max_and_min[0].minValue);
               yAxis_max = Math.round(opt.max_and_min[0].maxValue);
             }
             var screen_width = screen.width;
             var grid_top = '24%';
             var grid_left = '10%';
-            if(screen_width < 1600) {
+            if (screen_width < 1600) {
               grid_top = '32%';
-              grid_left= '16%';
+              grid_left = '16%';
             }
             var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)'];
             var option = {
@@ -696,16 +703,16 @@
                 orient: 'vertical',
                 left: 'right',
                 data: opt.legend,
-                textStyle:{
-                  color:'#d5e2df',
-                  fontSize:12
+                textStyle: {
+                  color: '#d5e2df',
+                  fontSize: 12
                 }
               },
-              grid:{
+              grid: {
                 //right:'3%',
-                top:'24%',
-                left:grid_left,
-                bottom:30
+                top: '24%',
+                left: grid_left,
+                bottom: 30
               },
               xAxis: {
                 type: 'category',
@@ -718,13 +725,13 @@
                     shadowBlur: 4
                   }
                 },
-                axisLabel:{
+                axisLabel: {
                   interval: 0,
-                  textStyle:{
-                    fontSize:10
+                  textStyle: {
+                    fontSize: 10
                   },
-                  formatter:function(value){
-                    var month = value.substring(value.indexOf('-')+1);
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
                     return Number(month) + '月';
                   }
                 },
@@ -747,11 +754,11 @@
                 axisLabel: {
                   formatter: '{value}'
                 },
-                name:opt.y_name,
-                min:yAxis_min,
-                max:yAxis_max,
-                splitBumber:5,
-                interval:(yAxis_max-yAxis_min)/5,
+                name: opt.y_name,
+                min: yAxis_min,
+                max: yAxis_max,
+                splitBumber: 5,
+                interval: (yAxis_max - yAxis_min) / 5,
                 axisLine: {
                   lineStyle: {
                     color: colors[2],
@@ -858,7 +865,7 @@
               title: {
                 text: text.name + "：" + text.value + text.unit,
                 subtext: subtext.name + "：" + subtext.value + subtext.unit,
-                left:'right',
+                left: 'right',
                 textStyle: {
                   fontSize: 12,
                   color: 'rgb(200,254,200)',
@@ -897,17 +904,16 @@
                         var labelShow = '\n';
                         if (obj.data.other && obj.data.other.length > 1) {
                           for (var i = 0; i < obj.data.other.length; i++) {
-                            if(i == obj.data.other.length-1) {
+                            if (i == obj.data.other.length - 1) {
                               labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value;
-                            }
-                            else{
+                            } else {
                               labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n\n';
                             }
 
                           }
                         } else {
-                          var unit = opt.y_name[0]?opt.y_name[0]:'';
-                          labelShow = obj.data.name + ":" + obj.data.value + unit +'\n\n';
+                          var unit = opt.y_name[0] ? opt.y_name[0] : '';
+                          labelShow = obj.data.name + ":" + obj.data.value + unit + '\n\n';
                           if (opt.auto_count && opt.auto_count == 'percent') {
                             labelShow += '占比：' + obj.percent + '%';
                           }
@@ -916,57 +922,75 @@
                       },
                       textStyle: {
                         color: "#FFF",
-                        fontSize:14
+                        fontSize: 14
                       }
                     }
                   }
                 },
                 labelLine: {
                   show: true,
-                  normal:{
-                    length:14,
-                    length2:8
+                  normal: {
+                    length: 14,
+                    length2: 8
                   }
                 }
               }]
             };
             var screen_width = screen.width;
-            if(screen_width < 1600) {
-              option.series[0].labelLine = {normal:{
-                  length:12,
-                  length2:4
-              }};
+            if (screen_width < 1600) {
+              option.series[0].labelLine = {
+                normal: {
+                  length: 12,
+                  length2: 4
+                }
+              };
               option.series[0].label = {};
               option.series[0].label.normal = {};
               option.series[0].label.normal.textStyle = {
                 color: '#FFF',
-                fontSize:10
+                fontSize: 10
               };
             }
             // chartInstance5 = echarts.init((element.find('div'))[0]);
             // chartInstance5.setOption(option);
 
             setTimeout(function() {
-              var ecoHeight = $('.profile')[0].scrollHeight;
-              $('.profile').css({'height':ecoHeight  + "px"});
+              // var ecoHeight = $('.profile')[0].scrollHeight;
+              // $('.profile').css({'height':ecoHeight  + "px"});
+              var center_top_height = $('.center-top').outerHeight(true);
+              var center_down_height = $('.center-down').outerHeight(true);
+              if (screen_width < 1600) {
+                $('.right-bottom').css({'max-height':center_down_height+'px'});
+                $('.right-top').css({'max-height':center_top_height+'px'});
+              }
               chartInstance5 = echarts.init((element.find('div'))[0]);
               //element.find('div')[0].style.height = $('.graph').height() + 'px';
               chartInstance5.clear();
               chartInstance5.resize();
               chartInstance5.setOption(option);
-            }, 600);
+            }, 900);
 
             scope.onResize5 = function() {
               if (chartInstance5) {
                 chartInstance5.resize();
+                var center_top_height = $('.center-top').outerHeight(true);
+                var center_down_height = $('.center-down').outerHeight(true);
+                if (screen_width < 1600) {
+                  $('.right-bottom').css({'max-height':center_down_height+'px'});
+                  $('.right-top').css({'max-height':center_top_height+'px'});
+                }
               }
             }
 
             // var ecoHeight = $('.profile')[0].scrollHeight;
             // $('.profile').css({'height':ecoHeight  + "px"});
-            // angular.element($window).bind('resize', function() {
-            //   scope.onResize5();
-            // })
+            angular.element($window).bind('resize', function() {
+              console.log($window.outerHeight);
+              console.log(screen.height);
+              console.log(screen.height-$window.outerHeight);
+
+              scope.onResize5();
+            })
           })
         }
       }

@@ -45,14 +45,14 @@
       color: $white;
       @include flex-num(1);
       @include smallscreen {
-        max-height: 270px !important;
+      //  max-height: 270px !important;
       }
     }
     .center-down {
       @include flex-num(1);
       @include flex-flow(row);
       @include smallscreen {
-        max-height: 270px !important;
+      //  max-height: 270px !important;
       }
       >div {
         @include flex-num(1);
@@ -76,7 +76,7 @@
       background: rgba(0, 120, 215, 0.1);
       @include flex-num(1);
       @include smallscreen {
-        max-height: 270px !important;
+        max-height: 270px;
       }
     }
     .right-top {
@@ -84,7 +84,7 @@
       background: rgba(0, 120, 215, 0.1);
       @extend .right-bottom;
       @include smallscreen {
-        max-height: 270px !important;
+        max-height: 270px;
       }
     }
   }
