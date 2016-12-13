@@ -120,3 +120,29 @@ $desktop-width: 1400px;
 .cg-busy-default-wrapper{
   top:45% !important;
 }
+
+/*---滚动条默认显示样式--*/
+::-webkit-scrollbar-thumb{
+   background-color:rgba(33,150,243,.4);
+   height:50px;
+   outline-offset:-2px;
+   outline:2px solid transparent;
+   -webkit-border-radius:4px;
+   border: 1px solid rgba(255,255,255,.2);
+}
+/*---鼠标点击滚动条显示样式--*/
+::-webkit-scrollbar-thumb:hover{
+   background-color:rgba(3,169,244,.6);
+   height:50px;
+   -webkit-border-radius:4px;
+}
+/*---滚动条大小--*/
+::-webkit-scrollbar{
+   width:8px;
+   height:8px;
+}
+/*---滚动框背景样式--*/
+::-webkit-scrollbar-track-piece{
+   background-color:rgba(96,125,139,.5);
+   -webkit-border-radius:0;
+}
