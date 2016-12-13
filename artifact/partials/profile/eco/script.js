@@ -233,10 +233,10 @@
                       var labelShow = '\n\n' + obj.data.name + '\n';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
-                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'\n';
+                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'\n\n';
                         }
                       } else {
-                        labelShow = obj.data.name + ":" + obj.data.value + '\n';
+                        labelShow = obj.data.name + ":" + obj.data.value + '\n\n';
                         if (opt.auto_count && opt.auto_count == 'percent') {
                           labelShow += '占比：' + obj.percent + '%';
                         }
@@ -374,10 +374,10 @@
                       var labelShow = '\n\n' + obj.data.name + '\n';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
-                          labelShow += obj.data.other[i].name + "\n" + obj.data.other[i].value + obj.data.other[i].unit +'\n';
+                          labelShow += obj.data.other[i].name + "\n" + obj.data.other[i].value + obj.data.other[i].unit +'\n\n';
                         }
                       } else {
-                        labelShow = obj.data.name + "\n" + obj.data.value + obj.data.unit+ '\n';
+                        labelShow = obj.data.name + "\n" + obj.data.value + obj.data.unit+ '\n\n';
                         if (opt.auto_count && opt.auto_count == 'percent') {
                           labelShow += '占比：' + obj.percent + '%';
                         }
@@ -880,11 +880,11 @@
                         var labelShow = '\n';
                         if (obj.data.other && obj.data.other.length > 1) {
                           for (var i = 0; i < obj.data.other.length; i++) {
-                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n';
+                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n\n';
                           }
                         } else {
                           var unit = opt.y_name[0]?opt.y_name[0]:'';
-                          labelShow = obj.data.name + ":" + obj.data.value + unit +'\n';
+                          labelShow = obj.data.name + ":" + obj.data.value + unit +'\n\n';
                           if (opt.auto_count && opt.auto_count == 'percent') {
                             labelShow += '占比：' + obj.percent + '%';
                           }
@@ -911,8 +911,8 @@
             // chartInstance5.setOption(option);
 
             setTimeout(function() {
-              // var ecoHeight = $('.profile')[0].scrollHeight;
-              // $('.profile').css({'height':ecoHeight  + "px"});
+              var ecoHeight = $('.profile')[0].scrollHeight;
+              $('.profile').css({'height':ecoHeight  + "px"});
               chartInstance5 = echarts.init((element.find('div'))[0]);
               //element.find('div')[0].style.height = $('.graph').height() + 'px';
               chartInstance5.clear();

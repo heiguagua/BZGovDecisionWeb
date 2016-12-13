@@ -281,13 +281,12 @@
         link: function(scope, element, attrs) {
           var chart = {};
           scope.$applyAsync(function() {
-            console.log(scope.content);
             chart = echarts.init(document.getElementById('bzmap'));
+
             setTimeout(function() {
               chart.clear();
               chart.resize();
-              // var ecoHeight = $('.profile')[0].scrollHeight;
-              // $('.profile').css({'height':ecoHeight  + "px"});
+
               chart.setOption({
                 // color:['rgb(195,211,234)','rgb(2,230,239)'],
                 legend: {

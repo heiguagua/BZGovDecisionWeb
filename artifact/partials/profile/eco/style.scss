@@ -41,10 +41,16 @@
       border: 1px solid $innerline;
       color: $white;
       @include flex-num(1);
+      @include smallscreen {
+        max-height: 260px !important;
+      }
     }
     .center-down {
       @include flex-num(1);
       @include flex-flow(row);
+      @include smallscreen {
+        max-height: 260px !important;
+      }
       >div {
         @include flex-num(1);
       }
@@ -61,15 +67,22 @@
     @include flex-flow(column);
     @include flex-align(stretch);
     @include flex-num(2);
+
     .right-bottom {
       border: 1px solid $innerline;
       background: rgba(0, 120, 215, 0.1);
       @include flex-num(1);
+      @include smallscreen {
+        max-height: 260px !important;
+      }
     }
     .right-top {
       margin-bottom: 15px;
       background: rgba(0, 120, 215, 0.1);
       @extend .right-bottom;
+      @include smallscreen {
+        max-height: 260px !important;
+      }
     }
   }
   .box-title {
@@ -151,8 +164,13 @@
     @include mobilescreen {
       @include flex-flow(column);
     }
+    // @include smallscreen {
+    //   max-height: 180px !important;
+    // }
     .chart {
       @include flex-num(1);
+
+
       >div{
         @include mobilescreen {
           min-height: 300px;

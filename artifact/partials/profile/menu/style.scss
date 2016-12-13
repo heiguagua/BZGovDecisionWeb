@@ -65,6 +65,9 @@
       color: $white;
       font-size: 0.75rem;
       font-family: '微软雅黑';
+      @include smallscreen {
+        padding: 0.6rem 1rem;
+      }
       .media-heading {
         font-size: 1rem;
         font-family: '微软雅黑';
