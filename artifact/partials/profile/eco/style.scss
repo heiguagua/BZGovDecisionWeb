@@ -76,7 +76,7 @@
       background: rgba(0, 120, 215, 0.1);
       @include flex-num(1);
       @include smallscreen {
-        max-height: 270px;
+        //max-height: 270px;
       }
     }
     .right-top {
@@ -84,7 +84,7 @@
       background: rgba(0, 120, 215, 0.1);
       @extend .right-bottom;
       @include smallscreen {
-        max-height: 270px;
+        //max-height: 270px;
       }
     }
   }
@@ -216,8 +216,4 @@
     bottom: -2px;
     border-right: 2px solid rgb(0,127,203);
   }
-}
-.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
-  background-color: rgba(3,169,244,.5);
-background-color: rgba(3,169,244,.5);
 }

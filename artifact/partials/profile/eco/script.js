@@ -295,7 +295,9 @@
 
             scope.onResize1 = function() {
               if (chartInstance1) {
+                chartInstance1.clear();
                 chartInstance1.resize();
+                chartInstance1.setOption(option);
               }
             }
 
@@ -443,7 +445,9 @@
 
             scope.onResize2 = function() {
               if (chartInstance2) {
+                chartInstance2.clear();
                 chartInstance2.resize();
+                chartInstance2.setOption(option);
               }
             }
 
@@ -647,7 +651,9 @@
 
             scope.onResize3 = function() {
               if (chartInstance3) {
+                chartInstance3.clear();
                 chartInstance3.resize();
+                chartInstance3.setOption(option);
               }
             }
 
@@ -799,7 +805,9 @@
 
             scope.onResize4 = function() {
               if (chartInstance4) {
+                chartInstance4.clear();
                 chartInstance4.resize();
+                chartInstance4.setOption(option);
               }
             }
 
@@ -956,31 +964,45 @@
             }
             // chartInstance5 = echarts.init((element.find('div'))[0]);
             // chartInstance5.setOption(option);
-
+            var inner_line_height = $('.inner-line').height();
+            var header_height = $('.header').outerHeight(true);
+            var main_height = inner_line_height-header_height-20-15-2-15;
+            $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+            $('.center-top').css({'max-height':main_height/2+'px'});
+            $('.center-down').css({'max-height':main_height/2+'px'});
+            var center_top_height = $('.center-top').outerHeight(true);
+            var center_down_height = $('.center-down').outerHeight(true);
+            if (screen_width < 1600) {
+              $('.right-bottom').css({'max-height':center_down_height+'px'});
+              $('.right-top').css({'max-height':center_top_height-15+'px'});
+            }
             setTimeout(function() {
               // var ecoHeight = $('.profile')[0].scrollHeight;
               // $('.profile').css({'height':ecoHeight  + "px"});
-              var center_top_height = $('.center-top').outerHeight(true);
-              var center_down_height = $('.center-down').outerHeight(true);
-              if (screen_width < 1600) {
-                $('.right-bottom').css({'max-height':center_down_height+'px'});
-                $('.right-top').css({'max-height':center_top_height+'px'});
-              }
+
               chartInstance5 = echarts.init((element.find('div'))[0]);
               //element.find('div')[0].style.height = $('.graph').height() + 'px';
               chartInstance5.clear();
               chartInstance5.resize();
               chartInstance5.setOption(option);
-            }, 900);
+            }, 600);
 
             scope.onResize5 = function() {
               if (chartInstance5) {
-                chartInstance5.resize();
+                var inner_line_height = $('.inner-line').height();
+                var header_height = $('.header').outerHeight(true);
+                var main_height = inner_line_height-header_height-20-15-2-15;
+                $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+                $('.center-top').css({'max-height':main_height/2+'px'});
+                $('.center-down').css({'max-height':main_height/2+'px'});
                 var center_top_height = $('.center-top').outerHeight(true);
                 var center_down_height = $('.center-down').outerHeight(true);
                 if (screen_width < 1600) {
                   $('.right-bottom').css({'max-height':center_down_height+'px'});
-                  $('.right-top').css({'max-height':center_top_height+'px'});
+                  $('.right-top').css({'max-height':center_top_height-15+'px'});
+                  chartInstance5.clear();
+                  chartInstance5.resize();
+                  chartInstance5.setOption(option);
                 }
               }
             }
@@ -988,10 +1010,6 @@
             // var ecoHeight = $('.profile')[0].scrollHeight;
             // $('.profile').css({'height':ecoHeight  + "px"});
             angular.element($window).bind('resize', function() {
-              console.log($window.outerHeight);
-              console.log(screen.height);
-              console.log(screen.height-$window.outerHeight);
-
               scope.onResize5();
             })
           })
