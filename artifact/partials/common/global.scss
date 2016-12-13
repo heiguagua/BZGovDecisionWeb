@@ -57,12 +57,16 @@ $desktop-width: 1400px;
   font-family: $fontFamily;
 }
 @mixin flex-flow ($flow:row) {
-  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox;      /* TWEENER - IE 10 */
-    display: -webkit-flex;     /* NEW - Chrome */
-    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
-
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Chrome */
+  display: flex;
+  /* NEW, Spec - Opera 12.1, Firefox 20+ */
   -webkit-flex-flow: $flow;
   flex-flow: $flow;
 }
@@ -75,11 +79,15 @@ $desktop-width: 1400px;
   justify-content: $justify;
 }
 @mixin flex-num($num:1) {
-  -webkit-box-flex: $num;      /* OLD - iOS 6-, Safari 3.1-6 */
- -moz-box-flex: $num;         /* OLD - Firefox 19- */
- -webkit-flex: $num;          /* Chrome */
- -ms-flex: $num;              /* IE 10 */
- flex:$num;
+  -webkit-box-flex: $num;
+  /* OLD - iOS 6-, Safari 3.1-6 */
+  -moz-box-flex: $num;
+  /* OLD - Firefox 19- */
+  -webkit-flex: $num;
+  /* Chrome */
+  -ms-flex: $num;
+  /* IE 10 */
+  flex: $num;
 }
 @media only screen and (max-width: 2400px) {
   html {
@@ -114,35 +122,43 @@ $desktop-width: 1400px;
 .left5 {
   padding-left: 5px;
 }
-.cg-busy{
+.cg-busy {
   background: rgba(221,221,221,.8);
 }
-.cg-busy-default-wrapper{
-  top:45% !important;
+.cg-busy-default-wrapper {
+  top: 45% !important;
 }
-
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+  background-color: rgba(3,169,244,.5);
+  background-color: rgba(3,169,244,.5);
+}
+.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar {
+  background-color: rgba(3,169,244,.8);
+  background-color: rgba(3,169,244,.8);
+}
 /*---滚动条默认显示样式--*/
-::-webkit-scrollbar-thumb{
-   background-color:rgba(33,150,243,.4);
-   height:50px;
-   outline-offset:-2px;
-   outline:2px solid transparent;
-   -webkit-border-radius:4px;
-   border: 0;
-}
-/*---鼠标点击滚动条显示样式--*/
-::-webkit-scrollbar-thumb:hover{
-   background-color:rgba(3,169,244,.6);
-   height:50px;
-   -webkit-border-radius:4px;
-}
-/*---滚动条大小--*/
-::-webkit-scrollbar{
-   width:8px;
-   height:8px;
-}
-/*---滚动框背景样式--*/
-::-webkit-scrollbar-track-piece{
-   background-color:rgba(96,125,139,.5);
-   -webkit-border-radius:0;
-}
+// ::-webkit-scrollbar-thumb{
+//    background-color:rgba(33,150,243,.4);
+//    height:50px;
+//    outline-offset:-2px;
+//    outline:2px solid transparent;
+//    -webkit-border-radius:4px;
+//    border: 0;
+// }
+// /*---鼠标点击滚动条显示样式--*/
+// ::-webkit-scrollbar-thumb:hover{
+//    background-color:rgba(3,169,244,.6);
+//    height:50px;
+//    -webkit-border-radius:4px;
+// }
+// /*---滚动条大小--*/
+// ::-webkit-scrollbar{
+//    width:8px;
+//    height:8px;
+// }
+// /*---滚动框背景样式--*/
+// ::-webkit-scrollbar-track-piece{
+//    background-color:rgba(96,125,139,.5);
+//    -webkit-border-radius:0;
+// }

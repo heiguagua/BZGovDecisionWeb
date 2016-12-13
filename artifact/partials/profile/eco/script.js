@@ -24,6 +24,7 @@
           chart.picCode = item.picCode;
           $scope.chartlist.push(chart);
         });
+
       });
 
       ecoService.getEcoData({
@@ -36,6 +37,8 @@
         picCode: 7118
       }).then(function(result) {
         vm.ecoDataDown = result.data;
+        console.log($('.datalist'));
+        $('.datalist').mCustomScrollbar();
       })
 
 
