@@ -7,6 +7,7 @@
     '$scope', 'menuService',
     function($scope, menuService) {
       var vm = this;
+      $('.profile').css({'background':'url(assets/images/bg_profile.png)'});
       $scope.allDatas = [{
         qxname: '通江县',
         data: [{

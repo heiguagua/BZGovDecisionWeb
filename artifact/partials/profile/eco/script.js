@@ -230,10 +230,15 @@
                     formatter: function(obj) {
                       var percentShow = '';
 
-                      var labelShow = '\n\n' + obj.data.name + '\n';
+                      var labelShow = '\n' + obj.data.name + '\n\n';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
-                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'\n\n';
+                          if( i == obj.data.other.length-1) {
+                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit ;
+                          }
+                          else{
+                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit +'\n\n';
+                          }
                         }
                       } else {
                         labelShow = obj.data.name + ":" + obj.data.value + '\n\n';
@@ -257,7 +262,7 @@
             if(screen_width < 1600) {
               option.series[1].labelLine = {normal:{
                   length:14,
-                  length2:4
+                  length2:8
               }};
               option.series[1].label.normal.textStyle = {
                 color: '#FFF',
@@ -371,13 +376,13 @@
                     formatter: function(obj) {
                       var percentShow = '';
 
-                      var labelShow = '\n\n' + obj.data.name + '\n';
+                      var labelShow = '\n\n' + obj.data.name + '\n\n';
                       if (obj.data.other && obj.data.other.length > 1) {
                         for (var i = 0; i < obj.data.other.length; i++) {
-                          labelShow += obj.data.other[i].name + "\n" + obj.data.other[i].value + obj.data.other[i].unit +'\n\n';
+                          labelShow += obj.data.other[i].name + "\n\n" + obj.data.other[i].value + obj.data.other[i].unit +'\n\n';
                         }
                       } else {
-                        labelShow = obj.data.name + "\n" + obj.data.value + obj.data.unit+ '\n\n';
+                        labelShow = obj.data.name + "\n\n" + obj.data.value + obj.data.unit+ '\n\n';
                         if (opt.auto_count && opt.auto_count == 'percent') {
                           labelShow += '占比：' + obj.percent + '%';
                         }
@@ -858,7 +863,7 @@
               series: [{
                 name: opt.series[0].name,
                 type: 'pie',
-                radius: '55%',
+                radius: '50%',
                 center: ['50%', '50%'],
                 startAngle: -230,
                 data: opt.series[0].data,
@@ -880,7 +885,13 @@
                         var labelShow = '\n';
                         if (obj.data.other && obj.data.other.length > 1) {
                           for (var i = 0; i < obj.data.other.length; i++) {
-                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n\n';
+                            if(i == obj.data.other.length-1) {
+                              labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value;
+                            }
+                            else{
+                              labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + '\n\n';
+                            }
+
                           }
                         } else {
                           var unit = opt.y_name[0]?opt.y_name[0]:'';
@@ -906,7 +917,19 @@
                 }
               }]
             };
-
+            var screen_width = screen.width;
+            if(screen_width < 1600) {
+              option.series[0].labelLine = {normal:{
+                  length:12,
+                  length2:4
+              }};
+              option.series[0].label = {};
+              option.series[0].label.normal = {};
+              option.series[0].label.normal.textStyle = {
+                color: '#FFF',
+                fontSize:10
+              };
+            }
             // chartInstance5 = echarts.init((element.find('div'))[0]);
             // chartInstance5.setOption(option);
 
