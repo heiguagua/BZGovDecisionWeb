@@ -964,24 +964,21 @@
             }
             // chartInstance5 = echarts.init((element.find('div'))[0]);
             // chartInstance5.setOption(option);
-            var inner_line_height = $('.inner-line').height();
-            var header_height = $('.header').outerHeight(true);
-            var main_height = inner_line_height-header_height-20-15-2-15;
-            $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
-            $('.center-top').css({'max-height':main_height/2+'px'});
-            $('.center-down').css({'max-height':main_height/2+'px'});
-            var center_top_height = $('.center-top').outerHeight(true);
-            var center_down_height = $('.center-down').outerHeight(true);
-            if (screen_width < 1600) {
+
+            //if (screen_width < 1600) {
+              var inner_line_height = $('.inner-line').height();
+              var header_height = $('.header').outerHeight(true);
+              var main_height = inner_line_height-header_height-20-15-2-15;
+              $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+              $('.center-top').css({'max-height':main_height/2+'px'});
+              $('.center-down').css({'max-height':main_height/2+'px'});
+              var center_top_height = $('.center-top').outerHeight(true);
+              var center_down_height = $('.center-down').outerHeight(true);
               $('.right-bottom').css({'max-height':center_down_height+'px'});
               $('.right-top').css({'max-height':center_top_height-15+'px'});
-            }
+            //}
             setTimeout(function() {
-              // var ecoHeight = $('.profile')[0].scrollHeight;
-              // $('.profile').css({'height':ecoHeight  + "px"});
-
               chartInstance5 = echarts.init((element.find('div'))[0]);
-              //element.find('div')[0].style.height = $('.graph').height() + 'px';
               chartInstance5.clear();
               chartInstance5.resize();
               chartInstance5.setOption(option);
@@ -989,21 +986,21 @@
 
             scope.onResize5 = function() {
               if (chartInstance5) {
-                var inner_line_height = $('.inner-line').height();
-                var header_height = $('.header').outerHeight(true);
-                var main_height = inner_line_height-header_height-20-15-2-15;
-                $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
-                $('.center-top').css({'max-height':main_height/2+'px'});
-                $('.center-down').css({'max-height':main_height/2+'px'});
-                var center_top_height = $('.center-top').outerHeight(true);
-                var center_down_height = $('.center-down').outerHeight(true);
-                if (screen_width < 1600) {
+                //if (screen_width < 1600) {
+                  var inner_line_height = $('.inner-line').height();
+                  var header_height = $('.header').outerHeight(true);
+                  var main_height = inner_line_height-header_height-20-15-2-15;
+                  $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+                  $('.center-top').css({'max-height':main_height/2+'px'});
+                  $('.center-down').css({'max-height':main_height/2+'px'});
+                  var center_top_height = $('.center-top').outerHeight(true);
+                  var center_down_height = $('.center-down').outerHeight(true);
                   $('.right-bottom').css({'max-height':center_down_height+'px'});
                   $('.right-top').css({'max-height':center_top_height-15+'px'});
-                  chartInstance5.clear();
-                  chartInstance5.resize();
-                  chartInstance5.setOption(option);
-                }
+                //}
+                chartInstance5.clear();
+                chartInstance5.resize();
+                chartInstance5.setOption(option);
               }
             }
 
