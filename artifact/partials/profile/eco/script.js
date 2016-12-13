@@ -207,7 +207,8 @@
                     },
                     //formatter: '{b}\n {c}亿元',
                     textStyle: {
-                      color: '#FFF'
+                      color: '#FFF',
+                      fontSize:14
                     }
                   }
                 },
@@ -249,7 +250,8 @@
                       return labelShow;
                     },
                     textStyle:{
-                      color: '#FFF'
+                      color: '#FFF',
+                      fontSize:14
                     }
                   }
                 },
@@ -264,6 +266,10 @@
                   length:14,
                   length2:8
               }};
+              option.series[0].label.normal.textStyle = {
+                color: '#FFF',
+                fontSize:10
+              };
               option.series[1].label.normal.textStyle = {
                 color: '#FFF',
                 fontSize:10
@@ -353,7 +359,8 @@
                       return "\n" + obj.data.name + "\n" + obj.data.value+ obj.data.unit + '\n';
                     },
                     textStyle: {
-                      color:'#FFF'
+                      color:'#FFF',
+                      fontSize:14
                     }
                   }
                 },
@@ -390,7 +397,8 @@
                       return labelShow;
                     },
                     textStyle: {
-                      color:'#FFF'
+                      color:'#FFF',
+                      fontSize:14
                     }
                   }
                 },
@@ -405,6 +413,10 @@
                   length:10,
                   length2:8
               }};
+              option.series[0].label.normal.textStyle = {
+                color: '#FFF',
+                fontSize:10
+              };
               option.series[1].label.normal.textStyle = {
                 color: '#FFF',
                 fontSize:10
@@ -903,7 +915,8 @@
                         return labelShow;
                       },
                       textStyle: {
-                        color: "#FFF"
+                        color: "#FFF",
+                        fontSize:14
                       }
                     }
                   }

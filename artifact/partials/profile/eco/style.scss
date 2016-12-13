@@ -35,6 +35,9 @@
     @include flex-align(stretch);
     @include flex-num(5);
     @include flex-flow(column);
+    @include smallscreen {
+      @include flex-num(4);
+    }
     .center-top {
       background: rgba(0,120,255,.1);
       margin-bottom: 15px;
@@ -86,7 +89,7 @@
     }
   }
   .box-title {
-    padding: 14px 19px 14px 10px;
+    padding: 14px 10px 14px 2px;
     margin: 0;
     background: url("../assets/images/title_bg.png") no-repeat left;
     background-size: 100% 100%;
