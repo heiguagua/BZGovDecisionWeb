@@ -1,0 +1,26 @@
+.industry {
+  .industry-main{
+    padding: 10px 0 0 15px;
+    @include flex-align(stretch);
+    @include flex-num(5);
+    @include flex-flow(column);
+    @include smallscreen {
+      @include flex-num(4);
+    }
+    .box-title{
+      padding:8px 16px 8px 4px;
+    }
+  }
+  .top-box {
+    @include flex-num(1);
+    @include flex-flow(row);
+    margin-bottom: 15px;
+    >div {
+      @include flex-num(1);
+    }
+  }
+  .down-box{
+    @extend .top-box;
+    margin-bottom:0;
+  }
+}

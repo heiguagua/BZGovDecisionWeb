@@ -11,6 +11,7 @@
       'app.profile',
       'app.profile.menu',
       'app.profile.eco',
+      'app.profile.industry',
       'app.file',
       'app.main.preview',
       'app.main.module',
@@ -48,6 +49,12 @@
         templateUrl: 'partials/profile/eco/view.html',
         controller: 'ecoController',
         controllerAs: 'eco',
+      })
+      .state('profile.industry', {
+        url: '/industry/:proid',
+        templateUrl: 'partials/profile/industry/view.html',
+        controller: 'industryController',
+        controllerAs: 'industry',
       })
       .state('main', {
         url: '/main/:mid/:typeid/:murl',

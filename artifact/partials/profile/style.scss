@@ -51,33 +51,34 @@
         @include bigscreen {
           padding: 0 1.2rem 20px;
         }
-        .nav-menu {
-          .menu-list {
-            list-style: none;
-            height: 100%;
-            @include flex-flow(column);
-            @include flex-align(stretch);
-            li {
-              display: block;
-              color: $white;
-              background: url("../assets/images/nav_bg.png") no-repeat center;
-              background-size: 100% 100%;
-              margin-top: 15px;
-              @include flex-num(1);
-              @include flex-flow(row);
-              @include flex-align(center);
-              @include flex-justify(center);
-              &.active {
-                background: url("../assets/images/nav_bg_active.png") no-repeat center;
-              }
-              a {
-                padding: 0 20px;
-                text-decoration: none;
-                @include font($fontSize:1rem);
-              }
-            }
-          }
-        }
+      }
+    }
+  }
+}
+.nav-menu {
+  .menu-list {
+    list-style: none;
+    height: 100%;
+    @include flex-flow(column);
+    @include flex-align(stretch);
+    li {
+      display: block;
+      color: $white;
+      background: url("../assets/images/nav_bg.png") no-repeat center;
+      background-size: 100% 100%;
+      margin-top: 15px;
+      @include flex-num(1);
+      @include flex-flow(row);
+      @include flex-align(center);
+      @include flex-justify(center);
+      &.active {
+        background: url("../assets/images/nav_bg_active.png") no-repeat center;
+        background-size:100% 100%;
+      }
+      a {
+        padding: 0 20px;
+        text-decoration: none;
+        @include font($fontSize:1rem);
       }
     }
   }

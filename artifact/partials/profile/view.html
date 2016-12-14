@@ -9,10 +9,11 @@
           <ul class='menu-list'>
             <li ng-repeat='menu in profile.menus' ui-sref-active="active">
               <!-- <a ui-sref='main({mid:menu.id,typeid:menu.type,murl:menu.url})' ui-sref-opts='{reload: main}'>{{menu.name}}</a> -->
-              <a ng-if='menu.name == "经济概况"' ui-sref='profile.menu' ui-sref-opts="{reload:'profile.menu'}">{{menu.name}}</a>
+              <!-- <a ng-if='menu.name == "经济概况"' ui-sref='profile.menu' ui-sref-opts="{reload:'profile.menu'}">{{menu.name}}</a>
               <a ng-if='menu.name == "经济形势分析"' ui-sref='profile.eco({proid:menu.id})' ui-sref-opts="{reload:'profile.eco'}">{{menu.name}}</a>
-              <a ng-if='menu.name != "经济概况" && menu.name != "经济形势分析"' >{{menu.name}}</a>
-              <!-- <a ui-sref='profile.menu' ui-sref-opts='{reload: profile.menu}'>{{menu.name}}</a> -->
+              <a ng-if='menu.name != "经济概况" && menu.name != "经济形势分析"' >{{menu.name}}</a> -->
+              <a ng-if='menu.profile_sref' ui-sref='{{menu.profile_sref}}' ui-sref-opts="{reload:menu.profile_sref}">{{menu.name}}</a>
+              <a ng-if='!menu.profile_sref' >{{menu.name}}</a>
             </li>
           </ul>
         </nav>

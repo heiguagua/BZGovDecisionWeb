@@ -7,29 +7,6 @@
     @include flex-flow(row);
   }
   padding: 0 15px 20px;
-  .nav-menu {
-    .menu-list {
-      list-style: none;
-      height: 100%;
-      @include flex-flow(column);
-      @include flex-align(stretch);
-      li {
-        display: block;
-        color: $white;
-        background: url("../assets/images/nav_bg.png") no-repeat center;
-        background-size: 100% 100%;
-        margin-top: 15px;
-        @include flex-num(1);
-        @include flex-flow(row);
-        @include flex-align(center);
-        @include flex-justify(center);
-        a {
-          padding: 0 20px;
-          @include font($fontSize:1rem);
-        }
-      }
-    }
-  }
   .center {
     padding: 15px 10px 0;
     @include flex-align(stretch);
@@ -45,14 +22,14 @@
       color: $white;
       @include flex-num(1);
       @include smallscreen {
-      //  max-height: 270px !important;
+        //  max-height: 270px !important;
       }
     }
     .center-down {
       @include flex-num(1);
       @include flex-flow(row);
       @include smallscreen {
-      //  max-height: 270px !important;
+        //  max-height: 270px !important;
       }
       >div {
         @include flex-num(1);
@@ -70,7 +47,6 @@
     @include flex-flow(column);
     @include flex-align(stretch);
     @include flex-num(2);
-
     .right-bottom {
       border: 1px solid $innerline;
       background: rgba(0, 120, 215, 0.1);
@@ -88,8 +64,15 @@
       }
     }
   }
+}
+.box {
+  position: relative;
+  border: 1px solid #3656bd;
+  background: rgba(0, 120, 215, 0.1);
+  height: 100%;
+  @include flex-flow(column);
   .box-title {
-    padding: 14px 10px 14px 2px;
+    padding: 8px 10px 8px 2px;
     margin: 0;
     background: url("../assets/images/title_bg.png") no-repeat left;
     background-size: 100% 100%;
@@ -97,69 +80,13 @@
     margin-left: -2px;
     @include font($fontSize:0.9rem,$textAlign:left);
   }
-  .box-sub-title {
-    padding: 15px 2px 15px 0;
-    color: #effcf9;
-    font-size: 0.7rem;
-  }
-  .datalist {
-    padding: 5px 10px;
-    @include flex-num(1);
-    overflow-y: auto;
-    .mdata-items {
-      display: table;
-      width: 100%;
-      padding: 3px 10px;
-      border-bottom: 1px solid rgba(0, 120, 215, 0.6);
-      font-size: 12px;
-      color: #fbfbfb;
-      .data-item {
-        display: table-cell;
-        vertical-align: bottom;
-        &.iname {
-          width: 54%;
-        }
-        span {
-          padding: 3px 6px;
-          color: #efefef;
-          border-radius: 4px;
-          display: block;
-          width: 55%;
-          text-align: center;
-          min-width: 60px;
-          height: 22px;
-        }
-        &.increase {
-          span {
-            background: rgb(22,177,205);
-          }
-        }
-        &.decrease {
-          span {
-            background: rgb(185,156,0);
-          }
-        }
-        &:nth-child(2) {
-          span {
-            background: none;
-            text-align: left;
-          }
-        }
-        label {
-          margin: 0;
-          padding: 2px 8px;
-          border-radius: 4px;
-          color: $white;
-        }
-      }
-    }
-  }
-}
-.box {
-  position: relative;
-  @include flex-flow(column);
   .top-wrap {
     overflow: hidden;
+    .box-sub-title {
+      padding: 15px 2px 15px 0;
+      color: #effcf9;
+      font-size: 0.7rem;
+    }
   }
   .box-content {
     @include flex-num(1);
@@ -172,9 +99,7 @@
     // }
     .chart {
       @include flex-num(1);
-
-
-      >div{
+      >div {
         @include mobilescreen {
           min-height: 300px;
         }
@@ -215,5 +140,57 @@
     right: -2px;
     bottom: -2px;
     border-right: 2px solid rgb(0,127,203);
+  }
+}
+.datalist {
+  padding: 5px 10px;
+  @include flex-num(1);
+  overflow-y: auto;
+  .mdata-items {
+    display: table;
+    width: 100%;
+    padding: 3px 10px;
+    border-bottom: 1px solid rgba(0, 120, 215, 0.6);
+    font-size: 12px;
+    color: #fbfbfb;
+    .data-item {
+      display: table-cell;
+      vertical-align: bottom;
+      &.iname {
+        width: 54%;
+      }
+      span {
+        padding: 3px 6px;
+        color: #efefef;
+        border-radius: 4px;
+        display: block;
+        width: 55%;
+        text-align: center;
+        min-width: 60px;
+        height: 22px;
+      }
+      &.increase {
+        span {
+          background: rgb(22,177,205);
+        }
+      }
+      &.decrease {
+        span {
+          background: rgb(185,156,0);
+        }
+      }
+      &:nth-child(2) {
+        span {
+          background: none;
+          text-align: left;
+        }
+      }
+      label {
+        margin: 0;
+        padding: 2px 8px;
+        border-radius: 4px;
+        color: $white;
+      }
+    }
   }
 }
