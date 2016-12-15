@@ -94,7 +94,7 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          var chartInstance4 = null;
+          var chartInstance1 = null;
           if (!scope.regcontent || !scope.regcontent.url) {
             return;
           }
@@ -119,25 +119,43 @@
               grid_top = '32%';
               grid_left = '16%';
             }
-            var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)'];
+            _.forEach(opt.series,function(item,index){
+              item.symbol = 'rect';
+              item.symbolSize = 4;
+              item.lineStyle = {
+                normal:{
+                  width:1
+                }
+              }
+              var label_pos = 'top';
+              if((index+1)%2 != 0) {
+                label_pos = 'bottom';
+              }
+              item.label = {
+                normal:{
+                  show:true,
+                  position:label_pos
+                }
+              }
+            });
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)','rgb(3,204,215)'];
             var option = {
               color: colors,
               tooltip: {
                 trigger: 'axis'
               },
               legend: {
-                orient: 'vertical',
-                left: 'right',
+                left: 'center',
+                top:20,
                 data: opt.legend,
                 textStyle: {
-                  color: '#d5e2df',
-                  fontSize: 12
+                  fontSize: 12,
+                  color:colors
                 }
               },
               grid: {
-                //right:'3%',
-                top: '24%',
                 left: grid_left,
+                right:'3.5%',
                 bottom: 30
               },
               xAxis: {
@@ -146,15 +164,16 @@
                 data: opt.x_data,
                 axisLine: {
                   lineStyle: {
-                    color: colors[2],
-                    shadowColor: colors[2],
+                    color: colors[3],
+                    shadowColor: colors[3],
                     shadowBlur: 4
                   }
                 },
                 axisLabel: {
                   interval: 0,
                   textStyle: {
-                    fontSize: 10
+                    fontSize: 10,
+                    color:colors[5]
                   },
                   formatter: function(value) {
                     var month = value.substring(value.indexOf('-') + 1);
@@ -178,17 +197,23 @@
               yAxis: {
                 type: 'value',
                 axisLabel: {
-                  formatter: '{value}'
+                  formatter: '{value}',
+                  textStyle:{
+                    color:colors[5]
+                  }
                 },
                 name: opt.y_name,
+                nameTextStyle:{
+                  color:colors[5]
+                },
                 min: yAxis_min,
                 max: yAxis_max,
                 splitBumber: 5,
                 interval: (yAxis_max - yAxis_min) / 5,
                 axisLine: {
                   lineStyle: {
-                    color: colors[2],
-                    shadowColor: colors[2],
+                    color: colors[3],
+                    shadowColor: colors[3],
                     shadowBlur: 4
                   }
                 },
@@ -210,28 +235,204 @@
             };
 
             setTimeout(function() {
-              chartInstance4 = echarts.init((element.find('div'))[0]);
-              chartInstance4.clear();
-              chartInstance4.resize();
-              chartInstance4.setOption(option);
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
             }, 600);
 
-            scope.onResize4 = function() {
-              if (chartInstance4) {
-                chartInstance4.clear();
-                chartInstance4.resize();
-                chartInstance4.setOption(option);
+            scope.onResize1 = function() {
+              if (chartInstance1) {
+                chartInstance1.clear();
+                chartInstance1.resize();
+                chartInstance1.setOption(option);
               }
             }
 
             angular.element($window).bind('resize', function() {
-              scope.onResize4();
+              scope.onResize1();
             })
           })
         }
       }
     }
   ]);
+
+
+  // 固定资产投资
+  industry.directive('indstChartInvest', ['industryService', '$window',
+    function(industryService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          invstcontent: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance2 = null;
+          if (!scope.invstcontent || !scope.invstcontent.url) {
+            return;
+          }
+          industryService.getDetail(scope.invstcontent.url, {
+            picCode: scope.invstcontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.invstcontent.dep_name = opt.dep_name;
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if (screen_width < 1600) {
+              grid_top = '32%';
+              grid_left = '16%';
+            }
+            _.forEach(opt.series,function(item,index){
+              item.symbol = 'rect';
+              item.symbolSize = 4;
+              item.lineStyle = {
+                normal:{
+                  width:1
+                }
+              }
+              var label_pos = 'top';
+              if((index+1)%2 != 0) {
+                label_pos = 'bottom';
+              }
+              item.label = {
+                normal:{
+                  show:true,
+                  position:label_pos
+                }
+              }
+            });
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)','rgb(3,204,215)'];
+            var option = {
+              color: colors,
+              tooltip: {
+                trigger: 'axis'
+              },
+              legend: {
+                left: 'center',
+                top:20,
+                data: opt.legend,
+                textStyle: {
+                  fontSize: 12,
+                  color:colors
+                }
+              },
+              grid: {
+                left: grid_left,
+                right:'3.5%',
+                bottom: 30
+              },
+              xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: opt.x_data,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                axisLabel: {
+                  interval: 0,
+                  textStyle: {
+                    fontSize: 10,
+                    color:colors[5]
+                  },
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 0,
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              yAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter: '{value}',
+                  textStyle:{
+                    color:colors[5]
+                  }
+                },
+                name: opt.y_name,
+                nameTextStyle:{
+                  color:colors[5]
+                },
+                min: yAxis_min,
+                max: yAxis_max,
+                splitBumber: 5,
+                interval: (yAxis_max - yAxis_min) / 5,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 'auto',
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              series: opt.series
+            };
+
+            setTimeout(function() {
+              chartInstance2 = echarts.init((element.find('div'))[0]);
+              chartInstance2.clear();
+              chartInstance2.resize();
+              chartInstance2.setOption(option);
+            }, 600);
+
+            scope.onResize2 = function() {
+              if (chartInstance2) {
+                chartInstance2.clear();
+                chartInstance2.resize();
+                chartInstance2.setOption(option);
+              }
+            }
+
+            angular.element($window).bind('resize', function() {
+              scope.onResize2();
+            })
+          })
+        }
+      }
+    }
+  ]);
+
 
   // 经济类型增速分析
   industry.directive('indstChartEco', ['industryService', '$window',
@@ -407,7 +608,7 @@
           //   yAxis_max = Math.round(opt.max_and_min[0].maxValue);
           // }
 
-          var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)'];
+          var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)','rgb(3,204,215)'];
           var option = {
             color: ['#3398DB'],
             tooltip: {
@@ -452,33 +653,41 @@
               axisLabel: {
                 interval: 0,
                 textStyle: {
-                  fontSize: 10,
-                  color: colors[5]
+                  fontSize: 8,
+                  color: colors[6]
                 },
 
                 formatter: function(val) {
                     var char_length = val.length;
-                    var newstr = val;
-                    _.forEach(val, function(char, index) {
-                      if (char_length > 4) {
+                    var newstr = '';
+                    var screen_width = screen.width;
+                    if (screen_width < 1600) {
+                      return val.split("").join("\n"); //横轴信息文字竖直显示
+                    }
+                    else{
+                      if (char_length > 3) {
                         var strTemp = '';
-                        var leftStr = ''
-                        if ((index + 1) % 2 == 0) {
-                          strTemp = val.substring(0, index+1);
-                          console.log(strTemp);
-                          leftStr = val.substring(index+1, char_length);
-                          newstr =  strTemp + '\n' + leftStr;
+                        var leftStr = '';
+                        for(var i=0; i<(char_length/2); i++) {
+                          if(i != 0) {
+                            if(val.length<2 || val.length == 3) {
+                              strTemp = val;
+                            }
+                            else{
+                              strTemp = val.substring(0, 2);
+                              val = val.substring(2, val.length);
+                            }
+
+                            newstr += strTemp + '\n';
+                          }
                         }
                       }
-                    })
-
-                    return newstr;
+                      else{
+                        newstr = val;
+                      }
+                      return newstr;
+                    }
                   }
-                  //   if (val.indexOf('月') > -1) {
-                  //     return val;
-                  //   }
-                  //   return val.split("").join("\n"); //横轴信息文字竖直显示
-                  // }
               },
               splitLine: {
                 show: true,
@@ -497,6 +706,9 @@
             yAxis: [{
               type: 'value',
               name: '??',
+              nameTextStyle:{
+                color:colors[5]
+              },
               axisLine: {
                 lineStyle: {
                   color: colors[2],
@@ -506,7 +718,7 @@
               },
               axisLabel: {
                 textStyle: {
-                  color: colors[5]
+                  color: colors[6]
                 }
               },
               splitLine: {
@@ -526,7 +738,13 @@
             series: [{
               name: '直接访问',
               type: 'bar',
-              barWidth: '60%',
+              barWidth: '45%',
+              label:{
+                normal:{
+                  show:true,
+                  position:'top',
+                }
+              },
               itemStyle: {
                 normal: {
                   color: colors[5]
@@ -560,4 +778,176 @@
     }
   ]);
 
+  industry.directive('indstChartElec', ['industryService', '$window',
+    function(industryService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          eleccontent: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance4 = null;
+          if (!scope.eleccontent || !scope.eleccontent.url) {
+            return;
+          }
+          industryService.getDetail(scope.eleccontent.url, {
+            picCode: scope.eleccontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.eleccontent.dep_name = opt.dep_name;
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if (screen_width < 1600) {
+              grid_top = '32%';
+              grid_left = '16%';
+            }
+            _.forEach(opt.series,function(item,index){
+              item.symbol = 'rect';
+              item.symbolSize = 4;
+              item.lineStyle = {
+                normal:{
+                  width:1
+                }
+              }
+              var label_pos = 'top';
+              if((index+1)%2 != 0) {
+                label_pos = 'bottom';
+              }
+              item.label = {
+                normal:{
+                  show:true,
+                  position:label_pos
+                }
+              }
+            });
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)','rgb(3,204,215)'];
+            var option = {
+              color: colors,
+              tooltip: {
+                trigger: 'axis'
+              },
+              legend: {
+                left: 'center',
+                top:20,
+                data: opt.legend,
+                textStyle: {
+                  fontSize: 12,
+                  color:colors
+                }
+              },
+              grid: {
+                left: grid_left,
+                right:'3.5%',
+                bottom: 30
+              },
+              xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: opt.x_data,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                axisLabel: {
+                  interval: 0,
+                  textStyle: {
+                    fontSize: 10,
+                    color:colors[5]
+                  },
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 0,
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              yAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter: '{value}',
+                  textStyle:{
+                    color:colors[5]
+                  }
+                },
+                name: opt.y_name,
+                nameTextStyle:{
+                  color:colors[5]
+                },
+                min: yAxis_min,
+                max: yAxis_max,
+                splitBumber: 5,
+                interval: (yAxis_max - yAxis_min) / 5,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 'auto',
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              series: opt.series
+            };
+
+            setTimeout(function() {
+              chartInstance4 = echarts.init((element.find('div'))[0]);
+              chartInstance4.clear();
+              chartInstance4.resize();
+              chartInstance4.setOption(option);
+            }, 600);
+
+            scope.onResize4 = function() {
+              if (chartInstance4) {
+                chartInstance4.clear();
+                chartInstance4.resize();
+                chartInstance4.setOption(option);
+              }
+            }
+
+            angular.element($window).bind('resize', function() {
+              scope.onResize4();
+            })
+          })
+        }
+      }
+    }
+  ]);
 })();
