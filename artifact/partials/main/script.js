@@ -15,12 +15,11 @@
       mainService.getMenus({parentId:"0"}).then(function(result) {
         vm.menus = result.data;
         _.forEach(vm.menus,function(item,index) {
-          console.log(item);
-          if(item && item.type == 3) { // 经济概况
+          if(item && item.type == '3') { // 经济概况
             vm.menus.splice(index, 1);
           }
         });
-        $state.go('main.module',{id:vm.menus[0].id});
+        $state.go('main.module',{id:$stateParams.mid});
       });
     }
   ]);

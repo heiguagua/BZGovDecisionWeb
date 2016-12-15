@@ -72,13 +72,13 @@
   height: 100%;
   @include flex-flow(column);
   .box-title {
-    padding: 8px 10px 8px 2px;
+    padding: 14px 10px 12px 2px;
     margin: 0;
     background: url("../assets/images/title_bg.png") no-repeat left;
     background-size: 100% 100%;
     margin-top: -2px;
     margin-left: -2px;
-    @include font($fontSize:0.9rem,$textAlign:left);
+    @include font($fontSize:0.8rem,$textAlign:left);
   }
   .top-wrap {
     overflow: hidden;

@@ -12,7 +12,7 @@
       });
 
       $scope.chartlist = [];
-
+      
       ecoService.getContent({
         menuId: 7
       }).then(function(result) {

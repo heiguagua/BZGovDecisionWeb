@@ -12,6 +12,9 @@
       'app.profile.menu',
       'app.profile.eco',
       'app.profile.industry',
+      'app.profile.agri',
+      'app.profile.service',
+      'app.profile.travel',
       'app.file',
       'app.main.preview',
       'app.main.module',
@@ -33,7 +36,7 @@
         controllerAs: 'dashboard',
       })
       .state('profile', {
-        url: '/profile/:proid/:typeid/:murl',
+        url: '/profile',
         templateUrl: 'partials/profile/view.html',
         controller: 'profileController',
         controllerAs: 'profile',
@@ -55,6 +58,24 @@
         templateUrl: 'partials/profile/industry/view.html',
         controller: 'industryController',
         controllerAs: 'industry',
+      })
+      .state('profile.agri', {
+        url: '/agri/:proid',
+        templateUrl: 'partials/profile/agri/view.html',
+        controller: 'agriController',
+        controllerAs: 'agri',
+      })
+      .state('profile.service', {
+        url: '/service/:proid',
+        templateUrl: 'partials/profile/service/view.html',
+        controller: 'serviceController',
+        controllerAs: 'service',
+      })
+      .state('profile.travel', {
+        url: '/travel/:proid',
+        templateUrl: 'partials/profile/travel/view.html',
+        controller: 'travelController',
+        controllerAs: 'travel',
       })
       .state('main', {
         url: '/main/:mid/:typeid/:murl',

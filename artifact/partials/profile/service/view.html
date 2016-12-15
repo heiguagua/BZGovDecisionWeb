@@ -1,6 +1,6 @@
-<div ng-repeat='item in industry.indstcontent  track by $index' ng-class="{'wrap':  $index == 0 }" class='industry'>
+<div ng-repeat='item in service.servicecontent  track by $index' ng-class="{'wrap':  $index == 0 }" class='service'>
   <div ng-if='$index == 0' class='inner-wrap'>
-    <div class='industry-main'>
+    <div class='service-main'>
       <div class='top-box'>
         <div class='left15 right5'>
           <div class='box'>
@@ -10,10 +10,10 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全国全省全市规上工业增加值增速比较</h5>
+                <h5 class='box-title'>近一年全国全省全市社会消费品零售总额增速比较</h5>
               </div>
             </div>
-            <div class='chart' indst-chart-reg regcontent=indstlist[0] ></div>
+            <div class='chart' dash-chart-cpi ccontent=chartlist[3] ></div>
           </div>
         </div>
         <div class='right5 left5'>
@@ -24,10 +24,10 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全市工业固定资产投资增速趋势</h5>
+                <h5 class='box-title'>近一年全市银行存贷款余额情况</h5>
               </div>
             </div>
-            <div class='chart' dash-chart-cpi ccontent=indstlist[3] ></div>
+            <div class='chart' dash-chart-cpi ccontent=chartlist[3] ></div>
           </div>
         </div>
         <div class='right15 left5'>
@@ -38,28 +38,10 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>规上工业经济效益</h5>
+                <h5 class='box-title'>全市商品房待售面积</h5>
               </div>
             </div>
-            <div class='datalist'>
-              <div class='mdata-items'>
-                <div class='data-item iname' style='font-weight:bold'>{{eco.ecoData.init_query_time}}数据</div>
-                <div class='data-item' style='width: 23%;padding: 0 6px;' ng-repeat='colname in eco.ecoData.columnName'>{{colname}}</div>
-              </div>
-              <div class='mdata-items' ng-repeat='edata in eco.ecoData.rowData'>
-                <div class='data-item iname'>{{edata.rowName}}</div>
-                <div class='data-item' style='width: 23%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]"><span ng-if='data.value == ""'>-</span><span ng-if='data.value != ""'>{{data.value}}</span></div>
-              </div>
-              <br/>
-              <div class='mdata-items'>
-                <div class='data-item iname' style='font-weight:bold'>{{eco.ecoData.init_query_time}}数据</div>
-                <div class='data-item' style='width: 23%;padding: 0 6px;' ng-repeat='colname in eco.ecoDataDown.columnName'>{{colname}}</div>
-              </div>
-              <div class='mdata-items' ng-repeat='edata in eco.ecoDataDown.rowData'>
-                <div class='data-item iname'>{{edata.rowName}}</div>
-                <div class='data-item' style='width: 23%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]"><span ng-if='data.value == ""'>-</span><span ng-if='data.value != ""'>{{data.value}}</span></div>
-              </div>
-            </div>
+            <div class='chart'></div>
           </div>
         </div>
       </div>
@@ -72,10 +54,10 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>全市规上工业产品产量增速分析</h5>
+                <h5 class='box-title'>全市服务业企业登记注册情况</h5>
               </div>
             </div>
-            <div class='chart'  indst-chart-pro ></div>
+            <div class='chart'  ></div>
           </div>
         </div>
         <div class='right5 left5'>
@@ -86,7 +68,7 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全市规上工业用电情况</h5>
+                <h5 class='box-title'>全市货物运输周转量</h5>
               </div>
             </div>
             <div class='chart'></div>
@@ -100,7 +82,7 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>全市规上工业分经济类型增速分析</h5>
+                <h5 class='box-title'>全市客运周转量</h5>
               </div>
             </div>
             <div class='chart' indst-chart-eco ></div>

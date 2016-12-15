@@ -1,7 +1,7 @@
 <div class='profile'>
   <div class='outer-line'>
     <div class='inner-line'>
-      <div class='header' ui-sref='main({mid:profile.menus[0].id,typeid:profile.menus[0].type,murl:profile.menus[0].url})' ui-sref-opts='{reload: main}'>
+      <div class='header' ui-sref='main({mid:profile.cMenu.id,typeid:profile.cMenu.type,murl:profile.cMenu.url})'>
         <h3></h3>
       </div>
       <div class='main'>
@@ -12,7 +12,7 @@
               <!-- <a ng-if='menu.name == "经济概况"' ui-sref='profile.menu' ui-sref-opts="{reload:'profile.menu'}">{{menu.name}}</a>
               <a ng-if='menu.name == "经济形势分析"' ui-sref='profile.eco({proid:menu.id})' ui-sref-opts="{reload:'profile.eco'}">{{menu.name}}</a>
               <a ng-if='menu.name != "经济概况" && menu.name != "经济形势分析"' >{{menu.name}}</a> -->
-              <a ng-if='menu.profile_sref' ui-sref='{{menu.profile_sref}}' ui-sref-opts="{reload:menu.profile_sref}">{{menu.name}}</a>
+              <a ng-if='menu.profile_sref' ui-sref='{{menu.profile_sref}}({proid:menu.id})' ui-sref-opts="{reload:menu.profile_sref}" ng-click='profile.currentMenu(menu)'>{{menu.name}}</a>
               <a ng-if='!menu.profile_sref' >{{menu.name}}</a>
             </li>
           </ul>

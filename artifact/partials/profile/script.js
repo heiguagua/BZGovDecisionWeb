@@ -7,11 +7,13 @@
     '$scope', 'profileService', '$state', '$stateParams',
     function($scope, profileService, $state, $stateParams) {
       var vm = this;
+
       profileService.getMenus({
         parentId: "0"
       }).then(function(result) {
         vm.menus = result.data;
-        _.forEach(vm.menus ,function(item) {
+        vm.cMenu = vm.menus[1];
+        _.forEach(vm.menus, function(item) {
           var mname = item.name;
           switch (mname) {
             case '经济概况':
@@ -22,6 +24,15 @@
               break;
             case '工业管理':
               item.profile_sref = 'profile.industry';
+              break;
+            case '农业管理':
+              item.profile_sref = 'profile.agri';
+              break;
+            case '服务业管理':
+              item.profile_sref = 'profile.service';
+              break;
+            case '旅游业管理':
+              item.profile_sref = 'profile.travel';
               break;
             default:
               break;
@@ -42,6 +53,15 @@
         }
 
       });
+
+      vm.currentMenu = function(menu) {
+        if (menu.type == '3') { //经济概况
+          vm.cMenu = vm.menus[1];
+        } else {
+          vm.cMenu = menu;
+        }
+
+      }
 
     }
   ]);

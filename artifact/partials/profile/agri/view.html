@@ -1,6 +1,6 @@
-<div ng-repeat='item in industry.indstcontent  track by $index' ng-class="{'wrap':  $index == 0 }" class='industry'>
+<div ng-repeat='item in agri.agricontent  track by $index' ng-class="{'wrap':  $index == 0 }" class='agri'>
   <div ng-if='$index == 0' class='inner-wrap'>
-    <div class='industry-main'>
+    <div class='agri-main'>
       <div class='top-box'>
         <div class='left15 right5'>
           <div class='box'>
@@ -10,10 +10,10 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全国全省全市规上工业增加值增速比较</h5>
+                <h5 class='box-title'>全市农村劳动力情况</h5>
               </div>
             </div>
-            <div class='chart' indst-chart-reg regcontent=indstlist[0] ></div>
+            <div class='chart' dash-chart-cpi ccontent=chartlist[3] ></div>
           </div>
         </div>
         <div class='right5 left5'>
@@ -24,10 +24,10 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全市工业固定资产投资增速趋势</h5>
+                <h5 class='box-title'>全市现代农业万亩园区发展情况</h5>
               </div>
             </div>
-            <div class='chart' dash-chart-cpi ccontent=indstlist[3] ></div>
+            <div class='chart' dash-chart-cpi ccontent=chartlist[3] ></div>
           </div>
         </div>
         <div class='right15 left5'>
@@ -38,7 +38,52 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>规上工业经济效益</h5>
+                <h5 class='box-title'>全市农林牧渔业总产值结构</h5>
+              </div>
+              <div class='pull-right box-sub-title'></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class='down-box'>
+        <div class='left15 right5'>
+          <div class='center-left box'>
+            <span class='box-left-top'></span>
+            <span class='box-left-bottom'></span>
+            <span class='box-right-top'></span>
+            <span class='box-right-bottom'></span>
+            <div class='top-wrap'>
+              <div class='pull-left'>
+                <h5 class='box-title'>全市专业合作社及家庭农场数量</h5>
+              </div>
+            </div>
+            <div class='chart'  ></div>
+          </div>
+        </div>
+        <div class='right5 left5'>
+          <div class='center-right box'>
+            <span class='box-left-top'></span>
+            <span class='box-left-bottom'></span>
+            <span class='box-right-top'></span>
+            <span class='box-right-bottom'></span>
+            <div class='top-wrap'>
+              <div class='pull-left'>
+                <h5 class='box-title'>近三年核桃种植情况</h5>
+              </div>
+            </div>
+            <div class='chart'></div>
+          </div>
+        </div>
+        <div class='right15 left5'>
+          <div class='center-right box'>
+            <span class='box-left-top'></span>
+            <span class='box-left-bottom'></span>
+            <span class='box-right-top'></span>
+            <span class='box-right-bottom'></span>
+            <div class='top-wrap'>
+              <div class='pull-left'>
+                <h5 class='box-title'>全市规上工业分经济类型增速分析</h5>
               </div>
             </div>
             <div class='datalist'>
@@ -60,50 +105,6 @@
                 <div class='data-item' style='width: 23%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]"><span ng-if='data.value == ""'>-</span><span ng-if='data.value != ""'>{{data.value}}</span></div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class='down-box'>
-        <div class='left15 right5'>
-          <div class='center-left box'>
-            <span class='box-left-top'></span>
-            <span class='box-left-bottom'></span>
-            <span class='box-right-top'></span>
-            <span class='box-right-bottom'></span>
-            <div class='top-wrap'>
-              <div class='pull-left'>
-                <h5 class='box-title'>全市规上工业产品产量增速分析</h5>
-              </div>
-            </div>
-            <div class='chart'  indst-chart-pro ></div>
-          </div>
-        </div>
-        <div class='right5 left5'>
-          <div class='center-right box'>
-            <span class='box-left-top'></span>
-            <span class='box-left-bottom'></span>
-            <span class='box-right-top'></span>
-            <span class='box-right-bottom'></span>
-            <div class='top-wrap'>
-              <div class='pull-left'>
-                <h5 class='box-title'>近一年全市规上工业用电情况</h5>
-              </div>
-            </div>
-            <div class='chart'></div>
-          </div>
-        </div>
-        <div class='right15 left5'>
-          <div class='center-right box'>
-            <span class='box-left-top'></span>
-            <span class='box-left-bottom'></span>
-            <span class='box-right-top'></span>
-            <span class='box-right-bottom'></span>
-            <div class='top-wrap'>
-              <div class='pull-left'>
-                <h5 class='box-title'>全市规上工业分经济类型增速分析</h5>
-              </div>
-            </div>
-            <div class='chart' indst-chart-eco ></div>
           </div>
         </div>
       </div>
