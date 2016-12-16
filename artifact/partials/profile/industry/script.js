@@ -14,7 +14,7 @@
       $scope.indstlist = [];
       var menuId = $stateParams.proid;
       industryService.getContent({
-        menuId: 7
+        menuId: menuId
       }).then(function(result) {
         vm.indstcontent = _.sortBy(result.data, ['picCode']);
         _.forEach(vm.indstcontent, function(item) {
@@ -27,6 +27,13 @@
 
       });
 
+      // 主要经济指标
+      industryService.getindustryData({
+        picCode: 2003
+      }).then(function(result) {
+        vm.industryData = result.data;
+        $('.datalist').mCustomScrollbar();
+      })
 
     }
   ]);
@@ -119,26 +126,26 @@
               grid_top = '32%';
               grid_left = '16%';
             }
-            _.forEach(opt.series,function(item,index){
+            _.forEach(opt.series, function(item, index) {
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
-                normal:{
-                  width:1
+                normal: {
+                  width: 1
                 }
               }
               var label_pos = 'top';
-              if((index+1)%2 != 0) {
-                label_pos = 'bottom';
-              }
+              // if ((index + 1) % 2 != 0) {
+              //   label_pos = 'bottom';
+              // }
               item.label = {
-                normal:{
-                  show:true,
-                  position:label_pos
+                normal: {
+                  show: true,
+                  position: label_pos
                 }
               }
             });
-            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)','rgb(3,204,215)'];
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
             var option = {
               color: colors,
               tooltip: {
@@ -146,16 +153,18 @@
               },
               legend: {
                 left: 'center',
-                top:20,
+                top: 15,
                 data: opt.legend,
                 textStyle: {
                   fontSize: 12,
-                  color:colors
-                }
+                  color: colors
+                },
+                itemWidth:15,
+                itemHeight:6
               },
               grid: {
                 left: grid_left,
-                right:'3.5%',
+                right: '3.5%',
                 bottom: 30
               },
               xAxis: {
@@ -171,9 +180,10 @@
                 },
                 axisLabel: {
                   interval: 0,
+                  margin:14,
                   textStyle: {
-                    fontSize: 10,
-                    color:colors[5]
+                    fontSize: 12,
+                    color: colors[5]
                   },
                   formatter: function(value) {
                     var month = value.substring(value.indexOf('-') + 1);
@@ -198,13 +208,13 @@
                 type: 'value',
                 axisLabel: {
                   formatter: '{value}',
-                  textStyle:{
-                    color:colors[5]
+                  textStyle: {
+                    color: colors[5]
                   }
                 },
                 name: opt.y_name,
-                nameTextStyle:{
-                  color:colors[5]
+                nameTextStyle: {
+                  color: colors[5]
                 },
                 min: yAxis_min,
                 max: yAxis_max,
@@ -294,26 +304,26 @@
               grid_top = '32%';
               grid_left = '16%';
             }
-            _.forEach(opt.series,function(item,index){
+            _.forEach(opt.series, function(item, index) {
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
-                normal:{
-                  width:1
+                normal: {
+                  width: 1
                 }
               }
               var label_pos = 'top';
-              if((index+1)%2 != 0) {
-                label_pos = 'bottom';
-              }
+              // if ((index + 1) % 2 != 0) {
+              //   label_pos = 'bottom';
+              // }
               item.label = {
-                normal:{
-                  show:true,
-                  position:label_pos
+                normal: {
+                  show: true,
+                  position: label_pos
                 }
               }
             });
-            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)','rgb(3,204,215)'];
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
             var option = {
               color: colors,
               tooltip: {
@@ -321,16 +331,18 @@
               },
               legend: {
                 left: 'center',
-                top:20,
+                top: 10,
                 data: opt.legend,
                 textStyle: {
                   fontSize: 12,
-                  color:colors
-                }
+                  color: colors
+                },
+                itemWidth:15,
+                itemHeight:6
               },
               grid: {
                 left: grid_left,
-                right:'3.5%',
+                right: '3.5%',
                 bottom: 30
               },
               xAxis: {
@@ -346,9 +358,10 @@
                 },
                 axisLabel: {
                   interval: 0,
+                  margin:14,
                   textStyle: {
-                    fontSize: 10,
-                    color:colors[5]
+                    fontSize: 12,
+                    color: colors[5]
                   },
                   formatter: function(value) {
                     var month = value.substring(value.indexOf('-') + 1);
@@ -373,13 +386,13 @@
                 type: 'value',
                 axisLabel: {
                   formatter: '{value}',
-                  textStyle:{
-                    color:colors[5]
+                  textStyle: {
+                    color: colors[5]
                   }
                 },
                 name: opt.y_name,
-                nameTextStyle:{
-                  color:colors[5]
+                nameTextStyle: {
+                  color: colors[5]
                 },
                 min: yAxis_min,
                 max: yAxis_max,
@@ -440,141 +453,260 @@
       return {
         restrict: 'ACE',
         scope: {
-          eco: '='
+          ecocontent: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance6 = null;
-          // if (!scope.regcontent || !scope.regcontent.url) {
-          //   return;
-          // }
-          // industryService.getDetail(scope.regcontent.url, {
-          //   queryTime: industryService.getDateFormat(scope.regcontent.model, scope.regcontent.format),
-          //   picCode: scope.regcontent.picCode
-          // }).then(function(result) {
-          //   var opt = result.data;
-          //   if (!opt || !opt.series) {
-          //     return;
-          //   }
-          //   scope.regcontent.query_time = opt.init_query_time;
-          //   scope.regcontent.dep_name = opt.dep_name;
-          //   var yAxis_min = 0;
-          //   var yAxis_max = 0;
-          //   if (opt.max_and_min) {
-          //     yAxis_min = Math.round(opt.max_and_min[0].minValue);
-          //     yAxis_max = Math.round(opt.max_and_min[0].maxValue);
-          //   }
-          //   var screen_width = screen.width;
-          //   var grid_top = '24%';
-          //   var grid_left = '10%';
-          //   if (screen_width < 1600) {
-          //     grid_top = '32%';
-          //     grid_left = '16%';
-          //   }
-          var option = {
-            tooltip: {
-              trigger: 'axis'
-            },
-            legend: {
+          if (!scope.ecocontent || !scope.ecocontent.url) {
+            return;
+          }
+          industryService.getDetail(scope.ecocontent.url, {
+            picCode: scope.ecocontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.ecocontent.query_time = opt.init_query_time;
+            scope.ecocontent.dep_name = opt.dep_name;
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            var radius = '80%';
+            if (screen_width < 1600) {
+              grid_top = '32%';
+              grid_left = '16%';
+              radius = '60%';
+            }
+
+            var indicators = [];
+            _.forEach(opt.x_data, function(item, index) {
+              var indicator = {};
+              indicator.name = item;
+              indicator.name.show = true;
+              var max = 0;
+              var min = 0;
+              if (opt.series[0].data.length == 1) {
+                var dataArray = _.map(opt.series[0].data, 'value')[0];
+                max = Number(dataArray[index]);
+                min = Number(dataArray[index]);
+                _.forEach(dataArray[0], function(data, index2) {
+                  if (Number(dataArray[index2]) > max) {
+                    max = Number(dataArray[index2]);
+                  }
+                  if (Number(dataArray[index2]) < min) {
+                    min = Number(dataArray[index2]);
+                  }
+                });
+              } else {
+                var dataArray = _.map(opt.series[0].data, 'value');
+                var dataAll = [];
+                _.forEach(dataArray, function(data, index2) {
+                  dataAll = _.concat(data, dataAll);
+                });
+                max = Number(dataAll[0]);
+                min = Number(dataAll[0]);
+                _.forEach(dataAll, function(data) {
+                  if (Number(data) > max) {
+                    max = Number(data);
+                  }
+                  if (Number(data) < min) {
+                    min = Number(data);
+                  }
+                });
+              }
+
+              indicator.max = max;
+              indicator.min = min * 0.8;
+              indicators.push(indicator);
+            });
+            _.forEach(opt.series, function(item) {
+              item.symbol ='diamond';
+              item.symbolSize = 0;
+              item.itemStyle = {
+                normal: {
+                  color: 'rgb(236,206,15)'
+                }
+              };
+              item.lineStyle = {
+                normal: {
+                  color: 'rgb(236,206,15)'
+                }
+              };
+              item.data[0].areaStyle = {
+                normal: {
+                  opacity: 0.8,
+                  color: 'rgb(173,168,70)'
+                }
+              }
+            })
+            var option = {};
+            // option.color = colors;
+            option.tooltip = {};
+            option.legend = {
               left: 'right',
-              data: [{
-                name: '同比增速',
-                icon: 'diamond'
-              }],
+              data: opt.legend,
               textStyle: {
                 color: 'rgb(236,206,15)'
+              },
+              itemWidth:15,
+              itemHeight:6
+            };
+            option.radar = {};
+            option.radar.center = ['50%', '50%'];
+            option.radar.name = {
+              show:true,
+              textStyle: {
+                color: 'rgb(0,255,246)',
+                fontSize: 14
+              },
+              formatter : function(val) {
+                var char_length = val.length;
+                var newstr = '';
+                if (char_length > 4) {
+                  var strTemp = '';
+                  var leftStr = '';
+                  //for(var i=0; i<(char_length/5); i++) {
+                    //if(i != 0) {
+                    strTemp = val.substring(0, char_length-5);
+                    if(strTemp.length>8) {
+                      var temp1 = strTemp.substring(0, strTemp.length-5);
+                      var temp2 = strTemp.substring(strTemp.length-5);
+                      strTemp = temp1 + '\n' + temp2;
+                    }
+                    leftStr = val.substring(char_length-5);
+                      newstr = strTemp + '\n' + leftStr;
+                    //}
+                  //}
+                }
+                else{
+                  newstr = val;
+                }
+                return newstr;
               }
-            },
-            radar: [{
-              name: {
-                textStyle: {
-                  color: 'rgb(0,255,246)',
-                  fontSize: 14
-                }
-              },
-              nameGap: 6,
-              axisLine: {
-                show: false
-              },
-              splitLine: {
-                lineStyle: {
-                  color: 'rgb(01,106,224)'
-                }
-              },
-              splitArea: {
-                show: false
-              },
-              indicator: [{
-                text: '国有企业增加值增速',
-                max: 100
-              }, {
-                text: '外商及港澳台商投资企业增加值增速',
-                max: 100
-              }, {
-                text: '私营企业增加值增速',
-                max: 100
-              }, {
-                text: '股份制企业增加值增速',
-                max: 100
-              }, {
-                text: '集体企业增加值增速',
-                max: 100
-              }],
-              center: ['50%', '50%'],
-              radius: '80%'
-            }],
-            series: [{
-              type: 'radar',
-              symbolSize: 0,
-              tooltip: {
-                trigger: 'item'
-              },
-              itemStyle: {
-                normal: {
-                  color: 'rgb(236,206,15)'
-                }
-              },
+            };
+            option.radar.nameGap = 8;
+            option.radar.radius = radius;
+            option.radar.axisLine = {
+              show: false
+            };
+            option.radar.splitLine = {
               lineStyle: {
-                normal: {
-                  color: 'rgb(236,206,15)'
-                }
-              },
-              data: [{
-                value: [60, 10, 60, 42, 60],
-                name: '同比增速',
-                areaStyle: {
-                  normal: {
-                    opacity: 0.8,
-                    color: 'rgb(173,168,70)'
-                  }
-                }
-              }]
-            }]
-          };
-          var screen_width = screen.width;
-          if (screen_width < 1600) {
-            option.radar[0].name.textStyle.fontSize = 10;
-          }
+                color: 'rgb(01,106,224)'
+              }
+            };
+            option.radar.splitArea = {
+              show: false
+            };
+            option.radar.indicator = indicators;
+            option.series = opt.series;
+            // var option = {
+            //   tooltip: {
+            //     trigger: 'axis'
+            //   },
+            //   legend: {
+            //     left: 'right',
+            //     data: [{
+            //       name: '同比增速',
+            //       icon: 'diamond'
+            //     }],
+            //     textStyle: {
+            //       color: 'rgb(236,206,15)'
+            //     }
+            //   },
+            //   radar: [{
+            //     name: {
+            //       textStyle: {
+            //         color: 'rgb(0,255,246)',
+            //         fontSize: 14
+            //       }
+            //     },
+            //     nameGap: 6,
+            //     axisLine: {
+            //       show: false
+            //     },
+            //     splitLine: {
+            //       lineStyle: {
+            //         color: 'rgb(01,106,224)'
+            //       }
+            //     },
+            //     splitArea: {
+            //       show: false
+            //     },
+            //     indicator: [{
+            //       text: '国有企业增加值增速',
+            //       max: 100
+            //     }, {
+            //       text: '外商及港澳台商投资企业增加值增速',
+            //       max: 100
+            //     }, {
+            //       text: '私营企业增加值增速',
+            //       max: 100
+            //     }, {
+            //       text: '股份制企业增加值增速',
+            //       max: 100
+            //     }, {
+            //       text: '集体企业增加值增速',
+            //       max: 100
+            //     }],
+            //     center: ['50%', '50%'],
+            //     radius: '80%'
+            //   }],
+            //   series: [{
+            //     type: 'radar',
+            //     symbolSize: 0,
+            //     tooltip: {
+            //       trigger: 'item'
+            //     },
+            //     itemStyle: {
+            //       normal: {
+            //         color: 'rgb(236,206,15)'
+            //       }
+            //     },
+            //     lineStyle: {
+            //       normal: {
+            //         color: 'rgb(236,206,15)'
+            //       }
+            //     },
+            //     data: [{
+            //       value: [60, 10, 60, 42, 60],
+            //       name: '同比增速',
+            //       areaStyle: {
+            //         normal: {
+            //           opacity: 0.8,
+            //           color: 'rgb(173,168,70)'
+            //         }
+            //       }
+            //     }]
+            //   }]
+            // };
 
-          setTimeout(function() {
-            chartInstance6 = echarts.init((element.find('div'))[0]);
-            chartInstance6.clear();
-            chartInstance6.resize();
-            chartInstance6.setOption(option);
-          }, 600);
-
-          scope.onResize4 = function() {
-            if (chartInstance6) {
+            setTimeout(function() {
+              chartInstance6 = echarts.init((element.find('div'))[0]);
               chartInstance6.clear();
               chartInstance6.resize();
               chartInstance6.setOption(option);
-            }
-          }
+            }, 600);
 
-          angular.element($window).bind('resize', function() {
+            scope.onResize4 = function() {
+              if (chartInstance6) {
+                chartInstance6.clear();
+                chartInstance6.resize();
+                chartInstance6.setOption(option);
+              }
+            }
+
+            angular.element($window).bind('resize', function() {
               scope.onResize4();
             })
-            // })
+          })
         }
       }
     }
@@ -585,194 +717,217 @@
       return {
         restrict: 'ACE',
         scope: {
-          regcontent: '='
+          procontent: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance4 = null;
-          // if (!scope.regcontent || !scope.regcontent.url) {
-          //   return;
-          // }
-          // industryService.getDetail(scope.regcontent.url, {
-          //   picCode: scope.regcontent.picCode
-          // }).then(function(result) {
-          // var opt = result.data;
-          // if (!opt || !opt.series) {
-          //   return;
-          // }
-          // scope.regcontent.dep_name = opt.dep_name;
-          // var yAxis_min = 0;
-          // var yAxis_max = 0;
-          // if (opt.max_and_min) {
-          //   yAxis_min = Math.round(opt.max_and_min[0].minValue);
-          //   yAxis_max = Math.round(opt.max_and_min[0].maxValue);
-          // }
-
-          var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)','rgb(3,204,215)'];
-          var option = {
-            color: ['#3398DB'],
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-              }
-            },
-            legend: {
-              left: 'center',
-              width: 20,
-              height: 20,
-              data: [{
-                name: '直接访问',
-                icon: 'rect'
-              }],
-              textStyle: {
-                color: '#FFF',
-                fontSize: 12
-              }
-            },
-            grid: {
-              top: '18%',
-              left: '3%',
-              right: '4%',
-              bottom: '3%',
-              containLabel: true
-            },
-            xAxis: [{
-              type: 'category',
-              data: ['铁矿石原矿', '自来水生产量', '大米', '精制食用植物油', '鲜冷藏冻肉', '白酒', '软饮料', '精制茶', '纱', '家具', '纸制品', '中成药', '塑料制品'],
-              axisTick: {
-                alignWithLabel: false
-              },
-              axisLine: {
+          if (!scope.procontent || !scope.procontent.url) {
+            return;
+          }
+          industryService.getDetail(scope.procontent.url, {
+            picCode: scope.procontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.procontent.dep_name = opt.dep_name;
+            var colors = ['rgb(0,255,161)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)', 'rgb(3,204,215)'];
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            opt.yAxis = [];
+            _.forEach(opt.y_name, function(item, index) {
+              var yAxis = {};
+              yAxis.type = 'value';
+              yAxis.name = item;
+              yAxis.nameTextStyle = {
+                color: colors[5]
+              };
+              yAxis.axisLabel = {
+                textStyle: {
+                  color: colors[5]
+                }
+              };
+              yAxis.axisTick = {};
+              yAxis.axisTick.inside = true;
+              yAxis.axisLine = {
                 lineStyle: {
-                  color: colors[2],
-                  shadowColor: colors[2],
+                  color: colors[1],
+                  shadowColor: colors[1],
                   shadowBlur: 4
                 }
-              },
-              axisLabel: {
-                interval: 0,
-                textStyle: {
-                  fontSize: 8,
-                  color: colors[6]
-                },
-
-                formatter: function(val) {
-                    var char_length = val.length;
-                    var newstr = '';
-                    var screen_width = screen.width;
-                    if (screen_width < 1600) {
-                      return val.split("").join("\n"); //横轴信息文字竖直显示
-                    }
-                    else{
-                      if (char_length > 3) {
-                        var strTemp = '';
-                        var leftStr = '';
-                        for(var i=0; i<(char_length/2); i++) {
-                          if(i != 0) {
-                            if(val.length<2 || val.length == 3) {
-                              strTemp = val;
-                            }
-                            else{
-                              strTemp = val.substring(0, 2);
-                              val = val.substring(2, val.length);
-                            }
-
-                            newstr += strTemp + '\n';
-                          }
-                        }
-                      }
-                      else{
-                        newstr = val;
-                      }
-                      return newstr;
-                    }
-                  }
-              },
-              splitLine: {
-                show: true,
-                interval: 0,
-                lineStyle: {
-                  color: colors[3]
-                }
-              },
-              splitArea: {
-                show: true,
-                areaStyle: {
-                  color: colors[4]
-                }
-              }
-            }],
-            yAxis: [{
-              type: 'value',
-              name: '??',
-              nameTextStyle:{
-                color:colors[5]
-              },
-              axisLine: {
-                lineStyle: {
-                  color: colors[2],
-                  shadowColor: colors[2],
-                  shadowBlur: 4
-                }
-              },
-              axisLabel: {
-                textStyle: {
-                  color: colors[6]
-                }
-              },
-              splitLine: {
+              };
+              yAxis.splitLine = {
                 show: true,
                 interval: 'auto',
                 lineStyle: {
-                  color: colors[3]
+                  color: colors[2]
                 }
-              },
-              splitArea: {
+              };
+              yAxis.splitArea = {
                 show: true,
                 areaStyle: {
-                  color: colors[4]
+                  color: colors[3]
                 }
+              };
+              if (opt.max_and_min) {
+                var minValue = Number(opt.max_and_min[index].minValue);
+                var maxValue = Number(opt.max_and_min[index].maxValue);
+                if (minValue >= 0 && minValue < 1) {
+                  minValue = 0;
+                } else {
+                  minValue = minValue - 1;
+                }
+                maxValue = 1 + maxValue;
+                yAxis.min = Math.round(minValue);
+                yAxis.max = Math.round(maxValue);
               }
-            }],
-            series: [{
-              name: '直接访问',
-              type: 'bar',
-              barWidth: '45%',
-              label:{
-                normal:{
-                  show:true,
-                  position:'top',
-                }
-              },
-              itemStyle: {
+              yAxis.splitBumber = 5;
+              yAxis.interval = (yAxis.max - yAxis.min) / yAxis.splitBumber;
+              opt.yAxis.push(yAxis);
+            });
+            _.forEach(opt.series, function(item) {
+              if (item.type == 'bar') {
+                item.barMaxWidth = '45%';
+              }
+              if(item.type == 'line') {
+                item.connectNulls = true;
+              }
+              item.label = {
                 normal: {
-                  color: colors[5]
+                  show: true,
+                  position: 'top'
+                }
+              };
+            });
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if (screen_width < 1600) {
+              grid_top = '36%';
+              grid_left = '12%';
+            }
+
+            var option = {
+              color: colors,
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                 }
               },
-              data: [10, 52, 200, 334, 390, 330, 220, 120, 34, 231, 123, 34, 232]
-            }]
-          };
 
-          setTimeout(function() {
-            chartInstance4 = echarts.init((element.find('div'))[0]);
-            chartInstance4.clear();
-            chartInstance4.resize();
-            chartInstance4.setOption(option);
-          }, 600);
+              legend: {
+                left: 'center',
+                data: opt.legend,
+                textStyle: {
+                  color: '#fbfbfb',
+                  fontSize: 12
+                },
+                itemWidth:15,
+                itemHeight:6
+              },
+              grid: {
+                top: '12%',
+                left: grid_left,
+                right: '2%',
+                bottom: 100
+              },
+              xAxis: [{
+                type: 'category',
+                axisTick: {
+                  alignWithLabel: false
+                },
+                axisLine: {
+                  lineStyle: {
+                    color: colors[1],
+                    shadowColor: colors[1],
+                    shadowBlur: 4
+                  }
+                },
+                axisLabel: {
+                  interval: 0,
+                  margin:14,
+                  textStyle: {
+                    fontSize: 12,
+                    color: colors[5]
+                  },
+                  formatter: function(val) {
+                    return val.split("").join("\n"); //横轴信息文字竖直显示
+                    // var char_length = val.length;
+                    // var newstr = '';
+                    // var screen_width = screen.width;
+                    // if (screen_width < 1600) {
+                    //   return val.split("").join("\n"); //横轴信息文字竖直显示
+                    // }
+                    // else{
+                    //   if (char_length > 3) {
+                    //     var strTemp = '';
+                    //     var leftStr = '';
+                    //     for(var i=0; i<(char_length/2); i++) {
+                    //       if(i != 0) {
+                    //         if(val.length<2 || val.length == 3) {
+                    //           strTemp = val;
+                    //         }
+                    //         else{
+                    //           strTemp = val.substring(0, 2);
+                    //           val = val.substring(2, val.length);
+                    //         }
+                    //
+                    //         newstr += strTemp + '\n';
+                    //       }
+                    //     }
+                    //   }
+                    //   else{
+                    //     newstr = val;
+                    //   }
+                    //   return newstr;
+                    // }
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 0,
+                  lineStyle: {
+                    color: colors[2]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[3]
+                  }
+                },
+                data: opt.x_data
+              }],
+              yAxis: opt.yAxis,
+              series: opt.series
+            };
 
-          scope.onResize4 = function() {
-            if (chartInstance4) {
+            setTimeout(function() {
+              chartInstance4 = echarts.init((element.find('div'))[0]);
               chartInstance4.clear();
               chartInstance4.resize();
               chartInstance4.setOption(option);
-            }
-          }
+            }, 600);
 
-          angular.element($window).bind('resize', function() {
+            scope.onResize4 = function() {
+              if (chartInstance4) {
+                chartInstance4.clear();
+                chartInstance4.resize();
+                chartInstance4.setOption(option);
+              }
+            }
+
+            angular.element($window).bind('resize', function() {
               scope.onResize4();
             })
-            //})
+          })
         }
       }
     }
@@ -812,26 +967,26 @@
               grid_top = '32%';
               grid_left = '16%';
             }
-            _.forEach(opt.series,function(item,index){
+            _.forEach(opt.series, function(item, index) {
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
-                normal:{
-                  width:1
+                normal: {
+                  width: 1
                 }
               }
               var label_pos = 'top';
-              if((index+1)%2 != 0) {
-                label_pos = 'bottom';
-              }
+              // if ((index + 1) % 2 != 0) {
+              //   label_pos = 'bottom';
+              // }
               item.label = {
-                normal:{
-                  show:true,
-                  position:label_pos
+                normal: {
+                  show: true,
+                  position: label_pos
                 }
               }
             });
-            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)','rgb(3,204,215)'];
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
             var option = {
               color: colors,
               tooltip: {
@@ -839,16 +994,18 @@
               },
               legend: {
                 left: 'center',
-                top:20,
+                top: 10,
                 data: opt.legend,
                 textStyle: {
                   fontSize: 12,
-                  color:colors
-                }
+                  color: colors
+                },
+                itemWidth:15,
+                itemHeight:6
               },
               grid: {
                 left: grid_left,
-                right:'3.5%',
+                right: '3.5%',
                 bottom: 30
               },
               xAxis: {
@@ -864,9 +1021,10 @@
                 },
                 axisLabel: {
                   interval: 0,
+                  margin:14,
                   textStyle: {
                     fontSize: 10,
-                    color:colors[5]
+                    color: colors[5]
                   },
                   formatter: function(value) {
                     var month = value.substring(value.indexOf('-') + 1);
@@ -891,13 +1049,13 @@
                 type: 'value',
                 axisLabel: {
                   formatter: '{value}',
-                  textStyle:{
-                    color:colors[5]
+                  textStyle: {
+                    color: colors[5]
                   }
                 },
                 name: opt.y_name,
-                nameTextStyle:{
-                  color:colors[5]
+                nameTextStyle: {
+                  color: colors[5]
                 },
                 min: yAxis_min,
                 max: yAxis_max,
@@ -927,6 +1085,16 @@
               series: opt.series
             };
 
+            var inner_line_height = $('.inner-line').height();
+            var header_height = $('.header').outerHeight(true);
+            var main_height = inner_line_height-header_height-15-2-15;
+            $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+            $('.top-box').css({'max-height':main_height/2+'px'});
+            $('.down-box').css({'max-height':main_height/2+'px'});
+            var center_top_height = $('.top-box').outerHeight(true);
+            var center_down_height = $('.down-box').outerHeight(true);
+            $('.right-table').css({'max-height':center_top_height-15+'px'});
+
             setTimeout(function() {
               chartInstance4 = echarts.init((element.find('div'))[0]);
               chartInstance4.clear();
@@ -935,6 +1103,15 @@
             }, 600);
 
             scope.onResize4 = function() {
+              var inner_line_height = $('.inner-line').height();
+              var header_height = $('.header').outerHeight(true);
+              var main_height = inner_line_height-header_height-15-2-15;
+              $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+              $('.top-box').css({'max-height':main_height/2+'px'});
+              $('.down-box').css({'max-height':main_height/2+'px'});
+              var center_top_height = $('.top-box').outerHeight(true);
+              var center_down_height = $('.down-box').outerHeight(true);
+              $('.right-table').css({'max-height':center_top_height-15+'px'});
               if (chartInstance4) {
                 chartInstance4.clear();
                 chartInstance4.resize();

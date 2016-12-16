@@ -12,9 +12,9 @@
       });
 
       $scope.chartlist = [];
-      
+      var menuId = $stateParams.proid;
       ecoService.getContent({
-        menuId: 7
+        menuId: menuId
       }).then(function(result) {
         vm.dashcontent = _.sortBy(result.data, ['picCode']);
         _.forEach(vm.dashcontent, function(item) {

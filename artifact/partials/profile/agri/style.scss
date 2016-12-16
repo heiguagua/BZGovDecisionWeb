@@ -1,5 +1,5 @@
 .agri {
-  .agri-main{
+  .agri-main {
     padding: 10px 0 0 15px;
     @include flex-align(stretch);
     @include flex-num(5);
@@ -7,8 +7,8 @@
     @include smallscreen {
       @include flex-num(4);
     }
-    .box-title{
-      padding:14px 18px 12px 8px;
+    .box-title {
+      padding: 14px 18px 12px 8px;
     }
   }
   .top-box {
@@ -19,8 +19,12 @@
       @include flex-num(1);
     }
   }
-  .down-box{
+  .down-box {
     @extend .top-box;
-    margin-bottom:0;
+    margin-bottom: 0;
+  }
+  .datalist .mdata-items .data-item:nth-child(2) span {
+    background: #16b1cd;
+    text-align: center;
   }
 }

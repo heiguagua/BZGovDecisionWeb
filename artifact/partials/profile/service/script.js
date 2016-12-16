@@ -11,10 +11,10 @@
         'background': 'url(assets/images/bg.png)'
       });
 
-      $scope.chartlist = [];
+      $scope.servicelist = [];
       var menuId = $stateParams.proid;
       serviceService.getContent({
-        menuId: 7
+        menuId: menuId
       }).then(function(result) {
         vm.servicecontent = _.sortBy(result.data, ['picCode']);
         _.forEach(vm.servicecontent, function(item) {
@@ -22,7 +22,7 @@
           chart.opened = false;
           chart.url = item.url;
           chart.picCode = item.picCode;
-          $scope.chartlist.push(chart);
+          $scope.servicelist.push(chart);
         });
 
       });
@@ -85,29 +85,27 @@
     }
   ]);
 
-  service.directive('serviceChartCpi', ['serviceService', '$window',
-    function(serviceService, $window) {
+  service.directive('serviceChartConsume', ['agriService', '$window',
+    function(agriService, $window) {
       return {
         restrict: 'ACE',
         scope: {
-          ccontent: '='
+          consumecontent: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          var chartInstance4 = null;
-          if (!scope.ccontent || !scope.ccontent.url) {
+          var chartInstance1 = null;
+          if (!scope.consumecontent || !scope.consumecontent.url) {
             return;
           }
-          serviceService.getDetail(scope.ccontent.url, {
-            queryTime: serviceService.getDateFormat(scope.ccontent.model, scope.ccontent.format),
-            picCode: scope.ccontent.picCode
+          agriService.getDetail(scope.consumecontent.url, {
+            picCode: scope.consumecontent.picCode
           }).then(function(result) {
             var opt = result.data;
             if (!opt || !opt.series) {
               return;
             }
-            scope.ccontent.query_time = opt.init_query_time;
-            scope.ccontent.dep_name = opt.dep_name;
+            scope.consumecontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -119,27 +117,47 @@
             var grid_left = '10%';
             if (screen_width < 1600) {
               grid_top = '32%';
-              grid_left = '16%';
+              grid_left = '10%';
             }
-            var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)'];
+            _.forEach(opt.series, function(item, index) {
+              item.symbol = 'rect';
+              item.symbolSize = 4;
+              item.lineStyle = {
+                normal: {
+                  width: 1
+                }
+              }
+              var label_pos = 'top';
+              // if ((index + 1) % 2 != 0) {
+              //   label_pos = 'bottom';
+              // }
+              item.label = {
+                normal: {
+                  show: true,
+                  position: label_pos
+                }
+              }
+            });
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
             var option = {
               color: colors,
               tooltip: {
                 trigger: 'axis'
               },
               legend: {
-                orient: 'vertical',
-                left: 'right',
+                left: 'center',
+                top: 10,
                 data: opt.legend,
                 textStyle: {
-                  color: '#d5e2df',
-                  fontSize: 12
-                }
+                  fontSize: 12,
+                  color: colors
+                },
+                itemWidth:15,
+                itemHeight:6
               },
               grid: {
-                //right:'3%',
-                top: '24%',
                 left: grid_left,
+                right: '3.5%',
                 bottom: 30
               },
               xAxis: {
@@ -148,15 +166,17 @@
                 data: opt.x_data,
                 axisLine: {
                   lineStyle: {
-                    color: colors[2],
-                    shadowColor: colors[2],
+                    color: colors[3],
+                    shadowColor: colors[3],
                     shadowBlur: 4
                   }
                 },
                 axisLabel: {
                   interval: 0,
+                  margin:14,
                   textStyle: {
-                    fontSize: 10
+                    fontSize: 10,
+                    color: colors[5]
                   },
                   formatter: function(value) {
                     var month = value.substring(value.indexOf('-') + 1);
@@ -180,17 +200,23 @@
               yAxis: {
                 type: 'value',
                 axisLabel: {
-                  formatter: '{value}'
+                  formatter: '{value}',
+                  textStyle: {
+                    color: colors[5]
+                  }
                 },
                 name: opt.y_name,
+                nameTextStyle: {
+                  color: colors[5]
+                },
                 min: yAxis_min,
                 max: yAxis_max,
                 splitBumber: 5,
                 interval: (yAxis_max - yAxis_min) / 5,
                 axisLine: {
                   lineStyle: {
-                    color: colors[2],
-                    shadowColor: colors[2],
+                    color: colors[3],
+                    shadowColor: colors[3],
                     shadowBlur: 4
                   }
                 },
@@ -211,22 +237,18 @@
               series: opt.series
             };
 
-            // chartInstance4 = echarts.init((element.find('div'))[0]);
-            // chartInstance4.setOption(option);
-
             setTimeout(function() {
-              chartInstance4 = echarts.init((element.find('div'))[0]);
-              //element.find('div')[0].style.height = $('.graph').height() + 'px';
-              chartInstance4.clear();
-              chartInstance4.resize();
-              chartInstance4.setOption(option);
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
             }, 600);
 
             scope.onResize4 = function() {
-              if (chartInstance4) {
-                chartInstance4.clear();
-                chartInstance4.resize();
-                chartInstance4.setOption(option);
+              if (chartInstance1) {
+                chartInstance1.clear();
+                chartInstance1.resize();
+                chartInstance1.setOption(option);
               }
             }
 
@@ -239,147 +261,918 @@
     }
   ]);
 
-  // 经济类型增速分析
-  service.directive('serviceChartEco', ['serviceService', '$window',
-    function(serviceService, $window) {
+  service.directive('serviceChartBank', ['agriService', '$window',
+    function(agriService, $window) {
       return {
         restrict: 'ACE',
         scope: {
-          eco: '='
+          bankcontent: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          var chartInstance6 = null;
-          // if (!scope.ccontent || !scope.ccontent.url) {
-          //   return;
-          // }
-          // serviceService.getDetail(scope.ccontent.url, {
-          //   queryTime: serviceService.getDateFormat(scope.ccontent.model, scope.ccontent.format),
-          //   picCode: scope.ccontent.picCode
-          // }).then(function(result) {
-          //   var opt = result.data;
-          //   if (!opt || !opt.series) {
-          //     return;
-          //   }
-          //   scope.ccontent.query_time = opt.init_query_time;
-          //   scope.ccontent.dep_name = opt.dep_name;
-          //   var yAxis_min = 0;
-          //   var yAxis_max = 0;
-          //   if (opt.max_and_min) {
-          //     yAxis_min = Math.round(opt.max_and_min[0].minValue);
-          //     yAxis_max = Math.round(opt.max_and_min[0].maxValue);
-          //   }
-          //   var screen_width = screen.width;
-          //   var grid_top = '24%';
-          //   var grid_left = '10%';
-          //   if (screen_width < 1600) {
-          //     grid_top = '32%';
-          //     grid_left = '16%';
-          //   }
+          var chartInstance1 = null;
+          if (!scope.bankcontent || !scope.bankcontent.url) {
+            return;
+          }
+          agriService.getDetail(scope.bankcontent.url, {
+            picCode: scope.bankcontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.bankcontent.dep_name = opt.dep_name;
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if (screen_width < 1600) {
+              grid_top = '32%';
+              grid_left = '16%';
+            }
+            _.forEach(opt.series, function(item, index) {
+              item.symbol = 'rect';
+              item.symbolSize = 4;
+              item.lineStyle = {
+                normal: {
+                  width: 1
+                }
+              }
+              var label_pos = 'top';
+              // if ((index + 1) % 2 != 0) {
+              //   label_pos = 'bottom';
+              // }
+              item.label = {
+                normal: {
+                  show: true,
+                  position: label_pos
+                }
+              }
+            });
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
             var option = {
+              color: colors,
               tooltip: {
                 trigger: 'axis'
               },
               legend: {
-                left:'right',
-                data: [{name:'同比增速',icon:'diamond'}],
-                textStyle:{
-                  color: 'rgb(236,206,15)'
-                }
+                left: 'center',
+                top: 10,
+                data: opt.legend,
+                textStyle: {
+                  fontSize: 12,
+                  color: colors
+                },
+                itemWidth:15,
+                itemHeight:6
               },
-              radar: [{
-                name:{
-                  textStyle:{
-                    color:'rgb(0,255,246)',
-                    fontSize:14
+              grid: {
+                left: grid_left,
+                right: '3.5%',
+                bottom: 30
+              },
+              xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: opt.x_data,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
                   }
                 },
-                nameGap:6,
-                axisLine: {
-                  show: false
+                axisLabel: {
+                  interval: 0,
+                  margin:14,
+                  textStyle: {
+                    fontSize: 10,
+                    color: colors[5]
+                  },
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
+                  }
                 },
                 splitLine: {
+                  show: true,
+                  interval: 0,
                   lineStyle: {
-                    color: 'rgb(01,106,224)'
+                    color: colors[3]
                   }
                 },
                 splitArea: {
-                  show: false
-                },
-                indicator: [{
-                  text: '国有企业增加值增速',
-                  max: 100
-                }, {
-                  text: '外商及港澳台商投资企业增加值增速',
-                  max: 100
-                }, {
-                  text: '私营企业增加值增速',
-                  max: 100
-                }, {
-                  text: '股份制企业增加值增速',
-                  max: 100
-                }, {
-                  text: '集体企业增加值增速',
-                  max: 100
-                }],
-                center: ['50%', '50%'],
-                radius: '80%'
-              }],
-              series: [{
-                type: 'radar',
-                symbolSize: 0,
-                tooltip: {
-                  trigger: 'item'
-                },
-                itemStyle: {
-                  normal: {
-                    color: 'rgb(236,206,15)'
-                  }
-                },
-                lineStyle: {
-                  normal: {
-                    color: 'rgb(236,206,15)'
-                  }
-                },
-                data: [{
-                  value: [60, 10, 60, 42, 60],
-                  name: '同比增速',
+                  show: true,
                   areaStyle: {
-                    normal: {
-                      opacity: 0.8,
-                      color: 'rgb(173,168,70)'
-                    }
+                    color: colors[4]
                   }
-                }]
-              }]
+                }
+              },
+              yAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter: '{value}',
+                  textStyle: {
+                    color: colors[5]
+                  }
+                },
+                name: opt.y_name,
+                nameTextStyle: {
+                  color: colors[5]
+                },
+                min: yAxis_min,
+                max: yAxis_max,
+                splitBumber: 5,
+                interval: (yAxis_max - yAxis_min) / 5,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 'auto',
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              series: opt.series
             };
-            var screen_width = screen.width;
-            if (screen_width < 1600) {
-              option.radar[0].name.textStyle.fontSize = 10;
-            }
 
             setTimeout(function() {
-              chartInstance6 = echarts.init((element.find('div'))[0]);
-              chartInstance6.clear();
-              chartInstance6.resize();
-              chartInstance6.setOption(option);
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
             }, 600);
 
             scope.onResize4 = function() {
-              if (chartInstance6) {
-                chartInstance6.clear();
-                chartInstance6.resize();
-                chartInstance6.setOption(option);
+              if (chartInstance1) {
+                chartInstance1.clear();
+                chartInstance1.resize();
+                chartInstance1.setOption(option);
               }
             }
 
             angular.element($window).bind('resize', function() {
               scope.onResize4();
             })
-          // })
+          })
         }
       }
     }
   ]);
 
+  // 商品房待售面积
+  service.directive('serviceChartHouse', ['agriService', '$window',
+    function(agriService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          housecontent: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance2 = null;
+          if (!scope.housecontent || !scope.housecontent.url) {
+            return;
+          }
+          agriService.getDetail(scope.housecontent.url, {
+            picCode: scope.housecontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.housecontent.dep_name = opt.dep_name;
+
+            var colors = ['rgb(0,255,161)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)', 'rgb(3,204,215)'];
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            opt.yAxis = [];
+            _.forEach(opt.y_name, function(item, index) {
+              var yAxis = {};
+              yAxis.type = 'value';
+              yAxis.name = item;
+              yAxis.nameTextStyle = {
+                color: colors[5]
+              };
+              yAxis.axisLabel = {
+                textStyle: {
+                  color: colors[5]
+                }
+              };
+              yAxis.axisTick = {};
+              yAxis.axisTick.inside = true;
+              yAxis.axisLine = {
+                lineStyle: {
+                  color: colors[1],
+                  shadowColor: colors[1],
+                  shadowBlur: 4
+                }
+              };
+              yAxis.splitLine = {
+                show: true,
+                interval: 'auto',
+                lineStyle: {
+                  color: colors[2]
+                }
+              };
+              yAxis.splitArea = {
+                show: true,
+                areaStyle: {
+                  color: colors[3]
+                }
+              };
+              if (opt.max_and_min) {
+                var minValue = Number(opt.max_and_min[index].minValue);
+                var maxValue = Number(opt.max_and_min[index].maxValue);
+                if (minValue >= 0 && minValue < 1) {
+                  minValue = 0;
+                } else {
+                  minValue = minValue - 1;
+                }
+                maxValue = 1 + maxValue;
+                yAxis.min = Math.round(minValue);
+                yAxis.max = Math.round(maxValue);
+              }
+              yAxis.splitBumber = 5;
+              yAxis.interval = (yAxis.max - yAxis.min) / yAxis.splitBumber;
+              opt.yAxis.push(yAxis);
+            });
+            _.forEach(opt.series, function(item) {
+              if (item.type == 'bar') {
+                item.barMaxWidth = '40%';
+              }
+              item.label = {
+                normal: {
+                  show: true,
+                  position: 'top'
+                }
+              };
+            });
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if (screen_width < 1600) {
+              grid_top = '36%';
+              grid_left = '12%';
+            }
+
+            var option = {
+              color: colors,
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                }
+              },
+
+              legend: {
+                left: 'center',
+                data: opt.legend,
+                textStyle: {
+                  color: '#fbfbfb',
+                  fontSize: 12
+                },
+                itemWidth:15,
+                itemHeight:6
+              },
+              grid: {
+                // top: grid_top,
+                left: grid_left,
+                right: grid_left,
+                bottom: 30
+              },
+              xAxis: [{
+                type: 'category',
+                axisTick: {
+                  alignWithLabel: false
+                },
+                axisLine: {
+                  lineStyle: {
+                    color: colors[1],
+                    shadowColor: colors[1],
+                    shadowBlur: 4
+                  }
+                },
+                axisLabel: {
+                  interval: 0,
+                  margin:14,
+                  textStyle: {
+                    fontSize: 8,
+                    color: colors[5]
+                  },
+                },
+                splitLine: {
+                  show: true,
+                  interval: 0,
+                  lineStyle: {
+                    color: colors[2]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[3]
+                  }
+                },
+                data: opt.x_data
+              }],
+              yAxis: opt.yAxis,
+              series: opt.series
+            };
+
+            setTimeout(function() {
+              chartInstance2 = echarts.init((element.find('div'))[0]);
+              chartInstance2.clear();
+              chartInstance2.resize();
+              chartInstance2.setOption(option);
+            }, 600);
+
+            scope.onResize2 = function() {
+              if (chartInstance2) {
+                chartInstance2.clear();
+                chartInstance2.resize();
+                chartInstance2.setOption(option);
+              }
+            }
+
+            angular.element($window).bind('resize', function() {
+              scope.onResize2();
+            })
+          })
+        }
+      }
+    }
+  ]);
+
+  // 企业登记注册
+  service.directive('serviceChartEnt', ['agriService', '$window',
+    function(agriService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          entcontent: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance1 = null;
+          if (!scope.entcontent || !scope.entcontent.url) {
+            return;
+          }
+          agriService.getDetail(scope.entcontent.url, {
+            picCode: scope.entcontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.entcontent.dep_name = opt.dep_name;
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            var grid_right ='12%';
+            if (screen_width < 1600) {
+              grid_top = '32%';
+              grid_left = '16%';
+              grid_right = '20%';
+            }
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)','rgb(3,204,215)'];
+            opt.yAxis = [];
+            _.forEach(opt.y_name, function(item, index) {
+
+              var yAxis = {};
+              yAxis.type = 'value';
+              yAxis.name = item;
+              yAxis.axisTick = {};
+              yAxis.axisTick.inside = true;
+
+              if (opt.max_and_min && opt.max_and_min[index]) {
+                var minValue = Number(opt.max_and_min[index].minValue);
+                var maxValue = Number(opt.max_and_min[index].maxValue);
+                if (minValue >= 0 && minValue < 1) {
+                  minValue = 0;
+                } else {
+                  minValue = minValue - 1;
+                }
+                maxValue = 1 + maxValue;
+                yAxis.min = Math.round(minValue);
+                yAxis.max = Math.round(maxValue);
+              }
+              yAxis.splitBumber = 5;
+              yAxis.interval = (yAxis.max - yAxis.min) / yAxis.splitBumber;
+              yAxis.axisLine = {
+                onZero: false,
+                lineStyle: {
+                  color: colors[3],
+                  shadowColor: colors[3],
+                  shadowBlur: 4
+                }
+              };
+              yAxis.axisLabel = {};
+              yAxis.axisLabel.formatter = function(value) {
+                if (((value + '').indexOf('.') != -1)) {
+                  return value.toFixed(1);
+                }
+                return value;
+              };
+              yAxis.axisLabel.textStyle ={
+                color:colors[5]
+              };
+              yAxis.nameTextStyle = {
+                color:colors[5]
+              };
+              yAxis.splitLine = {
+                show: true,
+                interval: 'auto',
+                lineStyle: {
+                  color: colors[3]
+                }
+              };
+              yAxis.splitArea = {
+                show: true,
+                areaStyle: {
+                  color: colors[4]
+                }
+              };
+              opt.yAxis.push(yAxis);
+            });
+            _.forEach(opt.series,function(item,index){
+              item.symbol = 'rect';
+              item.symbolSize = 4;
+              item.lineStyle = {
+                normal:{
+                  width:1
+                }
+              }
+              var label_pos = 'top';
+              if((index+1)%2 != 0) {
+                label_pos = 'bottom';
+              }
+              item.label = {
+                normal:{
+                  show:true,
+                  position:label_pos
+                }
+              }
+            });
+
+            var option = {
+              color: colors,
+              tooltip: {
+                trigger: 'axis'
+              },
+              legend: {
+                left: 'center',
+                top:2,
+                data: opt.legend,
+                textStyle: {
+                  fontSize: 12,
+                  color:colors
+                },
+                itemWidth:15,
+                itemHeight:6
+              },
+              grid: {
+                top: '14%',
+                left: grid_left,
+                right: '4%',
+                bottom: 160
+              },
+              xAxis: {
+                type: 'category',
+                axisTick: {
+                  alignWithLabel: false
+                },
+                data: opt.x_data,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                axisLabel: {
+                  interval: 0,
+                  margin:4,
+                  textStyle: {
+                    fontSize: 10,
+                    color:colors[5]
+                  },
+                  formatter:function(val) {
+                    return val.split("").join("\n"); //横轴信息文字竖直显示
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 0,
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              yAxis: opt.yAxis,
+              series: opt.series
+            };
+
+            setTimeout(function() {
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
+            }, 600);
+
+            scope.onResize4 = function() {
+              if (chartInstance1) {
+                chartInstance1.clear();
+                chartInstance1.resize();
+                chartInstance1.setOption(option);
+              }
+            }
+
+            angular.element($window).bind('resize', function() {
+              scope.onResize4();
+            })
+          })
+        }
+      }
+    }
+  ]);
+
+  // 货物运输周转量
+  service.directive('serviceChartGoods', ['agriService', '$window',
+    function(agriService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          goodscontent: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance1 = null;
+          if (!scope.goodscontent || !scope.goodscontent.url) {
+            return;
+          }
+          agriService.getDetail(scope.goodscontent.url, {
+            picCode: scope.goodscontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.goodscontent.dep_name = opt.dep_name;
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if (screen_width < 1600) {
+              grid_top = '32%';
+              grid_left = '16%';
+            }
+            _.forEach(opt.series, function(item, index) {
+              item.symbol = 'rect';
+              item.symbolSize = 4;
+              item.lineStyle = {
+                normal: {
+                  width: 1
+                }
+              }
+              var label_pos = 'top';
+              // if ((index + 1) % 2 != 0) {
+              //   label_pos = 'bottom';
+              // }
+              item.label = {
+                normal: {
+                  show: true,
+                  position: label_pos
+                }
+              }
+            });
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
+            var option = {
+              color: colors,
+              tooltip: {
+                trigger: 'axis'
+              },
+              legend: {
+                left: 'center',
+                top: 10,
+                data: opt.legend,
+                textStyle: {
+                  fontSize: 12,
+                  color: colors
+                },
+                itemWidth:15,
+                itemHeight:6
+              },
+              grid: {
+                left: grid_left,
+                right: '3.5%',
+                bottom: 30
+              },
+              xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: opt.x_data,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                axisLabel: {
+                  interval: 0,
+                  margin:14,
+                  textStyle: {
+                    fontSize: 10,
+                    color: colors[5]
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 0,
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              yAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter: '{value}',
+                  textStyle: {
+                    color: colors[5]
+                  }
+                },
+                name: opt.y_name,
+                nameTextStyle: {
+                  color: colors[5]
+                },
+                min: yAxis_min,
+                max: yAxis_max,
+                splitBumber: 5,
+                interval: (yAxis_max - yAxis_min) / 5,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 'auto',
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              series: opt.series
+            };
+
+            setTimeout(function() {
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
+            }, 600);
+
+            scope.onResize4 = function() {
+              if (chartInstance1) {
+                chartInstance1.clear();
+                chartInstance1.resize();
+                chartInstance1.setOption(option);
+              }
+            }
+
+            angular.element($window).bind('resize', function() {
+              scope.onResize4();
+            })
+          })
+        }
+      }
+    }
+  ]);
+
+  // 货物运输周转量
+  service.directive('serviceChartTraffic', ['agriService', '$window',
+    function(agriService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          trafficontent: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance1 = null;
+          if (!scope.trafficontent || !scope.trafficontent.url) {
+            return;
+          }
+          agriService.getDetail(scope.trafficontent.url, {
+            picCode: scope.trafficontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.trafficontent.dep_name = opt.dep_name;
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if (screen_width < 1600) {
+              grid_top = '32%';
+              grid_left = '16%';
+            }
+            _.forEach(opt.series, function(item, index) {
+              item.symbol = 'rect';
+              item.symbolSize = 4;
+              item.lineStyle = {
+                normal: {
+                  width: 1
+                }
+              }
+              var label_pos = 'top';
+              // if ((index + 1) % 2 != 0) {
+              //   label_pos = 'bottom';
+              // }
+              item.label = {
+                normal: {
+                  show: true,
+                  position: label_pos
+                }
+              }
+            });
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
+            var option = {
+              color: colors,
+              tooltip: {
+                trigger: 'axis'
+              },
+              legend: {
+                left: 'center',
+                top: 10,
+                data: opt.legend,
+                textStyle: {
+                  fontSize: 12,
+                  color: colors
+                },
+                itemWidth:15,
+                itemHeight:6
+              },
+              grid: {
+                left: grid_left,
+                right: '3.5%',
+                bottom: 30
+              },
+              xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: opt.x_data,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                axisLabel: {
+                  interval: 0,
+                  margin:14,
+                  textStyle: {
+                    fontSize: 10,
+                    color: colors[5]
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 0,
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              yAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter: '{value}',
+                  textStyle: {
+                    color: colors[5]
+                  }
+                },
+                name: opt.y_name,
+                nameTextStyle: {
+                  color: colors[5]
+                },
+                min: yAxis_min,
+                max: yAxis_max,
+                splitBumber: 5,
+                interval: (yAxis_max - yAxis_min) / 5,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 'auto',
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              series: opt.series
+            };
+
+            setTimeout(function() {
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
+            }, 600);
+
+            scope.onResize4 = function() {
+              if (chartInstance1) {
+                chartInstance1.clear();
+                chartInstance1.resize();
+                chartInstance1.setOption(option);
+              }
+            }
+
+            angular.element($window).bind('resize', function() {
+              scope.onResize4();
+            })
+          })
+        }
+      }
+    }
+  ]);
 })();
