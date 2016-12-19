@@ -114,6 +114,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.regcontent.query_time = opt.init_query_time;
             scope.regcontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -292,6 +293,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.invstcontent.query_time = opt.init_query_time;
             scope.invstcontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -734,6 +736,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.procontent.query_time = opt.init_query_time;
             scope.procontent.dep_name = opt.dep_name;
             var colors = ['rgb(0,255,161)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)', 'rgb(3,204,215)'];
             var yAxis_min = 0;
@@ -955,6 +958,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.eleccontent.query_time = opt.init_query_time;
             scope.eleccontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;

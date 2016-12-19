@@ -114,6 +114,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.rescontent.query_time = opt.init_query_time;
             scope.rescontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -313,6 +314,7 @@
           if (!opt || !opt.series) {
             return;
           }
+          scope.districtcontent.query_time = opt.init_query_time;
           scope.districtcontent.dep_name = opt.dep_name;
 
           var colors = ['rgb(0,255,161)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)', 'rgb(3,204,215)'];
@@ -504,6 +506,7 @@
           if (!opt || !opt.series) {
             return;
           }
+          scope.farmcontent.query_time = opt.init_query_time;
           scope.farmcontent.dep_name = opt.dep_name;
           var yAxis_min = 0;
           var yAxis_max = 0;
@@ -700,6 +703,7 @@
           if (!opt || !opt.series) {
             return;
           }
+          scope.walnutcontent.query_time = opt.init_query_time;
           scope.walnutcontent.dep_name = opt.dep_name;
           var yAxis_min = 0;
           var yAxis_max = 0;
@@ -897,6 +901,7 @@
           if (!opt || !opt.series) {
             return;
           }
+          scope.fishcontent.query_time = opt.init_query_time;
           scope.fishcontent.dep_name = opt.dep_name;
           var yAxis_min = 0;
           var yAxis_max = 0;

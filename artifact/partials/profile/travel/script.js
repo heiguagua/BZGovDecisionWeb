@@ -114,6 +114,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.housecontent.query_time = opt.init_query_time;
             scope.housecontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -493,6 +494,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.restacontent.query_time = opt.init_query_time;
             scope.restacontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -691,6 +693,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.tourcontent.query_time = opt.init_query_time;
             scope.tourcontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;

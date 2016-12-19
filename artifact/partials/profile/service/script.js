@@ -107,6 +107,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.consumecontent.query_time = opt.init_query_time;
             scope.consumecontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -283,6 +284,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.bankcontent.query_time = opt.init_query_time;
             scope.bankcontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -460,6 +462,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.housecontent.query_time = opt.init_query_time;
             scope.housecontent.dep_name = opt.dep_name;
 
             var colors = ['rgb(0,255,161)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)', 'rgb(3,204,215)'];
@@ -648,6 +651,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.entcontent.query_time = opt.init_query_time;
             scope.entcontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -662,7 +666,7 @@
             var grid_bottom = 100;
             var label_font = 12;
             if (screen_width < 1600) {
-              grid_top = '15%';
+              grid_top = '16%';
               grid_left = '15%';
               grid_right = '22%';
               grid_bottom = 80;
@@ -879,6 +883,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.goodscontent.query_time = opt.init_query_time;
             scope.goodscontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -1052,6 +1057,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.trafficontent.query_time = opt.init_query_time;
             scope.trafficontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
             var yAxis_max = 0;

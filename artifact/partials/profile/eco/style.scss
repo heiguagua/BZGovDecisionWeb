@@ -78,14 +78,17 @@
     background-size: 100% 100%;
     margin-top: -2px;
     margin-left: -2px;
-    @include font($fontSize:0.8rem,$textAlign:left);
+    @include font($fontSize:0.78rem,$textAlign:left);
   }
   .top-wrap {
     overflow: hidden;
     .box-sub-title {
       padding: 15px 2px 15px 0;
       color: #effcf9;
-      font-size: 0.7rem;
+      font-size: 0.56rem;
+      @include smallscreen {
+        font-size: 0.65rem;
+      }
     }
   }
   .box-content {
