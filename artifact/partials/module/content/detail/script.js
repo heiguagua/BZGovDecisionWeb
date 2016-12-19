@@ -622,8 +622,9 @@
                   var enTotal = opt.series[0].data;
                   var enNum = opt.series[1].data;
                   element.find('div')[0].innerHTML = '<div class="item-wrap">' +
+                    '<h3 class="chart-title">'+opt.title+'</h3>'+
                     '<div class="chart-item"><div class="item"><div class="pic pic-home"><i class="fa fa-home"></i></div></div><div class="item"><div class="pic pic-home"><i class="fa fa-rmb"></i></div></div></div>' +
-                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[0].name + enTotal[0].value + enTotal[0].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[0].name + "：" + enNum[0].value + enNum[0].unit + '</div></div></div>' +
+                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[0].name + enTotal[0].value + enTotal[0].unit + '</div></div><div class="item"><div class="content-item">' + '注册资金' + "：" + enNum[0].value + enNum[0].unit + '</div></div></div>' +
                     '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[1].name + enTotal[1].value + enTotal[1].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：" + enNum[1].value + enNum[1].unit + '</div></div></div>' +
                     '<div>';
                 } else {

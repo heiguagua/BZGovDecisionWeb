@@ -4,8 +4,8 @@
   service.$inject = ['$location'];
   /** Controller */
   service.controller('serviceController', [
-    '$scope', 'serviceService', '$state', '$stateParams', '$window','$rootScope',
-    function($scope, serviceService, $state, $stateParams, $window,$rootScope) {
+    '$scope', 'serviceService', '$state', '$stateParams', '$window', '$rootScope',
+    function($scope, serviceService, $state, $stateParams, $window, $rootScope) {
       var vm = this;
       $rootScope.showMenu = true;
       $('.profile').css({
@@ -154,8 +154,8 @@
                   fontSize: 12,
                   color: colors
                 },
-                itemWidth:15,
-                itemHeight:6
+                itemWidth: 15,
+                itemHeight: 6
               },
               grid: {
                 left: grid_left,
@@ -175,7 +175,7 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin:14,
+                  margin: 14,
                   textStyle: {
                     fontSize: 10,
                     color: colors[5]
@@ -330,8 +330,8 @@
                   fontSize: 12,
                   color: colors
                 },
-                itemWidth:15,
-                itemHeight:6
+                itemWidth: 15,
+                itemHeight: 6
               },
               grid: {
                 left: grid_left,
@@ -351,7 +351,7 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin:14,
+                  margin: 14,
                   textStyle: {
                     fontSize: 10,
                     color: colors[5]
@@ -555,8 +555,8 @@
                   color: '#fbfbfb',
                   fontSize: 12
                 },
-                itemWidth:15,
-                itemHeight:6
+                itemWidth: 15,
+                itemHeight: 6
               },
               grid: {
                 // top: grid_top,
@@ -578,7 +578,7 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin:14,
+                  margin: 14,
                   textStyle: {
                     fontSize: 8,
                     color: colors[5]
@@ -656,15 +656,15 @@
               yAxis_max = Math.round(opt.max_and_min[0].maxValue);
             }
             var screen_width = screen.width;
-            var grid_top = '24%';
+            var grid_top = 60;
             var grid_left = '10%';
-            var grid_right ='16%';
+            var grid_right = '16%';
             if (screen_width < 1600) {
-              grid_top = '32%';
+              grid_top = '15%';
               grid_left = '16%';
               grid_right = '22%';
             }
-            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)','rgb(3,204,215)'];
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
             opt.yAxis = [];
             _.forEach(opt.y_name, function(item, index) {
 
@@ -703,11 +703,11 @@
                 }
                 return value;
               };
-              yAxis.axisLabel.textStyle ={
-                color:colors[5]
+              yAxis.axisLabel.textStyle = {
+                color: colors[5]
               };
               yAxis.nameTextStyle = {
-                color:colors[5]
+                color: colors[5]
               };
               yAxis.splitLine = {
                 show: true,
@@ -724,22 +724,22 @@
               };
               opt.yAxis.push(yAxis);
             });
-            _.forEach(opt.series,function(item,index){
+            _.forEach(opt.series, function(item, index) {
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
-                normal:{
-                  width:1
+                normal: {
+                  width: 1
                 }
               }
               var label_pos = 'top';
-              if((index+1)%2 != 0) {
+              if ((index + 1) % 2 != 0) {
                 label_pos = 'bottom';
               }
               item.label = {
-                normal:{
-                  show:false,
-                  position:label_pos
+                normal: {
+                  show: false,
+                  position: label_pos
                 }
               }
             });
@@ -751,20 +751,20 @@
               },
               legend: {
                 left: 'center',
-                top:2,
+                top: 2,
                 data: opt.legend,
                 textStyle: {
                   fontSize: 12,
-                  color:colors
+                  color: colors
                 },
-                itemWidth:15,
-                itemHeight:6
+                itemWidth: 15,
+                itemHeight: 6
               },
               grid: {
-                top: '14%',
+                top: grid_top,
                 left: grid_left,
-                right: grid_right,
-                bottom: 160
+                right: 0,
+                bottom: 100
               },
               xAxis: {
                 type: 'category',
@@ -781,13 +781,35 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin:4,
+                  margin: 4,
                   textStyle: {
                     fontSize: 10,
-                    color:colors[5]
+                    color: colors[5]
                   },
-                  formatter:function(val) {
-                    return val.split("").join("\n"); //横轴信息文字竖直显示
+                  formatter: function(val) {
+                    var char_length = val.length;
+                    var newstr = '';
+                    if (char_length > 2) {
+                      var strTemp = '';
+                      var leftStr = '';
+                      for (var i = 0; i < (char_length / 2)+1; i++) {
+                        if (i != 0) {
+                          if (val.length < 2) {
+                            strTemp = val;
+
+                          } else {
+                            strTemp = val.substring(0, 2);
+                            val = val.substring(2, val.length);
+                            console.log(val);
+                          }
+
+                          newstr += strTemp + '\n';
+                        }
+                      }
+                    } else {
+                      newstr = val;
+                    }
+                    return newstr;
                   }
                 },
                 splitLine: {
@@ -900,8 +922,8 @@
                   fontSize: 12,
                   color: colors
                 },
-                itemWidth:15,
-                itemHeight:6
+                itemWidth: 15,
+                itemHeight: 6
               },
               grid: {
                 left: grid_left,
@@ -921,7 +943,7 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin:14,
+                  margin: 14,
                   textStyle: {
                     fontSize: 10,
                     color: colors[5]
@@ -1073,8 +1095,8 @@
                   fontSize: 12,
                   color: colors
                 },
-                itemWidth:15,
-                itemHeight:6
+                itemWidth: 15,
+                itemHeight: 6
               },
               grid: {
                 left: grid_left,
@@ -1094,7 +1116,7 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin:14,
+                  margin: 14,
                   textStyle: {
                     fontSize: 10,
                     color: colors[5]

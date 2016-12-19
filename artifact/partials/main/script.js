@@ -14,10 +14,8 @@
       // get menu list
       mainService.getMenus({parentId:"0"}).then(function(result) {
         vm.menus = result.data;
-        _.forEach(vm.menus,function(item,index) {
-          if(item && item.type == '3') { // 经济概况
-            vm.menus.splice(index, 1);
-          }
+        _.remove(vm.menus,function(item){
+          return item.type == '2' || item.type == '3';
         });
         $state.go('main.module',{id:$stateParams.mid});
       });
