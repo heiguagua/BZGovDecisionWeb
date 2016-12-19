@@ -7,6 +7,7 @@
     '$scope', 'menuService','$stateParams','$rootScope',
     function($scope, menuService,$stateParams,$rootScope) {
       var vm = this;
+      $rootScope.showMenu = true;
       $('.profile').css({'background':'url(assets/images/bg_profile.png)'});
       var menuId = $stateParams.proid;
       $rootScope.currentMenu = '';

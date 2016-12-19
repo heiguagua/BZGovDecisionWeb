@@ -9,6 +9,7 @@
       var vm = this;
       $('.profile').css({'background':'url(assets/images/bg_profile.png)'});
       var menuId = $stateParams.proid;
+      $rootScope.showMenu = false;
       $rootScope.currentMenu = '';
       indexService.getContent({
         menuId: menuId

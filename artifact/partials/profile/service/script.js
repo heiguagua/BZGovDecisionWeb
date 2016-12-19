@@ -7,6 +7,7 @@
     '$scope', 'serviceService', '$state', '$stateParams', '$window','$rootScope',
     function($scope, serviceService, $state, $stateParams, $window,$rootScope) {
       var vm = this;
+      $rootScope.showMenu = true;
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
       });
@@ -657,11 +658,11 @@
             var screen_width = screen.width;
             var grid_top = '24%';
             var grid_left = '10%';
-            var grid_right ='12%';
+            var grid_right ='16%';
             if (screen_width < 1600) {
               grid_top = '32%';
               grid_left = '16%';
-              grid_right = '20%';
+              grid_right = '22%';
             }
             var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)','rgb(3,204,215)'];
             opt.yAxis = [];
@@ -762,7 +763,7 @@
               grid: {
                 top: '14%',
                 left: grid_left,
-                right: '4%',
+                right: grid_right,
                 bottom: 160
               },
               xAxis: {

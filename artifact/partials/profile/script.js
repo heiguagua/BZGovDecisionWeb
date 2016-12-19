@@ -7,7 +7,7 @@
     '$scope', 'profileService', '$state', '$stateParams','$rootScope',
     function($scope, profileService, $state, $stateParams,$rootScope) {
       var vm = this;
-
+      $rootScope.showMenu = true;
       profileService.getMenus({
         parentId: "0"
       }).then(function(result) {
@@ -41,6 +41,9 @@
             default:
               break;
           }
+        });
+        _.remove(vm.menus, function(item) {
+          return item.name == '精准扶贫';
         })
         if (vm.menus && vm.menus[0] && vm.menus[0].id) {
           $('.profile').css({

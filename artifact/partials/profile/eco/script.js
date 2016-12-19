@@ -7,6 +7,7 @@
     '$scope', 'ecoService', '$state', '$stateParams','$window','$rootScope',
     function($scope, ecoService, $state, $stateParams,$window,$rootScope) {
       var vm = this;
+      $rootScope.showMenu = true;
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
       });

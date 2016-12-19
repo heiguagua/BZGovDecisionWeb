@@ -7,6 +7,7 @@
     '$scope', 'industryService', '$state', '$stateParams', '$window','$rootScope',
     function($scope, industryService, $state, $stateParams, $window,$rootScope) {
       var vm = this;
+      $rootScope.showMenu = true;
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
       });
@@ -181,7 +182,7 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin:14,
+                  margin:10,
                   textStyle: {
                     fontSize: 12,
                     color: colors[5]

@@ -1,6 +1,7 @@
 .menu{
   .left {
     @include flex-num(1);
+    @include flex-flow(column);
     padding-left: 4rem;
     @include smallscreen {
       padding-left: 0;
@@ -8,7 +9,7 @@
   }
   #map {
     width: 74%;
-    height: 97%;
+    @include flex-num(1);
     margin: 0 auto;
     @include smallscreen {
       width: 80%;
