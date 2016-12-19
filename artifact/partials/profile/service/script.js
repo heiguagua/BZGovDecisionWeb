@@ -737,7 +737,7 @@
               }
               item.label = {
                 normal:{
-                  show:true,
+                  show:false,
                   position:label_pos
                 }
               }
