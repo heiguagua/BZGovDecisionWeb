@@ -126,7 +126,7 @@
             var grid_left = '10%';
             if (screen_width < 1600) {
               grid_top = '32%';
-              grid_left = '16%';
+              grid_left = '12%';
             }
             _.forEach(opt.series, function(item, index) {
               item.symbol = 'rect';
@@ -182,7 +182,7 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin:10,
+                  margin:14,
                   textStyle: {
                     fontSize: 12,
                     color: colors[5]
@@ -304,7 +304,7 @@
             var grid_left = '10%';
             if (screen_width < 1600) {
               grid_top = '32%';
-              grid_left = '16%';
+              grid_left = '12%';
             }
             _.forEach(opt.series, function(item, index) {
               item.symbol = 'rect';
@@ -567,7 +567,7 @@
               show:true,
               textStyle: {
                 color: 'rgb(0,255,246)',
-                fontSize: 14
+                fontSize: 12
               },
               formatter : function(val) {
                 var char_length = val.length;
@@ -808,10 +808,10 @@
               };
             });
             var screen_width = screen.width;
-            var grid_top = '24%';
+            var grid_top = 60;
             var grid_left = '10%';
             if (screen_width < 1600) {
-              grid_top = '36%';
+              grid_top = '16%';
               grid_left = '12%';
             }
 
@@ -835,7 +835,7 @@
                 itemHeight:6
               },
               grid: {
-                top: '12%',
+                top: grid_top,
                 left: grid_left,
                 right: '2%',
                 bottom: 100
@@ -854,7 +854,7 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin:14,
+                  margin:8,
                   textStyle: {
                     fontSize: 12,
                     color: colors[5]
@@ -963,11 +963,11 @@
               yAxis_max = Math.round(opt.max_and_min[0].maxValue);
             }
             var screen_width = screen.width;
-            var grid_top = '24%';
+            var grid_top = 60;
             var grid_left = '10%';
             if (screen_width < 1600) {
-              grid_top = '32%';
-              grid_left = '16%';
+              grid_top = '16%';
+              grid_left = '12%';
             }
             _.forEach(opt.series, function(item, index) {
               item.symbol = 'rect';

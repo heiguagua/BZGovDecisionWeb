@@ -563,7 +563,7 @@
             var grid_top = '24%';
             var grid_left = '10%';
             if (screen_width < 1600) {
-              grid_top = '36%';
+              grid_top = '40%';
               grid_left = '12%';
             }
             var option = {
@@ -723,6 +723,7 @@
                 //right:'3%',
                 top: '24%',
                 left: grid_left,
+                right:'3%',
                 bottom: 30
               },
               xAxis: {
@@ -874,6 +875,9 @@
                   }
                   return labelShow;
                 }
+              },
+              grid: {
+                bottom: 10
               },
               title: {
                 text: text.name + "：" + text.value + text.unit,
