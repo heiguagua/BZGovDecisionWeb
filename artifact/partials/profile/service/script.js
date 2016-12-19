@@ -659,10 +659,12 @@
             var grid_top = 60;
             var grid_left = '10%';
             var grid_right = '16%';
+            var grid_bottom = 100;
             if (screen_width < 1600) {
               grid_top = '15%';
-              grid_left = '16%';
+              grid_left = '15%';
               grid_right = '22%';
+              grid_bottom = 80;
             }
             var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
             opt.yAxis = [];
@@ -763,8 +765,8 @@
               grid: {
                 top: grid_top,
                 left: grid_left,
-                right: 0,
-                bottom: 100
+                right: grid_right,
+                bottom: grid_bottom
               },
               xAxis: {
                 type: 'category',
@@ -783,7 +785,7 @@
                   interval: 0,
                   margin: 4,
                   textStyle: {
-                    fontSize: 10,
+                    fontSize: 8,
                     color: colors[5]
                   },
                   formatter: function(val) {
