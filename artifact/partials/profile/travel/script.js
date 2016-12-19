@@ -4,8 +4,8 @@
   travel.$inject = ['$location'];
   /** Controller */
   travel.controller('travelController', [
-    '$scope', 'travelService', '$state', '$stateParams', '$window',
-    function($scope, travelService, $state, $stateParams, $window) {
+    '$scope', 'travelService', '$state', '$stateParams', '$window','$rootScope',
+    function($scope, travelService, $state, $stateParams, $window,$rootScope) {
       var vm = this;
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
@@ -13,6 +13,7 @@
 
       $scope.travellist = [];
       var menuId = $stateParams.proid;
+      $rootScope.currentMenu = menuId;
       travelService.getContent({
         menuId: menuId
       }).then(function(result) {

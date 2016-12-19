@@ -4,8 +4,8 @@
   eco.$inject = ['$location'];
   /** Controller */
   eco.controller('ecoController', [
-    '$scope', 'ecoService', '$state', '$stateParams','$window',
-    function($scope, ecoService, $state, $stateParams,$window) {
+    '$scope', 'ecoService', '$state', '$stateParams','$window','$rootScope',
+    function($scope, ecoService, $state, $stateParams,$window,$rootScope) {
       var vm = this;
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
@@ -13,6 +13,7 @@
 
       $scope.chartlist = [];
       var menuId = $stateParams.proid;
+      $rootScope.currentMenu = menuId;
       ecoService.getContent({
         menuId: menuId
       }).then(function(result) {

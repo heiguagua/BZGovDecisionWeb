@@ -4,8 +4,8 @@
   service.$inject = ['$location'];
   /** Controller */
   service.controller('serviceController', [
-    '$scope', 'serviceService', '$state', '$stateParams', '$window',
-    function($scope, serviceService, $state, $stateParams, $window) {
+    '$scope', 'serviceService', '$state', '$stateParams', '$window','$rootScope',
+    function($scope, serviceService, $state, $stateParams, $window,$rootScope) {
       var vm = this;
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
@@ -13,6 +13,7 @@
 
       $scope.servicelist = [];
       var menuId = $stateParams.proid;
+      $rootScope.currentMenu = menuId;
       serviceService.getContent({
         menuId: menuId
       }).then(function(result) {

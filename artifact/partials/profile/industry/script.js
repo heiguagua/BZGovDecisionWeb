@@ -4,8 +4,8 @@
   industry.$inject = ['$location'];
   /** Controller */
   industry.controller('industryController', [
-    '$scope', 'industryService', '$state', '$stateParams', '$window',
-    function($scope, industryService, $state, $stateParams, $window) {
+    '$scope', 'industryService', '$state', '$stateParams', '$window','$rootScope',
+    function($scope, industryService, $state, $stateParams, $window,$rootScope) {
       var vm = this;
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
@@ -13,6 +13,7 @@
 
       $scope.indstlist = [];
       var menuId = $stateParams.proid;
+      $rootScope.currentMenu = menuId;
       industryService.getContent({
         menuId: menuId
       }).then(function(result) {

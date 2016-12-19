@@ -4,13 +4,14 @@
   menu.$inject = ['$location'];
   /** Controller */
   menu.controller('menuController', [
-    '$scope', 'menuService',
-    function($scope, menuService) {
+    '$scope', 'menuService','$stateParams','$rootScope',
+    function($scope, menuService,$stateParams,$rootScope) {
       var vm = this;
       $('.profile').css({'background':'url(assets/images/bg_profile.png)'});
-
+      var menuId = $stateParams.proid;
+      $rootScope.currentMenu = '';
       menuService.getContent({
-        menuId: 8
+        menuId: menuId
       }).then(function(result) {
         var data = result.data;
         if(data && data[0]) {

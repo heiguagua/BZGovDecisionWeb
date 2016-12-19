@@ -21,9 +21,13 @@
       //border: 1px solid $innerline;
       @include flex-flow(column);
       .header {
-        cursor: pointer;
+
+        position:relative;
         h3 {
+          cursor: pointer;
           background: url("../assets/images/header.png") no-repeat center;
+          width: 50%;
+          margin:0 auto;
           height: 50px;
           margin-top: 0;
           margin-bottom: 0;
@@ -31,6 +35,11 @@
           @media (min-width: #{$desktop-width}) {
             margin-top: 10px;
           }
+        }
+        .toDetail{
+          position:absolute;
+          right:4px;
+          top:6px;
         }
       }
       .main {

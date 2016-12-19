@@ -1,8 +1,9 @@
 <div class='profile'>
   <div class='outer-line'>
     <div class='inner-line'>
-      <div class='header' ui-sref='main({mid:profile.cMenu.id,typeid:profile.cMenu.type,murl:profile.cMenu.url})'>
-        <h3></h3>
+      <div class='header' >
+        <h3 ui-sref='main({mid:profile.cMenu.id,typeid:profile.cMenu.type,murl:profile.cMenu.url})'></h3>
+        <a class='toDetail' ui-sref='main({mid:currentMenu})' ng-show=currentMenu>查看详情</a>
       </div>
       <div class='main'>
         <nav class='nav-menu'>

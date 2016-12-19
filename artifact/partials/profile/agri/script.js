@@ -4,8 +4,8 @@
   agri.$inject = ['$location'];
   /** Controller */
   agri.controller('agriController', [
-    '$scope', 'agriService', '$state', '$stateParams', '$window',
-    function($scope, agriService, $state, $stateParams, $window) {
+    '$scope', 'agriService', '$state', '$stateParams', '$window','$rootScope',
+    function($scope, agriService, $state, $stateParams, $window,$rootScope) {
       var vm = this;
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
@@ -13,6 +13,7 @@
 
       $scope.agrilist = [];
       var menuId = $stateParams.proid;
+      $rootScope.currentMenu = menuId;
       agriService.getContent({
         menuId: menuId
       }).then(function(result) {

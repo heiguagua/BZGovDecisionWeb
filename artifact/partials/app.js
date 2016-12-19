@@ -9,6 +9,7 @@
       'app.login',
       'app.main',
       'app.profile',
+      'app.profile.index',
       'app.profile.menu',
       'app.profile.eco',
       'app.profile.industry',
@@ -41,8 +42,14 @@
         controller: 'profileController',
         controllerAs: 'profile',
       })
+      .state('profile.index', {
+        url: '/index/:proid',
+        templateUrl: 'partials/profile/index/view.html',
+        controller: 'indexController',
+        controllerAs: 'index',
+      })
       .state('profile.menu', {
-        url: '/menu',
+        url: '/menu/:proid',
         templateUrl: 'partials/profile/menu/view.html',
         controller: 'menuController',
         controllerAs: 'menu',
