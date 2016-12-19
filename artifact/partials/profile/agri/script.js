@@ -247,7 +247,7 @@
                   interval: 0,
                   margin:14,
                   textStyle: {
-                    fontSize: 10,
+                    fontSize: 12,
                     color:colors[5]
                   }
                 },
@@ -436,7 +436,7 @@
                 interval: 0,
                 margin:14,
                 textStyle: {
-                  fontSize: 8,
+                  fontSize: 12,
                   color: colors[5]
                 },
               },
@@ -632,7 +632,7 @@
                 interval: 0,
                 margin:14,
                 textStyle: {
-                  fontSize: 8,
+                  fontSize:12,
                   color: colors[5]
                 }
               },
@@ -829,7 +829,7 @@
                 interval: 0,
                 margin:14,
                 textStyle: {
-                  fontSize: 8,
+                  fontSize: 12,
                   color: colors[5]
                 }
               },
@@ -1025,7 +1025,7 @@
                 interval: 0,
                 margin:14,
                 textStyle: {
-                  fontSize: 8,
+                  fontSize: 12,
                   color: colors[5]
                 }
               },
