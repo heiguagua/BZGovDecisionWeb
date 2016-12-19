@@ -19,6 +19,7 @@
           menuService.getDetail(data[0].url, {
             picCode: data[0].picCode
           }).then(function(res) {
+            $scope.mInfo = res.data;
             var datas = res.data.series;
             $scope.allDatas = [];
             _.forEach(datas,function(item) {
@@ -352,7 +353,7 @@
                   type: 'map',
                   map: 'bz',
                   left: 10,
-                  top: 10,
+                  top: 20,
                   right: 10,
                   bottom: 10,
                   selectedMode: 'single',

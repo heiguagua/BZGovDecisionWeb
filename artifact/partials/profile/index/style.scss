@@ -93,6 +93,9 @@
       @include flex-flow(column);
       position: relative;
       margin: 15px 0;
+      @include smallscreen {
+        margin: 10px 0;
+      }
       &.border {
         background: rgba(0, 120, 255, 0.1);
         border: 1px solid #3656bd;

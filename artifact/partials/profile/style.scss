@@ -49,9 +49,9 @@
         .inner-wrap {
           &.menu {
             padding: 3rem 0 2rem;
-            // @include bigscreen {
-            //   padding: 2rem 0;
-            // }
+            @include smallscreen {
+              padding: 2rem 0 2rem;
+            }
           }
           @include flex-num(1);
           @include flex-flow(row);

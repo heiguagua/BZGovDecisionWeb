@@ -19,6 +19,7 @@
           indexService.getDetail(data[0].url, {
             picCode: data[0].picCode
           }).then(function(res) {
+            $scope.dataInfo = res.data;
             var datas = res.data.series;
             $scope.allDatas = [];
             _.forEach(datas,function(item) {
