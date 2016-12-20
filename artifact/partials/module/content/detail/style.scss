@@ -5,8 +5,11 @@
   flex-wrap: wrap;
   @include mobilescreen {
     display: block;
-    padding: 0;
-    background: #f6f6f6;
+    padding: 0 0 20px;
+    background: #f9fdff;
+    &:last-child {
+      padding: 0;
+    }
   }
   .chart {
     border: 1px solid #DDD;
@@ -18,6 +21,8 @@
       display: block;
       background: #FFF;
       margin-bottom: 0;
+      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+      box-shadow: 0 0 5px rgba(0, 0, 0, .15);
     }
     // @include smallscreen {
     //   height: 480px;
@@ -38,6 +43,9 @@
   .table-data {
     @include smallscreen {
       max-height: 100px;
+    }
+    @include mobilescreen {
+      display: none;
     }
     @include flex-num(1);
     @include flex-flow(column);
@@ -239,6 +247,9 @@
   .chart-item {
     @include flex-num(1);
     @include flex-flow(row);
+    @include mobilescreen {
+      margin-bottom: 1rem;
+    }
     .item {
       @include flex-num(1);
       @include flex-flow(row);
@@ -246,6 +257,10 @@
       justify-content: center;
       -webkit-align-items: center;
       align-items: center;
+      @include mobilescreen {
+        -webkit-align-items: stretch;
+        align-items: stretch;
+      }
       .pic {
         background: #4ca3d8;
         border-radius: 50%;
@@ -267,6 +282,11 @@
         background: rgba(0,176,80,1);
         font-size: 0.9rem;
         color: $white;
+        @include mobilescreen {
+          width: 76%;
+          padding: 0.4rem 0.6rem;
+          word-break: break-word;
+        }
       }
     }
   }

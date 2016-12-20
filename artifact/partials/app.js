@@ -137,7 +137,9 @@
           //config.withCredentials = true;
           var screen_width = screen.width;
           var screen_height = screen.height;
-          var box_height = $('.content-box').height() * 0.7 + 'px';
+          // var box_height = $('.content-main').height();
+          // console.log(screen_height);
+          // console.log(box_height);
           // $('.content-box .chart').css({
           //   'height': box_height
           // });

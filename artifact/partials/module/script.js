@@ -16,6 +16,7 @@
         }).then(function(result) {
           vm.menuTabs = result.data;
           if(vm.menuTabs && vm.menuTabs[0] && vm.menuTabs[0].id) {
+            $scope.current_menu = vm.menuTabs[0].name;
             $state.go('main.module.content', {
               tid: vm.menuTabs[0].id
             });
@@ -23,13 +24,10 @@
         })
       }
 
-      vm.toggleMenus = function(){
-        $('.menu-tabs').toggleClass('m-collapse');
-      }
-
       vm.toggleSecMenus = function(){
         $('.menu-label').toggleClass('m-collapse');
       }
+
     }
   ]);
 

@@ -1,22 +1,23 @@
 .menu-label {
   overflow: hidden;
   padding: 10px 0 6px;
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   @include mobilescreen {
     position: absolute;
     z-index: -1;
     background: #FFF;
     right: 0;
     opacity: 0;
-    top: 36px;
+    top: 38px;
     width: 100%;
+    padding: 0;
     &.m-collapse {
       opacity: 1;
       top: 42px;
-      z-index:999;
+      z-index: 999;
     }
   }
   .label {
@@ -32,13 +33,25 @@
     border: 1px solid nth($linkColor,3);
     color: nth($linkColor,3);
     cursor: pointer;
-    @include mobilescreen{
+    @include mobilescreen {
       display: block;
       float: none;
+      border-radius: 0;
+      margin: 0;
+      border: 0;
+      border-bottom: 1px solid #DDD;
+      padding: 10px 0;
+      color: rgb(37,99,200);
+      font-weight: 100;
+      background: #f2f2f2;
     }
     &.active {
       background: nth($linkColor,3);
       color: $white;
+      @include mobilescreen {
+        background: #f2f2f2;
+        color: rgb(37,99,200);
+      }
     }
   }
 }

@@ -53,12 +53,7 @@ $chartHeightBig: 540px;
   @include flex-flow(column);
   @include flex-num(1);
   @include mobilescreen {
-    left: 0;
-    position: relative;
-    display: block;
-    &.sidebar-collapse {
-      left: 225px;
-    }
+    display: none;
   }
   .side-nav {
     width: $sidebarWidth;
@@ -73,20 +68,6 @@ $chartHeightBig: 540px;
     top: 62px;
     z-index: 999;
     @include flex-align(stretch);
-    @include mobilescreen {
-      position: absolute;
-      top: 0;
-      margin-top: 0;
-      opacity: 0;
-      margin-left: -225px;
-      -webkit-transition: all 0.5s ease-in-out;
-      -moz-transition: all 0.5s ease-in-out;
-      -o-transition: all 0.5s ease-in-out;
-      transition: all 0.5s ease-in-out;
-      &.sidebar-collapse {
-        opacity: 1;
-      }
-    }
     >li {
       border-bottom: 1px solid #0063b1;
       border-bottom-style: inset;
@@ -116,12 +97,6 @@ $chartHeightBig: 540px;
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
-    @include mobilescreen {
-      display: block;
-      padding: 15px 10px;
-      border-bottom: 1px solid #DDD;
-      margin-bottom: 0;
-    }
   }
   .content-main {
     -webkit-transition: all 0.5s ease-in-out;
@@ -131,13 +106,115 @@ $chartHeightBig: 540px;
     @include flex-num(1);
     @include flex-flow(column);
     padding-left: 234px;
-    @include mobilescreen {
+  }
+}
+.mobile-content {
+  display: none;
+  @include mobilescreen {
+    padding-top: 0;
+    @include flex-flow(column);
+    padding-top: $headerHeight;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    @include flex-flow(column);
+    @include flex-num(1);
+    left: 0;
+    position: relative;
+    display: block;
+    &.sidebar-collapse {
+      left: 225px;
+    }
+    .side-nav {
+      width: $sidebarWidth;
+      border: none;
+      border-radius: 0;
+      overflow-y: auto;
+      background-color: nth($linkColor,1);
+      bottom: 0;
+      overflow-x: hidden;
+      padding-bottom: 40px;
+      z-index: 999;
+      @include flex-align(stretch);
+      position: absolute;
+      top: 0;
+      margin-top: 0;
+      opacity: 0;
+      margin-left: -225px;
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out;
+      &.sidebar-collapse {
+        opacity: 1;
+        margin-bottom: 0;
+      }
+      >li {
+        border-bottom: 1px solid #0063b1;
+        border-bottom-style: inset;
+        box-shadow: 0 1px 0.5px 0 #2d98ed;
+        a {
+          display: block;
+          width: $sidebarWidth;
+          color: #70e9fc;
+          text-align: left;
+          font-size: 16px;
+          padding: 16px 10px;
+          &:hover {
+            background: #2554a4;
+            color: $white;
+          }
+        }
+        &.active {
+          a {
+            &.submenu {
+              background: rgb(239,239,239);
+              color: rgba(0, 120, 215, 1);
+              padding: 14px 12px;
+              border-bottom: 1px solid #DDD;
+            }
+            background: #2554a4;
+            color: $white;
+          }
+          ul.collapse {
+            >li {
+              >a {
+                background: rgb(239,239,239);
+                color: rgba(0, 120, 215, 1);
+                text-decoration: none;
+                &.active {
+                  font-weight: bold;
+                  background: #DDD;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .m-header {
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out;
+      display: block;
+      padding: 10px;
+      border-bottom: 1px solid #DDD;
+      margin-bottom: 0;
+      font-size: 1.2rem;
+    }
+    .content-main {
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out;
+      @include flex-num(1);
+      @include flex-flow(column);
       padding-left: 0;
       display: block;
       position: relative;
     }
-  }
-  @include mobilescreen {
     padding-top: 0;
   }
 }

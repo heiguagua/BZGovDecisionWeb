@@ -42,14 +42,15 @@
     background: #f4f4f4;
     .item {
       float: left;
-      width: 50%;
+      width: 100%;
       text-align: center;
-      padding: 10px;
+      padding: 12px;
       border-right: 1px solid #DDD;
+      background: rgb(37,99,200);
+      color: #FFF;
       .fa-sort-desc {
         padding: 0 10px;
         vertical-align: top;
-        color: #5d5d5d;
         font-size: 16px;
       }
     }
@@ -62,10 +63,10 @@
   transition: all 0.5s ease-in-out;
   @include mobilescreen {
     position: absolute;
-    display:block;
+    display: block;
     opacity: 0;
-    top:36px;
-    z-index:-1;
+    top: 36px;
+    z-index: -1;
     >li {
       float: none;
       z-index: 999;
@@ -76,8 +77,8 @@
     }
     &.m-collapse {
       opacity: 1;
-      top:42px;
-      z-index:999;
+      top: 42px;
+      z-index: 999;
     }
   }
 }
