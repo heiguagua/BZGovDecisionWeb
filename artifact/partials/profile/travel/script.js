@@ -822,12 +822,12 @@
               series: opt.series
             };
 
-            var inner_line_height = $('.inner-line').height();
-            var header_height = $('.header').outerHeight(true);
-            var main_height = inner_line_height-header_height-15-2-15;
-            $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
-            $('.travel-main .left-box').css({'max-height':main_height+'px'});
-            $('.travel-main .right-box').css({'max-height':main_height+'px'});
+            // var inner_line_height = $('.inner-line').height();
+            // var header_height = $('.header').outerHeight(true);
+            // var main_height = inner_line_height-header_height-15-2-15;
+            // $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+            // $('.travel-main .left-box').css({'max-height':main_height+'px'});
+            // $('.travel-main .right-box').css({'max-height':main_height+'px'});
             setTimeout(function() {
               chartInstance1 = echarts.init((element.find('div'))[0]);
               chartInstance1.clear();
@@ -836,12 +836,12 @@
             }, 600);
 
             scope.onResize4 = function() {
-              var inner_line_height = $('.inner-line').height();
-              var header_height = $('.header').outerHeight(true);
-              var main_height = inner_line_height-header_height-15-2-15;
-              $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
-              $('.travel-main .left-box').css({'max-height':main_height+'px'});
-              $('.travel-main .right-box').css({'max-height':main_height+'px'});
+              // var inner_line_height = $('.inner-line').height();
+              // var header_height = $('.header').outerHeight(true);
+              // var main_height = inner_line_height-header_height-15-2-15;
+              // $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+              // $('.travel-main .left-box').css({'max-height':main_height+'px'});
+              // $('.travel-main .right-box').css({'max-height':main_height+'px'});
               if (chartInstance1) {
                 chartInstance1.clear();
                 chartInstance1.resize();

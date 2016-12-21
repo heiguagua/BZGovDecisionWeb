@@ -45,6 +45,7 @@
       .main {
         @include flex-flow(row);
         @include flex-num(1);
+        min-height:0;
         .wrap,
         .inner-wrap {
           &.menu {

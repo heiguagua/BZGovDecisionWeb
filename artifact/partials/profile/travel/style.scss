@@ -13,9 +13,11 @@
     .left-box{
       @include flex-num(1);
       @include flex-flow(column);
+      min-height:0;
       .left-down{
         @include flex-num(1);
         @include flex-flow(row);
+        min-height:0;
         >div{
           @include flex-num(1);
         }
@@ -28,6 +30,7 @@
     .right-box{
       width:28%;
       @include flex-flow(column);
+      min-height:0;
       >div{
         @include flex-num(1);
       }

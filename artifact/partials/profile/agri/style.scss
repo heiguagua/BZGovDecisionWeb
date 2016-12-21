@@ -15,6 +15,7 @@
     @include flex-num(1);
     @include flex-flow(row);
     margin-bottom: 15px;
+    min-height:0;
     >div {
       @include flex-num(1);
     }

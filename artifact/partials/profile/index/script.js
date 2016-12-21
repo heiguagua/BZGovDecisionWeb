@@ -4,10 +4,14 @@
   index.$inject = ['$location'];
   /** Controller */
   index.controller('indexController', [
-    '$scope', 'indexService','$stateParams','$rootScope',
-    function($scope, indexService,$stateParams,$rootScope) {
+    '$scope', 'indexService','$stateParams','$rootScope','$window',
+    function($scope, indexService,$stateParams,$rootScope,$window) {
       var vm = this;
       $('.profile').css({'background':'url(assets/images/bg_profile.png)'});
+      var inner_line_height = $('.inner-line').height();
+      var header_height = $('.header').outerHeight(true);
+      var main_height = inner_line_height-header_height-20-15-2-15;
+      $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
       var menuId = $stateParams.proid;
       $rootScope.showMenu = false;
       $rootScope.currentMenu = '';
@@ -53,6 +57,13 @@
         }
 
       });
+
+      angular.element($window).bind('resize', function() {
+        var inner_line_height = $('.inner-line').height();
+        var header_height = $('.header').outerHeight(true);
+        var main_height = inner_line_height-header_height-20-15-2-15;
+        $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+      })
     }
   ]);
 

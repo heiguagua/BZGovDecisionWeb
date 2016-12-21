@@ -1091,15 +1091,15 @@
               series: opt.series
             };
 
-            var inner_line_height = $('.inner-line').height();
-            var header_height = $('.header').outerHeight(true);
-            var main_height = inner_line_height-header_height-15-2-15;
-            $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
-            $('.top-box').css({'max-height':main_height/2+'px'});
-            $('.down-box').css({'max-height':main_height/2+'px'});
-            var center_top_height = $('.top-box').outerHeight(true);
-            var center_down_height = $('.down-box').outerHeight(true);
-            $('.right-table').css({'max-height':center_top_height-15+'px'});
+            // var inner_line_height = $('.inner-line').height();
+            // var header_height = $('.header').outerHeight(true);
+            // var main_height = inner_line_height-header_height-15-2-15;
+            // $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+            // $('.top-box').css({'max-height':main_height/2+'px'});
+            // $('.down-box').css({'max-height':main_height/2+'px'});
+            // var center_top_height = $('.top-box').outerHeight(true);
+            // var center_down_height = $('.down-box').outerHeight(true);
+            // $('.right-table').css({'max-height':center_top_height-15+'px'});
 
             setTimeout(function() {
               chartInstance4 = echarts.init((element.find('div'))[0]);
@@ -1109,15 +1109,15 @@
             }, 600);
 
             scope.onResize4 = function() {
-              var inner_line_height = $('.inner-line').height();
-              var header_height = $('.header').outerHeight(true);
-              var main_height = inner_line_height-header_height-15-2-15;
-              $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
-              $('.top-box').css({'max-height':main_height/2+'px'});
-              $('.down-box').css({'max-height':main_height/2+'px'});
-              var center_top_height = $('.top-box').outerHeight(true);
-              var center_down_height = $('.down-box').outerHeight(true);
-              $('.right-table').css({'max-height':center_top_height-15+'px'});
+              // var inner_line_height = $('.inner-line').height();
+              // var header_height = $('.header').outerHeight(true);
+              // var main_height = inner_line_height-header_height-15-2-15;
+              // $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+              // $('.top-box').css({'max-height':main_height/2+'px'});
+              // $('.down-box').css({'max-height':main_height/2+'px'});
+              // var center_top_height = $('.top-box').outerHeight(true);
+              // var center_down_height = $('.down-box').outerHeight(true);
+              // $('.right-table').css({'max-height':center_top_height-15+'px'});
               if (chartInstance4) {
                 chartInstance4.clear();
                 chartInstance4.resize();

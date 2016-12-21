@@ -15,6 +15,7 @@
   .top-box {
     @include flex-num(1);
     @include flex-flow(row);
+    min-height:0;
     margin-bottom: 15px;
     >div {
       @include flex-num(1);
