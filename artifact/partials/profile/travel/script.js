@@ -190,6 +190,9 @@
               opt.yAxis.push(yAxis);
             });
             _.forEach(opt.series,function(item,index){
+              if(item.type == 'line') {
+                item.connectNulls = true;
+              }
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
@@ -570,6 +573,9 @@
               opt.yAxis.push(yAxis);
             });
             _.forEach(opt.series,function(item,index){
+              if(item.type == 'line') {
+                item.connectNulls = true;
+              }
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
@@ -709,6 +715,9 @@
               grid_left = '10%';
             }
             _.forEach(opt.series, function(item, index) {
+              if(item.type == 'line') {
+                item.connectNulls = true;
+              }
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
@@ -900,6 +909,9 @@
               grid_left = '10%';
             }
             _.forEach(opt.series, function(item, index) {
+              if(item.type == 'line') {
+                item.connectNulls = true;
+              }
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {

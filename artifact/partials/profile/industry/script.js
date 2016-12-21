@@ -133,6 +133,9 @@
               grid_left = '12%';
             }
             _.forEach(opt.series, function(item, index) {
+              if(item.type == 'line') {
+                item.connectNulls = true;
+              }
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
@@ -320,6 +323,9 @@
               grid_left = '12%';
             }
             _.forEach(opt.series, function(item, index) {
+              if(item.type == 'line') {
+                item.connectNulls = true;
+              }
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
@@ -1005,6 +1011,9 @@
               grid_left = '12%';
             }
             _.forEach(opt.series, function(item, index) {
+              if(item.type == 'line') {
+                item.connectNulls = true;
+              }
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {

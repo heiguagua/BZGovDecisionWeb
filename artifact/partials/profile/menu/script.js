@@ -44,6 +44,13 @@
                 }
                 else{
                   cellData.title = cell.name;
+                  cellData.dep_name = cell.dep_name;
+                  if (cell.init_query_time && cell.init_query_time != '') {
+                    cellData.model = new Date(cell.init_query_time);
+                  }
+                  else{
+                    cellData.model = '';
+                  }
                   cellData.item.push(cell);
                   indicator.data.push(cellData);
                 }
