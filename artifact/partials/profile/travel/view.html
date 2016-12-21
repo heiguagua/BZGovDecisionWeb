@@ -26,30 +26,16 @@
               <span class='box-right-bottom'></span>
               <div class='top-wrap'>
                 <div class='pull-left'>
-                  <h5 class='box-title'>全市A级景区发展情况</h5>
-                </div>
-                <div class='pull-right box-sub-title'>{{travellist[1].model | date:"M月"}}数据：来源{{travellist[1].dep_name}}</div>
-              </div>
-              <div class='chart' travel-chart-site sitecontent=travellist[1]></div>
-            </div>
-          </div>
-        </div>
-        <div class='left-down'>
-          <div class='left15 right5'>
-            <div class='box'>
-              <span class='box-left-top'></span>
-              <span class='box-left-bottom'></span>
-              <span class='box-right-top'></span>
-              <span class='box-right-bottom'></span>
-              <div class='top-wrap'>
-                <div class='pull-left'>
                   <h5 class='box-title'>全市星级饭店出租情况</h5>
                 </div>
                 <div class='pull-right box-sub-title'>来源{{travellist[3].dep_name}}</div>
               </div>
               <div class='chart' travel-chart-resta restacontent=travellist[3]></div>
             </div>
+
           </div>
+        </div>
+        <div class='left-down'>
           <div class='left15 right5'>
             <div class='box'>
               <span class='box-left-top'></span>
@@ -65,12 +51,7 @@
               <div class='chart' travel-chart-tour tourcontent=travellist[4]></div>
             </div>
           </div>
-        </div>
-
-      </div>
-      <div class='right-box'>
-        <div class='right-top'>
-          <div class='right15 left5'>
+          <div class='left15 right5'>
             <div class='box'>
               <span class='box-left-top'></span>
               <span class='box-left-bottom'></span>
@@ -82,11 +63,15 @@
                 </div>
                 <div class='pull-right box-sub-title'>来源{{travellist[2].dep_name}}</div>
               </div>
-              <div class='chart' travel-chart-tour tourcontent=travellist[2]></div>
+              <div class='chart' travel-chart-siterun siteruncontent=travellist[2]></div>
             </div>
+
           </div>
         </div>
-        <div class='right-down'>
+
+      </div>
+      <div class='right-box'>
+        <div class='right-top'>
           <div class='right15 left5'>
             <div class='box'>
               <span class='box-left-top'></span>
@@ -114,6 +99,25 @@
                 <br/>
               </div>
             </div>
+
+          </div>
+        </div>
+        <div class='right-down'>
+          <div class='right15 left5'>
+            <div class='box'>
+              <span class='box-left-top'></span>
+              <span class='box-left-bottom'></span>
+              <span class='box-right-top'></span>
+              <span class='box-right-bottom'></span>
+              <div class='top-wrap'>
+                <div class='pull-left'>
+                  <h5 class='box-title'>全市A级景区发展情况</h5>
+                </div>
+                <div class='pull-right box-sub-title'>{{travellist[1].model | date:"M月"}}数据：来源{{travellist[1].dep_name}}</div>
+              </div>
+              <div class='chart' travel-chart-site sitecontent=travellist[1]></div>
+            </div>
+
 
           </div>
         </div>

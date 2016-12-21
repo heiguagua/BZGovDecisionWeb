@@ -862,4 +862,195 @@
       }
     }
   ]);
+
+  // A级景区经营情况
+  travel.directive('travelChartSiterun', ['agriService', '$window',
+    function(agriService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          siteruncontent: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance1 = null;
+          if (!scope.siteruncontent || !scope.siteruncontent.url) {
+            return;
+          }
+          agriService.getDetail(scope.siteruncontent.url, {
+            picCode: scope.siteruncontent.picCode
+          }).then(function(result) {
+            var opt = result.data;
+            if (!opt || !opt.series) {
+              return;
+            }
+            scope.siteruncontent.query_time = opt.init_query_time;
+            scope.siteruncontent.dep_name = opt.dep_name;
+            var yAxis_min = 0;
+            var yAxis_max = 0;
+            if (opt.max_and_min) {
+              yAxis_min = Math.round(opt.max_and_min[0].minValue);
+              yAxis_max = Math.round(opt.max_and_min[0].maxValue);
+            }
+            var screen_width = screen.width;
+            var grid_top = '24%';
+            var grid_left = '10%';
+            if (screen_width < 1600) {
+              grid_top = '32%';
+              grid_left = '10%';
+            }
+            _.forEach(opt.series, function(item, index) {
+              item.symbol = 'rect';
+              item.symbolSize = 4;
+              item.lineStyle = {
+                normal: {
+                  width: 1
+                }
+              }
+              var label_pos = 'top';
+              if ((index + 1) % 2 != 0) {
+                label_pos = 'bottom';
+              }
+              item.label = {
+                normal: {
+                  show: true,
+                  position: label_pos
+                }
+              }
+            });
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
+            var option = {
+              color: colors,
+              tooltip: {
+                trigger: 'axis'
+              },
+              legend: {
+                left: 'center',
+                top: 10,
+                data: opt.legend,
+                textStyle: {
+                  fontSize: 12,
+                  color: colors
+                },
+                itemWidth:15,
+                itemHeight:6
+              },
+              grid: {
+                left: grid_left,
+                right: '3.5%',
+                bottom: 30
+              },
+              xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: opt.x_data,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                axisLabel: {
+                  interval: 0,
+                  margin:14,
+                  textStyle: {
+                    fontSize: 12,
+                    color: colors[5]
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 0,
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              yAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter: function(value) {
+                    if (((value + '').indexOf('.') != -1)) {
+                      return value.toFixed(1);
+                    }
+                    return value;
+                  },
+                  textStyle: {
+                    color: colors[5]
+                  }
+                },
+                name: opt.y_name,
+                nameTextStyle: {
+                  color: colors[5]
+                },
+                min: yAxis_min,
+                max: yAxis_max,
+                splitBumber: 5,
+                interval: (yAxis_max - yAxis_min) / 5,
+                axisLine: {
+                  lineStyle: {
+                    color: colors[3],
+                    shadowColor: colors[3],
+                    shadowBlur: 4
+                  }
+                },
+                splitLine: {
+                  show: true,
+                  interval: 'auto',
+                  lineStyle: {
+                    color: colors[3]
+                  }
+                },
+                splitArea: {
+                  show: true,
+                  areaStyle: {
+                    color: colors[4]
+                  }
+                }
+              },
+              series: opt.series
+            };
+
+            // var inner_line_height = $('.inner-line').height();
+            // var header_height = $('.header').outerHeight(true);
+            // var main_height = inner_line_height-header_height-15-2-15;
+            // $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+            // $('.travel-main .left-box').css({'max-height':main_height+'px'});
+            // $('.travel-main .right-box').css({'max-height':main_height+'px'});
+            setTimeout(function() {
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
+            }, 600);
+
+            scope.onResize4 = function() {
+              // var inner_line_height = $('.inner-line').height();
+              // var header_height = $('.header').outerHeight(true);
+              // var main_height = inner_line_height-header_height-15-2-15;
+              // $('.main').css({'max-height':(inner_line_height-header_height)+'px'});
+              // $('.travel-main .left-box').css({'max-height':main_height+'px'});
+              // $('.travel-main .right-box').css({'max-height':main_height+'px'});
+              if (chartInstance1) {
+                chartInstance1.clear();
+                chartInstance1.resize();
+                chartInstance1.setOption(option);
+              }
+            }
+
+            angular.element($window).bind('resize', function() {
+              scope.onResize4();
+            })
+          })
+        }
+      }
+    }
+  ]);
 })();
