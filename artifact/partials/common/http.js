@@ -4,7 +4,7 @@
 
   module.constant('URL',
   //  'http://localhost:5353'
-  // 'http://172.16.7.89:8080/'
+  // 'http://172.16.7.89:8080'
   // 'http://172.16.0.103:8080/govDecisionServer'
   // 'http://192.168.13.223:8089/govDecisionServer'
   // 'http://172.16.0.53:8080/govDecisionServer'

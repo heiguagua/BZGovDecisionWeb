@@ -119,6 +119,7 @@
             }
             scope.regcontent.query_time = opt.init_query_time;
             scope.regcontent.dep_name = opt.dep_name;
+            scope.regcontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -309,6 +310,7 @@
             }
             scope.invstcontent.query_time = opt.init_query_time;
             scope.invstcontent.dep_name = opt.dep_name;
+            scope.invstcontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -499,6 +501,7 @@
             }
             scope.ecocontent.query_time = opt.init_query_time;
             scope.ecocontent.dep_name = opt.dep_name;
+            scope.ecocontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -766,6 +769,7 @@
             }
             scope.procontent.query_time = opt.init_query_time;
             scope.procontent.dep_name = opt.dep_name;
+            scope.procontent.title = opt.title;
             var colors = ['rgb(0,255,161)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)', 'rgb(3,204,215)'];
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -997,6 +1001,7 @@
             }
             scope.eleccontent.query_time = opt.init_query_time;
             scope.eleccontent.dep_name = opt.dep_name;
+            scope.eleccontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {

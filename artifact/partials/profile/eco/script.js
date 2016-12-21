@@ -158,6 +158,7 @@
             if (!scope.econtent.model && opt.init_query_time != '') {
               scope.econtent.model = new Date(opt.init_query_time);
             }
+            scope.econtent.title = opt.title;
             scope.econtent.query_time = opt.init_query_time;
             scope.econtent.dep_name = opt.dep_name;
             var dateOptions = {};
@@ -333,6 +334,7 @@
             if (!opt || !opt.series) {
               return;
             }
+            scope.icontent.title = opt.title;
             scope.icontent.query_time = opt.init_query_time;
             scope.icontent.dep_name = opt.dep_name;
             var colors = ['rgb(0,204,200)', 'rgb(232,175,64)', 'rgb(0,168,228)'];
@@ -485,6 +487,7 @@
             }
             scope.vcontent.query_time = opt.init_query_time;
             scope.vcontent.dep_name = opt.dep_name;
+            scope.vcontent.title = opt.title;
             var text = {};
             var subtext = {};
             if (opt.dataItems && opt.dataItems[0]) {
@@ -697,6 +700,7 @@
             }
             scope.ccontent.query_time = opt.init_query_time;
             scope.ccontent.dep_name = opt.dep_name;
+            scope.ccontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -857,6 +861,7 @@
             }
             scope.scontent.query_time = opt.init_query_time;
             scope.scontent.dep_name = opt.dep_name;
+            scope.scontent.title = opt.title;
             var text = {};
             var subtext = {};
             if (opt.dataItems && opt.dataItems[0]) {

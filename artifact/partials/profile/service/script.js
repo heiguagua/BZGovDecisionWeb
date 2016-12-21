@@ -109,6 +109,7 @@
             }
             scope.consumecontent.query_time = opt.init_query_time;
             scope.consumecontent.dep_name = opt.dep_name;
+            scope.consumecontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -294,6 +295,7 @@
             }
             scope.bankcontent.query_time = opt.init_query_time;
             scope.bankcontent.dep_name = opt.dep_name;
+            scope.bankcontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -480,7 +482,7 @@
             }
             scope.housecontent.query_time = opt.init_query_time;
             scope.housecontent.dep_name = opt.dep_name;
-
+            scope.housecontent.title = opt.title;
             var colors = ['rgb(0,255,161)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)', 'rgb(3,204,215)'];
             var yAxis_min = 0;
             var yAxis_max = 0;
@@ -678,6 +680,7 @@
             }
             scope.entcontent.query_time = opt.init_query_time;
             scope.entcontent.dep_name = opt.dep_name;
+            scope.entcontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -913,6 +916,7 @@
             }
             scope.goodscontent.query_time = opt.init_query_time;
             scope.goodscontent.dep_name = opt.dep_name;
+            scope.goodscontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -1095,6 +1099,7 @@
             }
             scope.trafficontent.query_time = opt.init_query_time;
             scope.trafficontent.dep_name = opt.dep_name;
+            scope.trafficontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {

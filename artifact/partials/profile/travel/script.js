@@ -116,6 +116,7 @@
             }
             scope.housecontent.query_time = opt.init_query_time;
             scope.housecontent.dep_name = opt.dep_name;
+            scope.housecontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -323,6 +324,7 @@
             }
             scope.sitecontent.query_time = opt.init_query_time;
             scope.sitecontent.dep_name = opt.dep_name;
+            scope.sitecontent.title = opt.title;
             var dateOptions = {};
             dateOptions.formatYear = 'yyyy';
             if (opt.time_scope == 'year') {
@@ -499,6 +501,7 @@
             }
             scope.restacontent.query_time = opt.init_query_time;
             scope.restacontent.dep_name = opt.dep_name;
+            scope.restacontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -701,6 +704,7 @@
             }
             scope.tourcontent.query_time = opt.init_query_time;
             scope.tourcontent.dep_name = opt.dep_name;
+            scope.tourcontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
@@ -895,6 +899,7 @@
             }
             scope.siteruncontent.query_time = opt.init_query_time;
             scope.siteruncontent.dep_name = opt.dep_name;
+            scope.siteruncontent.title = opt.title;
             var yAxis_min = 0;
             var yAxis_max = 0;
             if (opt.max_and_min) {
