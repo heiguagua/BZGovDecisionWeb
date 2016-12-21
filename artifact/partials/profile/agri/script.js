@@ -30,12 +30,12 @@
       });
 
       // 主要经济指标
-      agriService.getagriData({
-        picCode: 3003
-      }).then(function(result) {
-        vm.agriData = result.data;
-        $('.datalist').mCustomScrollbar();
-      })
+      // agriService.getagriData({
+      //   picCode: 3003
+      // }).then(function(result) {
+      //   vm.agriData = result.data;
+      //   $('.datalist').mCustomScrollbar();
+      // })
 
     }
   ]);
@@ -148,6 +148,9 @@
                 } else {
                   minValue = minValue - 1;
                 }
+                if(maxValue < 5) {
+                  maxValue = 4;
+                }
                 maxValue = 1 + maxValue;
                 yAxis.min = Math.round(minValue);
                 yAxis.max = Math.round(maxValue);
@@ -165,7 +168,7 @@
               yAxis.axisLabel = {};
               yAxis.axisLabel.formatter = function(value) {
                 if (((value + '').indexOf('.') != -1)) {
-                  return value.toFixed(1);
+                  return value.toFixed(0);
                 }
                 return value;
               };
@@ -198,9 +201,9 @@
                   width:1
                 }
               }
-              var label_pos = 'top';
+              var label_pos = 'bottom';
               if((index+1)%2 != 0) {
-                label_pos = 'bottom';
+                label_pos = 'top';
               }
               item.label = {
                 normal:{
@@ -337,6 +340,12 @@
                 color: colors[5]
               }
             };
+            yAxis.axisLabel.formatter = function(value) {
+              if (((value + '').indexOf('.') != -1)) {
+                return value.toFixed(0);
+              }
+              return value;
+            };
             yAxis.axisTick = {};
             yAxis.axisTick.inside = true;
             yAxis.axisLine = {
@@ -366,6 +375,9 @@
                 minValue = 0;
               } else {
                 minValue = minValue - 1;
+              }
+              if(maxValue<5){
+                maxValue = 4;
               }
               maxValue = 1 + maxValue;
               yAxis.min = Math.round(minValue);
@@ -534,6 +546,12 @@
                 color: colors[5]
               }
             };
+            yAxis.axisLabel.formatter = function(value) {
+              if (((value + '').indexOf('.') != -1)) {
+                return value.toFixed(0);
+              }
+              return value;
+            };
             yAxis.axisTick = {};
             yAxis.axisTick.inside = true;
             yAxis.axisLine = {
@@ -563,6 +581,9 @@
                 minValue = 0;
               } else {
                 minValue = minValue - 1;
+              }
+              if(maxValue<5){
+                maxValue = 4;
               }
               maxValue = 1 + maxValue;
               yAxis.min = Math.round(minValue);
@@ -731,6 +752,12 @@
               textStyle: {
                 color: colors[5]
               }
+            };
+            yAxis.axisLabel.formatter = function(value) {
+              if (((value + '').indexOf('.') != -1)) {
+                return value.toFixed(0);
+              }
+              return value;
             };
             yAxis.axisTick = {};
             yAxis.axisTick.inside = true;
@@ -901,6 +928,9 @@
           if (!opt || !opt.series) {
             return;
           }
+          if (!scope.fishcontent.model && opt.init_query_time != '') {
+            scope.fishcontent.model = new Date(opt.init_query_time);
+          }
           scope.fishcontent.query_time = opt.init_query_time;
           scope.fishcontent.dep_name = opt.dep_name;
           var yAxis_min = 0;
@@ -928,6 +958,12 @@
               textStyle: {
                 color: colors[5]
               }
+            };
+            yAxis.axisLabel.formatter = function(value) {
+              if (((value + '').indexOf('.') != -1)) {
+                return value.toFixed(0);
+              }
+              return value;
             };
             yAxis.axisTick = {};
             yAxis.axisTick.inside = true;
@@ -1011,7 +1047,7 @@
             grid: {
               // top: grid_top,
               left: grid_left,
-              right: '2%',
+              right: grid_left,
               bottom: 30
             },
             xAxis: [{

@@ -28,7 +28,7 @@
                 <div class='pull-left'>
                   <h5 class='box-title'>全市A级景区</h5>
                 </div>
-                <div class='pull-right box-sub-title'>{{travellist[1].query_time}}数据：来源{{travellist[1].dep_name}}</div>
+                <div class='pull-right box-sub-title'>{{travellist[1].model | date:"M月"}}数据：来源{{travellist[1].dep_name}}</div>
               </div>
               <div class='chart' travel-chart-site sitecontent=travellist[1] ></div>
             </div>
@@ -45,7 +45,7 @@
                 <div class='pull-left'>
                   <h5 class='box-title'>全市星级饭店出租情况</h5>
                 </div>
-                <div class='pull-right box-sub-title'>{{travellist[3].query_time}}数据：来源{{travellist[3].dep_name}}</div>
+                <div class='pull-right box-sub-title'>来源{{travellist[3].dep_name}}</div>
               </div>
               <div class='chart' travel-chart-resta restacontent=travellist[3]></div>
             </div>
@@ -60,7 +60,7 @@
                 <div class='pull-left'>
                   <h5 class='box-title'>全市旅行社经营情况</h5>
                 </div>
-                <div class='pull-right box-sub-title'>{{travellist[4].query_time}}数据：来源{{travellist[4].dep_name}}</div>
+                <div class='pull-right box-sub-title'>来源{{travellist[4].dep_name}}</div>
               </div>
               <div class='chart' travel-chart-tour tourcontent=travellist[4] ></div>
             </div>

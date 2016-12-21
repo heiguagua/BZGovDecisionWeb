@@ -114,6 +114,9 @@
             if (!opt || !opt.series) {
               return;
             }
+            if (!scope.regcontent.model && opt.init_query_time != '') {
+              scope.regcontent.model = new Date(opt.init_query_time);
+            }
             scope.regcontent.query_time = opt.init_query_time;
             scope.regcontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
@@ -293,6 +296,9 @@
             if (!opt || !opt.series) {
               return;
             }
+            if (!scope.invstcontent.model && opt.init_query_time != '') {
+              scope.invstcontent.model = new Date(opt.init_query_time);
+            }
             scope.invstcontent.query_time = opt.init_query_time;
             scope.invstcontent.dep_name = opt.dep_name;
             var yAxis_min = 0;
@@ -471,6 +477,9 @@
             var opt = result.data;
             if (!opt || !opt.series) {
               return;
+            }
+            if (!scope.ecocontent.model && opt.init_query_time != '') {
+              scope.ecocontent.model = new Date(opt.init_query_time);
             }
             scope.ecocontent.query_time = opt.init_query_time;
             scope.ecocontent.dep_name = opt.dep_name;
@@ -736,6 +745,9 @@
             if (!opt || !opt.series) {
               return;
             }
+            if (!scope.procontent.model && opt.init_query_time != '') {
+              scope.procontent.model = new Date(opt.init_query_time);
+            }
             scope.procontent.query_time = opt.init_query_time;
             scope.procontent.dep_name = opt.dep_name;
             var colors = ['rgb(0,255,161)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgba(0, 255, 161, 0.9)', 'rgb(3,204,215)'];
@@ -805,7 +817,7 @@
               }
               item.label = {
                 normal: {
-                  show: true,
+                  show: false,
                   position: 'top'
                 }
               };
@@ -957,6 +969,9 @@
             var opt = result.data;
             if (!opt || !opt.series) {
               return;
+            }
+            if (!scope.eleccontent.model && opt.init_query_time != '') {
+              scope.eleccontent.model = new Date(opt.init_query_time);
             }
             scope.eleccontent.query_time = opt.init_query_time;
             scope.eleccontent.dep_name = opt.dep_name;

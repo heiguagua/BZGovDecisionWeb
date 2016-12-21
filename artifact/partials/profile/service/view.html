@@ -10,7 +10,7 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全国全省全市社会消费品零售总额增速比较</h5>
+                <h5 class='box-title'>全国全省全市社会消费品零售总额增速比较</h5>
               </div>
               <div class='pull-right box-sub-title'>来源{{servicelist[0].dep_name}}</div>
             </div>
@@ -25,7 +25,7 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全市银行存贷款余额情况</h5>
+                <h5 class='box-title'>全市银行存贷款余额情况</h5>
               </div>
               <div class='pull-right box-sub-title'>来源{{servicelist[1].dep_name}}</div>
             </div>
@@ -42,7 +42,7 @@
               <div class='pull-left'>
                 <h5 class='box-title'>全市商品房待售面积</h5>
               </div>
-              <div class='pull-right box-sub-title'>{{servicelist[2].query_time}}数据：来源{{servicelist[2].dep_name}}</div>
+              <div class='pull-right box-sub-title'>来源{{servicelist[2].dep_name}}</div>
             </div>
             <div class='chart' service-chart-house housecontent=servicelist[2]></div>
           </div>
@@ -59,7 +59,7 @@
               <div class='pull-left'>
                 <h5 class='box-title'>全市服务业企业登记注册情况</h5>
               </div>
-              <div class='pull-right box-sub-title'>{{servicelist[3].query_time}}数据：来源{{servicelist[3].dep_name}}</div>
+              <div class='pull-right box-sub-title'>{{servicelist[3].model | date:"M月"}}数据：来源{{servicelist[3].dep_name}}</div>
             </div>
             <div class='chart' service-chart-ent entcontent=servicelist[3] ></div>
           </div>
@@ -74,7 +74,7 @@
               <div class='pull-left'>
                 <h5 class='box-title'>全市货物运输周转量</h5>
               </div>
-              <div class='pull-right box-sub-title'>{{servicelist[4].query_time}}数据：来源{{servicelist[4].dep_name}}</div>
+              <div class='pull-right box-sub-title'>来源{{servicelist[4].dep_name}}</div>
             </div>
             <div class='chart' service-chart-goods goodscontent=servicelist[4]></div>
           </div>
@@ -89,7 +89,7 @@
               <div class='pull-left'>
                 <h5 class='box-title'>全市客运周转量</h5>
               </div>
-              <div class='pull-right box-sub-title'>{{servicelist[5].query_time}}数据：来源{{servicelist[5].dep_name}}</div>
+              <div class='pull-right box-sub-title'>来源{{servicelist[5].dep_name}}</div>
             </div>
             <div class='chart' service-chart-traffic trafficontent=servicelist[5] ></div>
           </div>

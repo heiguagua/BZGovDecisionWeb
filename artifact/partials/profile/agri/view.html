@@ -40,20 +40,11 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>主要经济指标</h5>
+                <h5 class='box-title'>全市专业合作社及家庭农场情况</h5>
               </div>
-              <div class='pull-right box-sub-title'></div>
+              <div class='pull-right box-sub-title'>{{agrilist[3].query_time}}数据：来源{{agrilist[3].dep_name}}</div>
             </div>
-            <div class='datalist'>
-              <div class='mdata-items'>
-                <div class='data-item iname' style='font-weight:bold'>{{agri.agriData.init_query_time}}数据</div>
-                <div class='data-item' style='width: 23%;padding: 0 6px;' ng-repeat='colname in agri.agriData.columnName'>{{colname}}</div>
-              </div>
-              <div class='mdata-items' ng-repeat='edata in agri.agriData.rowData'>
-                <div class='data-item iname'>{{edata.rowName}}</div>
-                <div class='data-item' style='width: 23%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]"><span ng-if='data.value == ""'>-</span><span ng-if='data.value != ""'>{{data.value}}</span></div>
-              </div>
-            </div>
+            <div class='chart' agri-chart-district districtcontent=agrilist[3]></div>
           </div>
         </div>
       </div>
@@ -66,11 +57,11 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>全市专业合作社及家庭农场数量</h5>
+                <h5 class='box-title'>全市茶叶巴药种植情况</h5>
               </div>
-              <div class='pull-right box-sub-title'>{{agrilist[3].query_time}}数据：来源{{agrilist[3].dep_name}}</div>
+              <div class='pull-right box-sub-title'>{{agrilist[2].query_time}}数据：来源{{agrilist[2].dep_name}}</div>
             </div>
-            <div class='chart' agri-chart-farm farmcontent=agrilist[3]></div>
+            <div class='chart' agri-chart-farm farmcontent=agrilist[2]></div>
           </div>
         </div>
         <div class='right5 left5'>
@@ -98,7 +89,7 @@
               <div class='pull-left'>
                 <h5 class='box-title'>全市农林牧渔业总产值结构</h5>
               </div>
-              <div class='pull-right box-sub-title'>{{agrilist[5].query_time}}数据：来源{{agrilist[5].dep_name}}</div>
+              <div class='pull-right box-sub-title'>{{agrilist[5].model | date:"M月"}}数据：来源{{agrilist[5].dep_name}}</div>
             </div>
             <div class='chart' agri-chart-fish fishcontent=agrilist[5]></div>
           </div>

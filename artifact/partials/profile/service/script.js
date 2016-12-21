@@ -651,6 +651,9 @@
             if (!opt || !opt.series) {
               return;
             }
+            if (!scope.entcontent.model && opt.init_query_time != '') {
+              scope.entcontent.model = new Date(opt.init_query_time);
+            }
             scope.entcontent.query_time = opt.init_query_time;
             scope.entcontent.dep_name = opt.dep_name;
             var yAxis_min = 0;

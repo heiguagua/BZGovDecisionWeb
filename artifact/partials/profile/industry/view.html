@@ -10,7 +10,7 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全国全省全市规上工业增加值增速比较</h5>
+                <h5 class='box-title'>全国全省全市规上工业增加值增速比较</h5>
               </div>
               <div class='pull-right box-sub-title'>来源{{indstlist[0].dep_name}}</div>
             </div>
@@ -25,7 +25,7 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap '>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全市工业固定资产投资增速趋势</h5>
+                <h5 class='box-title'>全市工业固定资产投资增速趋势</h5>
               </div>
               <div class='pull-right box-sub-title'>来源{{indstlist[1].dep_name}}</div>
             </div>
@@ -65,9 +65,9 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>全市规上工业产品产量增速分析</h5>
+                <h5 class='box-title'>全市规上工业产品产量增长情况</h5>
               </div>
-              <div class='pull-right box-sub-title'>{{indstlist[3].query_time}}数据：来源{{indstlist[3].dep_name}}</div>
+              <div class='pull-right box-sub-title'>{{indstlist[3].model | date:"M月"}}数据：来源{{indstlist[3].dep_name}}</div>
             </div>
             <div class='chart'  indst-chart-pro  procontent=indstlist[3]></div>
           </div>
@@ -80,7 +80,7 @@
             <span class='box-right-bottom'></span>
             <div class='top-wrap'>
               <div class='pull-left'>
-                <h5 class='box-title'>近一年全市规上工业用电情况</h5>
+                <h5 class='box-title'>全市规上工业用电情况</h5>
               </div>
               <div class='pull-right box-sub-title'>来源{{indstlist[4].dep_name}}</div>
             </div>
@@ -97,7 +97,7 @@
               <div class='pull-left'>
                 <h5 class='box-title'>全市规上工业分经济类型增速分析</h5>
               </div>
-              <div class='pull-right box-sub-title'>{{indstlist[5].query_time}}数据：来源{{indstlist[5].dep_name}}</div>
+              <div class='pull-right box-sub-title'>{{indstlist[5].model | date:"M月"}}数据：来源{{indstlist[5].dep_name}}</div>
             </div>
             <div class='chart' indst-chart-eco ecocontent=indstlist[5]></div>
           </div>
