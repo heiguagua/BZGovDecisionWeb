@@ -31,8 +31,17 @@
       width:28%;
       @include flex-flow(column);
       min-height:0;
-      >div{
+      .right-down{
         @include flex-num(1);
+        @include flex-flow(row);
+        min-height:0;
+        >div{
+          @include flex-num(1);
+        }
+      }
+      .right-top{
+        @extend .right-down;
+        margin-bottom:15px;
       }
     }
   }

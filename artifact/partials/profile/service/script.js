@@ -203,7 +203,12 @@
               yAxis: {
                 type: 'value',
                 axisLabel: {
-                  formatter: '{value}',
+                  formatter: function(value) {
+                    if (((value + '').indexOf('.') != -1)) {
+                      return value.toFixed(0);
+                    }
+                    return value;
+                  },
                   textStyle: {
                     color: colors[5]
                   }
@@ -380,7 +385,12 @@
               yAxis: {
                 type: 'value',
                 axisLabel: {
-                  formatter: '{value}',
+                  formatter: function(value) {
+                    if (((value + '').indexOf('.') != -1)) {
+                      return value.toFixed(0);
+                    }
+                    return value;
+                  },
                   textStyle: {
                     color: colors[5]
                   }
@@ -484,6 +494,12 @@
                 textStyle: {
                   color: colors[5]
                 }
+              };
+              yAxis.axisLabel.formatter = function(value) {
+                if (((value + '').indexOf('.') != -1)) {
+                  return value.toFixed(0);
+                }
+                return value;
               };
               yAxis.axisTick = {};
               yAxis.axisTick.inside = true;
@@ -710,7 +726,7 @@
               yAxis.axisLabel = {};
               yAxis.axisLabel.formatter = function(value) {
                 if (((value + '').indexOf('.') != -1)) {
-                  return value.toFixed(1);
+                  return value.toFixed(0);
                 }
                 return value;
               };
@@ -978,7 +994,12 @@
               yAxis: {
                 type: 'value',
                 axisLabel: {
-                  formatter: '{value}',
+                  formatter: function(value) {
+                    if (((value + '').indexOf('.') != -1)) {
+                      return value.toFixed(0);
+                    }
+                    return value;
+                  },
                   textStyle: {
                     color: colors[5]
                   }
@@ -1152,7 +1173,12 @@
               yAxis: {
                 type: 'value',
                 axisLabel: {
-                  formatter: '{value}',
+                  formatter: function(value) {
+                    if (((value + '').indexOf('.') != -1)) {
+                      return value.toFixed(0);
+                    }
+                    return value;
+                  },
                   textStyle: {
                     color: colors[5]
                   }

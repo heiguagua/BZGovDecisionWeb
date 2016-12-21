@@ -6,6 +6,8 @@
     padding-left: 2rem;
     @include smallscreen {
       padding-left: 0;
+      padding-top: 2rem;
+      padding-bottom: 0;
     }
   }
   #map {
@@ -14,7 +16,7 @@
     margin: 0 auto;
     padding: 1rem 0;
     @include smallscreen {
-      width: 80%;
+      width: 62%;
     }
     #bzmap {
       width: 100%;
@@ -36,7 +38,7 @@
     position: relative;
     padding-bottom: 2rem;
     @include smallscreen {
-      padding-left: 4rem;
+      padding-bottom: 0;
     }
     .back-btn {
       position: absolute;
@@ -63,19 +65,24 @@
       }
     }
     .media {
+      display: table;
+      height: 100%;
       @include flex-num(1);
       margin: 0;
-      padding: 1.4rem 1rem;
+      padding: 0 0.2rem;
       color: $white;
       font-size: 0.75rem;
       font-family: '微软雅黑';
       @include smallscreen {
-        padding: 0.6rem 1rem;
+        padding: 0 0.4rem;
       }
       .media-heading {
         font-size: 1rem;
         font-family: '微软雅黑';
-        line-height: 2rem;
+        line-height: 1.2rem;
+      }
+      .media-body {
+        vertical-align: middle;
       }
       .media-left {
         width: 30%;

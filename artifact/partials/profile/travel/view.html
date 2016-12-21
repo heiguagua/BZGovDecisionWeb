@@ -15,7 +15,7 @@
                 </div>
                 <div class='pull-right box-sub-title'>{{travellist[0].query_time}}数据：来源{{travellist[0].dep_name}}</div>
               </div>
-              <div class='chart' travel-chart-house housecontent=travellist[0] ></div>
+              <div class='chart' travel-chart-house housecontent=travellist[0]></div>
             </div>
           </div>
           <div class='left15 right5'>
@@ -26,11 +26,11 @@
               <span class='box-right-bottom'></span>
               <div class='top-wrap'>
                 <div class='pull-left'>
-                  <h5 class='box-title'>全市A级景区</h5>
+                  <h5 class='box-title'>全市A级景区发展情况</h5>
                 </div>
                 <div class='pull-right box-sub-title'>{{travellist[1].model | date:"M月"}}数据：来源{{travellist[1].dep_name}}</div>
               </div>
-              <div class='chart' travel-chart-site sitecontent=travellist[1] ></div>
+              <div class='chart' travel-chart-site sitecontent=travellist[1]></div>
             </div>
           </div>
         </div>
@@ -62,38 +62,62 @@
                 </div>
                 <div class='pull-right box-sub-title'>来源{{travellist[4].dep_name}}</div>
               </div>
-              <div class='chart' travel-chart-tour tourcontent=travellist[4] ></div>
+              <div class='chart' travel-chart-tour tourcontent=travellist[4]></div>
             </div>
           </div>
         </div>
 
       </div>
       <div class='right-box'>
-        <div class='right15 left5'>
-          <div class='box'>
-            <span class='box-left-top'></span>
-            <span class='box-left-bottom'></span>
-            <span class='box-right-top'></span>
-            <span class='box-right-bottom'></span>
-            <div class='top-wrap'>
-              <div class='pull-left'>
-                <h5 class='box-title'>主要经济指标</h5>
+        <div class='right-top'>
+          <div class='right15 left5'>
+            <div class='box'>
+              <span class='box-left-top'></span>
+              <span class='box-left-bottom'></span>
+              <span class='box-right-top'></span>
+              <span class='box-right-bottom'></span>
+              <div class='top-wrap'>
+                <div class='pull-left'>
+                  <h5 class='box-title'>全市A级景区经营情况</h5>
+                </div>
+                <div class='pull-right box-sub-title'>来源{{travellist[2].dep_name}}</div>
               </div>
-              <!-- <div class='pull-right box-sub-title'>{{travellist[3].query_time}}数据：来源{{travellist[3].dep_name}}</div> -->
-            </div>
-            <div class='datalist'>
-              <div class='mdata-items'>
-                <div class='data-item iname' style='font-weight:bold'>{{travel.travelData.init_query_time}}数据</div>
-                <div class='data-item' style='width: 23%;padding: 0 6px;' ng-repeat='colname in travel.travelData.columnName'>{{colname}}</div>
-              </div>
-              <div class='mdata-items' ng-repeat='edata in travel.travelData.rowData'>
-                <div class='data-item iname'>{{edata.rowName}}</div>
-                <div class='data-item' style='width: 23%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]"><span ng-if='data.value == ""'>-</span><span ng-if='data.value != ""'>{{data.value}}</span></div>
-              </div>
-              <br/>
+              <div class='chart' travel-chart-tour tourcontent=travellist[2]></div>
             </div>
           </div>
         </div>
+        <div class='right-down'>
+          <div class='right15 left5'>
+            <div class='box'>
+              <span class='box-left-top'></span>
+              <span class='box-left-bottom'></span>
+              <span class='box-right-top'></span>
+              <span class='box-right-bottom'></span>
+              <div class='top-wrap'>
+                <div class='pull-left'>
+                  <h5 class='box-title'>主要经济指标</h5>
+                </div>
+                <!-- <div class='pull-right box-sub-title'>{{travellist[3].query_time}}数据：来源{{travellist[3].dep_name}}</div> -->
+              </div>
+              <div class='datalist'>
+                <div class='mdata-items'>
+                  <div class='data-item iname' style='font-weight:bold'>{{travel.travelData.init_query_time}}数据</div>
+                  <div class='data-item' style='width: 23%;padding: 0 6px;' ng-repeat='colname in travel.travelData.columnName'>{{colname}}</div>
+                </div>
+                <div class='mdata-items' ng-repeat='edata in travel.travelData.rowData'>
+                  <div class='data-item iname'>{{edata.rowName}}</div>
+                  <div class='data-item' style='width: 23%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]">
+                    <span ng-if='data.value == ""'>-</span>
+                    <span ng-if='data.value != ""'>{{data.value}}</span>
+                  </div>
+                </div>
+                <br/>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
 
     </div>

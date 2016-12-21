@@ -507,6 +507,12 @@
                   color: 'rgb(0,168,228)'
                 }
               };
+              yAxis.axisLabel.formatter = function(value) {
+                if (((value + '').indexOf('.') != -1)) {
+                  return value.toFixed(0);
+                }
+                return value;
+              };
               yAxis.axisTick = {};
               yAxis.axisTick.inside = true;
               yAxis.axisLine = {
@@ -764,7 +770,12 @@
               yAxis: {
                 type: 'value',
                 axisLabel: {
-                  formatter: '{value}'
+                  formatter:  function(value) {
+                    if (((value + '').indexOf('.') != -1)) {
+                      return value.toFixed(0);
+                    }
+                    return value;
+                  }
                 },
                 name: opt.y_name,
                 min: yAxis_min,

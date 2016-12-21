@@ -24,6 +24,9 @@
             picCode: data[0].picCode
           }).then(function(res) {
             $scope.dataInfo = res.data;
+            if (!$scope.dataInfo.model && $scope.dataInfo.init_query_time != '') {
+              $scope.dataInfo.model = new Date($scope.dataInfo.init_query_time);
+            }
             var datas = res.data.series;
             $scope.allDatas = [];
             _.forEach(datas,function(item) {

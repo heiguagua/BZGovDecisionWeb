@@ -164,7 +164,7 @@
               yAxis.axisLabel = {};
               yAxis.axisLabel.formatter = function(value) {
                 if (((value + '').indexOf('.') != -1)) {
-                  return value.toFixed(1);
+                  return value.toFixed(0);
                 }
                 return value;
               };
@@ -785,7 +785,12 @@
               yAxis: {
                 type: 'value',
                 axisLabel: {
-                  formatter: '{value}',
+                  formatter: function(value) {
+                    if (((value + '').indexOf('.') != -1)) {
+                      return value.toFixed(1);
+                    }
+                    return value;
+                  },
                   textStyle: {
                     color: colors[5]
                   }
