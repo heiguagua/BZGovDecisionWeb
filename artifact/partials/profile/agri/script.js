@@ -1003,6 +1003,9 @@
                 } else {
                   minValue = minValue - 1;
                 }
+                if(maxValue<5){
+                  maxValue = 4;
+                }
                 maxValue = 1 + maxValue;
                 yAxis.min = Math.round(minValue);
                 yAxis.max = Math.round(maxValue);

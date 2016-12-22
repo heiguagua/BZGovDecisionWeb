@@ -8,6 +8,7 @@
       'app.dashboard',
       'app.login',
       'app.main',
+      'app.home',
       'app.profile',
       'app.profile.index',
       'app.profile.menu',
@@ -29,12 +30,35 @@
   function config($stateProvider, $urlRouterProvider, $httpProvider) {
     /** UI-Router Config */
     $urlRouterProvider.otherwise('/profile');
+    var screen_width = screen.width;
+      if(screen_width<1024){
+        $urlRouterProvider.otherwise('/home');
+      }
+      else{
+        $urlRouterProvider.otherwise('/profile');
+      }
+    // $urlRouterProvider.when('/home', ['$match','$stateParams',function ($match, $stateParams) {
+    //   var screen_width = screen.width;
+    //   if(screen_width<1024){
+    //     return '/home';
+    //   }
+    //   else{
+    //     return '/home';
+    //   }
+    // }]);
+
     $stateProvider
       .state('dashboard', {
         url: '/dashboard',
         templateUrl: 'partials/dashboard/view.html',
         controller: 'dashboardController',
         controllerAs: 'dashboard',
+      })
+      .state('home', {
+        url: '/home',
+        templateUrl: 'partials/home/view.html',
+        controller: 'homeController',
+        controllerAs: 'home',
       })
       .state('profile', {
         url: '/profile',
