@@ -626,7 +626,7 @@
                 axisLabel: {
                   interval: 0,
                   textStyle: {
-                    fontSize: 10,
+                    fontSize: 12,
                     color: 'rgb(0,168,228)'
                   }
                 },
@@ -750,7 +750,7 @@
                 axisLabel: {
                   interval: 0,
                   textStyle: {
-                    fontSize: 10
+                    fontSize: 12
                   },
                   formatter: function(value) {
                     var month = value.substring(value.indexOf('-') + 1);

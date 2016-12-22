@@ -169,8 +169,10 @@
               },
               xAxis: {
                 type: 'category',
-                boundaryGap: false,
                 data: opt.x_data,
+                axisTick: {
+                  alignWithLabel: false
+                },
                 axisLine: {
                   lineStyle: {
                     color: colors[3],
@@ -355,8 +357,10 @@
               },
               xAxis: {
                 type: 'category',
-                boundaryGap: false,
                 data: opt.x_data,
+                axisTick: {
+                  alignWithLabel: false
+                },
                 axisLine: {
                   lineStyle: {
                     color: colors[3],
@@ -610,6 +614,10 @@
                     fontSize: 12,
                     color: colors[5]
                   },
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
+                  }
                 },
                 splitLine: {
                   show: true,
@@ -801,7 +809,7 @@
                 top: grid_top,
                 left: grid_left,
                 right: grid_right,
-                bottom: grid_bottom
+                bottom: 30
               },
               xAxis: {
                 type: 'category',
@@ -818,7 +826,7 @@
                 },
                 axisLabel: {
                   interval: 0,
-                  margin: 4,
+                  margin: 14,
                   textStyle: {
                     fontSize: label_font,
                     color: colors[5]
@@ -978,8 +986,10 @@
               },
               xAxis: {
                 type: 'category',
-                boundaryGap: false,
                 data: opt.x_data,
+                axisTick: {
+                  alignWithLabel: false
+                },
                 axisLine: {
                   lineStyle: {
                     color: colors[3],
@@ -993,6 +1003,10 @@
                   textStyle: {
                     fontSize: 12,
                     color: colors[5]
+                  },
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
                   }
                 },
                 splitLine: {
@@ -1161,8 +1175,10 @@
               },
               xAxis: {
                 type: 'category',
-                boundaryGap: false,
                 data: opt.x_data,
+                axisTick: {
+                  alignWithLabel: false
+                },
                 axisLine: {
                   lineStyle: {
                     color: colors[3],
@@ -1176,6 +1192,10 @@
                   textStyle: {
                     fontSize: 12,
                     color: colors[5]
+                  },
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
                   }
                 },
                 splitLine: {

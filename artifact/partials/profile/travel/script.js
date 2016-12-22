@@ -37,6 +37,13 @@
         $('.datalist').mCustomScrollbar();
       })
 
+      travelService.gettravelData({
+        picCode: 5007
+      }).then(function(result) {
+        vm.travelDataDown = result.data;
+        $('.datalist').mCustomScrollbar();
+      })
+
     }
   ]);
 
@@ -641,6 +648,10 @@
                   textStyle: {
                     fontSize: 12,
                     color:colors[5]
+                  },
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
                   }
                 },
                 splitLine: {
@@ -767,8 +778,11 @@
               },
               xAxis: {
                 type: 'category',
-                boundaryGap: false,
+
                 data: opt.x_data,
+                axisTick: {
+                  alignWithLabel: false
+                },
                 axisLine: {
                   lineStyle: {
                     color: colors[3],
@@ -782,6 +796,10 @@
                   textStyle: {
                     fontSize: 12,
                     color: colors[5]
+                  },
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
                   }
                 },
                 splitLine: {
@@ -962,8 +980,11 @@
               },
               xAxis: {
                 type: 'category',
-                boundaryGap: false,
+
                 data: opt.x_data,
+                axisTick: {
+                  alignWithLabel: false
+                },
                 axisLine: {
                   lineStyle: {
                     color: colors[3],
