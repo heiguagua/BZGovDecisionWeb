@@ -691,14 +691,12 @@
             var grid_top = 60;
             var grid_left = '10%';
             var grid_right = '16%';
-            var grid_bottom = 100;
+            var grid_bottom = 30;
             var label_font = 12;
             if (screen_width < 1600) {
-              grid_top = '16%';
-              grid_left = '15%';
-              grid_right = '22%';
-              grid_bottom = 80;
-              label_font = 8;
+              grid_top = '30%';
+              grid_left = '12%';
+              grid_right = '18%';
             }
             var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
             opt.yAxis = [];
@@ -764,6 +762,9 @@
               if(item.type == 'line') {
                 item.connectNulls = true;
               }
+              if(item.type == 'bar') {
+                item.barMaxWidth = '30%';
+              }
               item.symbol = 'rect';
               item.symbolSize = 4;
               item.lineStyle = {
@@ -772,9 +773,6 @@
                 }
               }
               var label_pos = 'top';
-              if ((index + 1) % 2 != 0) {
-                label_pos = 'bottom';
-              }
               item.label = {
                 normal: {
                   show: false,
@@ -825,31 +823,35 @@
                     fontSize: label_font,
                     color: colors[5]
                   },
-                  formatter: function(val) {
-                    var char_length = val.length;
-                    var newstr = '';
-                    if (char_length > 2) {
-                      var strTemp = '';
-                      var leftStr = '';
-                      for (var i = 0; i < (char_length / 2)+1; i++) {
-                        if (i != 0) {
-                          if (val.length < 2) {
-                            strTemp = val;
-
-                          } else {
-                            strTemp = val.substring(0, 2);
-                            val = val.substring(2, val.length);
-                            console.log(val);
-                          }
-
-                          newstr += strTemp + '\n';
-                        }
-                      }
-                    } else {
-                      newstr = val;
-                    }
-                    return newstr;
-                  }
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
+                  },
+                  // formatter: function(val) {
+                  //   var char_length = val.length;
+                  //   var newstr = '';
+                  //   if (char_length > 2) {
+                  //     var strTemp = '';
+                  //     var leftStr = '';
+                  //     for (var i = 0; i < (char_length / 2)+1; i++) {
+                  //       if (i != 0) {
+                  //         if (val.length < 2) {
+                  //           strTemp = val;
+                  //
+                  //         } else {
+                  //           strTemp = val.substring(0, 2);
+                  //           val = val.substring(2, val.length);
+                  //           console.log(val);
+                  //         }
+                  //
+                  //         newstr += strTemp + '\n';
+                  //       }
+                  //     }
+                  //   } else {
+                  //     newstr = val;
+                  //   }
+                  //   return newstr;
+                  // }
                 },
                 splitLine: {
                   show: true,

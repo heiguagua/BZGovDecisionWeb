@@ -711,8 +711,8 @@
             var grid_top = '24%';
             var grid_left = '10%';
             if (screen_width < 1600) {
-              grid_top = '32%';
-              grid_left = '16%';
+              grid_top = '20%';
+              grid_left = '10%';
             }
             var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)'];
             var option = {
