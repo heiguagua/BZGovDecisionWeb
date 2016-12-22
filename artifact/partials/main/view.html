@@ -45,7 +45,8 @@
       </div>
       <div class="mobile-content">
         <ul class="nav navbar-nav side-nav metismenu" id="menu">
-          <li ng-repeat='menu in main.menus' >
+          <li ui-sref-active="active"><a ui-sref='home'>首页</a></li>
+          <li ng-repeat='menu in main.menus' ui-sref-active="active">
             <a class="has-arrow" aria-expanded="false" ui-sref-active="active" ng-if='(menu.type != 0 && menu.type != 2)' ng-click='getSubmenus(menu.id)'>
               {{menu.name}}
             </a>

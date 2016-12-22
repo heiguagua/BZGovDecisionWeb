@@ -109,7 +109,7 @@
         controllerAs: 'travel',
       })
       .state('main', {
-        url: '/main/:mid/:typeid/:murl',
+        url: '/main/:mid',
         templateUrl: 'partials/main/view.html',
         controller: 'mainController',
         controllerAs: 'main',

@@ -974,6 +974,10 @@
                   textStyle: {
                     fontSize: 12,
                     color: colors[5]
+                  },
+                  formatter: function(value) {
+                    var month = value.substring(value.indexOf('-') + 1);
+                    return Number(month) + '月';
                   }
                 },
                 splitLine: {

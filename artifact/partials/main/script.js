@@ -26,13 +26,23 @@
           return item.type == '2' || item.type == '3';
         });
         if(screen_width<1024) { // mobile
-          _.forEach(vm.menus,function(menu) {
+          var current_menu_index = 0;
+          _.forEach(vm.menus,function(menu,index) {
+            if(menu.id == $stateParams.mid) {
+              current_menu_index = index;
+            }
             mainService.getMenus({
               parentId: menu.id
             }).then(function(result) {
-              menu.subMenus = result.data
+              menu.subMenus = result.data;
+              if(index == (vm.menus.length-1)){
+                console.log(vm.menus[current_menu_index]);
+                $state.go('main.module.content',{tid:vm.menus[current_menu_index].subMenus[0].id});
+              }
             })
           })
+          console.log(vm.menus);
+
         }
         else{
           $state.go('main.module',{id:$stateParams.mid});
