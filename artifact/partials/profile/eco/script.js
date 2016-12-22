@@ -714,7 +714,22 @@
               grid_top = '20%';
               grid_left = '10%';
             }
-            var colors = ['rgb(255,169,34)', 'rgb(0,152,72)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)'];
+            _.forEach(opt.series, function(item,index) {
+              if (item.type == 'bar') {
+                item.barMaxWidth = '20%';
+              }
+              var label_pos = 'top';
+              if(index == 0) {
+                label_pos = 'bottom';
+              }
+              item.label = {
+                normal: {
+                  show: true,
+                  position: label_pos
+                }
+              };
+            });
+            var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(0,168,228)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)'];
             var option = {
               color: colors,
               tooltip: {
