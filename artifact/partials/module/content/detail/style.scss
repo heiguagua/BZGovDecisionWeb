@@ -165,6 +165,10 @@
   .btn-default {
     background-color: #f8f8f8;
     border-color: #e1e1e1;
+    @include mobilescreen {
+      padding: 6px 8px;
+      font-size: 0.8rem;
+    }
     &.active {
       background-color: #31b0d5;
       border-color: #269abc;
@@ -178,12 +182,23 @@
   .btn-info {
     display: none;
   }
+  .btn-danger {
+    padding: 4px 10px;
+  }
   .btn-success {
     background-color: #20b3a9;
+    @include mobilescreen {
+      padding: 4px 10px;
+    }
   }
   .btn-danger {
     background-color: #f66850;
     border-color: #d5614e;
+  }
+}
+.uib-datepicker-popup.dropdown-menu {
+  @include mobilescreen {
+    left: -15px !important;
   }
 }
 .statistic {

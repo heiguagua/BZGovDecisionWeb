@@ -25,7 +25,7 @@
         _.remove(vm.menus,function(item){
           return item.type == '2' || item.type == '3';
         });
-        if(screen_width<1024) { // mobile
+        if(screen_width<1200) { // mobile
           var current_menu_index = 0;
           _.forEach(vm.menus,function(menu,index) {
             if(menu.id == $stateParams.mid) {
@@ -41,7 +41,6 @@
               }
             })
           })
-          console.log(vm.menus);
 
         }
         else{

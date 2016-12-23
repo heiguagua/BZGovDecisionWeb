@@ -635,11 +635,19 @@
                     var main_height = $('.mobile-content').height();
                     console.log(screen_height);
                     console.log(main_height);
-                    if(screen_width<1024) { // mobile
+                    if(screen_width<1200) { // mobile
                       $('.mobile-content').css({'min-height':screen_height+'px'});
+
                       if(main_height <= screen_height ) {
-                        $('.mobile-content .content-main').css({'min-height':(screen_height-50)+'px'}); // 50为header的高度
-                        $('.mobile-content .graph>div').css({'min-height':(screen_height-50-40-46-2-10)+'px'}); // 50为header的高度,40为菜单项高度,46为统计时间和部门高度,2为chartborder，10为graph边距
+                        if(screen_height >980) {
+                          $('.mobile-content .content-main').css({'min-height':(screen_height-50)+'px'}); // 50为header的高度
+                          $('.mobile-content .graph>div').css({'height':(screen_height/$('.mobile-content .content-box').length-20-44-50)+'px'}); // 50为header的高度
+                        }
+                        else{
+                          $('.mobile-content .content-main').css({'min-height':(screen_height-50)+'px'}); // 50为header的高度
+                          $('.mobile-content .graph>div').css({'min-height':(screen_height-50-40-46-2-10)+'px'}); // 50为header的高度,40为菜单项高度,46为统计时间和部门高度,2为chartborder，10为graph边距
+
+                        }
                       }
                     }
                     chartInstance = echarts.init((element.find('div'))[0]);

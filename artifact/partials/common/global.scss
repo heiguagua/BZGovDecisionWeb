@@ -22,7 +22,7 @@ ul {
 }
 $chartHeightSmall: 380px;
 $chartHeightBig: 540px;
-$tablet-width: 1024px;
+$tablet-width: 1200px;
 $desktop-width: 1400px;
 @mixin normalratio {
   @media screen and (device-aspect-ratio: 16/9) {
