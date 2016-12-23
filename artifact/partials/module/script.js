@@ -24,7 +24,8 @@
         })
       }
 
-      vm.toggleSecMenus = function(){
+      vm.toggleSecMenus = function(ev){
+        ev.stopPropagation();
         $('.menu-label').toggleClass('m-collapse');
       }
 

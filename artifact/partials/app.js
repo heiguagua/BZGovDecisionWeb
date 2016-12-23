@@ -145,7 +145,7 @@
         controllerAs: 'content',
       })
       .state('main.module.content.detail', {
-        url: '/detail/:pid',
+        url: '/detail/:pid/:mname',
         templateUrl: 'partials/module/content/detail/view.html',
         controller: 'detailController',
         controllerAs: 'detail',

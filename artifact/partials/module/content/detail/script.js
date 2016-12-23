@@ -3,9 +3,10 @@
   var detail = angular.module('app.main.module.content.detail', ['ui.bootstrap','cgBusy']);
   /** Controller */
   detail.controller('detailController', [
-    '$scope', 'detailService', '$stateParams', 'uibDateParser',
-    function($scope, detailService, $stateParams, uibDateParser) {
+    '$scope', 'detailService', '$stateParams', 'uibDateParser','$rootScope',
+    function($scope, detailService, $stateParams, uibDateParser,$rootScope) {
       var vm = this;
+      $rootScope.mname = $stateParams.mname;
       setTimeout(function(){
         $('.menu-label').removeClass('m-collapse');
       },600);
@@ -607,13 +608,6 @@
                     picCode: scope.content.picCode,
                     queryTime: getDateFormat(timeParam, timeFormatParam)
                   }).then(function(res) {
-                    // if (res.data.columnName.length > 5) {
-                    //   $('.box-wrap').css({
-                    //     '-webkit-flex-flow': 'column',
-                    //     'flex-flow': 'column'
-                    //   });
-                    // }
-                    console.log(_.map(res.data.rowData[0].rowValue, 'name'));
                     scope.content.columnNames = _.map(res.data.rowData[0].rowValue, 'name');
 
                     scope.content.rowData = res.data.rowData;
@@ -626,15 +620,13 @@
                   element.find('div')[0].innerHTML = '<div class="item-wrap">' +
                     '<h3 class="chart-title">'+opt.title+'</h3>'+
                     '<div class="chart-item"><div class="item"><div class="pic pic-home"><i class="fa fa-home"></i></div></div><div class="item"><div class="pic pic-home"><i class="fa fa-rmb"></i></div></div></div>' +
-                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[0].name + "："+enTotal[0].value + enTotal[0].unit + '</div></div><div class="item"><div class="content-item">' + '注册资金' + "：" + enNum[0].value + enNum[0].unit + '</div></div></div>' +
-                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[1].name + "："+enTotal[1].value + enTotal[1].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：" + enNum[1].value + enNum[1].unit + '</div></div></div>' +
+                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[0].name + "：<br/>"+enTotal[0].value + enTotal[0].unit + '</div></div><div class="item"><div class="content-item">' + '注册资金' + "：<br/>" + enNum[0].value + enNum[0].unit + '</div></div></div>' +
+                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[1].name + "：<br/>"+enTotal[1].value + enTotal[1].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：<br/>" + enNum[1].value + enNum[1].unit + '</div></div></div>' +
                     '<div>';
                 } else {
                   setTimeout(function() {
                     var screen_height = screen.height;
                     var main_height = $('.mobile-content').height();
-                    console.log(screen_height);
-                    console.log(main_height);
                     if(screen_width<1200) { // mobile
                       $('.mobile-content').css({'min-height':screen_height+'px'});
 

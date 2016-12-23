@@ -20,6 +20,11 @@ ul {
   margin: 0;
   padding: 0;
 }
+input,
+textarea {
+  -webkit-apprarance: none;
+  outline:none;
+}
 $chartHeightSmall: 380px;
 $chartHeightBig: 540px;
 $tablet-width: 1200px;
@@ -129,7 +134,7 @@ $desktop-width: 1400px;
   top: 45% !important;
 }
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
-.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
   background-color: rgba(3,169,244,.5);
   background-color: rgba(3,169,244,.5);
 }

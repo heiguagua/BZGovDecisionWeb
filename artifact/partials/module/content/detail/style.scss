@@ -232,6 +232,7 @@
         height: 26px;
         padding: 0 10px;
         width: 90px;
+        box-shadow: none;
         &.ng-invalid {
           border: 1px solid red !important;
         }
@@ -299,8 +300,11 @@
         color: $white;
         @include mobilescreen {
           width: 76%;
-          padding: 0.4rem 0.6rem;
+          padding: 0.4rem;
           word-break: break-word;
+          @include flex-flow(column);
+          -webkit-justify-content: center;
+          justify-content: center;
         }
       }
     }

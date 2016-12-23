@@ -199,10 +199,23 @@ $chartHeightBig: 540px;
       -o-transition: all 0.5s ease-in-out;
       transition: all 0.5s ease-in-out;
       display: block;
+      position: relative;
       padding: 10px;
       border-bottom: 1px solid #DDD;
       margin-bottom: 0;
       font-size: 1.2rem;
+      text-align: center;
+      .fa-bars {
+        position: absolute;
+        left: 4px;
+        top: 30%;
+      }
+      .menu-title {
+        display: inline-block;
+        margin: 0;
+        font-family: 微软雅黑;
+        color: #333;
+      }
     }
     .content-main {
       -webkit-transition: all 0.5s ease-in-out;
