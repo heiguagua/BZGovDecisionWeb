@@ -1,5 +1,3 @@
-
-
 (function() {
 
   angular.module('app', [
@@ -21,7 +19,9 @@
       'app.main.preview',
       'app.main.module',
       'app.main.module.content',
-      'app.main.module.content.detail'
+      'app.main.module.content.detail',
+      'app.main.module.content.job',
+      'app.main.module.content.goalquater'
     ])
     .config(config);
 
@@ -31,12 +31,11 @@
     /** UI-Router Config */
     $urlRouterProvider.otherwise('/profile');
     var screen_width = screen.width;
-      if(screen_width<1024){
-        $urlRouterProvider.otherwise('/home');
-      }
-      else{
-        $urlRouterProvider.otherwise('/profile');
-      }
+    if (screen_width < 1024) {
+      $urlRouterProvider.otherwise('/home');
+    } else {
+      $urlRouterProvider.otherwise('/profile');
+    }
     // $urlRouterProvider.when('/home', ['$match','$stateParams',function ($match, $stateParams) {
     //   var screen_width = screen.width;
     //   if(screen_width<1024){
@@ -150,6 +149,18 @@
         controller: 'detailController',
         controllerAs: 'detail',
       })
+      .state('main.module.content.job',{
+        url: '/job/:pid',
+        templateUrl: 'partials/module/content/job/view.html',
+        controller: 'jobController',
+        controllerAs: 'job'
+      })
+      .state('main.module.content.goalquater',{
+        url: '/goalquater/:pid',
+        templateUrl: 'partials/module/content/goal_quater/view.html',
+        controller: 'goalquaterController',
+        controllerAs: 'goalquater'
+      })
 
     /** HTTP Interceptor */
     $httpProvider.interceptors.push(interceptor);
@@ -189,22 +200,22 @@
     };
   };
 
-//  runState.$inject = ['$rootScope'];
+  //  runState.$inject = ['$rootScope'];
 
   //function runState($rootScope) {
-    // $rootScope.$on('$stateChangeStart',
-    //   function(event, toState, toParams, fromState, fromParams) {
-    //     console.log(toState.name);
-    //
-    //     if (toState.name !== 'dashboard') {
-    //       if (toState.name !== 'login') {
-    //         if (!sessionStorage.token) {
-    //           event.preventDefault();
-    //           window.location.href = './#/login';
-    //         }
-    //       };
-    //     }
-    //   });
+  // $rootScope.$on('$stateChangeStart',
+  //   function(event, toState, toParams, fromState, fromParams) {
+  //     console.log(toState.name);
+  //
+  //     if (toState.name !== 'dashboard') {
+  //       if (toState.name !== 'login') {
+  //         if (!sessionStorage.token) {
+  //           event.preventDefault();
+  //           window.location.href = './#/login';
+  //         }
+  //       };
+  //     }
+  //   });
   //}
 
 })();

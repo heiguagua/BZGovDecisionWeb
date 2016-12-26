@@ -23,18 +23,6 @@
     <div class='graph' wiserv-chart content=popups[$index] ></div>
   </div>
   <div class='table-data'>
-    <!-- <div ng-hide='popups[$index].formTable' class='data-content'>
-      <div class='data-head'>
-        <div class='data-head-item'></div>
-        <div class='data-head-item' ng-repeat='column in popups[$index].columnNames' title={{column}}>{{column}}</div>
-      </div>
-      <div class='data-body'>
-        <div class='data-body-item' ng-repeat='row in popups[$index].rowData'>
-          <div class='data-name' title={{row.rowName}}>{{row.rowName}}</div>
-          <div class='data-value' ng-repeat='data in row.rowValue track by $index' title='{{data.value}}'>{{data.value}}</div>
-        </div>
-      </div>
-    </div> -->
     <table class="table  table-striped top10 table-hover text-center" ng-hide='popups[$index].formTable'>
       <thead>
         <tr>

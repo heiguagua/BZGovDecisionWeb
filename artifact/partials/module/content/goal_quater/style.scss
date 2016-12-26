@@ -1,0 +1,25 @@
+.goal-quater{
+  @include flex-num(1);
+  @include flex-flow(column);
+  padding-bottom:1rem;
+  padding-right:1rem;
+  .content-top{
+    @include flex-num(1);
+    @include flex-flow(row);
+    min-height:300px;
+    .top-left{
+      @include flex-num(3);
+      border:1px solid #DDD;
+    }
+    .top-right{
+      margin-left:0.8rem;
+      @include flex-num(2);
+      border:1px solid #DDD;
+    }
+  }
+  .content-bottom{
+    border:1px solid #DDD;
+    margin-top:1rem;
+    height:20%;
+  }
+}

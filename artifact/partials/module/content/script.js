@@ -14,10 +14,18 @@
           $('.side-nav').removeClass('sidebar-collapse');
           $('.m-header').removeClass('sidebar-collapse');
           $('.mobile-content').removeClass('sidebar-collapse');
-          $state.go('main.module.content.detail', {
-            pid: vm.subMenus[0].id,
-            mname: vm.subMenus[0].name
-          });
+          if (vm.subMenus[0].type == '7') {
+            $state.go('main.module.content.goalquater',{pid:vm.subMenus[0].id});
+            vm.flag = true;
+          }
+          else{
+            $state.go('main.module.content.detail', {
+              pid: vm.subMenus[0].id,
+              mname: vm.subMenus[0].name
+            });
+            vm.flag = false;
+          }
+
         }
       })
     }

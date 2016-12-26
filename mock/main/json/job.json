@@ -1,0 +1,58 @@
+{
+  "chartData": {
+    "series": [{
+      "name": "进度正常",
+      "type": "bar",
+      "stack": "sum",
+      "barCategoryGap": "50%",
+      "itemStyle": {
+        "normal": {
+          "color": "tomato",
+          "barBorderColor": "tomato",
+          "barBorderWidth": "6",
+          "barBorderRadius": "0",
+          "label": {
+            "show": "true",
+            "position": "insideTop"
+          }
+        }
+      },
+      "data": ["260", "200", "220", "120", "100", "80"]
+    }, {
+      "name": "进度滞后",
+      "type": "bar",
+      "stack": "sum",
+      "barCategoryGap": "50%",
+       "itemStyle": {
+        "normal": {
+          "color": "#fff",
+          "barBorderColor": "tomato",
+          "barBorderWidth": "6",
+          "barBorderRadius": "0",
+          "label": {
+            "show": "true",
+            "position": "top",
+            "textStyle":{
+              "color":"#000"
+            }
+          }
+        }
+      },
+      "data": ["150", "100", "50", "30", "70", "80"]
+    }],
+    "legend": {
+      "data": ["进度正常","进度滞后"],
+      "y": "bottom"
+    },
+    "xAxis": [{
+      "type": "category",
+      "data": ["Cosco", "CMA", "APL", "OOCL", "Wanhai", "Zim"]
+    }],
+    "yAxis": [{
+      "type ": "value",
+      "boundaryGap": ["0", "0.1"]
+    }]
+  },
+  "init_query_time": "2016-09",
+  "time_scope": "quarter"
+}

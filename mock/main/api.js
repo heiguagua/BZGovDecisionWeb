@@ -25,5 +25,9 @@ Router.route('/identity/table')
   .get(function(request, response) {
     response.json(Util.json('/main/json/dataList.json'));
 });
+Router.route('/main/job')
+  .get(function(request, response) {
+    response.json(Util.json('/main/json/job.json'));
+}); 
 /** Module export */
 module.exports = Router;
