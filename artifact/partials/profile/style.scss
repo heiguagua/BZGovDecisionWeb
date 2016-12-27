@@ -7,6 +7,9 @@
   background-size: 100% 102% !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
+  @include smallscreen {
+    padding:24px;
+  }
   .chart {
     padding: 4px;
     @include flex-num(1);

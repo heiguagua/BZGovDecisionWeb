@@ -573,7 +573,7 @@
             var grid_left = '10%';
             if (screen_width < 1600) {
               grid_top = '40%';
-              grid_left = '12%';
+              grid_left = '10%';
             }
             var option = {
               color: areaColors,
@@ -596,7 +596,7 @@
               grid: {
                 top: grid_top,
                 left: grid_left,
-                right: grid_left,
+                right: '8%',
                 bottom: 30
               },
               legend: {
