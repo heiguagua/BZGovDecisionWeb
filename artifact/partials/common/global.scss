@@ -23,7 +23,32 @@ ul {
 input,
 textarea {
   -webkit-apprarance: none;
-  outline:none;
+  outline: none;
+}
+a,
+input,
+label,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li,
+div {
+  font-family: 微软雅黑;
+}
+.btn-primary {
+  border-radius: 4px;
+  padding: 4px 8px;
+  background-color: #33a6e5;
+  border: 0;
+  &:hover{
+    background-color: #159be4;
+  }
 }
 $chartHeightSmall: 380px;
 $chartHeightBig: 540px;

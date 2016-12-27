@@ -38,7 +38,7 @@
             <a ng-if='menu.type == 0' ui-sref='main.preview({preid:menu.id})' ui-sref-opts="{reload:'main.preview'}">{{menu.name}}</a>
             <a ng-if='(menu.type != 0 && menu.type != 2)' ui-sref='main.module({id:menu.id,url:menu.url})' ui-sref-opts="{reload:'main.module'}">{{menu.name}}</a>
             <!-- <a ng-if='menu.type == 2' ui-sref='main.file({furl:menu.url})' ui-sref-opts="{reload:'main.file'}">{{menu.name}}</a> -->
-            <a ng-if='menu.type == 2'>{{menu.name}}</a>
+            <a ng-if='menu.name == "精准扶贫"' href='http://124.161.245.148:8099/' target='_blank'>{{menu.name}}</a>
           </li>
           <!-- <li ui-sref-active="active"><a ui-sref='main.module.content'>目标工作分析</a></li> -->
         </ul>

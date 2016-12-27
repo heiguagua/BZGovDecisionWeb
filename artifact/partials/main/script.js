@@ -33,7 +33,7 @@
       }).then(function(result) {
         vm.menus = result.data;
         _.remove(vm.menus, function(item) {
-          return item.type == '2' || item.type == '3';
+          return item.name == '首页' || item.name == '经济概况';
         });
         if (screen_width < 1200) { // mobile
           var current_menu_index = 0;
