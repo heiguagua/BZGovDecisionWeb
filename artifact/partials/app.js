@@ -21,7 +21,14 @@
       'app.main.module.content',
       'app.main.module.content.detail',
       'app.main.module.content.job',
-      'app.main.module.content.goalquater'
+      'app.main.module.content.goalquater',
+      'app.main.module.content.goalyear',
+      'app.main.module.content.proceeding',
+      'app.main.module.content.ecocity',
+      'app.main.module.content.ecocounty',
+      'app.main.module.content.ecogdp',
+      'app.main.module.content.projectcity',
+      'app.main.module.content.projectcounty'
     ])
     .config(config);
 
@@ -161,6 +168,49 @@
         controller: 'goalquaterController',
         controllerAs: 'goalquater'
       })
+      .state('main.module.content.goalyear',{
+        url: '/goalyear/:pid',
+        templateUrl: 'partials/module/content/goal_year/view.html',
+        controller: 'goalyearController',
+        controllerAs: 'goalyear'
+      })
+      .state('main.module.content.proceeding',{
+        url: '/proceeding/:pid',
+        templateUrl: 'partials/module/content/proceeding/view.html',
+        controller: 'proceedingController',
+        controllerAs: 'proceeding'
+      })
+      .state('main.module.content.ecocity',{
+        url: '/ecocity/:pid',
+        templateUrl: 'partials/module/content/eco_city/view.html',
+        controller: 'ecocityController',
+        controllerAs: 'ecocity'
+      })
+      .state('main.module.content.ecocounty',{
+        url: '/ecocounty/:pid',
+        templateUrl: 'partials/module/content/eco_county/view.html',
+        controller: 'ecocountyController',
+        controllerAs: 'ecocounty'
+      })
+      .state('main.module.content.ecogdp',{
+        url: '/ecogdp/:pid',
+        templateUrl: 'partials/module/content/eco_gdp/view.html',
+        controller: 'ecogdpController',
+        controllerAs: 'ecogdp'
+      })
+      .state('main.module.content.projectcity',{
+        url: '/projectcity/:pid',
+        templateUrl: 'partials/module/content/project_city/view.html',
+        controller: 'projectcityController',
+        controllerAs: 'projectcity'
+      })
+      .state('main.module.content.projectcounty',{
+        url: '/projectcounty/:pid',
+        templateUrl: 'partials/module/content/project_county/view.html',
+        controller: 'projectcountyController',
+        controllerAs: 'projectcounty'
+      })
+
 
     /** HTTP Interceptor */
     $httpProvider.interceptors.push(interceptor);
