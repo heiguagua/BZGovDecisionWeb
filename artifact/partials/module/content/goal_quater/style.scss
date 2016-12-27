@@ -67,9 +67,11 @@
     margin-top: 1rem;
     height: 20%;
     padding: 15px;
+    -webkit-align-items: center;
+    align-items: center;
     @include flex-flow(row);
     .label-icon {
-      @include flex-num(1);
+      @include flex-num(2);
       border-right: 1px solid #DDD;
       .media-left {
         width: 46%;
@@ -86,22 +88,30 @@
         strong {
           font-size: 1.4rem;
           color: #33a6e5;
+          &.down{
+            color:#20b3a9;
+          }
         }
       }
     }
+    .item-list {
+      @include flex-num(4);
+      @include flex-flow(column);
+      padding: 0 0 0 3rem;
+    }
     .item {
-      @include flex-num(3);
+      @include flex-num(4);
       @include flex-flow(row);
       -webkit-align-items: center;
       align-items: center;
-      padding: 0 1rem 0 4rem;
+      padding:0 0 0 3rem;
       .cell {
-        @include flex-num(1);
+        @include flex-num(2);
         text-align: right;
         font-family: 微软雅黑;
         &:first-child {
           text-align: left;
-          @include flex-num(2);
+          @include flex-num(3);
         }
         &:nth-child(2) {
           text-align: center;
@@ -114,6 +124,35 @@
           color: #33a6e5;
         }
       }
+    }
+    .detail-item {
+      @include flex-num(3);
+      @include flex-flow(row);
+      -webkit-align-items: center;
+      align-items: center;
+      .cell {
+        @include flex-num(2);
+        text-align: right;
+        font-family: 微软雅黑;
+        &:first-child {
+          text-align: left;
+          @include flex-num(3);
+        }
+        &:nth-child(2) {
+          text-align: center;
+        }
+        h5 {
+          color: #333;
+        }
+        strong {
+          font-size: 1.2rem;
+          color: #20b3a9;
+        }
+      }
+    }
+    .next {
+      @include flex-num(1);
+      text-align: right;
     }
   }
 }
