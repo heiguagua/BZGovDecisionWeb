@@ -299,6 +299,7 @@
         background: rgba(0,176,80,1);
         font-size: 0.9rem;
         color: $white;
+        max-height: 65%;
         @include mobilescreen {
           width: 76%;
           padding: 0.4rem;
