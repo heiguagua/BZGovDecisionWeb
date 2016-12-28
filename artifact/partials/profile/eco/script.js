@@ -39,6 +39,7 @@
         picCode: 7118
       }).then(function(result) {
         vm.ecoDataDown = result.data;
+        console.log(vm.ecoDataDown);
         console.log($('.datalist'));
         $('.datalist').mCustomScrollbar();
       })
