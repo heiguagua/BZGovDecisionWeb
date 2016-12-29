@@ -64,19 +64,19 @@
         </div>
         <div class='datalist'>
           <div class='mdata-items'>
+            <div class='data-item iname' style='font-weight:bold'>{{eco.ecoDataDown.init_query_time}}数据</div>
+            <div class='data-item' style='width: 23%;padding: 0 6px;' ng-repeat='colname in eco.ecoDataDown.columnName'>{{colname}}</div>
+          </div>
+          <div class='mdata-items' ng-repeat='edata in eco.ecoDataDown.rowData'>
+            <div class='data-item iname'>{{edata.rowName}}</div>
+            <div class='data-item' style='width: 23%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]"><span ng-if='data.value == ""'>-</span><span ng-if='data.value != ""'>{{data.value}}</span></div>
+          </div>
+          <br />
+          <div class='mdata-items'>
             <div class='data-item iname' style='font-weight:bold'>{{eco.ecoData.init_query_time}}数据</div>
             <div class='data-item' style='width: 23%;padding: 0 6px;' ng-repeat='colname in eco.ecoData.columnName'>{{colname}}</div>
           </div>
           <div class='mdata-items' ng-repeat='edata in eco.ecoData.rowData'>
-            <div class='data-item iname'>{{edata.rowName}}</div>
-            <div class='data-item' style='width: 23%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]"><span ng-if='data.value == ""'>-</span><span ng-if='data.value != ""'>{{data.value}}</span></div>
-          </div>
-          <br/>
-          <div class='mdata-items'>
-            <div class='data-item iname' style='font-weight:bold'>{{eco.ecoData.init_query_time}}数据</div>
-            <div class='data-item' style='width: 23%;padding: 0 6px;' ng-repeat='colname in eco.ecoDataDown.columnName'>{{colname}}</div>
-          </div>
-          <div class='mdata-items' ng-repeat='edata in eco.ecoDataDown.rowData'>
             <div class='data-item iname'>{{edata.rowName}}</div>
             <div class='data-item' style='width: 23%;' ng-repeat='data in edata.rowValue track by $index' title='{{data.value}}' ng-class="{true: 'decrease', false: 'increase'}[data.value.indexOf('-')>-1]"><span ng-if='data.value == ""'>-</span><span ng-if='data.value != ""'>{{data.value}}</span></div>
           </div>
