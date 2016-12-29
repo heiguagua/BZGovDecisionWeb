@@ -1,6 +1,51 @@
 .eco_county{
-    @include flex-num(1);
+ @include flex-num(1);
  padding-bottom: 1rem;
   padding-right: 1rem;
+  
+  .body .header_nav{
+ border: 1px solid #ddd;
+   ul{
+   
+    list-style: none;
+   
+    li{
+      padding: 5px 7px;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      margin:15px 7px 0 7px;
+       display: inline-block;
+       cursor:pointer;
+    }
+    li:hover{
+      background: #33a6e5;
+      color: #fff;
+    }
+    .active{
+      background: #33a6e5;
+    }
+  }
+  }
+  table th,td{
+    text-align: center;
+    vertical-align: middle;
+  }
+  .font_back{
+    font-weight: bold;
+  }
+  .width20{
+    width: 40%;
+  }
+   .progress{
+        width: 99%;
+        border-radius: 15px;
+        color: #fff;
+        .progress-bar{
+            border-radius: 15px;
+            span{
+                font-size: 0.9em;
+            }
+        }
+    }
   
 }

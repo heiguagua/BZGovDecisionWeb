@@ -6,6 +6,10 @@
     '$scope', 'ecocityService', '$stateParams',
     function($scope, ecocityService, $stateParams) {
       var vm = this;
+      // 分页
+      $scope.maxSize = 5;
+           $scope.totalItems = 12;
+          $scope.currentPage = 1;
     }
   ]);
 

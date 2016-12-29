@@ -20,6 +20,10 @@
         color: #33a6e5;
         font-size: 34px;
     }
+    .font_color2{
+         color: #20b3a9;
+        font-size: 34px;
+    }
     .border_r{
     border-right: 1px solid #dddddd;
     }
@@ -45,20 +49,43 @@
         vertical-align: middle;
       
     }
-    .btn{
-        width: 100px;
-        padding: 5px;
+    .btn1{
+        width: 80px;
+       
         text-align: center;
         color: #fff;
+        display: inline-block;
+    }
+    .font_blue{
+        color: #20b3a9;
     }
     .blue{
         background: #20b3a9;
        
     }
+    .font_yellow{
+            color: #fa9b06;
+    }
     .yellow{
           background: #fa9b06;
        
     }
-    
+    .progress{
+        width: 99%;
+        border-radius: 15px;
+        color: #fff;
+        .progress-bar{
+            border-radius: 15px;
+            span{
+                font-size: 0.9em;
+            }
+        }
+    }
+    .width20{
+        width: 30%;
+    }
+    .none_data{
+        color: #333;
+    }
 }
 }
