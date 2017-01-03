@@ -43,7 +43,7 @@
           }
         });
         _.remove(vm.menus, function(item) {
-          return item.name == '精准扶贫';
+          return item.name == '精准扶贫' || item.name == '目标工作分析';
         })
         if (vm.menus && vm.menus[0] && vm.menus[0].id) {
           $('.profile').css({
