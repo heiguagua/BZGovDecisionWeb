@@ -16,11 +16,12 @@
       margin:15px 7px 0 7px;
        display: inline-block;
        cursor:pointer;
-    }
-    li:hover{
-      background: #33a6e5;
+      /*&:hover{
+         background: #33a6e5;
       color: #fff;
+      }*/
     }
+   
     .active{
       background: #33a6e5;
     }
