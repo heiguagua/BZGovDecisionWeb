@@ -34,7 +34,7 @@
         <table class="table table-responsive table-bordered table-striped" style="width:100%">
 
             <tr>
-                <th>主要经济指标<span class="glyphicon glyphicon-chevron-down" data-toggle="modal" data-target="#myModal"></span></th>
+                <th>主要经济指标<span class="glyphicon glyphicon-chevron-down pull-right" data-toggle="modal" data-target="#myModal"></span></th>
                 <th>目标总值</th>
                 <th>完成总量</th>
                 <th>总量完成进度</th>
@@ -128,16 +128,17 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">勾选需要展示的指标</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="text-align:center">
                     <!--分页-->
-                    <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" first-text="第一页" previous-text="上一页" next-text="下一页"
-                        last-text="最后页" boundary-links="true" boundary-link-numbers="true">
+                    <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="5" max-size="maxSize"  previous-text="上一页" next-text="下一页"
+                         boundary-links="false" >
                     </uib-pagination>
+                    <center>已勾{{}}选项指标</center>
                     <!--分页-->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">提交更改</button>
+                    <button type="button" class=" btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
                 </div>
             </div>
             <!-- /.modal-content -->

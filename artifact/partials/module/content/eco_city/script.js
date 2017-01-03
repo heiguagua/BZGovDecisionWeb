@@ -7,8 +7,8 @@
     function($scope, ecocityService, $stateParams) {
       var vm = this;
       // 分页
-      $scope.maxSize = 5;
-           $scope.totalItems = 12;
+      $scope.maxSize = 2;
+           $scope.totalItems = 40;
           $scope.currentPage = 1;
     }
   ]);
