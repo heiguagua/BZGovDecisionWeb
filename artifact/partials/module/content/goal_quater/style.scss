@@ -1,7 +1,7 @@
 .goal-quater {
   @include flex-num(1);
   @include flex-flow(column);
-  padding-bottom: 1rem;
+  padding-bottom: 10px;
   padding-right: 1rem;
   .content-top {
     @include flex-num(1);
@@ -48,6 +48,12 @@
             padding: 10px 8px;
             font-size: 0.7rem;
             color: #666666;
+            @include smallscreen{
+              padding:8px;
+            }
+            img{
+              width:14%;
+            }
             &.first {
               color: rgb(252,108,3);
             }
@@ -64,7 +70,7 @@
   }
   .content-bottom {
     border: 1px solid #DDD;
-    margin-top: 1rem;
+    margin-top: .6rem;
     height: 20%;
     padding: 15px;
     -webkit-align-items: center;
@@ -77,9 +83,13 @@
         width: 46%;
         text-align: center;
         padding-right: 0;
+        img{
+          width:40%;
+        }
         .desc {
           margin-top: 8px;
           color: #666666;
+          margin-bottom:0;
         }
       }
       .media-body {
@@ -118,6 +128,7 @@
         }
         h5 {
           color: #666666;
+
         }
         strong {
           font-size: 1.4rem;
@@ -143,6 +154,9 @@
         }
         h5 {
           color: #333;
+          @include smallscreen {
+            margin:0;
+          }
         }
         strong {
           font-size: 1.2rem;

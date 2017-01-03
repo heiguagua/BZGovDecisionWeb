@@ -1,8 +1,8 @@
-<div class='content-box right5 left5' ng-repeat='item in detail.dcontent  track by $index'>
+<div class='content-box right5 left5' >
 
-  <div class='chart' cg-busy="{promise:popups[$index].promise,message:'加载中',backdrop:false,delay:0,minDuration:50}">
+  <div class='chart' >
     <div class='statistic'>
-      <div ng-show='popups[$index].time_scope != "none"' class='pull-left'>
+      <div  class='pull-left'>
         <label >统计时间：</label>
         <div class='time-pick'>
           <p class="input-group">
@@ -17,9 +17,20 @@
         </div>
       </div>
       <div class='from-dept pull-right'>
-        <label>数据来源：</label>{{popups[$index].dep_name}}
+        <label>数据来源：</label>
       </div>
     </div>
-    <div class='graph' wiserv-chart content=popups[$index]></div>
+    <div class='graph' wiserv-goal-progress ></div>
+  </div>
+</div>
+<div class='content-box right5 left5' >
+
+  <div class='chart' >
+    <div class='statistic'>
+      <div class='from-dept pull-right'>
+        <label>数据来源：</label>
+      </div>
+    </div>
+    <div class='graph' wiserv-goal-rate ></div>
   </div>
 </div>

@@ -3,6 +3,12 @@
   @include flex-flow(column);
   padding-bottom: 10px;
   padding-right: 1rem;
+  position: relative;
+  .right-top {
+    position: absolute;
+    right: 23px;
+    top: -40px;
+  }
   .table-items {
     @include flex-flow(row);
     .y-item {
@@ -11,10 +17,18 @@
       margin-right: 5px;
       border: 1px solid #DDD;
       padding: 8px 5px;
+      h5 {
+        @include smallscreen {
+          margin: 2px 0;
+        }
+      }
     }
     table {
       margin-bottom: 0;
       margin-top: 18px;
+      @include smallscreen {
+        margin-top: 12px;
+      }
       thead {
         th {
           background: #DDD;
@@ -22,6 +36,9 @@
           color: #666666;
           font-size: 0.6rem;
           padding: 6px 8px;
+          @include smallscreen {
+            padding: 3px 8px;
+          }
           &:first-child {
             text-align: left;
             min-width: 40%;
@@ -41,6 +58,9 @@
             border: 0;
             color: #666;
             padding: 6px 8px;
+            @include smallscreen {
+              padding: 3px 8px;
+            }
             &:first-child {
               text-align: left;
             }

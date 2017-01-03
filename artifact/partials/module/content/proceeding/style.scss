@@ -11,16 +11,16 @@
       align-items: stretch;
       -webkit-justify-content: center;
       justify-content: center;
-      height: 150px;
       margin-right: 15px;
       border-top: 2px solid #33a6e5;
       border-left: 1px solid #dddddd;
       border-bottom: 1px solid #dddddd;
       border-right: 1px solid #dddddd;
-      padding: 15px 0;
+      padding: 10px 0;
+
       .font_color {
         color: #33a6e5;
-        font-size: 34px;
+        font-size: 1.4rem;
         margin-bottom: 0;
       }
       .border_r {
@@ -37,10 +37,11 @@
         .title {
           margin-top: 10px;
           margin-bottom: 0;
-          font-size: 0.85rem;
+          font-size: 0.75rem;
         }
         img {
           margin: 0 auto;
+          width: 44%;
         }
       }
       .width_r {
@@ -62,6 +63,86 @@
             display: table-cell;
             text-align: right;
             font-size: 0.6rem;
+          }
+        }
+      }
+      &:nth-of-type(even){
+        border-top:2px solid rgb(32,179,169);
+        .font_color{
+          color: rgb(32,179,169);
+        }
+      }
+    }
+  }
+  .chart-item {
+    @include flex-num(1);
+    @include flex-flow(row);
+    padding: 10px 0;
+    margin-top: 15px;
+    .chart-num {
+      @include flex-num(2);
+      border: 1px solid #DDD;
+      margin-right: 15px;
+      >div{
+        width:100%;
+        height:100%;
+      }
+    }
+    .chart-rate {
+      @include flex-num(2);
+      border: 1px solid #DDD;
+      margin-right: 15px;
+      >div{
+        width:100%;
+        height:100%;
+      }
+    }
+    .statistic-quater {
+      @include flex-num(1);
+      @include flex-flow(column);
+      border: 1px solid #DDD;
+      margin-right: 15px;
+      .total {
+        @include flex-num(1);
+        @include flex-flow(column);
+        background: #f2f2f2;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        h5{
+          font-size: 1rem;
+        }
+      }
+      .quater {
+        @include flex-num(1);
+        @include flex-flow(column);
+        background: #e2e2e2;
+        border-bottom: 12px solid #f2f2f2;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: space-around;
+        justify-content: space-around;
+        &:last-child {
+          border-bottom: 0;
+        }
+        h6 {
+          font-size: 0.85rem;
+          font-weight: bold;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+        .nums {
+          display: table;
+          width: 100%;
+          .item-num {
+            display: table-cell;
+            text-align: center;
+            font-size: 0.7rem;
+            label {
+              font-size: 0.7rem;
+              padding-right: 4px;
+            }
           }
         }
       }

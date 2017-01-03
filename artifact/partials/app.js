@@ -20,7 +20,7 @@
       'app.main.module',
       'app.main.module.content',
       'app.main.module.content.detail',
-      'app.main.module.content.job',
+      'app.main.module.content.goalprogress',
       'app.main.module.content.goalquater',
       'app.main.module.content.goalyear',
       'app.main.module.content.proceeding',
@@ -156,11 +156,11 @@
         controller: 'detailController',
         controllerAs: 'detail',
       })
-      .state('main.module.content.job',{
-        url: '/job/:pid',
-        templateUrl: 'partials/module/content/job/view.html',
-        controller: 'jobController',
-        controllerAs: 'job'
+      .state('main.module.content.goalprogress',{
+        url: '/goalprogress/:pid',
+        templateUrl: 'partials/module/content/goal_progress/view.html',
+        controller: 'goalprogressController',
+        controllerAs: 'goalprogress'
       })
       .state('main.module.content.goalquater',{
         url: '/goalquater/:pid',

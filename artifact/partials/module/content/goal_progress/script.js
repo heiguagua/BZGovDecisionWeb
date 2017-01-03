@@ -1,33 +1,36 @@
 (function() {
   /** Module */
-  var proceeding = angular.module('app.main.module.content.proceeding', ['ui.bootstrap', 'cgBusy']);
+  var goalprogress = angular.module('app.main.module.content.goalprogress', ['ui.bootstrap','cgBusy']);
   /** Controller */
-  proceeding.controller('proceedingController', [
-    '$scope', 'proceedingService', '$stateParams',
-    function($scope, proceedingService, $stateParams) {
+  goalprogress.controller('goalprogressController', [
+    '$scope', 'goalprogressService', '$stateParams', 'uibDateParser',
+    function($scope, goalprogressService, $stateParams, uibDateParser) {
       var vm = this;
+
+
+      $scope.altInputFormats = ['M!/d!/yyyy'];
     }
   ]);
 
   /** Service */
-  proceeding.factory('proceedingService', ['$http', 'URL',
+  goalprogress.factory('goalprogressService', ['$http', 'URL',
     function($http, URL) {
       return {
-        "": ""
+        '': ''
       }
     }
   ]);
 
-  proceeding.directive('wiservTargetProcnum', ['proceedingService',
-    function(proceedingService) {
+  goalprogress.directive('wiservGoalProgress', ['goalprogressService','$window',
+    function(goalprogressService,$window) {
       return {
         restrict: 'ACE',
         template: "<div style='width:100%;height:100%'></div>",
-        link: function(scope, element, attrs) {
+        link:function(scope,element,attrs){
           var option = {
             title: {
-              text: '纳入各月督办事项数目',
-              subtext: '数据来源：市委目督办',
+              text: '全市目标任务进度',
+              // subtext: '数据来源：市委目督办',
               left: 'center',
               top: '4%'
             },
@@ -94,20 +97,20 @@
     }
   ]);
 
-  proceeding.directive('wiservTargetProcrate', ['proceedingService',
-    function(proceedingService) {
+  goalprogress.directive('wiservGoalRate', ['goalprogressService','$window',
+    function(goalprogressService,$window) {
       return {
         restrict: 'ACE',
         template: "<div style='width:100%;height:100%'></div>",
-        link: function(scope, element, attrs) {
+        link:function(scope,element,attrs){
           var option = {
             title: {
-              text: '纳入各月督办事项办结率',
-              subtext: '数据来源：市委目督办',
+              text: '2016年全市目标工作正常推进率',
+              // subtext: '数据来源：市委目督办',
               left: 'center',
               top: '4%'
             },
-            color: ['rgb(49,167,229)', 'rgb(40,200,202)'],
+            color: ['rgb(49,167,229)', 'rgb(40,200,202)','rgb(221,129,142)'],
             tooltip: {
               trigger: 'axis',
               axisPointer: { // 坐标轴指示器，坐标轴触发有效
@@ -115,7 +118,7 @@
               }
             },
             legend: {
-              data: ['办结率'],
+              data: ['第一季度', '第二季度','第三季度'],
               top: '17%',
               itemGap: 50
             },
@@ -128,22 +131,40 @@
             },
             xAxis: [{
               type: 'category',
-              data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+              data: ['县、区', '经开区', '市委部门', '市政府部门', '驻巴单位', '驻外办事机构']
             }],
             yAxis: [{
               type: 'value',
               name: '%'
             }],
             series: [{
-              name: '办结率',
+              name: '第一季度',
               type: 'line',
-              data: [40, 32, 30, 14, 24, 23, 11, 15, 24, 29],
+              data: [16, 19, 20, 21, 24, 23],
               label: {
                 normal: {
                   show: true
                 }
               },
-            }]
+            }, {
+              name: '第二季度',
+              type: 'line',
+              data: [18, 26, 22, 30, 23, 33],
+              label: {
+                normal: {
+                  show: true
+                }
+              }
+            }, {
+              name: '第三季度',
+              type: 'line',
+              data: [21, 23, 26, 29, 26, 30],
+              label: {
+                normal: {
+                  show: true
+                }
+              }
+            } ]
           };
 
           setTimeout(function(){
@@ -156,5 +177,6 @@
       }
     }
   ]);
+
 
 })();
