@@ -195,3 +195,8 @@ $desktop-width: 1400px;
 //    background-color:rgba(96,125,139,.5);
 //    -webkit-border-radius:0;
 // }
+
+/*---进度条样式---*/
+.progress .progress-bar{
+  line-height: 16px;
+}

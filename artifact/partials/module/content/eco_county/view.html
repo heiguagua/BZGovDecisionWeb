@@ -1,12 +1,10 @@
 <div class="eco_county left5 right5">
-
     <div class='pull-right statistic'>
         <label>统计时间：</label>
         <div class='time-pick'>
-
             <p class="input-group">
-                <input type="text" class="form-control input-time" uib-datepicker-popup="{{format}}" ng-model="dat" is-open="popup1.opened"
-                    ng-required="true" close-text="关闭" clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
+                <input type="text" class="form-control input-time" uib-datepicker-popup="{{format}}" ng-model="dat" is-open="popup1.opened" 
+                datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
                 />
                 <span class="input-group-btn">
                      <button type="button" class="btn btn-default btn-time" ng-click="open1()">
@@ -15,11 +13,8 @@
                </span>
                 <select ng-model='popups[$index].quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
             </p>
-
         </div>
-
     </div>
-
     <div class="body" style="clear:both;">
         <div class="header_nav" style="overflow: hidden;">
             <ul>
@@ -54,7 +49,7 @@
                 </td>
                 <td>3.2</td>
                 <td>4</td>
-                <td><img src="assets\images\eco02_01.png" /> </td>
+                <td><img src="assets\images\target_1_1.png" /> </td>
             </tr>
             <tr>
                 <td>通江县</td>
@@ -63,7 +58,7 @@
                 </td>
                 <td>69.79</td>
                 <td>92</td>
-                <td><img src="assets\images\eco02_02.png" /> </td>
+                <td><img src="assets\images\target_1_2.png" /> </td>
             </tr>
             <tr>
                 <td>南江县</td>
@@ -72,7 +67,7 @@
                 </td>
                 <td>72.74</td>
                 <td>99</td>
-                <td><img src="assets\images\eco02_03.png" /> </td>
+                <td><img src="assets\images\target_1_3.png" /> </td>
             </tr>
             <tr>
                 <td>恩阳区</td>

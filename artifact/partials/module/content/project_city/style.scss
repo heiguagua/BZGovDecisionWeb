@@ -2,7 +2,7 @@
 @include flex-num(1);
  padding-bottom: 1rem;
   padding-right: 1rem;
- ul{
+ .body{
  
  @include flex-flow(row);
  li{

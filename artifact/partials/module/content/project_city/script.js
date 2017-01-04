@@ -6,7 +6,7 @@
     '$scope', 'projectcityService', '$stateParams',
     function($scope, projectcityService, $stateParams) {
       var vm = this;
-    $scope.popups = [];
+   $scope.popups = [];
       $scope.quarterOptions = [{
         'id': 3,
         "name": "第一季度"
@@ -19,9 +19,11 @@
       }];
 //  时间插件
       $scope.dat = new Date();
-      $scope.format = "yyyy/MM/dd";
+      $scope.format = "yyyy";
       $scope.altInputFormats = ['yyyy/M!/d!'];
-
+      $scope.dateOptions = {};
+      $scope.dateOptions.minMode = 'year';
+      $scope.dateOptions.datepickerMode = 'year';
       $scope.popup1 = {
         opened: false
       };
@@ -30,6 +32,7 @@
       };
     }
   ]);
+
 
   /** Service */
   projectcity.factory('projectcityService', ['$http', 'URL',

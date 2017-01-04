@@ -20,9 +20,11 @@
       }];
 //  时间插件
       $scope.dat = new Date();
-      $scope.format = "yyyy/MM/dd";
+      $scope.format = "yyyy";
       $scope.altInputFormats = ['yyyy/M!/d!'];
-
+      $scope.dateOptions = {};
+      $scope.dateOptions.minMode = 'year';
+      $scope.dateOptions.datepickerMode = 'year';
       $scope.popup1 = {
         opened: false
       };
