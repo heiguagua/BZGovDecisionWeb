@@ -307,7 +307,7 @@
         }
         @include mobilescreen {
           width: 76%;
-          padding: 0.4rem;
+          padding: 1rem 0;
           word-break: break-word;
           @include flex-flow(column);
           -webkit-justify-content: center;
