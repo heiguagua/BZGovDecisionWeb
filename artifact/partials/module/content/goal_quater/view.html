@@ -1,6 +1,26 @@
 <div class='goal-quater left5 right5'>
   <div class='content-top'>
-    <div class='top-left'></div>
+    <div class='top-left'>
+      <div class='chart'>
+        <div class='statistic'>
+          <div class='pull-left'>
+            <label >统计时间：</label>
+            <div class='time-pick'>
+              <p class="input-group">
+                <input type="text" ng-change='changed($index)' class="form-control input-time" uib-datepicker-popup="{{popups[$index].format}}" ng-model="popups[$index].model" is-open="popups[$index].opened" datepicker-options="popups[$index].dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default btn-time" ng-click="open($index)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
+                <select ng-model='popups[$index].quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class='graph' wiserv-goal-quater></div>
+      </div>
+    </div>
     <div class='top-right'>
       <h4 class='title'>2016年第三季度 目标任务考核总名次</h4>
       <table class="table  table-striped top10 table-hover text-center">
@@ -14,17 +34,17 @@
         <tr>
           <td title=''>通江区</td>
           <td title='' class='first'>1</td>
-          <td><img src='assets/images/target_1_1.png' alt='第一' /></td>
+          <td><img src='assets/images/target_1_1.png' alt='第一'/></td>
         </tr>
         <tr>
           <td title=''>恩阳区</td>
           <td title='' class='second'>2</td>
-          <td><img src='assets/images/target_1_2.png' alt='第二' /></td>
+          <td><img src='assets/images/target_1_2.png' alt='第二'/></td>
         </tr>
         <tr>
           <td title=''>巴州区</td>
           <td title='' class='third'>3</td>
-          <td><img src='assets/images/target_1_3.png' alt='第三' /></td>
+          <td><img src='assets/images/target_1_3.png' alt='第三'/></td>
         </tr>
         <tr>
           <td title=''>南江区</td>
@@ -49,7 +69,7 @@
     <div class='label-icon'>
       <div class="media">
         <a class="media-left media-middle" href="#">
-          <img src="assets/images/target_1_4.png"  alt='加分'/>
+          <img src="assets/images/target_1_4.png" alt='加分'/>
           <p class='desc'>受到加分单位数</p>
         </a>
         <div class="media-body">

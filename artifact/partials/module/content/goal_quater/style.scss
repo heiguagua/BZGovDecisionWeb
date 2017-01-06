@@ -9,8 +9,16 @@
     min-height: 300px;
     .top-left {
       @include flex-num(3);
+      @include flex-flow(column);
       border: 1px solid #DDD;
       padding: 10px;
+      .chart{
+        @include flex-num(1);
+        @include flex-flow(column);
+        .graph{
+          @include flex-num(1);
+        }
+      }
     }
     .top-right {
       margin-left: 0.8rem;
