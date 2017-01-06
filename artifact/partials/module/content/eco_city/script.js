@@ -6,11 +6,6 @@
     '$scope', 'ecocityService', '$stateParams',
     function ($scope, ecocityService, $stateParams) {
       var vm = this;
-      // 分页
-      $scope.maxSize = 2;
-      $scope.totalItems = 40;
-      $scope.currentPage = 1;
-
       ecocityService.getContent({
         menuId:$stateParams.pid
       }).then(function(result){
