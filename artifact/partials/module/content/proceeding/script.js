@@ -6,6 +6,68 @@
     '$scope', 'proceedingService', '$stateParams',
     function($scope, proceedingService, $stateParams) {
       var vm = this;
+      proceedingService.getContent({
+        menuId: $stateParams.pid
+      }).then(function(result) {
+        $scope.alldatas = result.data;
+        _.forEach(result.data, function(item) {
+          var url = item.url + '/' + item.picCode;
+
+          proceedingService.getContentDatas(url).then(function(res) {
+            if (item.picCode == 'businessSupervisionByMonth') {
+              $scope.bsMonth = res.data;
+              _.forEach($scope.bsMonth.data, function(data) {
+                switch (data.indicator_name) {
+                  case '本月新增督办事项':
+                    $scope.bs_increased = Number(data.item_number);
+                    break;
+                  case '本月继续督办事项':
+                    $scope.bs_going = Number(data.item_number);
+                    break;
+                  case '历史逾期未办结事项':
+                    $scope.bs_history = Number(data.item_number);
+                    break;
+                  case '本月应办结事项':
+                    $scope.should_do = Number(data.item_number);
+                    break;
+                  case '本月应办结事项办结数':
+                    $scope.done_num = Number(data.item_number);
+                    break;
+                  case '历史逾期事项本月办结数':
+                    $scope.done_history = Number(data.item_number);
+                    break;
+                  case '本月逾期未办结事项数':
+                    $scope.delay_num = Number(data.item_number);
+                    break;
+                  case '历史逾期事项本月未办结':
+                    $scope.delay_history = Number(data.item_number);
+                    break;
+                }
+              })
+            }
+            if (item.picCode == 'businessSupervisionQuarterly') {
+              $scope.quarter_data = res.data;
+              _.forEach($scope.quarter_data, function(data) {
+                if (data.quarter == 1) {
+                  data.quarter = '一';
+                }
+                if (data.quarter == 2) {
+                  data.quarter = '二';
+                }
+                if (data.quarter == 3) {
+                  data.quarter = '三';
+                }
+                if (data.quarter == 4) {
+                  data.quarter = '四';
+                }
+              })
+            }
+            if (item.picCode == 'businessSupervisionYearly') {
+              $scope.yearData = res.data;
+            }
+          })
+        })
+      })
     }
   ]);
 
@@ -13,7 +75,22 @@
   proceeding.factory('proceedingService', ['$http', 'URL',
     function($http, URL) {
       return {
-        "": ""
+        "getContent": getContent,
+        "getContentDatas": getContentDatas
+      }
+
+      function getContent(params) {
+        return $http.get(
+          URL + '/main/showPics', {
+            params: params
+          }
+        )
+      }
+
+      function getContentDatas(params) {
+        return $http.get(
+          URL + params
+        )
       }
     }
   ]);
@@ -22,8 +99,20 @@
     function(proceedingService) {
       return {
         restrict: 'ACE',
+        scope: {
+          numdata: '='
+        },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
+          var data_nums = [];
+          _.forEach(scope.numdata.value,function(data) {
+            if(data.name == '本月新增督办事项' || data.name == '本月继续督办事项' || data.name == '历史逾期未办结事项') {
+              data.type = 'bar';
+              data.barMaxWidth = '50%';
+              data.stack = '纳入本月';
+              data_nums.push(data);
+            }
+          });
           var option = {
             title: {
               text: '纳入各月督办事项数目',
@@ -39,7 +128,7 @@
               }
             },
             legend: {
-              data: ['进度正常', '进度滞后'],
+              data: _.map(data_nums,'name'),
               top: '17%',
               itemGap: 50
             },
@@ -52,43 +141,21 @@
             },
             xAxis: [{
               type: 'category',
-              data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+              data: scope.numdata.month
             }],
             yAxis: [{
               type: 'value',
               name: '%'
             }],
-            series: [{
-              name: '进度正常',
-              type: 'bar',
-              barMaxWidth: '50%',
-              stack: '纳入本月',
-              data: [40, 32, 30, 14, 24, 23, 11, 15, 24, 29],
-              label: {
-                normal: {
-                  show: true
-                }
-              },
-            }, {
-              name: '进度滞后',
-              type: 'bar',
-              barMaxWidth: '50%',
-              stack: '纳入本月',
-              data: [22, 18, 19, 23, 19, 23, 20, 17, 14, 18],
-              label: {
-                normal: {
-                  show: true
-                }
-              },
-            } ]
+            series: data_nums
           };
 
-          setTimeout(function(){
+          setTimeout(function() {
             var chartInstance = echarts.init((element.find('div'))[0]);
             chartInstance.clear();
             chartInstance.resize();
             chartInstance.setOption(option);
-          },300);
+          }, 300);
         }
       }
     }
@@ -98,8 +165,17 @@
     function(proceedingService) {
       return {
         restrict: 'ACE',
+        scope: {
+          ratedata: '='
+        },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
+          var dataValue = [];
+          _.forEach(scope.ratedata.value,function(data){
+            if(data.name == '纳入各月督办事项办结率') {
+              dataValue = data.data;
+            }
+          })
           var option = {
             title: {
               text: '纳入各月督办事项办结率',
@@ -128,7 +204,7 @@
             },
             xAxis: [{
               type: 'category',
-              data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+              data: scope.ratedata.month
             }],
             yAxis: [{
               type: 'value',
@@ -137,7 +213,7 @@
             series: [{
               name: '办结率',
               type: 'line',
-              data: [40, 32, 30, 14, 24, 23, 11, 15, 24, 29],
+              data: dataValue,
               label: {
                 normal: {
                   show: true
@@ -146,12 +222,12 @@
             }]
           };
 
-          setTimeout(function(){
+          setTimeout(function() {
             var chartInstance = echarts.init((element.find('div'))[0]);
             chartInstance.clear();
             chartInstance.resize();
             chartInstance.setOption(option);
-          },300);
+          }, 300);
         }
       }
     }
