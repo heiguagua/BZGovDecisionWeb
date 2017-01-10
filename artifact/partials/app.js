@@ -133,7 +133,7 @@
         controllerAs: 'preview',
       })
       .state('main.module', {
-        url: '/module/:id/:url',
+        url: '/module/:id',
         templateUrl: 'partials/module/view.html',
         controller: 'moduleController',
         controllerAs: 'module',

@@ -1,4 +1,4 @@
-<div class='goal-quater left5 right5'>
+<div class='goal-quater left5 right5' ng-repeat='item in alldatas  track by $index' ng-if='$index == 0'>
   <div class='content-top'>
     <div class='top-left'>
       <div class='chart'>
@@ -7,22 +7,22 @@
             <label >统计时间：</label>
             <div class='time-pick'>
               <p class="input-group">
-                <input type="text" ng-change='changed($index)' class="form-control input-time" uib-datepicker-popup="{{popups[$index].format}}" ng-model="popups[$index].model" is-open="popups[$index].opened" datepicker-options="popups[$index].dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
+                <input type="text" ng-change='changed()' class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model" is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default btn-time" ng-click="open($index)">
+                  <button type="button" class="btn btn-default btn-time" ng-click="open()">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
-                <select ng-model='popups[$index].quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
+                <select ng-model='datepick.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
               </p>
             </div>
           </div>
         </div>
-        <div class='graph' wiserv-goal-quater></div>
+        <div class='graph' wiserv-goal-quater quaterdata=targetExamRanks ng-if="targetExamRanks != void(0)"></div>
       </div>
     </div>
     <div class='top-right'>
-      <h4 class='title'>2016年第三季度 目标任务考核总名次</h4>
+      <h4 class='title'>{{targetExamTotalRanks.year}}年第{{targetExamTotalRanks.quarter}}季度 目标任务考核总名次</h4>
       <table class="table  table-striped top10 table-hover text-center">
         <thead>
           <tr>
@@ -31,35 +31,16 @@
             <th></th>
           </tr>
         </thead>
-        <tr>
-          <td title=''>通江区</td>
-          <td title='' class='first'>1</td>
-          <td><img src='assets/images/target_1_1.png' alt='第一'/></td>
-        </tr>
-        <tr>
-          <td title=''>恩阳区</td>
-          <td title='' class='second'>2</td>
-          <td><img src='assets/images/target_1_2.png' alt='第二'/></td>
-        </tr>
-        <tr>
-          <td title=''>巴州区</td>
-          <td title='' class='third'>3</td>
-          <td><img src='assets/images/target_1_3.png' alt='第三'/></td>
-        </tr>
-        <tr>
-          <td title=''>南江区</td>
-          <td title=''>4</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td title=''>平昌县</td>
-          <td title=''>5</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td title=''>经开区</td>
-          <td title=''>6</td>
-          <td></td>
+        <tr ng-repeat='data in targetExamTotalRanks.data'>
+          <td>{{data.area}}</td>
+          <td ng-if='data.rank == 1' class='first'>{{data.rank}}</td>
+          <td ng-if='data.rank == 2' class='second'>{{data.rank}}</td>
+          <td ng-if='data.rank == 3' class='third'>{{data.rank}}</td>
+          <td ng-if='data.rank != 1 && data.rank != 2 && data.rank != 3' >{{data.rank}}</td>
+          <td ng-if='data.rank == 1'><img src='assets/images/target_1_1.png' alt='第一'/></td>
+          <td ng-if='data.rank == 2'><img src='assets/images/target_1_2.png' alt='第二'/></td>
+          <td ng-if='data.rank == 3'><img src='assets/images/target_1_3.png' alt='第三'/></td>
+          <td ng-if='data.rank != 1 && data.rank != 2 && data.rank != 3' ></td>
         </tr>
 
       </table>
@@ -73,20 +54,20 @@
           <p class='desc'>受到加分单位数</p>
         </a>
         <div class="media-body">
-          <strong>5</strong>
+          <strong>{{awardedTotal}}</strong>
         </div>
       </div>
     </div>
-    <div class='item'>
+    <div class='item' ng-repeat='awarded in awardedUnits.data'>
       <div class='cell'>
-        <h4>巴中市发展与改革委员会</h4>
-        <h5>获得省长在xx地方的表彰</h5>
+        <h4>{{awarded.awarded_unit}}</h4>
+        <h5>{{awarded.awarded_reason}}</h5>
       </div>
       <div class='cell'>
-        <strong>+2</strong>
+        <strong>+{{awarded.awarded_points}}</strong>
       </div>
       <div class='cell'>
-        计入季度
+        计入{{awarded.awarded_scope}}
       </div>
     </div>
     <div class='next'>
@@ -101,51 +82,23 @@
           <p class='desc'>受到扣分单位数</p>
         </a>
         <div class="media-body">
-          <strong class='down'>10</strong>
+          <strong class='down'>{{penlTotal}}</strong>
         </div>
       </div>
     </div>
     <div class='item-list'>
-      <div class='detail-item'>
+      <div class='detail-item' ng-repeat='penal in penalUnits.data'>
         <div class='cell'>
-          <h5>巴中市发展与改革委员会</h5>
+          <h5>{{penal.penal_unit}}</h5>
         </div>
         <div class='cell'>
-          <strong>-2</strong>
+          <strong>-{{penal.penal_points}}</strong>
         </div>
         <div class='cell'>
-          计入季度
+          计入{{penal.penal_scope}}
         </div>
         <div class='cell'>
-          群众举报
-        </div>
-      </div>
-      <div class='detail-item'>
-        <div class='cell'>
-          <h5>巴中市发展与改革委员会</h5>
-        </div>
-        <div class='cell'>
-          <strong>-2</strong>
-        </div>
-        <div class='cell'>
-          计入季度
-        </div>
-        <div class='cell'>
-          群众举报
-        </div>
-      </div>
-      <div class='detail-item'>
-        <div class='cell'>
-          <h5>巴中市发展与改革委员会</h5>
-        </div>
-        <div class='cell'>
-          <strong>-2</strong>
-        </div>
-        <div class='cell'>
-          计入季度
-        </div>
-        <div class='cell'>
-          群众举报
+          {{penal.penal_target}}
         </div>
       </div>
     </div>

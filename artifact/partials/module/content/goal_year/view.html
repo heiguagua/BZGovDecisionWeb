@@ -3,12 +3,13 @@
     <label >统计时间：</label>
     <div class='time-pick'>
       <p class="input-group">
-        <input type="text" ng-change='changed()' class="form-control input-time" uib-datepicker-popup="{{popups[$index].format}}" ng-model="model" is-open="opened" datepicker-options="dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
+        <input type="text" ng-change='changed()' class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model" is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
         <span class="input-group-btn">
           <button type="button" class="btn btn-default btn-time" ng-click="open()">
             <i class="glyphicon glyphicon-calendar"></i>
           </button>
-        </span>  </p>
+        </span>
+      </p>
     </div>
   </div>
   <div class='table-items'>
@@ -22,55 +23,10 @@
             <th>名次变化</th>
           </tr>
         </thead>
-        <tr>
-          <td>市委办</td>
-          <td>1</td>
-          <td>+1</td>
-        </tr>
-        <tr>
-          <td>市纪委（监察局）</td>
-          <td>2</td>
-          <td>-1</td>
-        </tr>
-        <tr>
-          <td>市委政法委</td>
-          <td>3</td>
-          <td>+1</td>
-        </tr>
-        <tr>
-          <td>市人大办</td>
-          <td>4</td>
-          <td>+3</td>
-        </tr>
-        <tr>
-          <td>市委组织部</td>
-          <td>5</td>
-          <td>-2</td>
-        </tr>
-        <tr>
-          <td>市政协办</td>
-          <td>6</td>
-          <td>+2</td>
-        </tr>
-        <tr>
-          <td>市委宣传部</td>
-          <td>7</td>
-          <td>-2</td>
-        </tr>
-        <tr>
-          <td>市检察院</td>
-          <td>8</td>
-          <td>-1</td>
-        </tr>
-        <tr>
-          <td>市总工会</td>
-          <td>9</td>
-          <td>=</td>
-        </tr>
-        <tr>
-          <td>市中级法院</td>
-          <td>10</td>
-          <td>=</td>
+        <tr ng-repeat='data in partyDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
         </tr>
       </table>
     </div>
@@ -84,55 +40,10 @@
             <th>名次变化</th>
           </tr>
         </thead>
-        <tr>
-          <td>市国家税务局</td>
-          <td>1</td>
-          <td>+9</td>
-        </tr>
-        <tr>
-          <td>市教育局</td>
-          <td>2</td>
-          <td>-1</td>
-        </tr>
-        <tr>
-          <td>市审计局</td>
-          <td>3</td>
-          <td>+4</td>
-        </tr>
-        <tr>
-          <td>市农业局</td>
-          <td>4</td>
-          <td>+33</td>
-        </tr>
-        <tr>
-          <td>市财政局</td>
-          <td>5</td>
-          <td>-3</td>
-        </tr>
-        <tr>
-          <td>市扶贫移民局</td>
-          <td>6</td>
-          <td>+7</td>
-        </tr>
-        <tr>
-          <td>市公安局</td>
-          <td>7</td>
-          <td>-2</td>
-        </tr>
-        <tr>
-          <td>市人社局</td>
-          <td>8</td>
-          <td>-2</td>
-        </tr>
-        <tr>
-          <td>市政府办</td>
-          <td>9</td>
-          <td>-8</td>
-        </tr>
-        <tr>
-          <td>市促投委</td>
-          <td>10</td>
-          <td>+2</td>
+        <tr ng-repeat='data in govDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
         </tr>
       </table>
     </div>
@@ -146,55 +57,10 @@
             <th>名次变化</th>
           </tr>
         </thead>
-        <tr>
-          <td>是国家税务局</td>
-          <td>1</td>
-          <td>+3</td>
-        </tr>
-        <tr>
-          <td>市地方税务局</td>
-          <td>2</td>
-          <td>+1</td>
-        </tr>
-        <tr>
-          <td>巴中国家安全局</td>
-          <td>3</td>
-          <td>=</td>
-        </tr>
-        <tr>
-          <td>人行巴中市中心支行</td>
-          <td>4</td>
-          <td>+2</td>
-        </tr>
-        <tr>
-          <td>国家统计局巴中调查队</td>
-          <td>5</td>
-          <td>-3</td>
-        </tr>
-        <tr>
-          <td>国网巴中供电公司</td>
-          <td>6</td>
-          <td>+9</td>
-        </tr>
-        <tr>
-          <td>邮储银行巴中市支行</td>
-          <td>7</td>
-          <td>+3</td>
-        </tr>
-        <tr>
-          <td>中国移动巴中分公司</td>
-          <td>8</td>
-          <td>+8</td>
-        </tr>
-        <tr>
-          <td>巴中银监分局</td>
-          <td>9</td>
-          <td>-2</td>
-        </tr>
-        <tr>
-          <td>市气象局</td>
-          <td>10</td>
-          <td>-2</td>
+        <tr ng-repeat='data in centerDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
         </tr>
       </table>
     </div>
@@ -210,35 +76,10 @@
             <th>名次变化</th>
           </tr>
         </thead>
-        <tr>
-          <td>通江县</td>
-          <td>1</td>
-          <td>+3</td>
-        </tr>
-        <tr>
-          <td>恩阳区</td>
-          <td>2</td>
-          <td>=</td>
-        </tr>
-        <tr>
-          <td>巴州区</td>
-          <td>3</td>
-          <td>+1</td>
-        </tr>
-        <tr>
-          <td>南江县</td>
-          <td>4</td>
-          <td>-3</td>
-        </tr>
-        <tr>
-          <td>平昌县</td>
-          <td>5</td>
-          <td>-2</td>
-        </tr>
-        <tr>
-          <td>经开区</td>
-          <td>6</td>
-          <td>=</td>
+        <tr ng-repeat='data in countyDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
         </tr>
       </table>
     </div>
@@ -252,35 +93,10 @@
             <th>名次变化</th>
           </tr>
         </thead>
-        <tr>
-          <td>驻重庆办事处</td>
-          <td>1</td>
-          <td>+3</td>
-        </tr>
-        <tr>
-          <td>驻成都办事处</td>
-          <td>2</td>
-          <td>+2</td>
-        </tr>
-        <tr>
-          <td>驻上海联络处</td>
-          <td>3</td>
-          <td>=</td>
-        </tr>
-        <tr>
-          <td>驻西安办事处</td>
-          <td>4</td>
-          <td>+2</td>
-        </tr>
-        <tr>
-          <td>驻北京联络处</td>
-          <td>5</td>
-          <td>-4</td>
-        </tr>
-        <tr>
-          <td>驻广州办事处</td>
-          <td>6</td>
-          <td>-4</td>
+        <tr ng-repeat='data in foreignDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
         </tr>
       </table>
     </div>

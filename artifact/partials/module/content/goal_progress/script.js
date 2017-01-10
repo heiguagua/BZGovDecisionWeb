@@ -1,13 +1,46 @@
 (function() {
   /** Module */
-  var goalprogress = angular.module('app.main.module.content.goalprogress', ['ui.bootstrap','cgBusy']);
+  var goalprogress = angular.module('app.main.module.content.goalprogress', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   goalprogress.controller('goalprogressController', [
     '$scope', 'goalprogressService', '$stateParams', 'uibDateParser',
     function($scope, goalprogressService, $stateParams, uibDateParser) {
       var vm = this;
 
+      $scope.quarterOptions = [{
+        'id': 3,
+        "name": "第一季度"
+      }, {
+        'id': 6,
+        "name": "第二季度"
+      }, {
+        'id': 9,
+        "name": "第三季度"
+      }, {
+        'id': 12,
+        "name": "第四季度"
+      }];
+      $scope.datepick = {};
+      $scope.datepick.format = 'yyyy';
+      $scope.datepick.model = new Date();
+      $scope.datepick.dateOptions = {};
+      $scope.datepick.dateOptions.minMode = 'year';
+      $scope.datepick.dateOptions.datepickerMode = 'year';
 
+      $scope.open = function() {
+        $scope.datepick.opened = true;
+      };
+
+      $scope.changed = function() {
+        if (!angular.isDate($scope.datepick.model) || isNaN($scope.datepick.model.getTime())) {
+          //alert('请输入正确的日期格式！');
+          return;
+        }
+        if (!$scope.datepick.quarter) {
+          alert('请选择季度！');
+          return;
+        }
+      }
       $scope.altInputFormats = ['M!/d!/yyyy'];
     }
   ]);
@@ -21,12 +54,12 @@
     }
   ]);
 
-  goalprogress.directive('wiservGoalProgress', ['goalprogressService','$window',
-    function(goalprogressService,$window) {
+  goalprogress.directive('wiservGoalProgress', ['goalprogressService', '$window',
+    function(goalprogressService, $window) {
       return {
         restrict: 'ACE',
         template: "<div style='width:100%;height:100%'></div>",
-        link:function(scope,element,attrs){
+        link: function(scope, element, attrs) {
           var option = {
             title: {
               text: '全市目标任务进度',
@@ -83,26 +116,26 @@
                   show: true
                 }
               },
-            } ]
+            }]
           };
 
-          setTimeout(function(){
+          setTimeout(function() {
             var chartInstance = echarts.init((element.find('div'))[0]);
             chartInstance.clear();
             chartInstance.resize();
             chartInstance.setOption(option);
-          },300);
+          }, 300);
         }
       }
     }
   ]);
 
-  goalprogress.directive('wiservGoalRate', ['goalprogressService','$window',
-    function(goalprogressService,$window) {
+  goalprogress.directive('wiservGoalRate', ['goalprogressService', '$window',
+    function(goalprogressService, $window) {
       return {
         restrict: 'ACE',
         template: "<div style='width:100%;height:100%'></div>",
-        link:function(scope,element,attrs){
+        link: function(scope, element, attrs) {
           var option = {
             title: {
               text: '2016年全市目标工作正常推进率',
@@ -110,7 +143,7 @@
               left: 'center',
               top: '4%'
             },
-            color: ['rgb(49,167,229)', 'rgb(40,200,202)','rgb(221,129,142)'],
+            color: ['rgb(49,167,229)', 'rgb(40,200,202)', 'rgb(221,129,142)'],
             tooltip: {
               trigger: 'axis',
               axisPointer: { // 坐标轴指示器，坐标轴触发有效
@@ -118,7 +151,7 @@
               }
             },
             legend: {
-              data: ['第一季度', '第二季度','第三季度'],
+              data: ['第一季度', '第二季度', '第三季度'],
               top: '17%',
               itemGap: 50
             },
@@ -164,15 +197,15 @@
                   show: true
                 }
               }
-            } ]
+            }]
           };
 
-          setTimeout(function(){
+          setTimeout(function() {
             var chartInstance = echarts.init((element.find('div'))[0]);
             chartInstance.clear();
             chartInstance.resize();
             chartInstance.setOption(option);
-          },300);
+          }, 300);
         }
       }
     }

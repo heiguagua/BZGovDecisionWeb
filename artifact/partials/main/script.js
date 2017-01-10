@@ -21,7 +21,9 @@
       var screen_width = screen.width;
       var screen_height = screen.height;
       var main_height = $('.mobile-content').height();
+      $scope.showMobile = false;
       if (screen_width < 1024) { // mobile
+        $scope.showMobile = true;
         $('.mobile-content').css({
           'min-height': screen_height + 'px'
         });
@@ -33,7 +35,7 @@
       }).then(function(result) {
         vm.menus = result.data;
         _.remove(vm.menus, function(item) {
-          return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' || item.name=='目标工作分析';
+           return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' || item.name=='目标工作分析';
         });
         if (screen_width < 1200) { // mobile
           var current_menu_index = 0;
@@ -104,25 +106,25 @@
     }
   ]);
 
-  main.directive('wiservSideMenu', [
-    function() {
-      return {
-        restrict: 'ACE',
-        link: function(scope, element, attrs) {
-          console.log(element);
-          element.metisMenu({
-            preventDefault: false
-          });
-          element.bind('click', function(ev) {
-              ev.stopPropagation();
-            })
-            // element.sidr({
-            //   name: 'sidebar',
-            //   side: 'left'
-            // });
-        }
-      }
-    }
-  ]);
+  // main.directive('wiservSideMenu', [
+  //   function() {
+  //     return {
+  //       restrict: 'ACE',
+  //       link: function(scope, element, attrs) {
+  //         console.log(element);
+  //         element.metisMenu({
+  //           preventDefault: false
+  //         });
+  //         element.bind('click', function(ev) {
+  //             ev.stopPropagation();
+  //           })
+  //           // element.sidr({
+  //           //   name: 'sidebar',
+  //           //   side: 'left'
+  //           // });
+  //       }
+  //     }
+  //   }
+  // ]);
 
 })();

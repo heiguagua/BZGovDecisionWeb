@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" class="front-page">
-  <head>
-    <meta charset="utf-8"/>
-    <title>巴中市经济辅助决策系统</title>
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-  </head>
 
-  <body class='page-header-fixed'>
     <div class='page-wrap'>
       <div class="header navbar navbar-fixed-top">
         <!-- BEGIN TOP NAVIGATION BAR -->
@@ -32,11 +23,11 @@
         </div>
       </div>
 
-      <div class="main-content">
+      <div class="main-content" ng-if='!showMobile'>
         <ul class="nav navbar-nav side-nav">
           <li ng-repeat='menu in main.menus' ui-sref-active="active">
             <a ng-if='menu.type == 0' ui-sref='main.preview({preid:menu.id})' ui-sref-opts="{reload:'main.preview'}">{{menu.name}}</a>
-            <a ng-if='(menu.type != 0 && menu.type != 2)' ui-sref='main.module({id:menu.id,url:menu.url})' ui-sref-opts="{reload:'main.module'}">{{menu.name}}</a>
+            <a ng-if='(menu.type != 0 && menu.type != 2)' ui-sref='main.module({id:menu.id})' ui-sref-opts="{reload:'main.module'}">{{menu.name}}</a>
             <!-- <a ng-if='menu.type == 2' ui-sref='main.file({furl:menu.url})' ui-sref-opts="{reload:'main.file'}">{{menu.name}}</a> -->
             <a ng-if='menu.name == "精准扶贫"' href='http://124.161.245.148:8099/' target='_blank'>{{menu.name}}</a>
           </li>
@@ -44,7 +35,7 @@
         </ul>
         <div class='content-main left5' ui-view></div>
       </div>
-      <div class="mobile-content">
+      <div class="mobile-content" ng-if='showMobile'>
         <ul class="nav navbar-nav side-nav metismenu" id="menu">
           <li ui-sref-active="active"><a ui-sref='home'>首页</a></li>
           <li ng-repeat='menu in main.menus' ui-sref-active="active">
@@ -67,5 +58,3 @@
         <div class='content-main left5' ui-view ng-click='main.hideMenu()'></div>
       </div>
     </div>
-  </body>
-</html>
