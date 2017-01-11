@@ -13,12 +13,12 @@
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
-                <select ng-model='datepick.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
+                <select ng-model='targetExamRanks.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
               </p>
             </div>
           </div>
         </div>
-        <div class='graph' wiserv-goal-quater quaterdata=targetExamRanks ng-if="targetExamRanks != void(0)"></div>
+        <div class='graph' wiserv-goal-quater quaterdata=targetExamRanks datemodel='datepick' ng-if="targetExamRanks != void(0)"></div>
       </div>
     </div>
     <div class='top-right'>

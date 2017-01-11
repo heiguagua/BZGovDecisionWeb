@@ -1,36 +1,36 @@
-<div class='content-box right5 left5' >
+  <div class='content-box right5 left5' >
 
-  <div class='chart' >
-    <div class='statistic'>
-      <div  class='pull-left'>
-        <label >统计时间：</label>
-        <div class='time-pick'>
-          <p class="input-group">
-            <input type="text" ng-change='changed()' class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model" is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-default btn-time" ng-click="open()">
-                <i class="glyphicon glyphicon-calendar"></i>
-              </button>
-            </span>
-            <select ng-model='datepick.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
-          </p>
+    <div class='chart' >
+      <div class='statistic'>
+        <div  class='pull-left'>
+          <label >统计时间：</label>
+          <div class='time-pick'>
+            <p class="input-group">
+              <input type="text" ng-change='changed()' class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model" is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default btn-time" ng-click="open()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+              <select ng-model='cityYearData.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
+            </p>
+          </div>
+        </div>
+        <div class='from-dept pull-right'>
+          <label>数据来源：</label>
         </div>
       </div>
-      <div class='from-dept pull-right'>
-        <label>数据来源：</label>
-      </div>
+      <div class='graph' wiserv-goal-progress yearlydata=cityYearData datemodel=datepick ng-if="cityYearData != void(0) && datepick != void(0)"></div>
     </div>
-    <div class='graph' wiserv-goal-progress ></div>
   </div>
-</div>
-<div class='content-box right5 left5' >
+  <div class='content-box right5 left5' >
 
-  <div class='chart' >
-    <div class='statistic'>
-      <div class='from-dept pull-right'>
-        <label>数据来源：</label>
+    <div class='chart' >
+      <div class='statistic'>
+        <div class='from-dept pull-right'>
+          <label>数据来源：</label>
+        </div>
       </div>
+      <div class='graph' wiserv-goal-rate quarterlydata=cityQuarterData ng-if="cityQuarterData != void(0)"></div>
     </div>
-    <div class='graph' wiserv-goal-rate ></div>
   </div>
-</div>

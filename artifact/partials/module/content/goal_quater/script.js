@@ -3,20 +3,20 @@
   var goalquater = angular.module('app.main.module.content.goalquater', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   goalquater.controller('goalquaterController', [
-    '$scope', 'goalquaterService', '$stateParams','$rootScope',
-    function($scope, goalquaterService, $stateParams,$rootScope) {
+    '$scope', 'goalquaterService', '$stateParams', '$rootScope',
+    function($scope, goalquaterService, $stateParams, $rootScope) {
       var vm = this;
       $scope.quarterOptions = [{
-        'id': 3,
+        'id': 1,
         "name": "第一季度"
       }, {
-        'id': 6,
+        'id': 2,
         "name": "第二季度"
       }, {
-        'id': 9,
+        'id': 3,
         "name": "第三季度"
       }, {
-        'id': 12,
+        'id': 4,
         "name": "第四季度"
       }];
       $scope.datepick = {};
@@ -35,37 +35,40 @@
           //alert('请输入正确的日期格式！');
           return;
         }
-        if (!$scope.datepick.quarter) {
+        if (!$scope.targetExamRanks.quarter) {
           alert('请选择季度！');
           return;
         }
       }
+      $scope.altInputFormats = ['M!/d!/yyyy'];
 
       goalquaterService.getContent({
-        menuId:$stateParams.pid
-      }).then(function(result){
+        menuId: $stateParams.pid
+      }).then(function(result) {
         $scope.alldatas = result.data;
-        _.forEach(result.data,function(item){
+        _.forEach(result.data, function(item) {
           var url = item.url + '/' + item.picCode;
 
-          goalquaterService.getContentDatas(url).then(function(res){
-            if(item.picCode == 'targetExamTotalRanks') {
+          goalquaterService.getContentDatas(url).then(function(res) {
+            if (item.picCode == 'targetExamTotalRanks') {
               $scope.targetExamTotalRanks = res.data;
             }
-            if(item.picCode == 'targetExamRanks') {
+            if (item.picCode == 'targetExamRanks') {
               $scope.targetExamRanks = res.data;
+              $scope.targetExamRanks.url = url;
+              $scope.datepick.model = new Date($scope.targetExamRanks.year);
             }
-            if(item.picCode == 'penalUnits') {
+            if (item.picCode == 'penalUnits') {
               $scope.penalUnits = res.data;
               $scope.penlTotal = 0;
-              _.forEach($scope.penalUnits.data,function(data) {
+              _.forEach($scope.penalUnits.data, function(data) {
                 $scope.penlTotal += Number(data.penal_points);
               })
             }
-            if(item.picCode == 'awardedUnits') {
+            if (item.picCode == 'awardedUnits') {
               $scope.awardedUnits = res.data;
               $scope.awardedTotal = 0;
-              _.forEach($scope.awardedUnits.data,function(data) {
+              _.forEach($scope.awardedUnits.data, function(data) {
                 $scope.awardedTotal += Number(data.awarded_points);
               })
             }
@@ -81,7 +84,7 @@
     function($http, URL) {
       return {
         "getContent": getContent,
-        "getContentDatas":getContentDatas
+        "getContentDatas": getContentDatas
       }
 
       function getContent(params) {
@@ -92,9 +95,11 @@
         )
       }
 
-      function getContentDatas(params) {
+      function getContentDatas(url, params) {
         return $http.get(
-          URL + params
+          URL + url, {
+            params: params
+          }
         )
       }
     }
@@ -105,62 +110,118 @@
       return {
         restrict: 'ACE',
         scope: {
-          quaterdata: '='
+          quaterdata: '=',
+          datemodel: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          if(scope.quaterdata) {
-            var areas = scope.quaterdata.area;
-            var areaList = [];
-            _.forEach(areas,function(item) {
-              var obj = {};
-              obj.name = item;
-              obj.min = 1;
-              obj.max = areas.length;
-              areaList.push(obj);
+
+          scope.$watch('datemodel.model', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            getData();
+          });
+
+          scope.$watch('quaterdata.quarter', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            getData();
+          });
+
+          function getDateFormat(parseDate, format) {
+            var date = angular.copy(parseDate);
+            if (angular.isDate(date) && !isNaN(date.getTime())) {
+              return date.Format(format);
+            } else {
+              return '';
+            }
+          }
+
+          function getData() {
+            goalquaterService.getContentDatas(scope.quaterdata.url, {
+              year: getDateFormat(scope.datemodel.model, 'yyyy'),
+              quarter: scope.quaterdata.quarter
+            }).then(function(res) {
+              var url = scope.quaterdata.url;
+              scope.quaterdata = res.data;
+              scope.quaterdata.url = url;
+              scope.quaterdata.quarter = Number(scope.quaterdata.quarter);
+              redraw();
             })
-            var chartData = scope.quaterdata.data;
-            var legend = _.map(chartData,'name');
-            var i = 0;
-            var option = {
-              tooltip: {},
-              legend: {
-                left: 'left',
-                orient: 'vertical',
-                data: legend
-              },
-              radar: {
-                // shape: 'circle',
-                name: {
-                  textStyle: {
-                    color: '#333'
-                  }
+          }
+
+          redraw();
+
+          function redraw() {
+            if (scope.quaterdata && scope.quaterdata.area) {
+              var areas = scope.quaterdata.area;
+              var areaList = [];
+              _.forEach(areas, function(item) {
+                var obj = {};
+                obj.name = item;
+                obj.min = 1;
+                obj.max = areas.length;
+                areaList.push(obj);
+              })
+              var chartData = scope.quaterdata.data;
+              var legend = _.map(chartData, 'name');
+              scope.quaterdata.quarter = Number(scope.quaterdata.quarter);
+              var i = 0;
+              var option = {
+                title: {
+                  left: 'center',
+                  text: scope.quaterdata.year + '年第' + scope.quaterdata.quarter + '季度 目标任务考核分项名次',
+                  top: -2
                 },
-                indicator: areaList,
-                axisLabel: {
-                  show: false,
-                  formatter: function(data) {
-                    i++;
-                    if (i <= 6) {
-                      return data;
+                tooltip: {},
+                legend: {
+                  left: 'left',
+                  top: '10%',
+                  orient: 'vertical',
+                  data: legend,
+                  itemGap: 4
+                },
+
+                radar: {
+                  // shape: 'circle',
+                  center: ['60%', '54%'],
+                  name: {
+                    textStyle: {
+                      color: '#333'
+                    }
+                  },
+                  radius: '65%',
+                  nameGap: 8,
+                  indicator: areaList,
+                  axisLabel: {
+                    show: false,
+                    formatter: function(data) {
+                      i++;
+                      if (i <= 6) {
+                        return data;
+                      }
                     }
                   }
-                }
-              },
-              series: [{
-                name: '目标任务考核',
-                type: 'radar',
-                symbol: 'line',
-                data: chartData
-              }]
-            };
-            setTimeout(function() {
-              var chartInstance = echarts.init((element.find('div'))[0]);
-              chartInstance.clear();
-              chartInstance.resize();
-              chartInstance.setOption(option);
-            }, 300);
+                },
+                series: [{
+                  name: '目标任务考核',
+                  type: 'radar',
+                  symbol: 'line',
+                  data: chartData
+                }]
+              };
+              setTimeout(function() {
+                var chartInstance = echarts.init((element.find('div'))[0]);
+                chartInstance.clear();
+                chartInstance.resize();
+                chartInstance.setOption(option);
+              }, 300);
+            }
+
           }
+
 
         }
       }
