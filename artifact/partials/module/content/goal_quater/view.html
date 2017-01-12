@@ -13,7 +13,7 @@
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
-                <select ng-model='targetExamRanks.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
+                <select ng-model='datepick.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
               </p>
             </div>
           </div>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class='top-right'>
-      <h4 class='title'>{{targetExamTotalRanks.year}}年第{{targetExamTotalRanks.quarter}}季度 目标任务考核总名次</h4>
+      <h4 class='title'>{{targetExamTotalRanks.year}}年第{{datepick.quarter}}季度 目标任务考核总名次</h4>
       <table class="table  table-striped top10 table-hover text-center">
         <thead>
           <tr>
@@ -58,16 +58,18 @@
         </div>
       </div>
     </div>
-    <div class='item' ng-repeat='awarded in awardedUnits.data'>
-      <div class='cell'>
-        <h4>{{awarded.awarded_unit}}</h4>
-        <h5>{{awarded.awarded_reason}}</h5>
-      </div>
-      <div class='cell'>
-        <strong>+{{awarded.awarded_points}}</strong>
-      </div>
-      <div class='cell'>
-        计入{{awarded.awarded_scope}}
+    <div class='item-list'>
+      <div class='item' ng-repeat='awarded in awardedUnits.data'>
+        <div class='cell'>
+          <h4>{{awarded.awarded_unit}}</h4>
+          <h5>{{awarded.awarded_reason}}</h5>
+        </div>
+        <div class='cell'>
+          <strong>+{{awarded.awarded_points}}</strong>
+        </div>
+        <div class='cell'>
+          计入{{awarded.awarded_scope}}
+        </div>
       </div>
     </div>
     <div class='next'>

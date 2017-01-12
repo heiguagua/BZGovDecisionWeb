@@ -12,13 +12,13 @@
                   <i class="glyphicon glyphicon-calendar"></i>
                 </button>
               </span>
-              <select ng-model='cityYearData.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
+              <select ng-model='datepick.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
             </p>
           </div>
         </div>
-        <div class='from-dept pull-right'>
+        <!-- <div class='from-dept pull-right'>
           <label>数据来源：</label>
-        </div>
+        </div> -->
       </div>
       <div class='graph' wiserv-goal-progress yearlydata=cityYearData datemodel=datepick ng-if="cityYearData != void(0) && datepick != void(0)"></div>
     </div>
@@ -27,9 +27,9 @@
 
     <div class='chart' >
       <div class='statistic'>
-        <div class='from-dept pull-right'>
+        <!-- <div class='from-dept pull-right'>
           <label>数据来源：</label>
-        </div>
+        </div> -->
       </div>
       <div class='graph' wiserv-goal-rate quarterlydata=cityQuarterData ng-if="cityQuarterData != void(0)"></div>
     </div>

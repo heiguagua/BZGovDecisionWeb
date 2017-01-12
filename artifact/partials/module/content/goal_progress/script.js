@@ -36,7 +36,7 @@
           alert('请输入正确的日期格式！');
           return;
         }
-        if (!$scope.cityYearData.quarter) {
+        if (!$scope.datepick.quarter) {
           alert('请选择季度！');
           return;
         }
@@ -58,6 +58,7 @@
               $scope.cityYearData = res.data;
               $scope.cityYearData.url = url;
               $scope.datepick.model = new Date($scope.cityYearData.year);
+              $scope.datepick.quarter = Number($scope.cityYearData.quarter);
             }
           })
         })
@@ -108,9 +109,7 @@
             getData();
           },true);
 
-          scope.$watch('yearlydata.quarter', function(newValue, oldValue) {
-            console.log(newValue);
-            console.log(oldValue);
+          scope.$watch('datemodel.quarter', function(newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
@@ -129,13 +128,12 @@
           function getData() {
             goalprogressService.getContentDatas(scope.yearlydata.url, {
               year: getDateFormat(scope.datemodel.model, 'yyyy'),
-              quarter: scope.yearlydata.quarter
+              quarter: scope.datemodel.quarter
             }).then(function(res) {
               var url = scope.yearlydata.url;
               scope.yearlydata = res.data;
               scope.yearlydata.url = url;
-              console.log(scope.yearlydata.quarter);
-              scope.yearlydata.quarter = Number(scope.yearlydata.quarter);
+              scope.datemodel.quarter = Number(scope.datemodel.quarter);
               redraw();
             })
           }
@@ -146,7 +144,7 @@
             if (scope.yearlydata) {
               var normalData = [];
               var delayData = [];
-              scope.yearlydata.quarter = Number(scope.yearlydata.quarter);
+              scope.datemodel.quarter = Number(scope.datemodel.quarter);
               _.forEach(scope.yearlydata.data.value, function(item) {
                 if (item.name == 'nomal') {
                   normalData = item.data;

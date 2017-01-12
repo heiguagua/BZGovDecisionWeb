@@ -22,7 +22,41 @@
           //alert('请输入正确的日期格式！');
           return;
         }
+        getData($scope.url,{
+          year:getDateFormat($scope.datepick.model, 'yyyy')
+        });
+      }
 
+      function getDateFormat(parseDate, format) {
+        var date = angular.copy(parseDate);
+        if (angular.isDate(date) && !isNaN(date.getTime())) {
+          return date.Format(format);
+        } else {
+          return '';
+        }
+      }
+
+      function getData(url,params){
+        goalyearService.getContentDatas(url,params).then(function(res){
+          $scope.indicatorDatas = res.data;
+          _.forEach($scope.indicatorDatas,function(item){
+            if(item.area == 'county') {
+              $scope.countyDatas = item.data;
+            }
+            if(item.area == 'party') {
+              $scope.partyDatas = item.data;
+            }
+            if(item.area == 'gov') {
+              $scope.govDatas = item.data;
+            }
+            if(item.area == 'center') {
+              $scope.centerDatas = item.data;
+            }
+            if(item.area == 'foreign') {
+              $scope.foreignDatas = item.data;
+            }
+          })
+        })
       }
 
       goalyearService.getContent({
@@ -31,27 +65,8 @@
         var data = result.data[0];
         var picCode = data.picCode;
         var url = data.url;
-        url = url + '/' + picCode;
-         goalyearService.getContentDatas(url).then(function(res){
-           $scope.indicatorDatas = res.data;
-           _.forEach($scope.indicatorDatas,function(item){
-             if(item.area == 'county') {
-               $scope.countyDatas = item.data;
-             }
-             if(item.area == 'party') {
-               $scope.partyDatas = item.data;
-             }
-             if(item.area == 'gov') {
-               $scope.govDatas = item.data;
-             }
-             if(item.area == 'center') {
-               $scope.centerDatas = item.data;
-             }
-             if(item.area == 'foreign') {
-               $scope.foreignDatas = item.data;
-             }
-           })
-         })
+        $scope.url = url + '/' + picCode;
+        getData($scope.url);
       })
     }
   ]);
@@ -71,9 +86,11 @@
         )
       }
 
-      function getContentDatas(params) {
+      function getContentDatas(url,params) {
         return $http.get(
-          URL + params
+          URL + url,{
+            params:params
+          }
         )
       }
     }

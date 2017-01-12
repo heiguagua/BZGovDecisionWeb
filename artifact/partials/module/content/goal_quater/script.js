@@ -35,7 +35,7 @@
           //alert('请输入正确的日期格式！');
           return;
         }
-        if (!$scope.targetExamRanks.quarter) {
+        if (!$scope.datepick.quarter) {
           alert('请选择季度！');
           return;
         }
@@ -57,6 +57,7 @@
               $scope.targetExamRanks = res.data;
               $scope.targetExamRanks.url = url;
               $scope.datepick.model = new Date($scope.targetExamRanks.year);
+              $scope.datepick.quarter = $scope.targetExamRanks.quarter?Number($scope.targetExamRanks.quarter):'';
             }
             if (item.picCode == 'penalUnits') {
               $scope.penalUnits = res.data;
@@ -123,7 +124,7 @@
             getData();
           });
 
-          scope.$watch('quaterdata.quarter', function(newValue, oldValue) {
+          scope.$watch('datemodel.quarter', function(newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
@@ -142,12 +143,12 @@
           function getData() {
             goalquaterService.getContentDatas(scope.quaterdata.url, {
               year: getDateFormat(scope.datemodel.model, 'yyyy'),
-              quarter: scope.quaterdata.quarter
+              quarter: scope.datemodel.quarter
             }).then(function(res) {
               var url = scope.quaterdata.url;
               scope.quaterdata = res.data;
               scope.quaterdata.url = url;
-              scope.quaterdata.quarter = Number(scope.quaterdata.quarter);
+              scope.datemodel.quarter = Number(scope.datemodel.quarter);
               redraw();
             })
           }
@@ -167,12 +168,12 @@
               })
               var chartData = scope.quaterdata.data;
               var legend = _.map(chartData, 'name');
-              scope.quaterdata.quarter = Number(scope.quaterdata.quarter);
+              scope.datemodel.quarter = Number(scope.datemodel.quarter);
               var i = 0;
               var option = {
                 title: {
                   left: 'center',
-                  text: scope.quaterdata.year + '年第' + scope.quaterdata.quarter + '季度 目标任务考核分项名次',
+                  text: scope.quaterdata.year + '年第' + scope.datemodel.quarter + '季度 目标任务考核分项名次',
                   top: -2
                 },
                 tooltip: {},
