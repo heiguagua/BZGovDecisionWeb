@@ -53,7 +53,7 @@
                 <td>{{indicatorData.yearly_target_growth}}</td>
                 <td>{{indicatorData.current_quarter_actual_growth}}</td>
                 <td>
-                    <div class="yellow btn1" ng-if='indicatorData.growth_status.indexOf("-")>-1'>差{{indicatorData.growth_status}}%</div>
+                    <div class="yellow btn1" ng-if='indicatorData.growth_status.indexOf("-")>-1'>差{{-indicatorData.growth_status}}%</div>
                     <div class="blue btn1" ng-if='indicatorData.growth_status.indexOf("-")==-1'>超{{indicatorData.growth_status}}%</div>
                 </td>
                 <td class="font_blue" ng-if="indicatorData.schedule_evaluation=='正常'">{{indicatorData.schedule_evaluation}}</td>

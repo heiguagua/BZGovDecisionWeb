@@ -1,20 +1,21 @@
 <div class="project_county left5 right5">
-    <div class='pull-right statistic'>
-        <label>统计时间：</label>
-        <div class='time-pick'>
-            <p class="input-group">
-                <input type="text" class="form-control input-time" uib-datepicker-popup="{{format}}" ng-model="dat" is-open="popup1.opened"
-                    datepicker-options="dateOptions" ng-required="true" close-text="关闭" clear-text="清空" current-text="今天" alt-input-formats="altInputFormats"
-                />
-                <span class="input-group-btn">
-                     <button type="button" class="btn btn-default btn-time" ng-click="open1()">
-                         <i class="glyphicon glyphicon-calendar"></i>
-                         </button>
-               </span>
-                <select ng-model='popups[$index].quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
-            </p>
+    <div class='statistic'>
+        <div class='pull-right'>
+            <label>统计时间：</label>
+            <div class='time-pick'>
+                <p class="input-group">
+                    <input type="text" ng-change='changed()' class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model"
+                        is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除"
+                        current-text='' close-text='关闭' alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                <button type="button" class="btn btn-default btn-time" ng-click="open()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+                    <select ng-model='datepick.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
+                </p>
+            </div>
         </div>
-
     </div>
     <div class="eco_title" style="clear:both;">
         <ul class="body">
@@ -59,119 +60,23 @@
                 <th>滞后项目数</th>
                 <th>进度总评</th>
             </tr>
+            <tr ng-repeat="indicatorData in indicatorDatas">
+                <td>{{indicatorData.area}}</td>
+                <td>{{indicatorData.yearly_argetTotal}}</td>
+                <td>{{indicatorData.quarterly_target}}</td>
+                <td class="width20">
+                    <uib-progressbar value=indicatorData.yearly_investment_achieved_rate type="success" style="margin-bottom:0">95%</uib-progressbar>
+                    <div class="statistic1">
+                        <label>年进度</label>
+                        <uib-progressbar class="in_block" value=indicatorData.yearly_investment_achieved_rate type="info" style="margin-bottom:0"></uib-progressbar>
+                        <span>{{indicatorData.yearly_investment_achieved_rate}}%</span>
+                    </div>
+                </td>
+                <td>{{indicatorData.quarterly_investment_achieved_rate}}</td>
+                <td>{{indicatorData.delayed_project_number}}</td>
+                <td class="font_yellow" ng-if="indicatorData.processing_evaluation=='滞后'">{{indicatorData.processing_evaluation}}</td>
+                <td class="font_blue" ng-if="indicatorData.processing_evaluation=='正常'">{{indicatorData.processing_evaluation}}</td>
 
-
-            <tr>
-                <td>市本级</td>
-                <td>93.1</td>
-                <td>30.2</td>
-                <td class="width20">
-                    <uib-progressbar value="95" type="success" style="margin-bottom:0">95%</uib-progressbar>
-                    <div class="statistic1">
-                        <label>年进度</label>
-                        <uib-progressbar class="in_block" value="87.3" type="info" style="margin-bottom:0"></uib-progressbar>
-                        <span>87.3%</span>
-                    </div>
-                </td>
-                <td>13.5</td>
-                <td>1</td>
-                <td class="font_yellow">滞后</td>
-            </tr>
-            <tr>
-                <td>巴州区</td>
-                <td>93.1</td>
-                <td>30.2</td>
-                <td class="width20">
-                    <uib-progressbar value="95" type="success" style="margin-bottom:0">95%</uib-progressbar>
-                    <div class="statistic1">
-                        <label>年进度</label>
-                        <uib-progressbar class="in_block" value="87.3" type="info" style="margin-bottom:0"></uib-progressbar>
-                        <span>87.3%</span>
-                    </div>
-                </td>
-                <td>13.5</td>
-                <td>1</td>
-                <td class="font_blue">正常</td>
-            </tr>
-            <tr>
-                <td>恩阳区</td>
-                <td>93.1</td>
-                <td>30.2</td>
-                <td class="width20">
-                    <uib-progressbar value="95" type="success" style="margin-bottom:0">95%</uib-progressbar>
-                    <div class="statistic1">
-                        <label>年进度</label>
-                        <uib-progressbar class="in_block" value="87.3" type="info" style="margin-bottom:0"></uib-progressbar>
-                        <span>87.3%</span>
-                    </div>
-                </td>
-                <td>13.5</td>
-                <td>1</td>
-                <td class="font_blue">正常</td>
-            </tr>
-            <tr>
-                <td>平昌县</td>
-                <td>93.1</td>
-                <td>30.2</td>
-                <td class="width20">
-                    <uib-progressbar value="95" type="success" style="margin-bottom:0">95%</uib-progressbar>
-                    <div class="statistic1">
-                        <label>年进度</label>
-                        <uib-progressbar class="in_block" value="87.3" type="info" style="margin-bottom:0"></uib-progressbar>
-                        <span>87.3%</span>
-                    </div>
-                </td>
-                <td>13.5</td>
-                <td>1</td>
-                <td class="font_blue">正常</td>
-            </tr>
-            <tr>
-                <td>通江县</td>
-                <td>93.1</td>
-                <td>30.2</td>
-                <td class="width20">
-                    <uib-progressbar value="95" type="success" style="margin-bottom:0">95%</uib-progressbar>
-                    <div class="statistic1">
-                        <label>年进度</label>
-                        <uib-progressbar class="in_block" value="87.3" type="info" style="margin-bottom:0"></uib-progressbar>
-                        <span>87.3%</span>
-                    </div>
-                </td>
-                <td>13.5</td>
-                <td>1</td>
-                <td class="font_blue">正常</td>
-            </tr>
-            <tr>
-                <td>南江县</td>
-                <td>93.1</td>
-                <td>30.2</td>
-                <td class="width20">
-                    <uib-progressbar value="95" type="success" style="margin-bottom:0">95%</uib-progressbar>
-                    <div class="statistic1">
-                        <label>年进度</label>
-                        <uib-progressbar class="in_block" value="87.3" type="info" style="margin-bottom:0"></uib-progressbar>
-                        <span>87.3%</span>
-                    </div>
-                </td>
-                <td>13.5</td>
-                <td>1</td>
-                <td class="font_blue">正常</td>
-            </tr>
-            <tr>
-                <td>全市</td>
-                <td>3122</td>
-                <td>134</td>
-                <td class="width20">
-                    <uib-progressbar value="95" type="success" style="margin-bottom:0">95%</uib-progressbar>
-                    <div class="statistic1">
-                        <label>年进度</label>
-                        <uib-progressbar class="in_block" value="87.3" type="info" style="margin-bottom:0"></uib-progressbar>
-                        <span>87.3%</span>
-                    </div>
-                </td>
-                <td>80</td>
-                <td>8</td>
-                <td class="font_blue">正常</td>
             </tr>
         </table>
     </div>
