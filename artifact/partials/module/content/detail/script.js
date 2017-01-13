@@ -204,7 +204,11 @@
                 scope.content.dateOptions = dateOptions;
 
 
-
+                var screen_width = screen.width;
+                var label_show = true;
+                if(screen_width<1200) {
+                  label_show = false;
+                }
                 opt.yAxis = [];
                 _.forEach(opt.y_name, function(item, index) {
 
@@ -409,7 +413,7 @@
                   _.forEach(opt.series, function(item, index) {
                     item.label = {
                       normal: {
-                        show: true,
+                        show: label_show,
                         position: labelPos,
                         textStyle: {
                           // color: '#333',
@@ -436,7 +440,7 @@
                         } else {
                           item.label = {
                             normal: {
-                              show: true,
+                              show: label_show,
                               position: labelPos,
                               textStyle: {
                                 // color: '#333',
@@ -457,7 +461,7 @@
                           if (dataIndex == 0) {
                             idata.label = {
                               normal: {
-                                show: true,
+                                show: label_show,
                                 textStyle: {
                                   // color: colors[2],
                                   fontWeight: 'bolder'
@@ -496,7 +500,7 @@
                     item.stack = stack_name;
 
                   });
-                  var screen_width = screen.width;
+
                   var grid_left = '10%';
                   var grid_right = '10%';
                   if (screen_width < 1600) {
