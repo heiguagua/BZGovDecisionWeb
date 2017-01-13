@@ -1,15 +1,15 @@
 (function() {
   /** Module */
-  var detail = angular.module('app.main.module.content.detail', ['ui.bootstrap','cgBusy']);
+  var detail = angular.module('app.main.module.content.detail', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   detail.controller('detailController', [
-    '$scope', 'detailService', '$stateParams', 'uibDateParser','$rootScope',
-    function($scope, detailService, $stateParams, uibDateParser,$rootScope) {
+    '$scope', 'detailService', '$stateParams', 'uibDateParser', '$rootScope',
+    function($scope, detailService, $stateParams, uibDateParser, $rootScope) {
       var vm = this;
       $rootScope.mname = $stateParams.mname;
-      setTimeout(function(){
+      setTimeout(function() {
         $('.menu-label').removeClass('m-collapse');
-      },600);
+      }, 600);
       $scope.popups = [];
       $scope.quarterOptions = [{
         'id': 3,
@@ -206,7 +206,7 @@
 
                 var screen_width = screen.width;
                 var label_show = true;
-                if(screen_width<1200) {
+                if (screen_width < 1200) {
                   label_show = false;
                 }
                 opt.yAxis = [];
@@ -305,7 +305,9 @@
                   option.series[0].label = {};
                   option.series[0].label.normal = {};
                   option.series[0].label.normal.position = 'center';
-                  option.series[0].label.normal.textStyle ={color:'#333'};
+                  option.series[0].label.normal.textStyle = {
+                    color: '#333'
+                  };
                   if (option.series.length == 1) {
                     option.series[0].label.normal.position = 'outside';
                   }
@@ -398,15 +400,32 @@
                   if (opt.series[0].data.length > 10) {
                     axisLabel = {
                       interval: 0,
-                      formatter: function(val) {
+                      formatter: function(val, index) {
                         if (val.indexOf('月') > -1) {
+                          if (screen_width < 1200 && index % 2 != 0) {
+                            val = '\n' + val;
+                          }
                           return val;
                         }
                         return val.split("").join("\n"); //横轴信息文字竖直显示
                       }
 
                     };
-                  };
+                  } else {
+                    if (opt.series[0].data.length > 4 && screen_width < 1200) {
+                      axisLabel = {
+                        interval: 0,
+                        formatter: function(val, index) {
+                          if (index % 2 != 0) {
+                            val = '\n' + val;
+                          }
+                          return val;
+                        }
+
+                      };
+                    }
+                  }
+                  axisLabel.interval = 0;
                   axisLabel.textStyle = {
                     fontWeight: 'bolder'
                   };
@@ -622,27 +641,36 @@
                   var enTotal = opt.series[0].data;
                   var enNum = opt.series[1].data;
                   element.find('div')[0].innerHTML = '<div class="item-wrap">' +
-                    '<h3 class="chart-title">'+opt.title+'</h3>'+
+                    '<h3 class="chart-title">' + opt.title + '</h3>' +
                     '<div class="chart-item"><div class="item"><div class="pic pic-home"><i class="fa fa-home"></i></div></div><div class="item"><div class="pic pic-home"><i class="fa fa-rmb"></i></div></div></div>' +
-                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[0].name + "：<br/>"+enTotal[0].value + enTotal[0].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：<br/>" + enNum[0].value + enNum[0].unit + '</div></div></div>' +
-                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[1].name + "：<br/>"+enTotal[1].value + enTotal[1].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：<br/>" + enNum[1].value + enNum[1].unit + '</div></div></div>' +
-                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[2].name + "：<br/>"+enTotal[2].value + enTotal[2].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：<br/>" + enNum[2].value + enNum[2].unit + '</div></div></div>' +
+                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[0].name + "：<br/>" + enTotal[0].value + enTotal[0].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：<br/>" + enNum[0].value + enNum[0].unit + '</div></div></div>' +
+                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[1].name + "：<br/>" + enTotal[1].value + enTotal[1].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：<br/>" + enNum[1].value + enNum[1].unit + '</div></div></div>' +
+                    '<div class="chart-item"><div class="item"><div class="content-item">' + enTotal[2].name + "：<br/>" + enTotal[2].value + enTotal[2].unit + '</div></div><div class="item"><div class="content-item">' + opt.series[1].name + "：<br/>" + enNum[2].value + enNum[2].unit + '</div></div></div>' +
                     '<div>';
                 } else {
                   setTimeout(function() {
                     var screen_height = screen.height;
                     var main_height = $('.mobile-content').height();
-                    if(screen_width<1200) { // mobile
-                      $('.mobile-content').css({'min-height':screen_height+'px'});
+                    if (screen_width < 1200) { // mobile
+                      $('.mobile-content').css({
+                        'min-height': screen_height + 'px'
+                      });
 
-                      if(main_height <= screen_height ) {
-                        if(screen_height >980) {
-                          $('.mobile-content .content-main').css({'min-height':(screen_height-50)+'px'}); // 50为header的高度
-                          $('.mobile-content .graph>div').css({'height':(screen_height/$('.mobile-content .content-box').length-20-44-50)+'px'}); // 50为header的高度
-                        }
-                        else{
-                          $('.mobile-content .content-main').css({'min-height':(screen_height-50)+'px'}); // 50为header的高度
-                          $('.mobile-content .graph>div').css({'min-height':(screen_height-50-40-46-2-10)+'px'}); // 50为header的高度,40为菜单项高度,46为统计时间和部门高度,2为chartborder，10为graph边距
+                      if (main_height <= screen_height) {
+                        if (screen_height > 980) {
+                          $('.mobile-content .content-main').css({
+                            'min-height': (screen_height - 50) + 'px'
+                          }); // 50为header的高度
+                          $('.mobile-content .graph>div').css({
+                            'height': (screen_height / $('.mobile-content .content-box').length - 20 - 44 - 50) + 'px'
+                          }); // 50为header的高度
+                        } else {
+                          $('.mobile-content .content-main').css({
+                            'min-height': (screen_height - 50) + 'px'
+                          }); // 50为header的高度
+                          $('.mobile-content .graph>div').css({
+                            'min-height': (screen_height - 50 - 40 - 46 - 2 - 10) + 'px'
+                          }); // 50为header的高度,40为菜单项高度,46为统计时间和部门高度,2为chartborder，10为graph边距
 
                         }
                       }
