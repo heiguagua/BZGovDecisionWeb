@@ -55,6 +55,7 @@
             if(item.area == 'foreign') {
               $scope.foreignDatas = item.data;
             }
+            $('.y-item').mCustomScrollbar();
           })
         })
       }

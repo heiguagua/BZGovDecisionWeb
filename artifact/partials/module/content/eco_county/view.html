@@ -18,12 +18,12 @@
     <div class="body" style="clear:both;">
         <div class="header_nav" style="overflow: hidden;">
             <ul>
-               
+
                 <li ng-repeat="list in listMenu" ng-click="display(list.indicator_name) " ng-class="{true: 'active', false: 'inactive'}[show==list.indicator_name]" >{{list.indicator_name}}</li>
-               
+
                 <!--<li>更多</li>-->
             </ul>
-            <p class="pull-right right5">注：1-9月数据</p>
+            <!-- <p class="pull-right right5">注：1-9月数据</p> -->
         </div>
         <table class="table table-responsive table-bordered table-striped" style="width:100%">
 
@@ -47,7 +47,7 @@
                 <td ng-if="indicatorData.rank==2"><img src="assets\images\target_1_2.png" /></td>
                 <td ng-if="indicatorData.rank==3"><img src="assets\images\target_1_3.png" /></td>
                 <td ng-if="indicatorData.rank!=3 && indicatorData.rank!=2 && indicatorData.rank!=1">{{indicatorData.rank}}</td>
-                
+
             </tr>
             <!--<tr>
                 <td>经开区</td>

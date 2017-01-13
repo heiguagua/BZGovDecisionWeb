@@ -63,7 +63,7 @@
                <td>{{indicatorData.yearly_argetTotal}}</td>
                <td>{{indicatorData.quarterly_target}}</td>
                 <td class="width20">
-                     <uib-progressbar value=indicatorData.yearly_investment_achieved_rate type="success" style="margin-bottom:0">95%</uib-progressbar>
+                     <uib-progressbar value=indicatorData.yearly_investment_achieved_rate type="success" style="margin-bottom:0">{{indicatorData.yearly_investment_achieved_rate}}%</uib-progressbar>
                     <div class="statistic1">
                         <label>年进度</label>
                         <uib-progressbar class="in_block" value=indicatorData.yearly_investment_achieved_rate type="info" style="margin-bottom:0"></uib-progressbar>
@@ -74,10 +74,10 @@
                 <td>{{indicatorData.delayed_project_number}}</td>
                 <td class="font_yellow" ng-if="indicatorData.processing_evaluation=='滞后'">{{indicatorData.processing_evaluation}}</td>
                  <td class="font_blue" ng-if="indicatorData.processing_evaluation=='正常'">{{indicatorData.processing_evaluation}}</td>
-                
+
             </tr>
 
-            
+
         </table>
     </div>
 </div>

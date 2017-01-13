@@ -129,11 +129,16 @@
             },
             legend: {
               data: _.map(data_nums,'name'),
-              top: '17%',
-              itemGap: 50
+              top: '19%',
+              // itemGap: 10,
+              itemWidth:16,
+              itemHeight:16,
+              borderWidth:0
+              // orient:'vertical',
+              // left:'right'
             },
             grid: {
-              top: '26%',
+              top: '34%',
               left: '3%',
               right: '4%',
               bottom: '3%',
@@ -192,11 +197,11 @@
             },
             legend: {
               data: ['办结率'],
-              top: '17%',
+              top: '19%',
               itemGap: 50
             },
             grid: {
-              top: '26%',
+              top: '34%',
               left: '3%',
               right: '4%',
               bottom: '3%',
