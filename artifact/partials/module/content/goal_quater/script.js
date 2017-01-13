@@ -62,15 +62,20 @@
             if (item.picCode == 'penalUnits') {
               $scope.penalUnits = res.data;
               $scope.penlTotal = 0;
-              _.forEach($scope.penalUnits.data, function(data) {
-                $scope.penlTotal += Number(data.penal_points);
-              })
+
             }
             if (item.picCode == 'awardedUnits') {
               $scope.awardedUnits = res.data;
               $scope.awardedTotal = 0;
-              _.forEach($scope.awardedUnits.data, function(data) {
-                $scope.awardedTotal += Number(data.awarded_points);
+              setTimeout(function(){
+                $('#awardedPlay').slick({
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  autoplay: false,
+                  autoplaySpeed: 3000,
+                  prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
+                  nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
+                },3000);
               })
             }
           })
@@ -228,6 +233,38 @@
       }
     }
   ]);
+
+  goalquater.directive('wiservPenalPlay', ['goalquaterService', '$window',
+    function(goalquaterService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          penaldata: '=',
+        },
+        link: function(scope, element, attrs) {
+          if(scope.penaldata) {
+            var htmlcontent = ''
+            _.forEach(scope.penaldata,function(item){
+              htmlcontent += "<div class='detail-item'>"+
+              "<div class='cell'><h5>"+item.penal_unit+"</h5></div>"+
+              "<div class='cell'><strong>-"+item.penal_points+"</strong></div>"+
+              "<div class='cell'>计入"+item.penal_scope+"</div>"+
+              "<div class='cell'>"+item.penal_target+"</div></div>";
+            });
+            element[0].innerHTML = htmlcontent;
+            console.log($(element[0]));
+            $(element[0]).slick({
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              autoplay: false,
+              autoplaySpeed: 3000,
+              prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
+              nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
+            });
+          }
+        }
+      }
+    }])
 
 
 })();

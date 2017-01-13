@@ -8,6 +8,7 @@ $white: #FFF;
 $chartHeightSmall: 380px;
 $chartHeightBig: 540px;
 .page-wrap {
+  overflow:hidden;
   @include flex-flow(row);
   @include flex-num(1);
   @include mobilescreen {
@@ -50,6 +51,7 @@ $chartHeightBig: 540px;
   -moz-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
+  overflow:hidden;
   @include flex-flow(column);
   @include flex-num(1);
   @include mobilescreen {

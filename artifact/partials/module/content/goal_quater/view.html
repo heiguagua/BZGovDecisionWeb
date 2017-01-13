@@ -54,11 +54,11 @@
           <p class='desc'>受到加分单位数</p>
         </a>
         <div class="media-body">
-          <strong>{{awardedTotal}}</strong>
+          <strong>{{awardedUnits.total}}</strong>
         </div>
       </div>
     </div>
-    <div class='item-list'>
+    <div class='item-list' id='awardedPlay'>
       <div class='item' ng-repeat='awarded in awardedUnits.data'>
         <div class='cell'>
           <h4>{{awarded.awarded_unit}}</h4>
@@ -72,9 +72,9 @@
         </div>
       </div>
     </div>
-    <div class='next'>
+    <!-- <div class='next'>
       <a class='btn btn-primary'>下一条</a>
-    </div>
+    </div> -->
   </div>
   <div class='content-bottom'>
     <div class='label-icon'>
@@ -84,28 +84,17 @@
           <p class='desc'>受到扣分单位数</p>
         </a>
         <div class="media-body">
-          <strong class='down'>{{penlTotal}}</strong>
+          <strong class='down'>{{penalUnits.total}}</strong>
         </div>
       </div>
     </div>
     <div class='item-list'>
-      <div class='detail-item' ng-repeat='penal in penalUnits.data'>
-        <div class='cell'>
-          <h5>{{penal.penal_unit}}</h5>
-        </div>
-        <div class='cell'>
-          <strong>-{{penal.penal_points}}</strong>
-        </div>
-        <div class='cell'>
-          计入{{penal.penal_scope}}
-        </div>
-        <div class='cell'>
-          {{penal.penal_target}}
-        </div>
+      <div class='item-list' id='penalPlay' wiserv-penal-play penaldata=penalUnits.data ng-if='penalUnits.data != void(0)'>
+
       </div>
     </div>
-    <div class='next'>
+    <!-- <div class='next'>
       <a class='btn btn-primary'>下一页</a>
-    </div>
+    </div> -->
   </div>
 </div>
