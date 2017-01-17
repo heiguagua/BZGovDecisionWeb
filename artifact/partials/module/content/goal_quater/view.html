@@ -1,23 +1,24 @@
 <div class='goal-quater left5 right5' ng-repeat='item in alldatas  track by $index' ng-if='$index == 0'>
+  <div class='statistic right-top'>
+    <div class='pull-left'>
+      <label >统计时间：</label>
+      <div class='time-pick'>
+        <p class="input-group">
+          <input type="text" ng-change='changed()' readonly class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model" is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default btn-time" ng-click="open()">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+          <select ng-model='datepick.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
+        </p>
+      </div>
+    </div>
+  </div>
   <div class='content-top'>
     <div class='top-left'>
       <div class='chart'>
-        <div class='statistic'>
-          <div class='pull-left'>
-            <label >统计时间：</label>
-            <div class='time-pick'>
-              <p class="input-group">
-                <input type="text" ng-change='changed()' readonly class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model" is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default btn-time" ng-click="open()">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                  </button>
-                </span>
-                <select ng-model='datepick.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
-              </p>
-            </div>
-          </div>
-        </div>
+
         <div class='graph' wiserv-goal-quater quaterdata=targetExamRanks datemodel='datepick' ng-if="targetExamRanks != void(0)"></div>
       </div>
     </div>

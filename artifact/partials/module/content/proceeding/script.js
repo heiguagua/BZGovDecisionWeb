@@ -153,7 +153,7 @@
             }],
             yAxis: [{
               type: 'value',
-              name: '%'
+              name: '项'
             }],
             series: data_nums
           };
