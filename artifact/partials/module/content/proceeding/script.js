@@ -146,6 +146,9 @@
             },
             xAxis: [{
               type: 'category',
+              axisLabel:{
+                interval:0,
+              },
               data: scope.numdata.month
             }],
             yAxis: [{
@@ -209,6 +212,9 @@
             },
             xAxis: [{
               type: 'category',
+              axisLabel:{
+                interval:0,
+              },
               data: scope.ratedata.month
             }],
             yAxis: [{

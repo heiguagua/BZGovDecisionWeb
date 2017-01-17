@@ -169,7 +169,7 @@
                 },
                 legend: {
                   data: ['进度正常', '进度滞后'],
-                  top: '17%',
+                  top: '13%',
                   itemGap: 50
                 },
                 grid: {
@@ -181,6 +181,9 @@
                 },
                 xAxis: [{
                   type: 'category',
+                  axisLabel:{
+                    interval:0,
+                  },
                   data: scope.yearlydata.data.area
                 }],
                 yAxis: [{
@@ -275,7 +278,7 @@
               },
               legend: {
                 data: _.map(scope.quarterlydata.value, 'name'),
-                top: '17%',
+                top: '13%',
                 itemGap: 50
               },
               grid: {
@@ -287,6 +290,9 @@
               },
               xAxis: [{
                 type: 'category',
+                axisLabel:{
+                  interval:0,
+                },
                 data: scope.quarterlydata.area
               }],
               yAxis: [{

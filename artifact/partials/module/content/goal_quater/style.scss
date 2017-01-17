@@ -4,10 +4,12 @@
   padding-bottom: 10px;
   padding-right: 1rem;
   overflow: hidden;
+  min-height:0;
   .content-top {
     @include flex-num(1);
     @include flex-flow(row);
-    min-height: 300px;
+    min-height:0;
+    // min-height: 300px;
     .top-left {
       @include flex-num(3);
       @include flex-flow(column);
@@ -25,13 +27,14 @@
       margin-left: 0.8rem;
       @include flex-num(2);
       border: 1px solid #DDD;
-      padding: 10px;
+      padding: 10px 10px 0 10px;
       .title {
         text-align: center;
         font-family: 微软雅黑;
       }
     }
     .table {
+      margin-bottom:0;
       thead {
         tr {
           background: #20b3a9;
@@ -58,7 +61,7 @@
             font-size: 0.7rem;
             color: #666666;
             @include smallscreen {
-              padding: 8px;
+              padding: 5px;
             }
             img {
               width: 14%;
@@ -84,6 +87,7 @@
     padding: 15px;
     -webkit-align-items: center;
     align-items: center;
+    min-height:0;
     @include flex-flow(row);
     .label-icon {
       @include flex-num(2);
