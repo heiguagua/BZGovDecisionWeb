@@ -226,6 +226,9 @@
                     } else {
                       minValue = minValue - 1;
                     }
+                    if (maxValue < 5) {
+                      maxValue = 4;
+                    }
                     maxValue = 1 + maxValue;
                     yAxis.min = Math.round(minValue);
                     yAxis.max = Math.round(maxValue);
@@ -238,7 +241,7 @@
                   yAxis.axisLabel = {};
                   yAxis.axisLabel.formatter = function(value) {
                     if (((value + '').indexOf('.') != -1)) {
-                      return value.toFixed(1);
+                      return value.toFixed(0);
                     }
                     return value;
                   };
@@ -264,16 +267,19 @@
                       var percentShow = '';
 
                       var labelShow = '\n\n' + obj.data.name + '\n';
-                      if (obj.data.other && obj.data.other.length > 1) {
-                        for (var i = 0; i < obj.data.other.length; i++) {
-                          labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit + '\n';
-                        }
-                      } else {
-                        labelShow = obj.data.name + ":" + obj.data.value + obj.data.unit + '\n';
-                        if (opt.auto_count && opt.auto_count == 'percent') {
-                          labelShow += '占比：' + obj.percent + '%';
+                      if(screen_width >= 1200) {
+                        if (obj.data.other && obj.data.other.length > 1) {
+                          for (var i = 0; i < obj.data.other.length; i++) {
+                            labelShow += obj.data.other[i].name + ":" + obj.data.other[i].value + obj.data.other[i].unit + '\n';
+                          }
+                        } else {
+                          labelShow = obj.data.name + ":" + obj.data.value + obj.data.unit + '\n';
+                          if (opt.auto_count && opt.auto_count == 'percent') {
+                            labelShow += '占比：' + obj.percent + '%';
+                          }
                         }
                       }
+
 
 
                       return labelShow;
@@ -315,7 +321,9 @@
                   // option.series[0].label.normal.textStyle = {
                   //   color: "#333"
                   // };
-
+                  if (scope.content.picCode == '1231') {
+                    option.series[1].startAngle = 120;
+                  }
                 } else
                 if (opt.series[0].type == 'radar') {
                   var indicators = [];
@@ -380,8 +388,37 @@
                       fontSize: 14
                     }
                   };
+                  if(screen_width<1200) {
+                    option.radar.name.formatter = function(val) {
+                      var char_length = val.length;
+                      var newstr = '';
+                      if (char_length > 4) {
+                        var strTemp = '';
+                        var leftStr = '';
+                        //for(var i=0; i<(char_length/5); i++) {
+                          //if(i != 0) {
+                          strTemp = val.substring(0, char_length-4);
+                          if(strTemp.length>8) {
+                            var temp1 = strTemp.substring(0, strTemp.length-4);
+                            var temp2 = strTemp.substring(strTemp.length-4);
+                            strTemp = temp1 + '\n' + temp2;
+                          }
+                          leftStr = val.substring(char_length-4);
+                            newstr = strTemp + '\n' + leftStr;
+                          //}
+                        //}
+                      }
+                      else{
+                        newstr = val;
+                      }
+                      return newstr;
+                    }
+                  }
                   option.radar.nameGap = 8;
                   option.radar.radius = '60%';
+                  if(screen_width < 1200) {
+                    option.radar.radius = '45%';
+                  }
                   option.radar.indicator = indicators;
                   if (scope.content.picCode == '2321') {
                     option.radar.startAngle = 162;
@@ -392,6 +429,9 @@
                   var labelPos = 'top';
                   var axisLabel = {};
                   var grid_btm = 70;
+                  if(screen_width<1200) {
+                    grid_btm = 80;
+                  }
                   if (opt.need_group == "1") {
                     stack_name = 'group';
                     labelPos = 'inside';
@@ -507,8 +547,14 @@
                         if (data.name && data.name.length > 5 && item.data.length > 12) { // 字符长度大于5
                           if (scope.content.picCode == '2322') {
                             grid_btm = 100;
+                            if(screen_width<1200) {
+                                grid_btm = 120;
+                            }
                           } else {
                             grid_btm = 190;
+                            if(screen_width<1200) {
+                                grid_btm = 210;
+                            }
                           }
                         }
                       })
@@ -522,9 +568,18 @@
 
                   var grid_left = '10%';
                   var grid_right = '10%';
+                  var grid_top = '15%';
                   if (screen_width < 1600) {
-                    grid_left = '15%';
-                    grid_right = '15%';
+                    if(screen_width<1200) {
+                      grid_left = '18%';
+                      grid_right = '20%';
+                      grid_top = '18%';
+                    }
+                    else {
+                      grid_left = '15%';
+                      grid_right = '15%';
+                    }
+
                   }
                   option = {
                     color: colors,
@@ -547,7 +602,7 @@
                     },
                     grid: {
                       bottom: grid_btm,
-                      top: '15%',
+                      top: grid_top,
                       left: grid_left,
                       right: grid_right
                     },

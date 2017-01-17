@@ -6,7 +6,7 @@
         <label >统计时间：</label>
         <div class='time-pick'>
           <p class="input-group">
-            <input type="text" ng-change='changed($index)' class="form-control input-time" uib-datepicker-popup="{{popups[$index].format}}" ng-model="popups[$index].model" is-open="popups[$index].opened" datepicker-options="popups[$index].dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
+            <input type="text" ng-change='changed($index)' readonly class="form-control input-time" uib-datepicker-popup="{{popups[$index].format}}" ng-model="popups[$index].model" is-open="popups[$index].opened" datepicker-options="popups[$index].dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
             <span class="input-group-btn">
               <button type="button" class="btn btn-default btn-time" ng-click="open($index)">
                 <i class="glyphicon glyphicon-calendar"></i>

@@ -4,7 +4,7 @@
             <label>统计时间：</label>
             <div class='time-pick'>
                 <p class="input-group">
-                    <input type="text" ng-change='changed()' class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model"
+                    <input type="text" ng-change='changed()' readonly class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model"
                         is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除"
                         current-text='' close-text='关闭' alt-input-formats="altInputFormats" />
                     <span class="input-group-btn">
