@@ -10,7 +10,7 @@
               <i class="glyphicon glyphicon-calendar"></i>
             </button>
           </span>
-          <select ng-model='datepick.quarter' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select>
+          <select ng-model='datepick.quarter' class='quarter' ng-change='changed()' ng-options='x.id as x.name for x in quarterOptions'></select>
         </p>
       </div>
     </div>
@@ -37,11 +37,11 @@
           <td ng-if='data.rank == 1' class='first'>{{data.rank}}</td>
           <td ng-if='data.rank == 2' class='second'>{{data.rank}}</td>
           <td ng-if='data.rank == 3' class='third'>{{data.rank}}</td>
-          <td ng-if='data.rank != 1 && data.rank != 2 && data.rank != 3' >{{data.rank}}</td>
+          <td ng-if='data.rank != 1 && data.rank != 2 && data.rank != 3'>{{data.rank}}</td>
           <td ng-if='data.rank == 1'><img src='assets/images/target_1_1.png' alt='第一'/></td>
           <td ng-if='data.rank == 2'><img src='assets/images/target_1_2.png' alt='第二'/></td>
           <td ng-if='data.rank == 3'><img src='assets/images/target_1_3.png' alt='第三'/></td>
-          <td ng-if='data.rank != 1 && data.rank != 2 && data.rank != 3' ></td>
+          <td ng-if='data.rank != 1 && data.rank != 2 && data.rank != 3'></td>
         </tr>
 
       </table>
@@ -59,18 +59,9 @@
         </div>
       </div>
     </div>
-    <div class='item-list' id='awardedPlay'>
-      <div class='item' ng-repeat='awarded in awardedUnits.data'>
-        <div class='cell'>
-          <h4>{{awarded.awarded_unit}}</h4>
-          <h5>{{awarded.awarded_reason}}</h5>
-        </div>
-        <div class='cell'>
-          <strong>+{{awarded.awarded_points}}</strong>
-        </div>
-        <div class='cell'>
-          计入{{awarded.awarded_scope}}
-        </div>
+    <div class='item-list'>
+      <div class='item-list' id='awardedPlay' wiserv-award-play awarddata=awardedUnits.data ng-if='awardedUnits.data != void(0)'>
+
       </div>
     </div>
     <!-- <div class='next'>
@@ -90,9 +81,7 @@
       </div>
     </div>
     <div class='item-list'>
-      <div class='item-list' id='penalPlay' wiserv-penal-play penaldata=penalUnits.data ng-if='penalUnits.data != void(0)'>
-
-      </div>
+      <div class='item-list' id='penalPlay' wiserv-penal-play penaldata=penalUnits.data ng-if='penalUnits.data != void(0)'></div>
     </div>
     <!-- <div class='next'>
       <a class='btn btn-primary'>下一页</a>

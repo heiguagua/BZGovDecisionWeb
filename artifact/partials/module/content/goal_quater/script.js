@@ -39,17 +39,19 @@
           alert('请选择季度！');
           return;
         }
+        getAllDataDetails({
+          year: goalquaterService.getDateFormat($scope.datepick.model, 'yyyy'),
+          quarter: $scope.datepick.quarter
+        });
       }
+      
       $scope.altInputFormats = ['M!/d!/yyyy'];
 
-      goalquaterService.getContent({
-        menuId: $stateParams.pid
-      }).then(function(result) {
-        $scope.alldatas = result.data;
-        _.forEach(result.data, function(item) {
+      function getAllDataDetails(params) {
+        _.forEach($scope.alldatas, function(item) {
           var url = item.url + '/' + item.picCode;
 
-          goalquaterService.getContentDatas(url).then(function(res) {
+          goalquaterService.getContentDatas(url,params).then(function(res) {
             if (item.picCode == 'targetExamTotalRanks') {
               $scope.targetExamTotalRanks = res.data;
             }
@@ -80,6 +82,13 @@
             }
           })
         })
+      }
+
+      goalquaterService.getContent({
+        menuId: $stateParams.pid
+      }).then(function(result) {
+        $scope.alldatas = result.data;
+        getAllDataDetails();
       })
 
     }
@@ -90,7 +99,8 @@
     function($http, URL) {
       return {
         "getContent": getContent,
-        "getContentDatas": getContentDatas
+        "getContentDatas": getContentDatas,
+        "getDateFormat":getDateFormat
       }
 
       function getContent(params) {
@@ -108,6 +118,15 @@
           }
         )
       }
+
+      function getDateFormat(parseDate, format) {
+        var date = angular.copy(parseDate);
+        if (angular.isDate(date) && !isNaN(date.getTime())) {
+          return date.Format(format);
+        } else {
+          return '';
+        }
+      }
     }
   ]);
 
@@ -122,41 +141,38 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
 
-          scope.$watch('datemodel.model', function(newValue, oldValue) {
+          // scope.$watch('datemodel.model', function(newValue, oldValue) {
+          //   if (newValue === oldValue || !newValue || !oldValue) {
+          //     return;
+          //   }
+          //   getData();
+          // });
+          //
+          // scope.$watch('datemodel.quarter', function(newValue, oldValue) {
+          //   if (newValue === oldValue || !newValue || !oldValue) {
+          //     return;
+          //   }
+          //   getData();
+          // });
+          //
+          // function getData() {
+          //   goalquaterService.getContentDatas(scope.quaterdata.url, {
+          //     year: goalquaterService.getDateFormat(scope.datemodel.model, 'yyyy'),
+          //     quarter: scope.datemodel.quarter
+          //   }).then(function(res) {
+          //     var url = scope.quaterdata.url;
+          //     scope.quaterdata = res.data;
+          //     scope.quaterdata.url = url;
+          //     scope.datemodel.quarter = Number(scope.datemodel.quarter);
+          //     redraw();
+          //   })
+          // }
+          scope.$watch('quaterdata', function(newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
-            getData();
+            redraw();
           });
-
-          scope.$watch('datemodel.quarter', function(newValue, oldValue) {
-            if (newValue === oldValue || !newValue || !oldValue) {
-              return;
-            }
-            getData();
-          });
-
-          function getDateFormat(parseDate, format) {
-            var date = angular.copy(parseDate);
-            if (angular.isDate(date) && !isNaN(date.getTime())) {
-              return date.Format(format);
-            } else {
-              return '';
-            }
-          }
-
-          function getData() {
-            goalquaterService.getContentDatas(scope.quaterdata.url, {
-              year: getDateFormat(scope.datemodel.model, 'yyyy'),
-              quarter: scope.datemodel.quarter
-            }).then(function(res) {
-              var url = scope.quaterdata.url;
-              scope.quaterdata = res.data;
-              scope.quaterdata.url = url;
-              scope.datemodel.quarter = Number(scope.datemodel.quarter);
-              redraw();
-            })
-          }
 
           redraw();
 
@@ -242,29 +258,81 @@
           penaldata: '=',
         },
         link: function(scope, element, attrs) {
-          if(scope.penaldata) {
-            var htmlcontent = ''
-            _.forEach(scope.penaldata,function(item){
-              htmlcontent += "<div class='detail-item'>"+
-              "<div class='cell'><h5>"+item.penal_unit+"</h5></div>"+
-              "<div class='cell'><strong>-"+item.penal_points+"</strong></div>"+
-              "<div class='cell'>计入"+item.penal_scope+"</div>"+
-              "<div class='cell'>"+item.penal_target+"</div></div>";
-            });
-            element[0].innerHTML = htmlcontent;
-            console.log($(element[0]));
-            $(element[0]).slick({
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              autoplay: false,
-              autoplaySpeed: 3000,
-              prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
-              nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
-            });
+          scope.$watch('penaldata', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            drawhtml();
+          });
+          drawhtml();
+          function drawhtml() {
+            if(scope.penaldata) {
+              var htmlcontent = ''
+              _.forEach(scope.penaldata,function(item){
+                htmlcontent += "<div class='detail-item'>"+
+                "<div class='cell'><h5>"+item.penal_unit+"</h5></div>"+
+                "<div class='cell'><strong>-"+item.penal_points+"</strong></div>"+
+                "<div class='cell'>计入"+item.penal_scope+"</div>"+
+                "<div class='cell'>"+item.penal_target+"</div></div>";
+              });
+              element[0].innerHTML = htmlcontent;
+              console.log($(element[0]));
+              $(element[0]).slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
+                nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
+              });
+            }
           }
+
         }
       }
-    }])
+    }]);
+
+    goalquater.directive('wiservAwardPlay', ['goalquaterService', '$window',
+      function(goalquaterService, $window) {
+        return {
+          restrict: 'ACE',
+          scope: {
+            awarddata: '=',
+          },
+          link: function(scope, element, attrs) {
+            scope.$watch('awarddata', function(newValue, oldValue) {
+              if (newValue === oldValue || !newValue || !oldValue) {
+                return;
+              }
+              drawhtml();
+            });
+            drawhtml();
+
+            function drawhtml() {
+              if(scope.awarddata) {
+                var htmlcontent = ''
+                _.forEach(scope.awarddata,function(item){
+                  htmlcontent += "<div class='detail-item'>"+
+                  "<div class='cell'><h4>"+item.awarded_unit+"</h4><h5>"+item.awarded_reason+"</h5></div>"+
+                  "<div class='cell'><strong>+"+item.awarded_points+"</strong></div>"+
+                  "<div class='cell'>计入"+item.awarded_scope+"</div></div>";
+                });
+                element[0].innerHTML = htmlcontent;
+                $(element[0]).slick({
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  autoplay: false,
+                  autoplaySpeed: 3000,
+                  prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
+                  nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
+                });
+              }
+            }
+
+          }
+        }
+      }])
+
 
 
 })();
