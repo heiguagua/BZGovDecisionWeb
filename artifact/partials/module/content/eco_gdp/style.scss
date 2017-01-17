@@ -1,48 +1,50 @@
-.eco_gdp{
-     @include flex-num(1);
- padding-bottom: 1rem;
-  padding-right: 1rem;
-   table td,th{
+.eco_gdp {
+    .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+    .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+        background-color: rgba(156, 156, 156, 0.5);
+    }
+    overflow: hidden;
+    @include flex-num(1);
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    table td,
+    th {
         text-align: center;
         vertical-align: middle;
-      
     }
-    .btn1{
+    .btn1 {
         width: 80px;
-       
         text-align: center;
         color: #fff;
         display: inline-block;
     }
-    .font_blue{
+    .font_blue {
         color: #20b3a9;
     }
-    .blue{
+    .blue {
         background: #20b3a9;
-       
     }
-    .font_yellow{
-            color: #fa9b06;
+    .font_yellow {
+        color: #fa9b06;
     }
-    .yellow{
-          background: #fa9b06;
-       
+    .yellow {
+        background: #fa9b06;
     }
-    .progress{
+    .progress {
         width: 99%;
         border-radius: 15px;
         color: #fff;
-        .progress-bar{
+        .progress-bar {
             border-radius: 15px;
-            span{
+            span {
                 font-size: 0.9em;
             }
         }
     }
-    .width20{
+    .width20 {
         width: 30%;
     }
-    .none_data{
+    .none_data {
         color: #333;
     }
 }

@@ -4,9 +4,9 @@
             <label>统计时间：</label>
             <div class='time-pick'>
                 <p class="input-group">
-                    <input type="text" ng-change='changed()' readonly class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" ng-model="datepick.model"
-                        is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除"
-                        current-text='' close-text='关闭' alt-input-formats="altInputFormats" />
+                    <input type="text" ng-change='changed()' readonly class="form-control input-time" uib-datepicker-popup="{{datepick.format}}"
+                        ng-model="datepick.model" is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true"
+                        clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats" />
                     <span class="input-group-btn">
                 <button type="button" class="btn btn-default btn-time" ng-click="open()">
                   <i class="glyphicon glyphicon-calendar"></i>
@@ -24,7 +24,7 @@
                     <img src="assets\images\process_01.png" class="img-responsive" width="50%" />
                 </div>
                 <div class="pull-right width_r">
-                    <p class="font_color">98%</p>
+                    <p class="font_color">{{allCityData[0].quarterly_investment_achieved_rate}}%</p>
                     <p>季度总投资完成进度</p>
                 </div>
             </li>
@@ -33,7 +33,7 @@
                     <img src="assets\images\process_02.png" class="img-responsive" width="50%" />
                 </div>
                 <div class="pull-right width_r">
-                    <p class="font_color2">72%</p>
+                    <p class="font_color2">{{allCityData[0].yearly_investment_achieved_rate}}%</p>
                     <p>全年总投资完成进度</p>
                 </div>
             </li>
@@ -42,7 +42,7 @@
                     <img src="assets\images\process_03.png" class="img-responsive" width="50%" />
                 </div>
                 <div class="pull-right width_r">
-                    <p class="font_color">5</p>
+                    <p class="font_color">{{allCityData[0].delayed_project_number}}</p>
                     <p>进度滞后项目数</p>
                 </div>
             </li>

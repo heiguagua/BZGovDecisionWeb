@@ -1,12 +1,12 @@
-(function() {
+(function () {
   /** Module */
-  var projectcounty = angular.module('app.main.module.content.projectcounty', ['ui.bootstrap','cgBusy']);
+  var projectcounty = angular.module('app.main.module.content.projectcounty', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   projectcounty.controller('projectcountyController', [
     '$scope', 'projectcountyService', '$stateParams',
-    function($scope, projectcountyService, $stateParams) {
+    function ($scope, projectcountyService, $stateParams) {
       var vm = this;
-    $scope.popups = [];
+      $scope.popups = [];
       $scope.quarterOptions = [{
         'id': 1,
         "name": "第一季度"
@@ -20,7 +20,7 @@
         'id': 4,
         "name": "第四季度"
       }];
-//  时间插件
+      //  时间插件
       $scope.datepick = {};
       $scope.datepick.format = 'yyyy';
       $scope.datepick.model = new Date();
@@ -28,14 +28,14 @@
       $scope.datepick.dateOptions.minMode = 'year';
       $scope.datepick.dateOptions.datepickerMode = 'year';
 
-      $scope.open = function() {
+      $scope.open = function () {
         $scope.datepick.opened = true;
       };
 
-      $scope.changed = function() {
+      $scope.changed = function () {
         if (!angular.isDate($scope.datepick.model) || isNaN($scope.datepick.model.getTime())) {
           alert('请输入正确的日期格式！');
-           
+
           return;
         }
         if (!$scope.datepick.quarter) {
@@ -45,27 +45,32 @@
       }
       $scope.altInputFormats = ['M!/d!/yyyy'];
 
-       projectcountyService.getContent({
-        menuId:$stateParams.pid
-      }).then(function(result){
-        var data = result.data[0];
-        console.log(data);
-        var picCode = data.picCode;
-        var url = data.url;
-        $scope.url = data.url + '/' + picCode;
-        console.log(url);
-         projectcountyService.getContentDatas($scope.url).then(function(res){
-           console.log(res);
-           var data=res.data;
-           $scope.indicatorDatas=data.data;
-           $scope.datepick.model=new Date(data.year);
-           $scope.datepick.quarter = Number(data.quarter);
-          //  $scope.indicatorFirst=data.data[0];
-           console.log( $scope.indicatorDatas);
-         })
+      projectcountyService.getContent({
+        menuId: $stateParams.pid
+      }).then(function (result) {
+
+        _.forEach(result.data, function (item) {
+          $scope.url = item.url + '/' + item.picCode;
+
+          projectcountyService.getContentDatas($scope.url).then(function (res) {
+            if (item.picCode == 'countyScheduleIndicatorsSummary') {
+              $scope.allCityData = res.data.data;
+            }
+            if (item.picCode == 'countyScheduleIndicators') {
+              var data = res.data;
+              $scope.indicatorDatas = data.data;
+              $scope.datepick.model = new Date(data.year);
+              $scope.datepick.quarter = Number(data.quarter);
+              //  $scope.indicatorFirst=data.data[0];
+              console.log($scope.indicatorDatas);
+              console.log(3343);
+            }
+            console.log(res);
+
+          })
+        })
       })
-    
-  
+
       $scope.$watch('datepick.model', function (newValue, oldValue) {
         if (newValue === oldValue || !newValue || !oldValue) {
           return;
@@ -82,14 +87,14 @@
         getData();
       }, true);
       // 格式化数据
-       function getDateFormat(parseDate, format) {
-            var date = angular.copy(parseDate);
-            if (angular.isDate(date) && !isNaN(date.getTime())) {
-              return date.Format(format);
-            } else {
-              return '';
-            }
-          }
+      function getDateFormat(parseDate, format) {
+        var date = angular.copy(parseDate);
+        if (angular.isDate(date) && !isNaN(date.getTime())) {
+          return date.Format(format);
+        } else {
+          return '';
+        }
+      }
       function getData() {
         console.log($scope.url);
         projectcountyService.getContentDatasUrl($scope.url, {
@@ -98,10 +103,11 @@
         }).then(function (res) {
           var data = res.data;
           $scope.indicatorDatas = data.data;
+          $scope.allCityData = res.data.data;
         })
-   
+
       }
-       Date.prototype.Format = function(fmt) { //author: meizz
+      Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
           "M+": this.getMonth() + 1, //月份
           "d+": this.getDate(), //日
@@ -123,11 +129,11 @@
 
   /** Service */
   projectcounty.factory('projectcountyService', ['$http', 'URL',
-    function($http, URL) {
+    function ($http, URL) {
       return {
         "getContent": getContent,
-        "getContentDatas":getContentDatas,
-        "getContentDatasUrl":getContentDatasUrl
+        "getContentDatas": getContentDatas,
+        "getContentDatasUrl": getContentDatasUrl
       }
 
       function getContent(params) {
@@ -142,10 +148,10 @@
           URL + params
         )
       }
-       function getContentDatasUrl(url,params) {
+      function getContentDatasUrl(url, params) {
         return $http.get(
-          URL + url,{
-             params: params
+          URL + url, {
+            params: params
           }
         )
       }

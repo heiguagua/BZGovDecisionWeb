@@ -1,91 +1,93 @@
-.eco_city{
-@include flex-num(1);
- padding-bottom: 1rem;
-  padding-right: 1rem;
- ul{
- 
- @include flex-flow(row);
- li{
-      @include flex-num(1);
-      @include flex-flow(row);
-      align-items:center;
-      justify-content: center;
-    height: 150px;
-   margin-right: 15px;
-    border-top: 2px solid #33a6e5;
-    border-left: 1px solid #dddddd;
-    border-bottom: 1px solid #dddddd;
-    border-right: 1px solid #dddddd;
-    .font_color{
-        color: #33a6e5;
-        font-size: 34px;
+.eco_city {
+    .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+    .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+        background-color: rgba(156, 156, 156, 0.5);
     }
-    .font_color2{
-         color: #20b3a9;
-        font-size: 34px;
-    }
-    .border_r{
-    border-right: 1px solid #dddddd;
-    }
-    .width_l{
-       width: 45%;
+    @include flex-flow(column);
+    @include flex-num(1);
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    ul {
         @include flex-flow(row);
-          align-items:center;
-      justify-content: center;
-    }
-    .width_r{
-         width: 55%;
-          @include flex-flow(column);
-            align-items:center;
-      justify-content: center;
-    }
-}
-}
-
-.eco_footer{
-    margin-top: 20px;
-    table td,th{
-        text-align: center;
-        vertical-align: middle;
-      
-    }
-    .btn1{
-        width: 80px;
-       
-        text-align: center;
-        color: #fff;
-        display: inline-block;
-    }
-    .font_blue{
-        color: #20b3a9;
-    }
-    .blue{
-        background: #20b3a9;
-       
-    }
-    .font_yellow{
-            color: #fa9b06;
-    }
-    .yellow{
-          background: #fa9b06;
-       
-    }
-    .progress{
-        width: 99%;
-        border-radius: 15px;
-        color: #fff;
-        .progress-bar{
-            border-radius: 15px;
-            span{
-                font-size: 0.9em;
+        li {
+            @include flex-num(1);
+            @include flex-flow(row);
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+            margin-right: 15px;
+            border-top: 2px solid #33a6e5;
+            border-left: 1px solid #dddddd;
+            border-bottom: 1px solid #dddddd;
+            border-right: 1px solid #dddddd;
+            .font_color {
+                color: #33a6e5;
+                font-size: 34px;
+            }
+            .font_color2 {
+                color: #20b3a9;
+                font-size: 34px;
+            }
+            .border_r {
+                border-right: 1px solid #dddddd;
+            }
+            .width_l {
+                width: 45%;
+                @include flex-flow(row);
+                align-items: center;
+                justify-content: center;
+            }
+            .width_r {
+                width: 55%;
+                @include flex-flow(column);
+                align-items: center;
+                justify-content: center;
             }
         }
     }
-    .width20{
-        width: 30%;
+    .eco_footer {
+        margin-top: 20px;
+        @include flex-num(1);
+        overflow: hidden;
+        table td,
+        th {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .btn1 {
+            width: 80px;
+            text-align: center;
+            color: #fff;
+            display: inline-block;
+        }
+        .font_blue {
+            color: #20b3a9;
+        }
+        .blue {
+            background: #20b3a9;
+        }
+        .font_yellow {
+            color: #fa9b06;
+        }
+        .yellow {
+            background: #fa9b06;
+        }
+        .progress {
+            width: 99%;
+            border-radius: 15px;
+            color: #fff;
+            .progress-bar {
+                border-radius: 15px;
+                span {
+                    font-size: 0.9em;
+                }
+            }
+        }
+        .width20 {
+            width: 30%;
+        }
+        .none_data {
+            color: #333;
+        }
     }
-    .none_data{
-        color: #333;
-    }
-}
 }

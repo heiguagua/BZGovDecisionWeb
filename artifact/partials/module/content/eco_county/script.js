@@ -28,11 +28,9 @@
       $scope.datepick.dateOptions = {};
       $scope.datepick.dateOptions.minMode = 'year';
       $scope.datepick.dateOptions.datepickerMode = 'year';
-
       $scope.open = function () {
         $scope.datepick.opened = true;
       };
-
       $scope.changed = function () {
         if (!angular.isDate($scope.datepick.model) || isNaN($scope.datepick.model.getTime())) {
           alert('请输入正确的日期格式！');
@@ -46,13 +44,11 @@
         // getData();
       }
       $scope.altInputFormats = ['M!/d!/yyyy'];
-
       ecocountyService.getContent({
         menuId: $stateParams.pid
       }).then(function (result) {
         _.forEach(result.data, function (item) {
           $scope.url = item.url + '/' + item.picCode;
-
           ecocountyService.getContentDatas($scope.url).then(function (res) {
             if (item.picCode == 'ecnomicalIndicatorsTitles') {
               $scope.listMenu = res.data;
@@ -60,17 +56,15 @@
             if (item.picCode == 'ecnomicalIndicators') {
               //getData();
               var data = res.data;
-        $scope.indicatorDatas = data.data;
-        $scope.datepick.model = new Date(data.year);
-        $scope.datepick.quarter = Number(data.quarter);
-        $scope.show = data.indicator_name;
+              $scope.indicatorDatas = data.data;
+              $scope.datepick.model = new Date(data.year);
+              $scope.datepick.quarter = Number(data.quarter);
+              $scope.show = data.indicator_name;
+              $('.tb-wrap').mCustomScrollbar();
             }
           })
         })
-
       })
-
-
       $scope.$watch('datepick.model', function (newValue, oldValue) {
         if (newValue === oldValue || !newValue || !oldValue) {
           return;
@@ -100,21 +94,19 @@
           indicator_name: $scope.show
         }).then(function (res) {
           var data = res.data;
-        $scope.indicatorDatas = data.data;
-        //$scope.datepick.model = new Date(data.year);
-        //$scope.datepick.quarter = Number(data.quarter);
-        //$scope.show = data.indicator_name;
+          $scope.indicatorDatas = data.data;
+          //$scope.datepick.model = new Date(data.year);
+          //$scope.datepick.quarter = Number(data.quarter);
+          //$scope.show = data.indicator_name;
         })
         console.log(11);
         console.log($scope.url)
       }
-
       $scope.display = function (p) {
         $scope.show = p;
         getData();
       }
-
-      Date.prototype.Format = function(fmt) { //author: meizz
+      Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
           "M+": this.getMonth() + 1, //月份
           "d+": this.getDate(), //日
@@ -133,8 +125,6 @@
       }
     }
   ]);
-
-
   /** Service */
   ecocounty.factory('ecocountyService', ['$http', 'URL',
     function ($http, URL) {

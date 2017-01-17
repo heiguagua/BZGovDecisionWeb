@@ -7,23 +7,26 @@
     function ($scope, ecocityService, $stateParams) {
       var vm = this;
       ecocityService.getContent({
-        menuId:$stateParams.pid
-      }).then(function(result){
+        menuId: $stateParams.pid
+      }).then(function (result) {
         var data = result.data[0];
         console.log(data);
         var picCode = data.picCode;
         var url = data.url;
         url = url + '/' + picCode;
         console.log(url);
-         ecocityService.getContentDatas(url).then(function(res){
-           console.log(res);
-           var data=res.data;
-           $scope.indicatorDatas=data.data;
-           $scope.indicatorFirst=data.data[0];
-         })
+        ecocityService.getContentDatas(url).then(function (res) {
+          console.log(res);
+          var data = res.data;
+          $scope.indicatorDatas = data.data;
+          angular.forEach(data.data, function (data, index, array) {
+            if (data.indicator_name == '地区生产总值') {
+              $scope.indicatorFirst = data;
+            }
+          });
+          $('.eco_footer').mCustomScrollbar();
+        })
       })
-      //$scope.indicatorData.growth_statu=$scope.indicatorData.growth_statu<0?'差'+Math.abs($scope.indicatorData.growth_statu):'超'+Math.abs($scope.indicatorData.growth_statu);
-     
     }
   ]);
 
@@ -32,9 +35,8 @@
     function ($http, URL) {
       return {
         "getContent": getContent,
-        "getContentDatas":getContentDatas
+        "getContentDatas": getContentDatas
       }
-
       function getContent(params) {
         return $http.get(
           URL + '/main/showPics', {
@@ -47,7 +49,6 @@
           URL + params
         )
       }
-
     }
   ]);
 

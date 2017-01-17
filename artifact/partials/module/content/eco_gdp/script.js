@@ -15,12 +15,14 @@
         var url = data.url;
         url = url + '/' + picCode;
         console.log(url);
-         console.log(1111);
+        console.log(1111);
         ecogdpService.getContentDatas(url).then(function (res) {
           console.log(res);
           var data = res.data;
           $scope.indicatorDatas = data;
-           console.log($scope.indicatorDatas );
+          console.log($scope.indicatorDatas);
+
+          $('.eco_gdp').mCustomScrollbar();
         })
       })
     }
