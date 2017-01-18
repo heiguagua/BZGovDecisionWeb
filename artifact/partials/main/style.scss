@@ -8,8 +8,8 @@ $white: #FFF;
 $chartHeightSmall: 380px;
 $chartHeightBig: 540px;
 .page-wrap {
-  overflow:hidden;
-  @include flex-flow(row);
+  overflow-x: hidden;
+  @include flex-flow(column);
   @include flex-num(1);
   @include mobilescreen {
     overflow-x: hidden;
@@ -46,12 +46,13 @@ $chartHeightBig: 540px;
   }
 }
 .main-content {
+  width: 100%;
   padding-top: $headerHeight;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
-  overflow:hidden;
+  // overflow:hidden;
   @include flex-flow(column);
   @include flex-num(1);
   @include mobilescreen {
@@ -108,6 +109,7 @@ $chartHeightBig: 540px;
     @include flex-num(1);
     @include flex-flow(column);
     padding-left: 234px;
+    min-height: 0;
   }
 }
 .mobile-content {

@@ -4,11 +4,17 @@
   padding-bottom: 10px;
   padding-right: 1rem;
   overflow: hidden;
-  min-height:0;
+  min-height: 0;
+  position: relative;
+  .right-top {
+    position: absolute;
+    right: 23px;
+    top: -40px;
+  }
   .content-top {
     @include flex-num(1);
     @include flex-flow(row);
-    min-height:0;
+    min-height: 0;
     // min-height: 300px;
     .top-left {
       @include flex-num(3);
@@ -27,14 +33,14 @@
       margin-left: 0.8rem;
       @include flex-num(2);
       border: 1px solid #DDD;
-      padding: 10px 10px 0 10px;
+      padding: 10px 10px 0;
       .title {
         text-align: center;
         font-family: 微软雅黑;
       }
     }
     .table {
-      margin-bottom:0;
+      margin-bottom: 0;
       thead {
         tr {
           background: #20b3a9;
@@ -87,10 +93,10 @@
     padding: 15px;
     -webkit-align-items: center;
     align-items: center;
-    min-height:0;
+    min-height: 0;
     @include flex-flow(row);
     .label-icon {
-      @include flex-num(2);
+      @include flex-num(1);
       border-right: 1px solid #DDD;
       .media-left {
         width: 46%;
@@ -118,16 +124,17 @@
       }
     }
     .item-list {
-      @include flex-num(5);
+      @include flex-num(3);
       @include flex-flow(row);
       padding: 0;
       overflow: hidden;
       -webkit-align-items: center;
       align-items: center;
       position: relative;
-      .slick-list{
-        margin-left:80px;
-        width:100%;
+      .slick-list {
+        margin-left: 80px;
+        margin-right: 80px;
+        width: 100%;
       }
     }
     .item {
@@ -135,8 +142,7 @@
       @include flex-flow(row);
       -webkit-align-items: center;
       align-items: center;
-      padding: 0 1rem;
-      padding-right: 100px;
+      padding: 0 100px 0 1rem;
       .cell {
         @include flex-num(2);
         text-align: right;
@@ -162,11 +168,10 @@
       @include flex-flow(row);
       -webkit-align-items: center;
       align-items: center;
-      padding: 0 1rem;
-      padding-right: 100px;
+      padding: 15px;
       .cell {
         @include flex-num(2);
-        text-align: right;
+        text-align: center;
         font-family: 微软雅黑;
         &:first-child {
           text-align: left;
@@ -189,15 +194,13 @@
     }
     .prev {
       position: absolute;
-      left: 0;
-      text-align: right;
-      padding: 5px 0 5px 15px;
+      left: 15px;
+      top: 30%;
     }
     .next {
       position: absolute;
-      right: 0;
-      text-align: right;
-      padding: 5px 0 5px 15px;
+      right: 15px;
+      top: 30%;
     }
   }
 }
