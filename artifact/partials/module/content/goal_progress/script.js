@@ -40,17 +40,43 @@
           alert('请选择季度！');
           return;
         }
+        getDataDetails({
+          year: goalprogressService.getDateFormat($scope.datepick.model, 'yyyy'),
+          quarter: $scope.datepick.quarter
+        });
+      }
+
+      $scope.qtchanged = function() {
+        if (!angular.isDate($scope.datepick.model) || isNaN($scope.datepick.model.getTime())) {
+          alert('请输入正确的日期格式！');
+          return;
+        }
+        if (!$scope.datepick.quarter) {
+          alert('请选择季度！');
+          return;
+        }
+        _.forEach($scope.alldatas, function(item) {
+          var url = item.url + '/' + item.picCode;
+          if (item.picCode == 'cityQuarterlyTargetSchedule') {
+            goalprogressService.getContentDatas(url, {
+              year: $scope.datepick.year,
+              quarter: $scope.datepick.quarter
+            }).then(function(res) {
+              $scope.cityYearData = res.data;
+              $scope.cityYearData.url = url;
+              $scope.datepick.model = new Date($scope.cityYearData.year);
+              $scope.datepick.quarter = Number($scope.cityYearData.quarter);
+            })
+          }
+        })
       }
       $scope.altInputFormats = ['M!/d!/yyyy'];
 
-      goalprogressService.getContent({
-        menuId: $stateParams.pid
-      }).then(function(result) {
-        $scope.alldatas = result.data;
-        _.forEach(result.data, function(item) {
+      function getDataDetails(params) {
+        _.forEach($scope.alldatas, function(item) {
           var url = item.url + '/' + item.picCode;
 
-          goalprogressService.getContentDatas(url).then(function(res) {
+          goalprogressService.getContentDatas(url, params).then(function(res) {
             if (item.picCode == 'cityYearlyTargetSchedule') {
               $scope.cityQuarterData = res.data;
             }
@@ -58,10 +84,18 @@
               $scope.cityYearData = res.data;
               $scope.cityYearData.url = url;
               $scope.datepick.model = new Date($scope.cityYearData.year);
+              $scope.datepick.year = goalprogressService.getDateFormat($scope.datepick.model, 'yyyy');
               $scope.datepick.quarter = Number($scope.cityYearData.quarter);
             }
           })
         })
+      }
+
+      goalprogressService.getContent({
+        menuId: $stateParams.pid
+      }).then(function(result) {
+        $scope.alldatas = result.data;
+        getDataDetails();
       })
     }
   ]);
@@ -71,7 +105,8 @@
     function($http, URL) {
       return {
         "getContent": getContent,
-        "getContentDatas": getContentDatas
+        "getContentDatas": getContentDatas,
+        "getDateFormat": getDateFormat
       }
 
       function getContent(params) {
@@ -89,6 +124,15 @@
           }
         )
       }
+
+      function getDateFormat(parseDate, format) {
+        var date = angular.copy(parseDate);
+        if (angular.isDate(date) && !isNaN(date.getTime())) {
+          return date.Format(format);
+        } else {
+          return '';
+        }
+      }
     }
   ]);
 
@@ -102,41 +146,13 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          scope.$watch('datemodel.model', function(newValue, oldValue) {
+
+          scope.$watch('yearlydata', function(newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
-            getData();
-          },true);
-
-          scope.$watch('datemodel.quarter', function(newValue, oldValue) {
-            if (newValue === oldValue || !newValue || !oldValue) {
-              return;
-            }
-            getData();
-          },true);
-
-          function getDateFormat(parseDate, format) {
-            var date = angular.copy(parseDate);
-            if (angular.isDate(date) && !isNaN(date.getTime())) {
-              return date.Format(format);
-            } else {
-              return '';
-            }
-          }
-
-          function getData() {
-            goalprogressService.getContentDatas(scope.yearlydata.url, {
-              year: getDateFormat(scope.datemodel.model, 'yyyy'),
-              quarter: scope.datemodel.quarter
-            }).then(function(res) {
-              var url = scope.yearlydata.url;
-              scope.yearlydata = res.data;
-              scope.yearlydata.url = url;
-              scope.datemodel.quarter = Number(scope.datemodel.quarter);
-              redraw();
-            })
-          }
+            redraw();
+          }, true);
 
           redraw();
 
@@ -181,8 +197,8 @@
                 },
                 xAxis: [{
                   type: 'category',
-                  axisLabel:{
-                    interval:0,
+                  axisLabel: {
+                    interval: 0,
                   },
                   data: scope.yearlydata.data.area
                 }],
@@ -236,78 +252,90 @@
       return {
         restrict: 'ACE',
         scope: {
-          quarterlydata: '='
+          quarterlydata: '=',
+          datemodel: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          if (scope.quarterlydata) {
-            var dataList = [];
-            _.forEach(scope.quarterlydata.value, function(item) {
-              if (item.quarter == 1) {
-                item.name = '第一季度';
-              }
-              if (item.quarter == 2) {
-                item.name = '第二季度';
-              }
-              if (item.quarter == 3) {
-                item.name = '第三季度';
-              }
-              if (item.quarter == 4) {
-                item.name = '第四季度';
-              }
-              item.type = 'line';
-              item.label = {
-                normal: {
-                  show: true
-                }
-              };
-            })
-            var option = {
-              title: {
-                text: '2016年全市目标工作正常推进率',
-                // subtext: '数据来源：市委目督办',
-                left: 'center',
-                top: '4%'
-              },
-              color: ['rgb(49,167,229)', 'rgb(40,200,202)', 'rgb(221,129,142)'],
-              tooltip: {
-                trigger: 'axis',
-                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                }
-              },
-              legend: {
-                data: _.map(scope.quarterlydata.value, 'name'),
-                top: '13%',
-                itemGap: 50
-              },
-              grid: {
-                top: '26%',
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-              },
-              xAxis: [{
-                type: 'category',
-                axisLabel:{
-                  interval:0,
-                },
-                data: scope.quarterlydata.area
-              }],
-              yAxis: [{
-                type: 'value',
-                name: '%'
-              }],
-              series: scope.quarterlydata.value
-            };
+          scope.$watch('quarterlydata', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
 
-            setTimeout(function() {
-              var chartInstance = echarts.init((element.find('div'))[0]);
-              chartInstance.clear();
-              chartInstance.resize();
-              chartInstance.setOption(option);
-            }, 300);
+          redraw();
+
+          function redraw() {
+            if (scope.quarterlydata) {
+              var dataList = [];
+              _.forEach(scope.quarterlydata.value, function(item) {
+                if (item.quarter == 1) {
+                  item.name = '第一季度';
+                }
+                if (item.quarter == 2) {
+                  item.name = '第二季度';
+                }
+                if (item.quarter == 3) {
+                  item.name = '第三季度';
+                }
+                if (item.quarter == 4) {
+                  item.name = '第四季度';
+                }
+                item.type = 'line';
+                item.label = {
+                  normal: {
+                    show: true
+                  }
+                };
+              })
+              var option = {
+                title: {
+                  text: scope.datemodel.year + '年全市目标工作正常推进率',
+                  // subtext: '数据来源：市委目督办',
+                  left: 'center',
+                  top: '4%'
+                },
+                color: ['rgb(49,167,229)', 'rgb(40,200,202)', 'rgb(221,129,142)'],
+                tooltip: {
+                  trigger: 'axis',
+                  axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                  }
+                },
+                legend: {
+                  data: _.map(scope.quarterlydata.value, 'name'),
+                  top: '13%',
+                  itemGap: 50
+                },
+                grid: {
+                  top: '26%',
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+                },
+                xAxis: [{
+                  type: 'category',
+                  axisLabel: {
+                    interval: 0,
+                  },
+                  data: scope.quarterlydata.area
+                }],
+                yAxis: [{
+                  type: 'value',
+                  name: '%'
+                }],
+                series: scope.quarterlydata.value
+              };
+
+              setTimeout(function() {
+                var chartInstance = echarts.init((element.find('div'))[0]);
+                chartInstance.clear();
+                chartInstance.resize();
+                chartInstance.setOption(option);
+              }, 300);
+            }
           }
         }
       }
