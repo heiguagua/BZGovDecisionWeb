@@ -204,7 +204,8 @@
                 }],
                 yAxis: [{
                   type: 'value',
-                  name: '%'
+                  name: '%',
+                  nameGap:8
                 }],
                 series: [{
                   name: '进度正常',
@@ -324,7 +325,8 @@
                 }],
                 yAxis: [{
                   type: 'value',
-                  name: '%'
+                  name: '%',
+                  nameGap:8
                 }],
                 series: scope.quarterlydata.value
               };

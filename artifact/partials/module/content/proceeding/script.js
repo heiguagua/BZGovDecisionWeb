@@ -130,9 +130,10 @@
             legend: {
               data: _.map(data_nums,'name'),
               top: '19%',
-              // itemGap: 10,
-              itemWidth:16,
-              itemHeight:16,
+              itemGap: 8,
+              padding:0,
+              itemWidth:14,
+              itemHeight:14,
               borderWidth:0
               // orient:'vertical',
               // left:'right'
@@ -153,7 +154,8 @@
             }],
             yAxis: [{
               type: 'value',
-              name: '项'
+              name: '项',
+              nameGap:8
             }],
             series: data_nums
           };
@@ -219,7 +221,8 @@
             }],
             yAxis: [{
               type: 'value',
-              name: '%'
+              name: '%',
+              nameGap:8
             }],
             series: [{
               name: '办结率',
