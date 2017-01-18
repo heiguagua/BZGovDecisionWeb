@@ -50,24 +50,23 @@
       }).then(function (result) {
 
         _.forEach(result.data, function (item) {
-          $scope.url = item.url + '/' + item.picCode;
+         var url = item.url + '/' + item.picCode;
 
-          projectcityService.getContentDatas($scope.url).then(function (res) {
+          projectcityService.getContentDatas(url).then(function (res) {
             if (item.picCode == 'cityScheduleIndicatorsSummary') {
               $scope.allCityData = res.data.data;
+              $scope.url1=url;
+              
             }
             if (item.picCode == 'cityScheduleIndicators') {
+               $scope.url2=url;
               var data = res.data;
               $scope.indicatorDatas = data.data;
               $scope.datepick.model = new Date(data.year);
               $scope.datepick.quarter = Number(data.quarter);
-              //  $scope.indicatorFirst=data.data[0];
-              console.log($scope.indicatorDatas);
-              console.log(3343);
+              
               $('.eco_footer').mCustomScrollbar();
             }
-            console.log(res);
-
           })
         })
       })
@@ -99,22 +98,21 @@
       }
       function getData() {
         console.log($scope.url);
-        projectcityService.getContentDatasUrl($scope.url, {
+        projectcityService.getContentDatasUrl($scope.url2, {
           year: getDateFormat($scope.datepick.model, 'yyyy'),
           quarter: $scope.datepick.quarter
         }).then(function (res) {
           var data = res.data;
           $scope.indicatorDatas = data.data;
-          $scope.allCityData = res.data.data;
-          // $scope.allCityData = [];
-          // angular.forEach(data.data, function (data, index, array) {
-          //   if (data.area == '全市整体') {
-          //     $scope.allCityData.push(data);
-          //   }
-          //   console.log($scope.allCityData);
-          // });
         })
-
+        projectcityService.getContentDatasUrl($scope.url1, {
+          year: getDateFormat($scope.datepick.model, 'yyyy'),
+          quarter: $scope.datepick.quarter
+        }).then(function (res) {
+          var data = res.data;
+          $scope.allCityData = res.data.data;
+         
+        })
       }
       Date.prototype.Format = function (fmt) { //author: meizz
         var o = {

@@ -50,23 +50,21 @@
       }).then(function (result) {
 
         _.forEach(result.data, function (item) {
-          $scope.url = item.url + '/' + item.picCode;
+          var url = item.url + '/' + item.picCode;
 
-          projectcountyService.getContentDatas($scope.url).then(function (res) {
+          projectcountyService.getContentDatas(url).then(function (res) {
             if (item.picCode == 'countyScheduleIndicatorsSummary') {
               $scope.allCityData = res.data.data;
+              $scope.url1=url;
             }
             if (item.picCode == 'countyScheduleIndicators') {
+              $scope.url2=url;
               var data = res.data;
               $scope.indicatorDatas = data.data;
               $scope.datepick.model = new Date(data.year);
               $scope.datepick.quarter = Number(data.quarter);
-              //  $scope.indicatorFirst=data.data[0];
-              console.log($scope.indicatorDatas);
-              console.log(3343);
+               $('.eco_footer').mCustomScrollbar();
             }
-            console.log(res);
-
           })
         })
       })
@@ -97,15 +95,22 @@
       }
       function getData() {
         console.log($scope.url);
-        projectcountyService.getContentDatasUrl($scope.url, {
+        projectcountyService.getContentDatasUrl($scope.url2, {
           year: getDateFormat($scope.datepick.model, 'yyyy'),
           quarter: $scope.datepick.quarter
         }).then(function (res) {
           var data = res.data;
           $scope.indicatorDatas = data.data;
-          $scope.allCityData = res.data.data;
+         
         })
-
+        projectcountyService.getContentDatasUrl($scope.url1, {
+          year: getDateFormat($scope.datepick.model, 'yyyy'),
+          quarter: $scope.datepick.quarter
+        }).then(function (res) {
+          var data = res.data;
+        
+          $scope.allCityData = data.data;
+        })
       }
       Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
