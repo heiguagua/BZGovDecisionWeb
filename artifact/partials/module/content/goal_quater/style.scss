@@ -1,3 +1,8 @@
+.goal-quarter-timepick{
+  position: absolute;
+  right: 23px;
+  top: -40px;
+}
 .goal-quater {
   @include flex-num(1);
   @include flex-flow(column);
@@ -6,11 +11,6 @@
   overflow: hidden;
   min-height: 0;
   position: relative;
-  .right-top {
-    position: absolute;
-    right: 23px;
-    top: -40px;
-  }
   .content-top {
     @include flex-num(1);
     @include flex-flow(row);
@@ -102,6 +102,8 @@
         width: 46%;
         text-align: center;
         padding-right: 0;
+        text-decoration:none;
+        cursor:default;
         img {
           width: 36%;
         }

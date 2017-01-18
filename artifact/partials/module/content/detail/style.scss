@@ -206,7 +206,7 @@
   padding: 6px;
   height: 46px;
   label {
-    line-height: 1rem;
+    margin-top: 5px;
     display: inline-block;
     vertical-align: top;
   }
@@ -270,15 +270,15 @@
     }
     .item {
       @include flex-num(1);
-      @include flex-flow(row);
+      @include flex-flow(column);
       -webkit-justify-content: center;
       justify-content: center;
       -webkit-align-items: center;
       align-items: center;
       min-height: 0;
       @include mobilescreen {
-        -webkit-align-items: stretch;
-        align-items: stretch;
+        -webkit-align-items: center;
+        align-items: center;
       }
       .pic {
         background: #4ca3d8;
@@ -299,9 +299,13 @@
         text-align: center;
         padding: 0.6rem 0.7rem;
         background: rgba(0,176,80,1);
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         color: $white;
-        max-height: 65%;
+        @include flex-flow(column);
+        margin-top: 15px;
+        margin-bottom: 10px;
+        -webkit-justify-content: center;
+        justify-content: center;
         @include smallscreen {
           padding: 0.5rem 0.7rem;
         }
