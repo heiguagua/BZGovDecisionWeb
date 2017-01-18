@@ -3,7 +3,7 @@
   var module = angular.module('common.http', []);
 
   module.constant('URL',
-  //  'http://localhost:5353'
+  //  'http://localhost:8080/govDecisionServer'
   // 'http://172.16.7.89:8080'
   // 'http://172.16.30.230:8080'
   // 'http://192.168.13.223:8089/govDecisionServer'
