@@ -1,15 +1,16 @@
+.goal-quarter-timepick{
+  position: absolute;
+  right: 23px;
+  top: -40px;
+}
 .goal-quater {
   @include flex-num(1);
   @include flex-flow(column);
   padding-bottom: 10px;
   padding-right: 1rem;
+  overflow: hidden;
   min-height: 0;
   position: relative;
-  .right-top {
-    position: absolute;
-    right: 23px;
-    top: -40px;
-  }
   .content-top {
     @include flex-num(1);
     @include flex-flow(row);
