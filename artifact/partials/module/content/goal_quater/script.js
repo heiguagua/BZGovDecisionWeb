@@ -44,7 +44,7 @@
           quarter: $scope.datepick.quarter
         });
       }
-      
+
       $scope.altInputFormats = ['M!/d!/yyyy'];
 
       function getAllDataDetails(params) {
@@ -69,16 +69,18 @@
             if (item.picCode == 'awardedUnits') {
               $scope.awardedUnits = res.data;
               $scope.awardedTotal = 0;
-              setTimeout(function(){
-                $('#awardedPlay').slick({
-                  slidesToShow: 1,
-                  slidesToScroll: 1,
-                  autoplay: false,
-                  autoplaySpeed: 3000,
-                  prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
-                  nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
-                },3000);
-              })
+              // if($scope.awardedUnits) {
+              //   setTimeout(function(){
+              //     $('#awardedPlay').slick({
+              //       slidesToShow: 1,
+              //       slidesToScroll: 1,
+              //       autoplay: false,
+              //       autoplaySpeed: 3000,
+              //       prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
+              //       nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
+              //     },3000);
+              //   })
+              // }
             }
           })
         })
@@ -140,33 +142,7 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-
-          // scope.$watch('datemodel.model', function(newValue, oldValue) {
-          //   if (newValue === oldValue || !newValue || !oldValue) {
-          //     return;
-          //   }
-          //   getData();
-          // });
-          //
-          // scope.$watch('datemodel.quarter', function(newValue, oldValue) {
-          //   if (newValue === oldValue || !newValue || !oldValue) {
-          //     return;
-          //   }
-          //   getData();
-          // });
-          //
-          // function getData() {
-          //   goalquaterService.getContentDatas(scope.quaterdata.url, {
-          //     year: goalquaterService.getDateFormat(scope.datemodel.model, 'yyyy'),
-          //     quarter: scope.datemodel.quarter
-          //   }).then(function(res) {
-          //     var url = scope.quaterdata.url;
-          //     scope.quaterdata = res.data;
-          //     scope.quaterdata.url = url;
-          //     scope.datemodel.quarter = Number(scope.datemodel.quarter);
-          //     redraw();
-          //   })
-          // }
+          var chartInstance = null;
           scope.$watch('quaterdata', function(newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
@@ -235,7 +211,7 @@
                 }]
               };
               setTimeout(function() {
-                var chartInstance = echarts.init((element.find('div'))[0]);
+                chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
                 chartInstance.setOption(option);
@@ -244,6 +220,15 @@
 
           }
 
+          scope.onResize = function() {
+            if (chartInstance) {
+              chartInstance.resize();
+            }
+          }
+
+          angular.element($window).bind('resize', function() {
+            scope.onResize();
+          })
 
         }
       }
@@ -267,6 +252,7 @@
           drawhtml();
           function drawhtml() {
             if(scope.penaldata) {
+              console.log(scope.penaldata);
               var htmlcontent = ''
               _.forEach(scope.penaldata,function(item){
                 htmlcontent += "<div class='detail-item'>"+

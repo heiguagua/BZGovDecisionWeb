@@ -121,6 +121,7 @@ $desktop-width: 1400px;
   -ms-flex: $num;
   /* IE 10 */
   flex: $num;
+  min-height: 0;
 }
 @media only screen and (max-width: 2400px) {
   html {

@@ -42,7 +42,7 @@
   }
   .table-data {
     @include smallscreen {
-      max-height: 100px;
+      // max-height: 100px;
     }
     @include mobilescreen {
       display: none;

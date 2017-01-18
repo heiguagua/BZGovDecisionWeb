@@ -15,6 +15,7 @@
   }
 }
 .tab-content {
+  min-height: 0;
   @include flex-flow(column);
   @include flex-num(1);
   @include mobilescreen {
