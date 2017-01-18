@@ -23,7 +23,7 @@
       //  时间插件
       $scope.datepick = {};
       $scope.datepick.format = 'yyyy';
-      $scope.datepick.model = new Date();
+      // $scope.datepick.model = new Date();
       $scope.datepick.dateOptions = {};
       $scope.datepick.dateOptions.minMode = 'year';
       $scope.datepick.dateOptions.datepickerMode = 'year';

@@ -53,9 +53,6 @@
             }
         }
     }
-    .eco_title {
-        @include flex-num(1);
-    }
     .eco_footer {
         overflow: hidden;
         @include flex-num(1);
