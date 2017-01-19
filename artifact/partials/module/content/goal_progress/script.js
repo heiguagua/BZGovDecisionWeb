@@ -97,6 +97,24 @@
         $scope.alldatas = result.data;
         getDataDetails();
       })
+
+      Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+          "M+": this.getMonth() + 1, //月份
+          "d+": this.getDate(), //日
+          "h+": this.getHours(), //小时
+          "m+": this.getMinutes(), //分
+          "s+": this.getSeconds(), //秒
+          "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+          "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt))
+          fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+          if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+      }
     }
   ]);
 
@@ -205,7 +223,7 @@
                 yAxis: [{
                   type: 'value',
                   name: '%',
-                  nameGap:8
+                  nameGap: 8
                 }],
                 series: [{
                   name: '进度正常',
@@ -302,6 +320,15 @@
                   trigger: 'axis',
                   axisPointer: { // 坐标轴指示器，坐标轴触发有效
                     type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                  },
+                  formatter: function(params) {
+                    console.log(params);
+                    var html = params[0].name + "<br/>";
+                    _.forEach(params, function(item) {
+                      var value = item.value=='' ? item.value : parseFloat(item.value);
+                      html += item.seriesName + ":" + value + "<br/>";
+                    })
+                    return html;
                   }
                 },
                 legend: {
@@ -326,7 +353,7 @@
                 yAxis: [{
                   type: 'value',
                   name: '%',
-                  nameGap:8
+                  nameGap: 8
                 }],
                 series: scope.quarterlydata.value
               };
