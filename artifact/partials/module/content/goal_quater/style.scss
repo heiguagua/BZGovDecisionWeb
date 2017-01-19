@@ -1,4 +1,4 @@
-.goal-quarter-timepick{
+.goal-quarter-timepick {
   position: absolute;
   right: 23px;
   top: -40px;
@@ -102,8 +102,8 @@
         width: 46%;
         text-align: center;
         padding-right: 0;
-        text-decoration:none;
-        cursor:default;
+        text-decoration: none;
+        cursor: default;
         img {
           width: 36%;
         }
@@ -133,6 +133,19 @@
       -webkit-align-items: center;
       align-items: center;
       position: relative;
+      slick {
+        @include flex-flow(row);
+        overflow: hidden;
+        .slick-prev {
+          left: 15px;
+          background: #03A9F4;
+
+        }
+        .slick-next {
+          right: 15px;
+          background: #03A9F4;
+        }
+      }
       .slick-list {
         margin-left: 80px;
         margin-right: 80px;
@@ -194,15 +207,25 @@
         }
       }
     }
-    .prev {
+    .prev ,.penal-prev{
       position: absolute;
       left: 15px;
       top: 30%;
+      &.slick-disabled {
+        .btn{
+          opacity: 0.6;
+        }
+      }
     }
-    .next {
+    .next ,.penal-next{
       position: absolute;
       right: 15px;
       top: 30%;
+      &.slick-disabled {
+        .btn{
+          opacity: 0.6;
+        }
+      }
     }
   }
 }
