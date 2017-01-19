@@ -222,7 +222,7 @@
                 }],
                 yAxis: [{
                   type: 'value',
-                  name: '%',
+                  name: '项',
                   nameGap: 8
                 }],
                 series: [{
