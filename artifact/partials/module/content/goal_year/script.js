@@ -38,7 +38,8 @@
 
       function getData(url,params){
         goalyearService.getContentDatas(url,params).then(function(res){
-          $scope.indicatorDatas = res.data;
+          $scope.indicatorDatas = res.data.data;
+          $scope.datepick.model = new Date(res.data.year);
           _.forEach($scope.indicatorDatas,function(item){
             if(item.area == 'county') {
               $scope.countyDatas = item.data;
@@ -87,7 +88,7 @@
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
       }
-      
+
     }
   ]);
 
