@@ -50,7 +50,7 @@
   <div class='content-bottom'>
     <div class='label-icon'>
       <div class="media">
-        <a class="media-left media-middle" >
+        <a class="media-left media-middle">
           <img src="assets/images/target_1_4.png" alt='加分'/>
           <p class='desc'>受到加分单位数</p>
         </a>
@@ -60,8 +60,24 @@
       </div>
     </div>
     <div class='item-list'>
-      <div class='item-list' id='awardedPlay' wiserv-award-play awarddata=awardedUnits.data ng-if='awardedUnits.data != void(0)'>
+      <!-- <div class='item-list' id='awardedPlay' wiserv-award-play awarddata=awardedUnits.data ng-if='awardedUnits.data != void(0)'>
 
+      </div> -->
+      <div class='item-list' >
+        <slick infinite=false speed=300 prev-arrow='.prev' next-arrow='.next' slides-to-show=1 touch-move=false slides-to-scroll=1 data="awardedUnits.data" ng-if='awardedUnits.data'>
+        <div class='detail-item' ng-repeat='item in awardedUnits.data'>
+          <div class='cell'>
+            <h4>{{item.awarded_unit}}</h4>
+            <h5>{{item.awarded_reason}}</h5>
+          </div>
+          <div class='cell'>
+            <strong>+{{item.awarded_points}}</strong>
+          </div>
+          <div class='cell'>计入{{item.awarded_scope}}</div>
+        </div>
+      </slick>
+      <div class="prev"><a class="btn btn-primary">上一条</a></div>
+      <div class="next"><a class="btn btn-primary">下一条</a></div>
       </div>
     </div>
     <!-- <div class='next'>
@@ -71,7 +87,7 @@
   <div class='content-bottom'>
     <div class='label-icon'>
       <div class="media">
-        <a class="media-left media-middle" >
+        <a class="media-left media-middle">
           <img src="assets/images/target_1_5.png" alt='加分'/>
           <p class='desc'>受到扣分单位数</p>
         </a>
@@ -81,8 +97,16 @@
       </div>
     </div>
     <div class='item-list'>
-      <div class='item-list' id='penalPlay' wiserv-penal-play penaldata=penalUnits.data ng-if='penalUnits.data != void(0)'>
-      </div>
+      <slick infinite=false speed=300 prev-arrow='.penal-prev' next-arrow='.penal-next' slides-to-show=1 touch-move=false slides-to-scroll=1 data="penalUnits.data" ng-if='penalUnits.data'>
+        <div class='detail-item' ng-repeat='item in penalUnits.data'>
+        <div class='cell'><h5>{{item.penal_unit}}</h5></div>
+        <div class='cell'><strong>-{{item.penal_points}}</strong></div>
+        <div class='cell'>计入{{item.penal_scope}}</div>
+        <div class='cell'>{{item.penal_target}}</div></div>
+      </slick>
+      <div class="penal-prev"><a class="btn btn-primary">上一条</a></div>
+      <div class="penal-next"><a class="btn btn-primary">下一条</a></div>
+      <!-- <div class='item-list' id='penalPlay' wiserv-penal-play penaldata=penalUnits.data ng-if='penalUnits.data != void(0)'></div> -->
     </div>
     <!-- <div class='next'>
       <a class='btn btn-primary'>下一页</a>

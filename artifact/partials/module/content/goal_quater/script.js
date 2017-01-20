@@ -1,10 +1,10 @@
 (function() {
   /** Module */
-  var goalquater = angular.module('app.main.module.content.goalquater', ['ui.bootstrap', 'cgBusy']);
+  var goalquater = angular.module('app.main.module.content.goalquater', ['ui.bootstrap', 'cgBusy','slick']);
   /** Controller */
   goalquater.controller('goalquaterController', [
-    '$scope', 'goalquaterService', '$stateParams', '$rootScope',
-    function($scope, goalquaterService, $stateParams, $rootScope) {
+    '$scope', 'goalquaterService', '$stateParams', '$rootScope','$timeout',
+    function($scope, goalquaterService, $stateParams, $rootScope,$timeout) {
       var vm = this;
       $scope.quarterOptions = [{
         'id': 1,
@@ -25,6 +25,7 @@
       $scope.datepick.dateOptions = {};
       $scope.datepick.dateOptions.minMode = 'year';
       $scope.datepick.dateOptions.datepickerMode = 'year';
+
 
       $scope.open = function() {
         $scope.datepick.opened = true;
@@ -48,6 +49,8 @@
       $scope.altInputFormats = ['M!/d!/yyyy'];
 
       function getAllDataDetails(params) {
+        $scope.awardedUnits = null;
+        $scope.penalUnits = null;
         _.forEach($scope.alldatas, function(item) {
           var url = item.url + '/' + item.picCode;
 
@@ -67,20 +70,10 @@
 
             }
             if (item.picCode == 'awardedUnits') {
-              $scope.awardedUnits = res.data;
-              $scope.awardedTotal = 0;
-              // if($scope.awardedUnits) {
-              //   setTimeout(function(){
-              //     $('#awardedPlay').slick({
-              //       slidesToShow: 1,
-              //       slidesToScroll: 1,
-              //       autoplay: false,
-              //       autoplaySpeed: 3000,
-              //       prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
-              //       nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
-              //     },3000);
-              //   })
-              // }
+              $timeout(function(){
+                $scope.awardedUnits = res.data;
+                $scope.awardedTotal = 0;
+              });
             }
           })
         })
@@ -93,6 +86,24 @@
         getAllDataDetails();
       })
 
+
+      Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+          "M+": this.getMonth() + 1, //月份
+          "d+": this.getDate(), //日
+          "h+": this.getHours(), //小时
+          "m+": this.getMinutes(), //分
+          "s+": this.getSeconds(), //秒
+          "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+          "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt))
+          fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+          if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+      }
     }
   ]);
 
@@ -235,89 +246,90 @@
     }
   ]);
 
-  goalquater.directive('wiservPenalPlay', ['goalquaterService', '$window',
-    function(goalquaterService, $window) {
-      return {
-        restrict: 'ACE',
-        scope: {
-          penaldata: '=',
-        },
-        link: function(scope, element, attrs) {
-          scope.$watch('penaldata', function(newValue, oldValue) {
-            if (newValue === oldValue || !newValue || !oldValue) {
-              return;
-            }
-            drawhtml();
-          });
-          drawhtml();
-          function drawhtml() {
-            if(scope.penaldata) {
-              console.log(scope.penaldata);
-              var htmlcontent = ''
-              _.forEach(scope.penaldata,function(item){
-                htmlcontent += "<div class='detail-item'>"+
-                "<div class='cell'><h5>"+item.penal_unit+"</h5></div>"+
-                "<div class='cell'><strong>-"+item.penal_points+"</strong></div>"+
-                "<div class='cell'>计入"+item.penal_scope+"</div>"+
-                "<div class='cell'>"+item.penal_target+"</div></div>";
-              });
-              element[0].innerHTML = htmlcontent;
-              console.log($(element[0]));
-              $(element[0]).slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                autoplay: false,
-                autoplaySpeed: 3000,
-                prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
-                nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
-              });
-            }
-          }
-
-        }
-      }
-    }]);
-
-    goalquater.directive('wiservAwardPlay', ['goalquaterService', '$window',
-      function(goalquaterService, $window) {
-        return {
-          restrict: 'ACE',
-          scope: {
-            awarddata: '=',
-          },
-          link: function(scope, element, attrs) {
-            scope.$watch('awarddata', function(newValue, oldValue) {
-              if (newValue === oldValue || !newValue || !oldValue) {
-                return;
-              }
-              drawhtml();
-            });
-            drawhtml();
-
-            function drawhtml() {
-              if(scope.awarddata) {
-                var htmlcontent = ''
-                _.forEach(scope.awarddata,function(item){
-                  htmlcontent += "<div class='detail-item'>"+
-                  "<div class='cell'><h4>"+item.awarded_unit+"</h4><h5>"+item.awarded_reason+"</h5></div>"+
-                  "<div class='cell'><strong>+"+item.awarded_points+"</strong></div>"+
-                  "<div class='cell'>计入"+item.awarded_scope+"</div></div>";
-                });
-                element[0].innerHTML = htmlcontent;
-                $(element[0]).slick({
-                  slidesToShow: 1,
-                  slidesToScroll: 1,
-                  autoplay: false,
-                  autoplaySpeed: 3000,
-                  prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
-                  nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
-                });
-              }
-            }
-
-          }
-        }
-      }])
+  // goalquater.directive('wiservPenalPlay', ['goalquaterService', '$window',
+  //   function(goalquaterService, $window) {
+  //     return {
+  //       restrict: 'ACE',
+  //       scope: {
+  //         penaldata: '=',
+  //       },
+  //       link: function(scope, element, attrs) {
+  //         scope.$watch('penaldata', function(newValue, oldValue) {
+  //           if (newValue === oldValue || !newValue || !oldValue) {
+  //             return;
+  //           }
+  //           drawhtml();
+  //         });
+  //         drawhtml();
+  //         function drawhtml() {
+  //           if(scope.penaldata) {
+  //             var htmlcontent = ''
+  //             _.forEach(scope.penaldata,function(item){
+  //               htmlcontent += "<div class='detail-item'>"+
+  //               "<div class='cell'><h5>"+item.penal_unit+"</h5></div>"+
+  //               "<div class='cell'><strong>-"+item.penal_points+"</strong></div>"+
+  //               "<div class='cell'>计入"+item.penal_scope+"</div>"+
+  //               "<div class='cell'>"+item.penal_target+"</div></div>";
+  //             });
+  //             element[0].innerHTML = htmlcontent;
+  //             $(element[0]).slick({
+  //               slidesToShow: 1,
+  //               slidesToScroll: 1,
+  //               autoplay: false,
+  //               autoplaySpeed: 3000,
+  //               prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
+  //               nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
+  //             });
+  //           }
+  //         }
+  //
+  //       }
+  //     }
+  //   }]);
+  //
+  //   goalquater.directive('wiservAwardPlay', ['goalquaterService', '$window',
+  //     function(goalquaterService, $window) {
+  //       return {
+  //         restrict: 'ACE',
+  //         scope: {
+  //           awarddata: '=',
+  //         },
+  //         link: function(scope, element, attrs) {
+  //           scope.$watch('awarddata', function(newValue, oldValue) {
+  //             if (newValue === oldValue || !newValue || !oldValue) {
+  //               return;
+  //             }
+  //             drawhtml();
+  //           });
+  //           drawhtml();
+  //
+  //           function drawhtml() {
+  //             if(scope.awarddata) {
+  //               var htmlcontent = ''
+  //               _.forEach(scope.awarddata,function(item){
+  //                 htmlcontent += "<div class='detail-item'>"+
+  //                 "<div class='cell'><h4>"+item.awarded_unit+"</h4><h5>"+item.awarded_reason+"</h5></div>"+
+  //                 "<div class='cell'><strong>+"+item.awarded_points+"</strong></div>"+
+  //                 "<div class='cell'>计入"+item.awarded_scope+"</div></div>";
+  //               });
+  //               scope.$applyAsync(function() {
+  //                 element[0].innerHTML = htmlcontent;
+  //                 $(element[0]).slick({
+  //                   slidesToShow: 1,
+  //                   slidesToScroll: 1,
+  //                   autoplay: false,
+  //                   autoplaySpeed: 3000,
+  //                   prevArrow:'<div class="prev"><a class="btn btn-primary">上一条</a></div>',
+  //                   nextArrow:'<div class="next"><a class="btn btn-primary">下一条</a></div>'
+  //                 });
+  //               })
+  //
+  //             }
+  //           }
+  //
+  //         }
+  //       }
+  //     }])
 
 
 
