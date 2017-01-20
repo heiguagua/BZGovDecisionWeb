@@ -1,10 +1,10 @@
 (function() {
   /** Module */
-  var goalquater = angular.module('app.main.module.content.goalquater', ['ui.bootstrap', 'cgBusy','slick']);
+  var goalquater = angular.module('app.main.module.content.goalquater', ['ui.bootstrap', 'cgBusy', 'slick']);
   /** Controller */
   goalquater.controller('goalquaterController', [
-    '$scope', 'goalquaterService', '$stateParams', '$rootScope','$timeout',
-    function($scope, goalquaterService, $stateParams, $rootScope,$timeout) {
+    '$scope', 'goalquaterService', '$stateParams', '$rootScope', '$timeout',
+    function($scope, goalquaterService, $stateParams, $rootScope, $timeout) {
       var vm = this;
       $scope.quarterOptions = [{
         'id': 1,
@@ -54,7 +54,7 @@
         _.forEach($scope.alldatas, function(item) {
           var url = item.url + '/' + item.picCode;
 
-          goalquaterService.getContentDatas(url,params).then(function(res) {
+          goalquaterService.getContentDatas(url, params).then(function(res) {
             if (item.picCode == 'targetExamTotalRanks') {
               $scope.targetExamTotalRanks = res.data;
             }
@@ -62,7 +62,7 @@
               $scope.targetExamRanks = res.data;
               $scope.targetExamRanks.url = url;
               $scope.datepick.model = new Date($scope.targetExamRanks.year);
-              $scope.datepick.quarter = $scope.targetExamRanks.quarter?Number($scope.targetExamRanks.quarter):'';
+              $scope.datepick.quarter = $scope.targetExamRanks.quarter ? Number($scope.targetExamRanks.quarter) : '';
             }
             if (item.picCode == 'penalUnits') {
               $scope.penalUnits = res.data;
@@ -70,7 +70,7 @@
 
             }
             if (item.picCode == 'awardedUnits') {
-              $timeout(function(){
+              $timeout(function() {
                 $scope.awardedUnits = res.data;
                 $scope.awardedTotal = 0;
               });
@@ -87,7 +87,7 @@
       })
 
 
-      Date.prototype.Format = function (fmt) { //author: meizz
+      Date.prototype.Format = function(fmt) { //author: meizz
         var o = {
           "M+": this.getMonth() + 1, //月份
           "d+": this.getDate(), //日
@@ -113,7 +113,7 @@
       return {
         "getContent": getContent,
         "getContentDatas": getContentDatas,
-        "getDateFormat":getDateFormat
+        "getDateFormat": getDateFormat
       }
 
       function getContent(params) {
@@ -174,17 +174,47 @@
                 obj.max = areas.length;
                 areaList.push(obj);
               })
-              var chartData = scope.quaterdata.data;
+              var chartData = rankFormat(scope.quaterdata.data);
               var legend = _.map(chartData, 'name');
               scope.datemodel.quarter = Number(scope.datemodel.quarter);
               var i = 0;
+
+              function rankFormat(chartdata) {
+                var data = angular.copy(chartdata);
+                _.forEach(data, function(item) {
+                  var max = _.max(item.value);
+                  var value = [];
+                  var ranks = [];
+                  _.forEach(item.value, function(rank) {
+                    if (rank != '') {
+                      value.push(1 + Number(max) - Number(rank));
+                      ranks.push(rank);
+                    } else {
+                      value.push(rank);
+                      ranks.push(rank);
+                    }
+                  });
+                  item.value = value;
+                  item.ranks = ranks;
+                })
+                return data;
+              }
+
               var option = {
                 title: {
                   left: 'center',
                   text: scope.quaterdata.year + '年第' + scope.datemodel.quarter + '季度 目标任务考核分项名次',
                   top: -2
                 },
-                tooltip: {},
+                tooltip: {
+                  formatter: function(data) {
+                    var text = data.name + "<br/>";
+                    _.forEach(areas, function(areaName, index) {
+                      text += areaName + ":" + data.data.ranks[index] + "<br/>";
+                    })
+                    return text;
+                  }
+                },
                 legend: {
                   left: 'left',
                   top: '10%',
