@@ -53,11 +53,11 @@
 
             <tr>
                 <th>区域</th>
-                <th>年目标</th>
-                <th>季目标</th>
+                <th>年目标（亿元）</th>
+                <th>季目标（亿元）</th>
                 <th>投资进度完成比</th>
                 <th>季进度</th>
-                <th>滞后项目数</th>
+                <th>滞后项目数（个）</th>
                 <th>进度总评</th>
             </tr>
             <tr ng-repeat="indicatorData in indicatorDatas">
@@ -72,7 +72,7 @@
                         <span>{{indicatorData.yearly_investment_achieved_rate}}%</span>
                     </div>
                 </td>
-                <td>{{indicatorData.quarterly_investment_achieved_rate}}</td>
+                <td>{{indicatorData.quarterly_investment_achieved_rate}}%</td>
                 <td>{{indicatorData.delayed_project_number}}</td>
                 <td class="font_yellow" ng-if="indicatorData.processing_evaluation=='滞后'">{{indicatorData.processing_evaluation}}</td>
                 <td class="font_blue" ng-if="indicatorData.processing_evaluation=='正常'">{{indicatorData.processing_evaluation}}</td>
