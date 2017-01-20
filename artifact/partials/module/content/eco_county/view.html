@@ -38,7 +38,7 @@
                 </tr>
                 <tr ng-repeat="indicatorData in indicatorDatas">
                     <td>{{indicatorData.area}}</td>
-                    <td>{{indicatorData.current_quarter_achieved}}</td>
+                    <td>{{indicatorData.current_quarter_achieved}}%</td>
                     <td class="width20">
                         <uib-progressbar value=indicatorData.current_quarter_achieved_rate type="success" style="margin-bottom:0" ng-if="indicatorData.current_quarter_achieved_rate<=100">{{indicatorData.current_quarter_achieved_rate}}%</uib-progressbar>
                         <uib-progressbar value=indicatorData.current_quarter_achieved_rate type="warning" style="margin-bottom:0" ng-if="indicatorData.current_quarter_achieved_rate>100">{{indicatorData.current_quarter_achieved_rate}}%</uib-progressbar>
