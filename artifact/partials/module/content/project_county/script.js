@@ -101,18 +101,19 @@
           year: getDateFormat($scope.datepick.model, 'yyyy'),
           quarter: $scope.datepick.quarter
         }).then(function (res) {
+          var data = res.data;
           var summary_index = data.summary_index
           $scope.indicatorDatas = data.data;
           $scope.allCityData = data.data[summary_index - 1];
           console.log($scope.allCityData)
-         
+
         })
         // projectcountyService.getContentDatasUrl($scope.url1, {
         //   year: getDateFormat($scope.datepick.model, 'yyyy'),
         //   quarter: $scope.datepick.quarter
         // }).then(function (res) {
         //   var data = res.data;
-        
+
         //   $scope.allCityData = data.data;
         // })
       }
