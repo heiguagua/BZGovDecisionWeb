@@ -54,8 +54,8 @@
 
           projectcountyService.getContentDatas(url).then(function (res) {
             if (item.picCode == 'countyScheduleIndicatorsSummary') {
-              $scope.allCityData = res.data.data;
-              $scope.url1=url;
+              // $scope.allCityData = res.data.data;
+              // $scope.url1=url;
             }
             if (item.picCode == 'countyScheduleIndicators') {
               $scope.url2=url;
@@ -63,6 +63,8 @@
               $scope.indicatorDatas = data.data;
               $scope.datepick.model = new Date(data.year);
               $scope.datepick.quarter = Number(data.quarter);
+               var summary_index = data.summary_index
+              $scope.allCityData = data.data[summary_index - 1];
                $('.eco_footer').mCustomScrollbar();
             }
           })
@@ -99,18 +101,20 @@
           year: getDateFormat($scope.datepick.model, 'yyyy'),
           quarter: $scope.datepick.quarter
         }).then(function (res) {
-          var data = res.data;
+          var summary_index = data.summary_index
           $scope.indicatorDatas = data.data;
+          $scope.allCityData = data.data[summary_index - 1];
+          console.log($scope.allCityData)
          
         })
-        projectcountyService.getContentDatasUrl($scope.url1, {
-          year: getDateFormat($scope.datepick.model, 'yyyy'),
-          quarter: $scope.datepick.quarter
-        }).then(function (res) {
-          var data = res.data;
+        // projectcountyService.getContentDatasUrl($scope.url1, {
+        //   year: getDateFormat($scope.datepick.model, 'yyyy'),
+        //   quarter: $scope.datepick.quarter
+        // }).then(function (res) {
+        //   var data = res.data;
         
-          $scope.allCityData = data.data;
-        })
+        //   $scope.allCityData = data.data;
+        // })
       }
       Date.prototype.Format = function (fmt) { //author: meizz
         var o = {

@@ -50,21 +50,22 @@
       }).then(function (result) {
 
         _.forEach(result.data, function (item) {
-         var url = item.url + '/' + item.picCode;
+          var url = item.url + '/' + item.picCode;
 
           projectcityService.getContentDatas(url).then(function (res) {
             if (item.picCode == 'cityScheduleIndicatorsSummary') {
-              $scope.allCityData = res.data.data;
-              $scope.url1=url;
-              
+              // $scope.allCityData = res.data.data;
+              // $scope.url1=url;
+
             }
             if (item.picCode == 'cityScheduleIndicators') {
-               $scope.url2=url;
+              $scope.url2 = url;
               var data = res.data;
               $scope.indicatorDatas = data.data;
               $scope.datepick.model = new Date(data.year);
               $scope.datepick.quarter = Number(data.quarter);
-              
+              var summary_index = data.summary_index
+              $scope.allCityData = data.data[summary_index - 1];
               $('.eco_footer').mCustomScrollbar();
             }
           })
@@ -101,17 +102,13 @@
         projectcityService.getContentDatasUrl($scope.url2, {
           year: getDateFormat($scope.datepick.model, 'yyyy'),
           quarter: $scope.datepick.quarter
+
         }).then(function (res) {
           var data = res.data;
+          var summary_index = data.summary_index
           $scope.indicatorDatas = data.data;
-        })
-        projectcityService.getContentDatasUrl($scope.url1, {
-          year: getDateFormat($scope.datepick.model, 'yyyy'),
-          quarter: $scope.datepick.quarter
-        }).then(function (res) {
-          var data = res.data;
-          $scope.allCityData = res.data.data;
-         
+          $scope.allCityData = data.data[summary_index - 1];
+          console.log($scope.allCityData)
         })
       }
       Date.prototype.Format = function (fmt) { //author: meizz
