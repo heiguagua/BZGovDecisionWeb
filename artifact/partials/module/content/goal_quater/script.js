@@ -209,8 +209,16 @@
                 tooltip: {
                   formatter: function(data) {
                     var text = data.name + "<br/>";
+                    var datas = [];
                     _.forEach(areas, function(areaName, index) {
-                      text += areaName + ":" + data.data.ranks[index] + "<br/>";
+                      var item = {};
+                      item.name = areaName;
+                      item.rank = data.data.ranks[index];
+                      datas.push(item);
+                    });
+                    datas = _.sortBy(datas,'rank');
+                    _.forEach(datas, function(item) {
+                      text += item.name + ":" + item.rank + "<br/>";
                     })
                     return text;
                   }
