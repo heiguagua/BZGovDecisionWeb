@@ -3,9 +3,13 @@
   var ecogdp = angular.module('app.main.module.content.ecogdp', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   ecogdp.controller('ecogdpController', [
-    '$scope', 'ecogdpService', '$stateParams',
-    function ($scope, ecogdpService, $stateParams) {
+    '$scope', 'ecogdpService', '$stateParams','$rootScope',
+    function ($scope, ecogdpService, $stateParams,$rootScope) {
       var vm = this;
+      $rootScope.mname = $stateParams.mname;
+      setTimeout(function() {
+        $('.menu-label').removeClass('m-collapse');
+      }, 600);
       ecogdpService.getContent({
         menuId: $stateParams.pid
       }).then(function (result) {

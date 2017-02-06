@@ -17,11 +17,28 @@
       border-bottom: 1px solid #dddddd;
       border-right: 1px solid #dddddd;
       padding: 10px 0;
-
+      @include mobilescreen {
+        margin-right: 0;
+        padding: 5px;
+      }
       .font_color {
         color: #33a6e5;
         font-size: 1.4rem;
         margin-bottom: 0;
+        @include mobilescreen {
+          font-size: 1.3rem;
+        }
+      }
+      .m_font {
+        display: none;
+        margin-bottom: 0;
+        @include mobilescreen {
+          display: block;
+          font-size: 0.8rem;
+        }
+        .fa-info-circle {
+          color: #33a6e5;
+        }
       }
       .border_r {
         border-right: 1px solid #dddddd;
@@ -34,6 +51,9 @@
         justify-content: center;
         width: 45%;
         text-align: center;
+        @include mobilescreen {
+          display: none;
+        }
         .title {
           margin-top: 10px;
           margin-bottom: 0;
@@ -49,10 +69,16 @@
         @include flex-flow(column);
         -webkit-align-items: center;
         align-items: center;
+        @include mobilescreen {
+          width: 100%;
+        }
         .item {
           width: 100%;
           padding: 0.1rem 0.5rem;
           display: table;
+          @include mobilescreen {
+            display: none;
+          }
           label {
             display: table-cell;
             width: 80%;
@@ -66,9 +92,12 @@
           }
         }
       }
-      &:nth-of-type(even){
-        border-top:2px solid rgb(32,179,169);
-        .font_color{
+      &:nth-of-type(even) {
+        border-top: 2px solid rgb(32,179,169);
+        .font_color {
+          color: rgb(32,179,169);
+        }
+        .fa-info-circle {
           color: rgb(32,179,169);
         }
       }
@@ -79,22 +108,48 @@
     @include flex-flow(row);
     padding: 10px 0;
     margin-top: 15px;
+    @include mobilescreen {
+      @include flex-flow(column);
+      margin-top: 0;
+      padding: 0;
+    }
     .chart-num {
       @include flex-num(2);
+      @include flex-flow(column);
       border: 1px solid #DDD;
       margin-right: 15px;
-      >div{
-        width:100%;
-        height:100%;
+      @include mobilescreen {
+        margin-right:0;
+      }
+      >div {
+        @include flex-num(1);
+        width: 100%;
+        height: 100%;
+        >div{
+          @include mobilescreen {
+            min-height:300px;
+          }
+        }
       }
     }
     .chart-rate {
       @include flex-num(2);
+      @include flex-flow(column);
       border: 1px solid #DDD;
       margin-right: 15px;
-      >div{
-        width:100%;
-        height:100%;
+      @include mobilescreen {
+        margin-right:0;
+        min-height:300px;
+      }
+      >div {
+        @include flex-num(1);
+        width: 100%;
+        height: 100%;
+        >div{
+          @include mobilescreen {
+            min-height:300px;
+          }
+        }
       }
     }
     .statistic-quater {
@@ -102,6 +157,10 @@
       @include flex-flow(column);
       border: 1px solid #DDD;
       margin-right: 15px;
+      @include mobilescreen {
+        margin-right:0;
+        border:0;
+      }
       .total {
         @include flex-num(1);
         @include flex-flow(column);
@@ -110,7 +169,7 @@
         align-items: center;
         -webkit-justify-content: center;
         justify-content: center;
-        h5{
+        h5 {
           font-size: 1rem;
         }
       }
@@ -123,6 +182,9 @@
         align-items: center;
         -webkit-justify-content: space-around;
         justify-content: space-around;
+        @include mobilescreen {
+          display:none;
+        }
         &:last-child {
           border-bottom: 0;
         }
@@ -143,6 +205,17 @@
               font-size: 0.7rem;
               padding-right: 4px;
             }
+          }
+        }
+      }
+      .table-quater{
+        display:none;
+        @include mobilescreen {
+          display:table;
+          border:0;
+          margin-bottom:0;
+          th{
+            padding:6px;
           }
         }
       }

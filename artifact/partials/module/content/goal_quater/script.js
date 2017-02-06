@@ -6,6 +6,10 @@
     '$scope', 'goalquaterService', '$stateParams', '$rootScope', '$timeout',
     function($scope, goalquaterService, $stateParams, $rootScope, $timeout) {
       var vm = this;
+      $rootScope.mname = $stateParams.mname;
+      setTimeout(function() {
+        $('.menu-label').removeClass('m-collapse');
+      }, 600);
       $scope.quarterOptions = [{
         'id': 1,
         "name": "第一季度"

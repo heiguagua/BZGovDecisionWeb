@@ -6,7 +6,10 @@
     '$scope', 'goalprogressService', '$stateParams', 'uibDateParser', '$rootScope',
     function($scope, goalprogressService, $stateParams, uibDateParser, $rootScope) {
       var vm = this;
-
+      $rootScope.mname = $stateParams.mname;
+      setTimeout(function() {
+        $('.menu-label').removeClass('m-collapse');
+      }, 600);
       $scope.quarterOptions = [{
         'id': 1,
         "name": "第一季度"
@@ -187,6 +190,7 @@
                   delayData = item.data;
                 }
               });
+              var screen_width = screen.width;
               var option = {
                 title: {
                   text: '全市目标任务进度',
@@ -217,6 +221,31 @@
                   type: 'category',
                   axisLabel: {
                     interval: 0,
+                    formatter : function(val) {
+                      var newstr = '';
+                      if(screen_width<1024) {
+                        var char_length = val.length;
+                        if (char_length > 4) {
+                          var strTemp = '';
+                          var leftStr = '';
+                          //for(var i=0; i<(char_length/5); i++) {
+                            //if(i != 0) {
+                            strTemp = val.substring(0, char_length-3);
+                            leftStr = val.substring(char_length-3);
+                            newstr = strTemp + '\n' + leftStr;
+                            //}
+                          //}
+                        }
+                        else{
+                          newstr = val;
+                        }
+                      }
+                      else{
+                        newstr = val;
+                      }
+
+                      return newstr;
+                    }
                   },
                   data: scope.yearlydata.data.area
                 }],
@@ -307,7 +336,14 @@
                     show: true
                   }
                 };
-              })
+              });
+              var screen_width = screen.width;
+              var itemGap = 50;
+              var grid_top = '26%';
+              if(screen_width < 1024) {
+                itemGap = 10;
+                grid_top = '34%';
+              }
               var option = {
                 title: {
                   text: scope.datemodel.year + '年全市目标工作正常推进率',
@@ -334,10 +370,10 @@
                 legend: {
                   data: _.map(scope.quarterlydata.value, 'name'),
                   top: '13%',
-                  itemGap: 50
+                  itemGap: itemGap
                 },
                 grid: {
-                  top: '26%',
+                  top: grid_top,
                   left: '3%',
                   right: '4%',
                   bottom: '3%',
@@ -347,6 +383,31 @@
                   type: 'category',
                   axisLabel: {
                     interval: 0,
+                    formatter : function(val) {
+                      var newstr = '';
+                      if(screen_width<1024) {
+                        var char_length = val.length;
+                        if (char_length > 4) {
+                          var strTemp = '';
+                          var leftStr = '';
+                          //for(var i=0; i<(char_length/5); i++) {
+                            //if(i != 0) {
+                            strTemp = val.substring(0, char_length-3);
+                            leftStr = val.substring(char_length-3);
+                            newstr = strTemp + '\n' + leftStr;
+                            //}
+                          //}
+                        }
+                        else{
+                          newstr = val;
+                        }
+                      }
+                      else{
+                        newstr = val;
+                      }
+
+                      return newstr;
+                    }
                   },
                   data: scope.quarterlydata.area
                 }],

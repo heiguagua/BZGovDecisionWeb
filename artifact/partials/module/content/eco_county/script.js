@@ -3,10 +3,13 @@
   var ecocounty = angular.module('app.main.module.content.ecocounty', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   ecocounty.controller('ecocountyController', [
-    '$scope', 'ecocountyService', '$stateParams',
-    function ($scope, ecocountyService, $stateParams) {
+    '$scope', 'ecocountyService', '$stateParams','$rootScope',
+    function ($scope, ecocountyService, $stateParams,$rootScope) {
       var vm = this;
-
+      $rootScope.mname = $stateParams.mname;
+      setTimeout(function() {
+        $('.menu-label').removeClass('m-collapse');
+      }, 600);
       $scope.popups = [];
       $scope.quarterOptions = [{
         'id': 1,

@@ -3,9 +3,13 @@
   var goalyear = angular.module('app.main.module.content.goalyear', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   goalyear.controller('goalyearController', [
-    '$scope', 'goalyearService', '$stateParams',
-    function($scope, goalyearService, $stateParams) {
+    '$scope', 'goalyearService', '$stateParams','$rootScope',
+    function($scope, goalyearService, $stateParams,$rootScope) {
       var vm = this;
+      $rootScope.mname = $stateParams.mname;
+      setTimeout(function() {
+        $('.menu-label').removeClass('m-collapse');
+      }, 600);
       $scope.datepick = {};
       $scope.datepick.format = 'yyyy';
       $scope.datepick.model = new Date();

@@ -3,9 +3,13 @@
   var ecocity = angular.module('app.main.module.content.ecocity', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   ecocity.controller('ecocityController', [
-    '$scope', 'ecocityService', '$stateParams',
-    function ($scope, ecocityService, $stateParams) {
+    '$scope', 'ecocityService', '$stateParams','$rootScope',
+    function ($scope, ecocityService, $stateParams,$rootScope) {
       var vm = this;
+      $rootScope.mname = $stateParams.mname;
+      setTimeout(function() {
+        $('.menu-label').removeClass('m-collapse');
+      }, 600);
       ecocityService.getContent({
         menuId: $stateParams.pid
       }).then(function (result) {

@@ -2,6 +2,11 @@
   position: absolute;
   right: 23px;
   top: -40px;
+  @include mobilescreen {
+    position: relative;
+    right: 0;
+    top: 0;
+  }
 }
 .goal-quater {
   @include flex-num(1);
@@ -139,7 +144,6 @@
         .slick-prev {
           left: 15px;
           background: #03A9F4;
-
         }
         .slick-next {
           right: 15px;
@@ -207,22 +211,24 @@
         }
       }
     }
-    .prev ,.penal-prev{
+    .prev,
+    .penal-prev {
       position: absolute;
       left: 15px;
       top: 30%;
       &.slick-disabled {
-        .btn{
+        .btn {
           opacity: 0.6;
         }
       }
     }
-    .next ,.penal-next{
+    .next,
+    .penal-next {
       position: absolute;
       right: 15px;
       top: 30%;
       &.slick-disabled {
-        .btn{
+        .btn {
           opacity: 0.6;
         }
       }

@@ -51,7 +51,8 @@
               }
             });
             $state.go(vm.subMenus[0].content_sref, {
-              pid: vm.subMenus[0].id
+              pid: vm.subMenus[0].id,
+              mname: vm.subMenus[0].name
             });
 
           } else {

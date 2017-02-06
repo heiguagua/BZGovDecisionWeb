@@ -3,9 +3,13 @@
   var projectcounty = angular.module('app.main.module.content.projectcounty', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   projectcounty.controller('projectcountyController', [
-    '$scope', 'projectcountyService', '$stateParams',
-    function ($scope, projectcountyService, $stateParams) {
+    '$scope', 'projectcountyService', '$stateParams','$rootScope',
+    function ($scope, projectcountyService, $stateParams,$rootScope) {
       var vm = this;
+      $rootScope.mname = $stateParams.mname;
+      setTimeout(function() {
+        $('.menu-label').removeClass('m-collapse');
+      }, 600);
       $scope.popups = [];
       $scope.quarterOptions = [{
         'id': 1,

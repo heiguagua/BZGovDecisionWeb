@@ -157,55 +157,55 @@
         controllerAs: 'detail',
       })
       .state('main.module.content.goalprogress',{
-        url: '/goalprogress/:pid',
+        url: '/goalprogress/:pid/:mname',
         templateUrl: 'partials/module/content/goal_progress/view.html',
         controller: 'goalprogressController',
         controllerAs: 'goalprogress'
       })
       .state('main.module.content.goalquater',{
-        url: '/goalquater/:pid',
+        url: '/goalquater/:pid/:mname',
         templateUrl: 'partials/module/content/goal_quater/view.html',
         controller: 'goalquaterController',
         controllerAs: 'goalquater'
       })
       .state('main.module.content.goalyear',{
-        url: '/goalyear/:pid',
+        url: '/goalyear/:pid/:mname',
         templateUrl: 'partials/module/content/goal_year/view.html',
         controller: 'goalyearController',
         controllerAs: 'goalyear'
       })
       .state('main.module.content.proceeding',{
-        url: '/proceeding/:pid',
+        url: '/proceeding/:pid/:mname',
         templateUrl: 'partials/module/content/proceeding/view.html',
         controller: 'proceedingController',
         controllerAs: 'proceeding'
       })
       .state('main.module.content.ecocity',{
-        url: '/ecocity/:pid',
+        url: '/ecocity/:pid/:mname',
         templateUrl: 'partials/module/content/eco_city/view.html',
         controller: 'ecocityController',
         controllerAs: 'ecocity'
       })
       .state('main.module.content.ecocounty',{
-        url: '/ecocounty/:pid',
+        url: '/ecocounty/:pid/:mname',
         templateUrl: 'partials/module/content/eco_county/view.html',
         controller: 'ecocountyController',
         controllerAs: 'ecocounty'
       })
       .state('main.module.content.ecogdp',{
-        url: '/ecogdp/:pid',
+        url: '/ecogdp/:pid/:mname',
         templateUrl: 'partials/module/content/eco_gdp/view.html',
         controller: 'ecogdpController',
         controllerAs: 'ecogdp'
       })
       .state('main.module.content.projectcity',{
-        url: '/projectcity/:pid',
+        url: '/projectcity/:pid/:mname',
         templateUrl: 'partials/module/content/project_city/view.html',
         controller: 'projectcityController',
         controllerAs: 'projectcity'
       })
       .state('main.module.content.projectcounty',{
-        url: '/projectcounty/:pid',
+        url: '/projectcounty/:pid/:mname',
         templateUrl: 'partials/module/content/project_county/view.html',
         controller: 'projectcountyController',
         controllerAs: 'projectcounty'

@@ -3,9 +3,13 @@
   var projectcity = angular.module('app.main.module.content.projectcity', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   projectcity.controller('projectcityController', [
-    '$scope', 'projectcityService', '$stateParams',
-    function ($scope, projectcityService, $stateParams) {
+    '$scope', 'projectcityService', '$stateParams','$rootScope',
+    function ($scope, projectcityService, $stateParams,$rootScope) {
       var vm = this;
+      $rootScope.mname = $stateParams.mname;
+      setTimeout(function() {
+        $('.menu-label').removeClass('m-collapse');
+      }, 600);
       $scope.popups = [];
       $scope.quarterOptions = [{
         'id': 1,

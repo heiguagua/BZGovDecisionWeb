@@ -5,9 +5,18 @@
   padding-right: 1rem;
   min-height: 0;
   position: relative;
+  @include mobilescreen {
+    @include flex-flow(column);
+    padding-right:0;
+  }
   .right-top {
     position: absolute;
     right: 23px;
     top: -40px;
+    @include mobilescreen {
+      position:relative;
+      right:0;
+      top:0;
+    }
   }
 }

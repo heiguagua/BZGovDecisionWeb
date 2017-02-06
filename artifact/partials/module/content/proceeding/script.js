@@ -3,9 +3,13 @@
   var proceeding = angular.module('app.main.module.content.proceeding', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   proceeding.controller('proceedingController', [
-    '$scope', 'proceedingService', '$stateParams',
-    function($scope, proceedingService, $stateParams) {
+    '$scope', 'proceedingService', '$stateParams','$rootScope',
+    function($scope, proceedingService, $stateParams,$rootScope) {
       var vm = this;
+      $rootScope.mname = $stateParams.mname;
+      setTimeout(function() {
+        $('.menu-label').removeClass('m-collapse');
+      }, 600);
       proceedingService.getContent({
         menuId: $stateParams.pid
       }).then(function(result) {
@@ -95,8 +99,8 @@
     }
   ]);
 
-  proceeding.directive('wiservTargetProcnum', ['proceedingService',
-    function(proceedingService) {
+  proceeding.directive('wiservTargetProcnum', ['proceedingService','$window',
+    function(proceedingService,$window) {
       return {
         restrict: 'ACE',
         scope: {
@@ -105,6 +109,7 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var data_nums = [];
+          var chartInstance = null;
           _.forEach(scope.numdata.value,function(data) {
             if(data.name == '本月新增督办事项' || data.name == '本月继续督办事项' || data.name == '历史逾期未办结事项') {
               data.type = 'bar';
@@ -113,6 +118,13 @@
               data_nums.push(data);
             }
           });
+          var screen_width = screen.width;
+          var grid_top = '34%';
+          var legend_top = '19%';
+          if(screen_width< 1024) {
+            grid_top = '40%';
+            legend_top = '20%';
+          }
           var option = {
             title: {
               text: '纳入各月督办事项数目',
@@ -129,7 +141,7 @@
             },
             legend: {
               data: _.map(data_nums,'name'),
-              top: '19%',
+              top: legend_top,
               itemGap: 8,
               padding:0,
               itemWidth:14,
@@ -139,7 +151,7 @@
               // left:'right'
             },
             grid: {
-              top: '34%',
+              top: grid_top,
               left: '3%',
               right: '4%',
               bottom: '3%',
@@ -149,6 +161,12 @@
               type: 'category',
               axisLabel:{
                 interval:0,
+                formatter: function(val, index) {
+                  if (screen_width< 1200 && index % 2 != 0) {
+                    val = '\n' + val;
+                  }
+                  return val;
+                }
               },
               data: scope.numdata.month
             }],
@@ -161,18 +179,28 @@
           };
 
           setTimeout(function() {
-            var chartInstance = echarts.init((element.find('div'))[0]);
+            chartInstance = echarts.init((element.find('div'))[0]);
             chartInstance.clear();
             chartInstance.resize();
             chartInstance.setOption(option);
           }, 300);
+
+          scope.onResize = function() {
+            if (chartInstance) {
+              chartInstance.resize();
+            }
+          }
+
+          angular.element($window).bind('resize', function() {
+            scope.onResize();
+          })
         }
       }
     }
   ]);
 
-  proceeding.directive('wiservTargetProcrate', ['proceedingService',
-    function(proceedingService) {
+  proceeding.directive('wiservTargetProcrate', ['proceedingService','$window',
+    function(proceedingService,$window) {
       return {
         restrict: 'ACE',
         scope: {
@@ -181,11 +209,13 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var dataValue = [];
+          var chartInstance = null;
           _.forEach(scope.ratedata.value,function(data){
             if(data.name == '纳入各月督办事项办结率') {
               dataValue = data.data;
             }
-          })
+          });
+          var screen_width = screen.width;
           var option = {
             title: {
               text: '纳入各月督办事项办结率',
@@ -216,6 +246,12 @@
               type: 'category',
               axisLabel:{
                 interval:0,
+                formatter: function(val, index) {
+                  if (screen_width< 1200 && index % 2 != 0) {
+                    val = '\n' + val;
+                  }
+                  return val;
+                }
               },
               data: scope.ratedata.month
             }],
@@ -237,11 +273,21 @@
           };
 
           setTimeout(function() {
-            var chartInstance = echarts.init((element.find('div'))[0]);
+            chartInstance = echarts.init((element.find('div'))[0]);
             chartInstance.clear();
             chartInstance.resize();
             chartInstance.setOption(option);
-          }, 300);
+          }, 600);
+
+          scope.onResize = function() {
+            if (chartInstance) {
+              chartInstance.resize();
+            }
+          }
+
+          angular.element($window).bind('resize', function() {
+            scope.onResize();
+          })
         }
       }
     }
