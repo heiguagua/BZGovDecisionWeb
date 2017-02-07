@@ -31,7 +31,7 @@
         </ul>
     </div>
     <div class="eco_footer">
-        <table class="table table-responsive table-bordered table-striped" style="width:100%">
+        <table class="table table-responsive table-bordered table-striped table-lg-screen" style="width:100%">
             <tr>
                 <th>主要经济指标</th>
                 <th>目标总值</th>
@@ -58,6 +58,21 @@
                 </td>
                 <td class="font_blue" ng-if="indicatorData.schedule_evaluation=='正常'">{{indicatorData.schedule_evaluation}}</td>
                 <td class="font_yellow" ng-if="indicatorData.schedule_evaluation=='滞后'">{{indicatorData.schedule_evaluation}}</td>
+            </tr>
+        </table>
+        <table class="table table-responsive table-bordered table-striped table-mb-screen" style="width:100%">
+            <tr>
+                <th width='30%'>主要经济指标</th>
+                <th width='55%'>进度</th>
+                <th width='15%'>详情</th>
+            </tr>
+            <tr ng-repeat="indicatorData in indicatorDatas">
+                <td>{{indicatorData.indicator_name}}</td>
+                <td class="width20">
+                    <uib-progressbar value=indicatorData.current_quarter_achieved_rate type="success" style="margin-bottom:0" ng-if="indicatorData.current_quarter_achieved_rate<=100">已完成{{indicatorData.current_quarter_achieved_rate}}%</uib-progressbar>
+                    <uib-progressbar value=indicatorData.current_quarter_achieved_rate type="warning" style="margin-bottom:0" ng-if="indicatorData.current_quarter_achieved_rate>100">已完成{{indicatorData.current_quarter_achieved_rate}}%</uib-progressbar>
+                </td>
+                <td> <button uib-popover-html="" class="btn btn-default" ><i class='fa fa-info-circle'></i></button></td>
             </tr>
         </table>
     </div>

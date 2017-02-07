@@ -14,19 +14,16 @@
         menuId: $stateParams.pid
       }).then(function (result) {
         var data = result.data[0];
-        console.log(data);
         var picCode = data.picCode;
         var url = data.url;
         url = url + '/' + picCode;
-        console.log(url);
-        console.log(1111);
         ecogdpService.getContentDatas(url).then(function (res) {
-          console.log(res);
           var data = res.data;
           $scope.indicatorDatas = data;
-          console.log($scope.indicatorDatas);
-
-          $('.eco_gdp').mCustomScrollbar();
+          var screen_width = screen.width;
+          if(screen_width > 1200) {
+            $('.eco_gdp').mCustomScrollbar();
+          }
         })
       })
     }

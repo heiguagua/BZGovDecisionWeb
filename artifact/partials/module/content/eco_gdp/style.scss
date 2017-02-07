@@ -7,6 +7,20 @@
     @include flex-num(1);
     padding-bottom: 1rem;
     padding-right: 1rem;
+    @include mobilescreen {
+      padding:0;
+    }
+    .table-lg-screen {
+      @include mobilescreen{
+        display:none;
+      }
+    }
+    .table-mb-screen {
+      display:none;
+      @include mobilescreen {
+        display:table;
+      }
+    }
     table td,
     th {
         text-align: center;

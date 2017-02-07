@@ -3,8 +3,8 @@
   var ecocity = angular.module('app.main.module.content.ecocity', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   ecocity.controller('ecocityController', [
-    '$scope', 'ecocityService', '$stateParams','$rootScope',
-    function ($scope, ecocityService, $stateParams,$rootScope) {
+    '$scope', 'ecocityService', '$stateParams','$rootScope','$sce',
+    function ($scope, ecocityService, $stateParams,$rootScope,$sce) {
       var vm = this;
       $rootScope.mname = $stateParams.mname;
       setTimeout(function() {
@@ -14,13 +14,10 @@
         menuId: $stateParams.pid
       }).then(function (result) {
         var data = result.data[0];
-        console.log(data);
         var picCode = data.picCode;
         var url = data.url;
         url = url + '/' + picCode;
-        console.log(url);
         ecocityService.getContentDatas(url).then(function (res) {
-          console.log(res);
           var data = res.data;
           $scope.indicatorDatas = data.data;
           angular.forEach(data.data, function (data, index, array) {
@@ -28,9 +25,15 @@
               $scope.indicatorFirst = data;
             }
           });
-          $('.eco_footer').mCustomScrollbar();
+          var screen_width = screen.width;
+          if(screen_width > 1200) {
+            $('.eco_footer').mCustomScrollbar();
+          }
         })
-      })
+      });
+
+      
+
     }
   ]);
 
