@@ -63,7 +63,11 @@
               $scope.datepick.model = new Date(data.year);
               $scope.datepick.quarter = Number(data.quarter);
               $scope.show = data.indicator_name;
-              $('.tb-wrap').mCustomScrollbar();
+
+              var screen_width = screen.width;
+              if(screen_width > 1200) {
+                $('.tb-wrap').mCustomScrollbar();
+              }
             }
           })
         })

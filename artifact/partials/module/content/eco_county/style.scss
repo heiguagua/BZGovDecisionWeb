@@ -8,10 +8,21 @@
     position: relative;
     padding-bottom: 1rem;
     padding-right: 1rem;
+    @include mobilescreen {
+      padding:0;
+    }
     .statistic {
         position: absolute;
         right: 23px;
         top: -40px;
+        @include mobilescreen {
+          position:relative;
+          right:0;
+          top:0;
+          .pull-right{
+            float:left !important;
+          }
+        }
     }
     .body {
         @include flex-flow(column);

@@ -4,6 +4,9 @@
   padding-bottom: 10px;
   padding-right: 1rem;
   position: relative;
+  @include mobilescreen {
+    padding:0;
+  }
   .right-top {
     position: absolute;
     right: 23px;

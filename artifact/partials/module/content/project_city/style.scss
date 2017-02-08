@@ -1,111 +1,156 @@
 .project_city,
 .project_county {
-    .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
-    .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
-        background-color: rgba(156, 156, 156, 0.5);
-    }
-    position: relative;
-    .statistic {
-        @include flex-num(1);
-        position: absolute;
-        right: 23px;
-        top: -40px;
-    }
+  .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+  .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+    background-color: rgba(156, 156, 156, 0.5);
+  }
+  position: relative;
+  .statistic {
     @include flex-num(1);
-    @include flex-flow(column);
-    padding-bottom: 1rem;
-    padding-right: 1rem;
-    .body {
+    position: absolute;
+    right: 23px;
+    top: -40px;
+    @include mobilescreen {
+      position: relative;
+      right: 0;
+      top: 0;
+      .pull-right {
+        float: left !important;
+      }
+    }
+  }
+  @include flex-num(1);
+  @include flex-flow(column);
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  @include mobilescreen {
+    padding: 0;
+  }
+  .body {
+    @include flex-flow(row);
+    li {
+      @include flex-num(1);
+      @include flex-flow(row);
+      align-items: center;
+      justify-content: center;
+      height: 150px;
+      margin-right: 15px;
+      border-top: 2px solid #33a6e5;
+      border-left: 1px solid #dddddd;
+      border-bottom: 1px solid #dddddd;
+      border-right: 1px solid #dddddd;
+      @include mobilescreen {
+        height: auto;
+        margin-right: 0;
+        padding: 5px;
+      }
+      .font_color {
+        color: #33a6e5;
+        font-size: 34px;
+      }
+      .font_color2 {
+        color: #20b3a9;
+        font-size: 34px;
+      }
+      .border_r {
+        border-right: 1px solid #dddddd;
+      }
+      .width_l {
+        width: 45%;
         @include flex-flow(row);
-        li {
-            @include flex-num(1);
-            @include flex-flow(row);
-            align-items: center;
-            justify-content: center;
-            height: 150px;
-            margin-right: 15px;
-            border-top: 2px solid #33a6e5;
-            border-left: 1px solid #dddddd;
-            border-bottom: 1px solid #dddddd;
-            border-right: 1px solid #dddddd;
-            .font_color {
-                color: #33a6e5;
-                font-size: 34px;
-            }
-            .font_color2 {
-                color: #20b3a9;
-                font-size: 34px;
-            }
-            .border_r {
-                border-right: 1px solid #dddddd;
-            }
-            .width_l {
-                width: 45%;
-                @include flex-flow(row);
-                align-items: center;
-                justify-content: center;
-            }
-            .width_r {
-                width: 55%;
-                @include flex-flow(column);
-                align-items: center;
-                justify-content: center;
-            }
+        align-items: center;
+        justify-content: center;
+        @include mobilescreen {
+          display: none;
         }
+      }
+      .width_r {
+        width: 55%;
+        @include flex-flow(column);
+        align-items: center;
+        justify-content: center;
+        @include mobilescreen {
+          width: 100%;
+          p {
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+      }
     }
-    .eco_footer {
-        overflow: hidden;
-        @include flex-num(1);
-        margin-top: 20px;
-        table td,
-        th {
-            text-align: center;
-            vertical-align: middle;
-            .statistic1 {
-                margin-top: 5px;
-                font-size: 0.8em;
-                width: 100%;
-                .in_block {
-                    display: inline-block;
-                    width: 66%;
-                    height: 16px;
-                }
-            }
+  }
+  .eco_footer {
+    overflow: hidden;
+    @include flex-num(1);
+    margin-top: 20px;
+    .table-lg-screen {
+      @include mobilescreen {
+        display: none;
+      }
+    }
+    .table-mb-screen {
+      display: none;
+      @include mobilescreen {
+        display: table;
+        .fa-info-circle{
+          font-size:1.1rem;
         }
-        .btn1 {
-            width: 80px;
-            text-align: center;
-            color: #fff;
+      }
+    }
+    table td,
+    th {
+      text-align: center;
+      vertical-align: middle;
+      .statistic1 {
+        margin-top: 5px;
+        font-size: 0.8em;
+        width: 100%;
+        .in_block {
+          display: inline-block;
+          width: 66%;
+          height: 16px;
+        }
+      }
+    }
+    .btn1 {
+      width: 80px;
+      text-align: center;
+      color: #fff;
+      display: inline-block;
+    }
+    .font_blue {
+      color: #20b3a9;
+    }
+    .blue {
+      background: #20b3a9;
+    }
+    .font_yellow {
+      color: #fa9b06;
+    }
+    .yellow {
+      background: #fa9b06;
+    }
+    .progress {
+      /*width: 99%;*/
+      border-radius: 15px;
+      .progress-bar {
+        border-radius: 15px;
+        color: #fff;
+        span {
+          font-size: 0.9em;
+          @include mobilescreen {
             display: inline-block;
+            white-space: nowrap;
+            color: #0b0b0b;
+          }
         }
-        .font_blue {
-            color: #20b3a9;
-        }
-        .blue {
-            background: #20b3a9;
-        }
-        .font_yellow {
-            color: #fa9b06;
-        }
-        .yellow {
-            background: #fa9b06;
-        }
-        .progress {
-            /*width: 99%;*/
-            border-radius: 15px;
-            .progress-bar {
-                border-radius: 15px;
-                color: #fff;
-                span {
-                    font-size: 0.9em;
-                }
-            }
-        }
-        .width20 {
-            width: 30%;
-        }
-        .none_data {
-            color: #333;
-        }
+      }
     }
+    .width20 {
+      width: 30%;
+    }
+    .none_data {
+      color: #333;
+    }
+  }
 }

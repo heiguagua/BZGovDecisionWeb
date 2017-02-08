@@ -19,6 +19,9 @@
       display:none;
       @include mobilescreen {
         display:table;
+        .fa-info-circle{
+          font-size:1.1rem;
+        }
       }
     }
     table td,

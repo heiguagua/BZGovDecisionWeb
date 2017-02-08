@@ -69,7 +69,11 @@
               $scope.datepick.quarter = Number(data.quarter);
                var summary_index = data.summary_index
               $scope.allCityData = data.data[summary_index - 1];
-               $('.eco_footer').mCustomScrollbar();
+
+              var screen_width = screen.width;
+              if(screen_width>1200) {
+                $('.eco_footer').mCustomScrollbar();
+              }
             }
           })
         })
