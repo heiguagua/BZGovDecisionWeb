@@ -3,8 +3,8 @@
   var proceeding = angular.module('app.main.module.content.proceeding', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   proceeding.controller('proceedingController', [
-    '$scope', 'proceedingService', '$stateParams','$rootScope',
-    function($scope, proceedingService, $stateParams,$rootScope) {
+    '$scope', 'proceedingService', '$stateParams','$rootScope','$sce',
+    function($scope, proceedingService, $stateParams,$rootScope,$sce) {
       var vm = this;
       $rootScope.mname = $stateParams.mname;
       setTimeout(function() {
@@ -71,7 +71,35 @@
             }
           })
         })
-      })
+      });
+      $scope.trusted = {};
+      $scope.bsDetail = function(increase,doing,history) {
+        var html = '<p>本月督办详情</p>'
+        +'<div>本月新增：'+increase+'</div>'
+        +'<div>继续督办：'+doing+'</div>'
+        +'<div>历史逾期未办结：'+history+'%</div>';
+        return $scope.trusted[html] || ($scope.trusted[html] = $sce.trustAsHtml(html));
+      }
+
+      $scope.shouldDetail = function(should) {
+        var html = '<p>本月应办详情</p>'
+        +'<div>本月应办：'+should+'</div>';
+        return $scope.trusted[html] || ($scope.trusted[html] = $sce.trustAsHtml(html));
+      }
+
+      $scope.doneDetail = function(done,done_history) {
+        var html = '<p>本月实际办结详情</p>'
+        +'<div>完成本月应办结：'+done+'</div>'
+        +'<div>完成历史逾期：'+done_history+'</div>';
+        return $scope.trusted[html] || ($scope.trusted[html] = $sce.trustAsHtml(html));
+      }
+
+      $scope.delayDetail = function(delay,delay_history) {
+        var html = '<p>本月逾期未办结详情</p>'
+        +'<div>本月逾期：'+delay+'</div>'
+        +'<div>历史逾期：'+delay_history+'</div>';
+        return $scope.trusted[html] || ($scope.trusted[html] = $sce.trustAsHtml(html));
+      }
     }
   ]);
 

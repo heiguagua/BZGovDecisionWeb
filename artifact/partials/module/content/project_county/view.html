@@ -88,7 +88,7 @@
           <uib-progressbar value=indicatorData.quarterly_investment_achieved_rate type="success" style="margin-bottom:4px">季进度{{indicatorData.quarterly_investment_achieved_rate}}%</uib-progressbar>
           <uib-progressbar class="in_block" value=indicatorData.yearly_investment_achieved_rate type="info" style="margin-bottom:0">年进度{{indicatorData.yearly_investment_achieved_rate}}%</uib-progressbar>
         </td>
-        <td><i class='fa fa-info-circle'></i></td>
+        <td><button uib-popover-html="detailInfo({{indicatorData}})" class="btn btn-default btn-detail-info"  popover-trigger="focus" ><i class='fa fa-info-circle'></i></button></td>
       </tr>
     </table>
   </div>

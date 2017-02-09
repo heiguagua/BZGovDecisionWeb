@@ -72,7 +72,7 @@
                     <uib-progressbar value=indicatorData.current_quarter_achieved_rate type="success" style="margin-bottom:0" ng-if="indicatorData.current_quarter_achieved_rate<=100">已完成{{indicatorData.current_quarter_achieved_rate}}%</uib-progressbar>
                     <uib-progressbar value=indicatorData.current_quarter_achieved_rate type="warning" style="margin-bottom:0" ng-if="indicatorData.current_quarter_achieved_rate>100">已完成{{indicatorData.current_quarter_achieved_rate}}%</uib-progressbar>
                 </td>
-                <td> <button uib-popover-html="detailInfo({{indicatorData}})" class="btn btn-default"  popover-trigger="focus" ><i class='fa fa-info-circle'></i></button></td>
+                <td> <button uib-popover-html="detailInfo({{indicatorData}})" class="btn btn-default btn-detail-info"  popover-trigger="focus" ><i class='fa fa-info-circle'></i></button></td>
             </tr>
         </table>
     </div>

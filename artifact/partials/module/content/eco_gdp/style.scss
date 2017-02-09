@@ -1,67 +1,88 @@
 .eco_gdp {
-    .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
-    .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
-        background-color: rgba(156, 156, 156, 0.5);
-    }
-    overflow: hidden;
-    @include flex-num(1);
-    padding-bottom: 1rem;
-    padding-right: 1rem;
+  .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+  .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+    background-color: rgba(156, 156, 156, 0.5);
+  }
+  overflow: hidden;
+  @include flex-num(1);
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  @include mobilescreen {
+    padding: 0;
+  }
+  .table-lg-screen {
     @include mobilescreen {
-      padding:0;
+      display: none;
     }
-    .table-lg-screen {
-      @include mobilescreen{
-        display:none;
+  }
+  .table-mb-screen {
+    display: none;
+    @include mobilescreen {
+      display: table;
+      .fa-info-circle {
+        font-size: 1.1rem;
       }
-    }
-    .table-mb-screen {
-      display:none;
-      @include mobilescreen {
-        display:table;
-        .fa-info-circle{
-          font-size:1.1rem;
+      .popover {
+        left: auto !important;
+        right: 4px !important;
+        &.top {
+          .arrow {
+            left: 76% !important;
+          }
         }
       }
-    }
-    table td,
-    th {
-        text-align: center;
-        vertical-align: middle;
-    }
-    .btn1 {
-        width: 80px;
-        text-align: center;
-        color: #fff;
+      button.btn-detail-info {
         display: inline-block;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background: transparent;
+      }
     }
-    .font_blue {
-        color: #20b3a9;
-    }
-    .blue {
-        background: #20b3a9;
-    }
-    .font_yellow {
-        color: #fa9b06;
-    }
-    .yellow {
-        background: #fa9b06;
-    }
-    .progress {
-        width: 99%;
-        border-radius: 15px;
-        color: #fff;
-        .progress-bar {
-            border-radius: 15px;
-            span {
-                font-size: 0.9em;
-            }
+  }
+  table td,
+  th {
+    text-align: center;
+    vertical-align: middle;
+  }
+  .btn1 {
+    width: 80px;
+    text-align: center;
+    color: #fff;
+    display: inline-block;
+  }
+  .font_blue {
+    color: #20b3a9;
+  }
+  .blue {
+    background: #20b3a9;
+  }
+  .font_yellow {
+    color: #fa9b06;
+  }
+  .yellow {
+    background: #fa9b06;
+  }
+  .progress {
+    width: 99%;
+    border-radius: 15px;
+    color: #fff;
+    .progress-bar {
+      border-radius: 15px;
+      span {
+        font-size: 0.9em;
+        @include mobilescreen {
+          display: inline-block;
+          white-space: nowrap;
+          color: #333;
         }
+      }
     }
-    .width20 {
-        width: 30%;
-    }
-    .none_data {
-        color: #333;
-    }
+  }
+  .width20 {
+    width: 30%;
+  }
+  .none_data {
+    color: #333;
+  }
 }

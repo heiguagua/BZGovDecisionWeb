@@ -3,8 +3,8 @@
   var ecogdp = angular.module('app.main.module.content.ecogdp', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   ecogdp.controller('ecogdpController', [
-    '$scope', 'ecogdpService', '$stateParams','$rootScope',
-    function ($scope, ecogdpService, $stateParams,$rootScope) {
+    '$scope', 'ecogdpService', '$stateParams','$rootScope','$sce',
+    function ($scope, ecogdpService, $stateParams,$rootScope,$sce) {
       var vm = this;
       $rootScope.mname = $stateParams.mname;
       setTimeout(function() {
@@ -25,7 +25,17 @@
             $('.eco_gdp').mCustomScrollbar();
           }
         })
-      })
+      });
+
+      $scope.trusted = {};
+      $scope.detailInfo = function(s) {
+        var html = '<p>'+s.indicator_name+'</p><div>目标总量：'+s.yearly_target+'</div>'+'<div>完成总量：'+s.current_quarter_achieved+'</div>'
+        +'<div>目标增速：'+s.yearly_target_growth+'%</div>'
+        +'<div>实际增速：'+s.current_quarter_actual_growth+'%</div>'
+        +'<div>增速状态：'+s.growth_status+'%</div>'
+        +'<div>增速评价：'+s.schedule_evaluation+'</div>';
+        return $scope.trusted[html] || ($scope.trusted[html] = $sce.trustAsHtml(html));
+        }
     }
   ]);
 

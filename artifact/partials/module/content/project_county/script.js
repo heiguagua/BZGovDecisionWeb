@@ -3,8 +3,8 @@
   var projectcounty = angular.module('app.main.module.content.projectcounty', ['ui.bootstrap', 'cgBusy']);
   /** Controller */
   projectcounty.controller('projectcountyController', [
-    '$scope', 'projectcountyService', '$stateParams','$rootScope',
-    function ($scope, projectcountyService, $stateParams,$rootScope) {
+    '$scope', 'projectcountyService', '$stateParams','$rootScope','$sce',
+    function ($scope, projectcountyService, $stateParams,$rootScope,$sce) {
       var vm = this;
       $rootScope.mname = $stateParams.mname;
       setTimeout(function() {
@@ -77,7 +77,18 @@
             }
           })
         })
-      })
+      });
+
+      $scope.trusted = {};
+      $scope.detailInfo = function(s) {
+        var html = '<p>'+s.area+'</p>'
+        +'<div>年目标（亿元）：'+s.yearly_argetTotal+'</div>'
+        +'<div>季目标（亿元）：'+s.quarterly_target+'</div>'
+        +'<div>年进度：'+s.yearly_investment_achieved_rate+'%</div>'
+        +'<div>季进度：'+s.quarter_investment_processing+'%</div>'
+        +'<div>滞后项目数（个）：'+s.delayed_project_number+'</div>';
+        return $scope.trusted[html] || ($scope.trusted[html] = $sce.trustAsHtml(html));
+      }
 
       $scope.$watch('datepick.model', function (newValue, oldValue) {
         if (newValue === oldValue || !newValue || !oldValue) {

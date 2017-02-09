@@ -19,7 +19,7 @@
       padding: 10px 0;
       @include mobilescreen {
         margin-right: 0;
-        padding: 5px;
+        padding: 5px 0;
       }
       .font_color {
         color: #33a6e5;
@@ -36,8 +36,23 @@
           display: block;
           font-size: 0.8rem;
         }
+        button {
+          display: inline-block;
+          padding: 0;
+          margin: 0;
+          border: 0;
+          background: transparent;
+        }
+
+        &.last_child{
+          .popover {
+            left: auto !important;
+            right: 0 !important;
+          }
+        }
         .fa-info-circle {
           color: #33a6e5;
+          font-size: 1rem;
         }
       }
       .border_r {
@@ -119,15 +134,15 @@
       border: 1px solid #DDD;
       margin-right: 15px;
       @include mobilescreen {
-        margin-right:0;
+        margin-right: 0;
       }
       >div {
         @include flex-num(1);
         width: 100%;
         height: 100%;
-        >div{
+        >div {
           @include mobilescreen {
-            min-height:300px;
+            min-height: 300px;
           }
         }
       }
@@ -138,16 +153,16 @@
       border: 1px solid #DDD;
       margin-right: 15px;
       @include mobilescreen {
-        margin-right:0;
-        min-height:300px;
+        margin-right: 0;
+        min-height: 300px;
       }
       >div {
         @include flex-num(1);
         width: 100%;
         height: 100%;
-        >div{
+        >div {
           @include mobilescreen {
-            min-height:300px;
+            min-height: 300px;
           }
         }
       }
@@ -158,8 +173,8 @@
       border: 1px solid #DDD;
       margin-right: 15px;
       @include mobilescreen {
-        margin-right:0;
-        border:0;
+        margin-right: 0;
+        border: 0;
       }
       .total {
         @include flex-num(1);
@@ -183,7 +198,7 @@
         -webkit-justify-content: space-around;
         justify-content: space-around;
         @include mobilescreen {
-          display:none;
+          display: none;
         }
         &:last-child {
           border-bottom: 0;
@@ -208,14 +223,14 @@
           }
         }
       }
-      .table-quater{
-        display:none;
+      .table-quater {
+        display: none;
         @include mobilescreen {
-          display:table;
-          border:0;
-          margin-bottom:0;
-          th{
-            padding:6px;
+          display: table;
+          border: 0;
+          margin-bottom: 0;
+          th {
+            padding: 6px;
           }
         }
       }
