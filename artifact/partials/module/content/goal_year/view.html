@@ -12,7 +12,7 @@
       </p>
     </div>
   </div>
-  <div class='table-items'>
+  <div class='table-items table-items-pc'>
     <div class='y-item'>
       <h5 class='text-center'>市级党群部门</h5>
       <table class="table  table-striped top10 table-hover text-center">
@@ -65,7 +65,7 @@
       </table>
     </div>
   </div>
-  <div class='table-items items-down' style='margin-top:10px'>
+  <div class='table-items items-down table-items-pc' style='margin-top:10px'>
     <div class='y-item'>
       <h5 class='text-center'>县、区</h5>
       <table class="table  table-striped top10 table-hover text-center">
@@ -103,4 +103,92 @@
     <div class='y-item opacity0'>
     </div>
   </div>
+
+  <ul rn-carousel class='table-items table-items-touch' rn-carousel-transition='hexagon' rn-carousel-index='1'>
+    <li class='y-item'>
+      <h5 class='text-center'>市级党群部门</h5>
+      <table class="table  table-striped top10 table-hover text-center">
+        <thead>
+          <tr>
+            <th>单位</th>
+            <th>名次</th>
+            <th>名次变化</th>
+          </tr>
+        </thead>
+        <tr ng-repeat='data in partyDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
+        </tr>
+      </table>
+    </li>
+    <li class='y-item'>
+      <h5 class='text-center'>市政府部门</h5>
+      <table class="table  table-striped top10 table-hover text-center">
+        <thead>
+          <tr>
+            <th>单位</th>
+            <th>名次</th>
+            <th>名次变化</th>
+          </tr>
+        </thead>
+        <tr ng-repeat='data in govDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
+        </tr>
+      </table>
+    </li>
+    <li class='y-item'>
+      <h5 class='text-center'>中央、省驻巴单位</h5>
+      <table class="table  table-striped top10 table-hover text-center">
+        <thead>
+          <tr>
+            <th>单位</th>
+            <th>名次</th>
+            <th>名次变化</th>
+          </tr>
+        </thead>
+        <tr ng-repeat='data in centerDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
+        </tr>
+      </table>
+    </li>
+    <li class='y-item'>
+      <h5 class='text-center'>县、区</h5>
+      <table class="table  table-striped top10 table-hover text-center">
+        <thead>
+          <tr>
+            <th>单位</th>
+            <th>名次</th>
+            <th>名次变化</th>
+          </tr>
+        </thead>
+        <tr ng-repeat='data in countyDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
+        </tr>
+      </table>
+    </li>
+    <li class='y-item'>
+      <h5 class='text-center'>驻外办事机构</h5>
+      <table class="table  table-striped top10 table-hover text-center">
+        <thead>
+          <tr>
+            <th>单位</th>
+            <th>名次</th>
+            <th>名次变化</th>
+          </tr>
+        </thead>
+        <tr ng-repeat='data in foreignDatas'>
+          <td>{{data.area}}</td>
+          <td>{{data.rank}}</td>
+          <td>{{data.rank_changed}}</td>
+        </tr>
+      </table>
+    </li>
+  </ul>
 </div>

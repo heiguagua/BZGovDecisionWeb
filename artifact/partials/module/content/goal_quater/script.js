@@ -204,10 +204,30 @@
                 return data;
               }
 
+              var screen_width = screen.width;
+              var radar_center = ['60%', '54%'];
+              var radius = '65%';
+              var legend_orient = 'vertical';
+              var legend_top = '10%';
+              var title_size = 18;
+              var item_width = 25;
+              var legend_padding = 5;
+              if(screen_width< 1200) {
+                radar_center = ['32%', '40%'];
+                radius = '40%';
+                legend_orient = 'horizontal';
+                legend_top = 'bottom';
+                title_size = 16;
+                item_width = 35;
+                legend_padding = [15,10,0,10];
+              }
               var option = {
                 title: {
                   left: 'center',
                   text: scope.quaterdata.year + '年第' + scope.datemodel.quarter + '季度 目标任务考核分项名次',
+                  textStyle:{
+                    fontSize: title_size
+                  },
                   top: -2
                 },
                 tooltip: {
@@ -229,21 +249,22 @@
                 },
                 legend: {
                   left: 'left',
-                  top: '10%',
-                  orient: 'vertical',
+                  top: legend_top,
+                  orient: legend_orient,
                   data: legend,
-                  itemGap: 4
+                  itemWidth: item_width,
+                  padding: legend_padding
                 },
 
                 radar: {
                   // shape: 'circle',
-                  center: ['60%', '54%'],
+                  center: radar_center,
                   name: {
                     textStyle: {
                       color: '#333'
                     }
                   },
-                  radius: '65%',
+                  radius: radius,
                   nameGap: 8,
                   indicator: areaList,
                   axisLabel: {

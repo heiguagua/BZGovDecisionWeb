@@ -7,7 +7,7 @@
           </div>
           <div class="pull-right width_r">
               <p class="font_color">{{0+bs_increased+bs_going+bs_history}}</p>
-              <p class='m_font'>本月督办&nbsp; <button uib-popover-html="bsDetail(bs_increased,bs_going,bs_history)" popover-trigger="focus" ><i class='fa fa-info-circle'></i></button></p>
+              <p class='m_font'>本月督办&nbsp; <button uib-popover-html="bsDetail(bs_increased,bs_going,bs_history)" popover-trigger="outsideClick" ><i class='fa fa-info-circle'></i></button></p>
               <div class='item'><label>本月新增</label><span>{{bs_increased?bs_increased:0}}</span></div>
               <div class='item'><label>继续督办</label><span>{{bs_going?bs_going:0}}</span></div>
               <div class='item'><label>历史逾期未办结</label><span>{{bs_history?bs_history:0}}</span></div>
@@ -20,7 +20,7 @@
           </div>
           <div class="pull-right width_r">
               <p class="font_color">{{should_do?should_do:0}}</p>
-              <p class='m_font'>本月应办&nbsp;<button uib-popover-html="shouldDetail(should_do)" popover-trigger="focus" ><i class='fa fa-info-circle'></i></button></p>
+              <p class='m_font'>本月应办&nbsp;<button uib-popover-html="shouldDetail(should_do)" popover-trigger="outsideClick" ><i class='fa fa-info-circle'></i></button></p>
               <div class='item'><label>本月应办结</label><span>{{should_do?should_do:0}}</span></div>
           </div>
       </li>
@@ -31,7 +31,7 @@
           </div>
           <div class="pull-right width_r">
               <p class="font_color">{{0+done_num+done_history}}</p>
-              <p class='m_font'>本月实办&nbsp;<button uib-popover-html="doneDetail(done_num,done_history)" popover-trigger="focus" ><i class='fa fa-info-circle'></i></button></p>
+              <p class='m_font'>本月实办&nbsp;<button uib-popover-html="doneDetail(done_num,done_history)" popover-trigger="outsideClick" ><i class='fa fa-info-circle'></i></button></p>
               <div class='item'><label>完成本月应办结</label><span>{{done_num?done_num:0}}</span></div>
               <div class='item'><label>完成历史逾期</label><span>{{done_history?done_history:0}}</span></div>
           </div>
@@ -43,7 +43,7 @@
           </div>
           <div class="pull-right width_r">
               <p class="font_color">{{0+delay_num+delay_history}}</p>
-              <p class='m_font last_child'>逾期未办&nbsp;<button uib-popover-html="delayDetail(delay_num,delay_history)"  popover-trigger="focus"><i class='fa fa-info-circle'></i></button></p>
+              <p class='m_font last_child'>逾期未办&nbsp;<button uib-popover-html="delayDetail(delay_num,delay_history)"  popover-trigger="outsideClick"><i class='fa fa-info-circle'></i></button></p>
               <div class='item'><label>本月逾期</label><span>{{delay_num?delay_num:0}}</span></div>
               <div class='item'><label>历史逾期</label><span>{{delay_history?delay_history:0}}</span></div>
           </div>

@@ -20,11 +20,27 @@
       <div class='chart'>
 
         <div class='graph' wiserv-goal-quater quaterdata=targetExamRanks datemodel='datepick' ng-if="targetExamRanks != void(0)"></div>
+        <table class="table  table-striped top10 table-hover text-center table-mb-screen">
+          <thead>
+            <tr>
+              <th>单位</th>
+              <th>名次</th>
+            </tr>
+          </thead>
+          <tr ng-repeat='data in targetExamTotalRanks.data'>
+            <td>{{data.area}}</td>
+            <td ng-if='data.rank == 1' class='first'>{{data.rank}}</td>
+            <td ng-if='data.rank == 2' class='second'>{{data.rank}}</td>
+            <td ng-if='data.rank == 3' class='third'>{{data.rank}}</td>
+            <td ng-if='data.rank != 1 && data.rank != 2 && data.rank != 3'>{{data.rank}}</td>
+          </tr>
+
+        </table>
       </div>
     </div>
     <div class='top-right'>
       <h4 class='title'>{{targetExamTotalRanks.year}}年第{{targetExamTotalRanks.quarter}}季度 目标任务考核总名次</h4>
-      <table class="table  table-striped top10 table-hover text-center">
+      <table class="table  table-striped top10 table-hover text-center table-lg-screen">
         <thead>
           <tr>
             <th>单位</th>

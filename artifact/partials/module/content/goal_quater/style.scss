@@ -16,21 +16,45 @@
   overflow: hidden;
   min-height: 0;
   position: relative;
+  @include mobilescreen {
+    padding: 0 5px;
+  }
   .content-top {
     @include flex-num(1);
     @include flex-flow(row);
     min-height: 0;
     // min-height: 300px;
+    @include mobilescreen {
+      position: relative;
+    }
     .top-left {
       @include flex-num(3);
       @include flex-flow(column);
       border: 1px solid #DDD;
       padding: 10px;
+      .table-mb-screen {
+        display: none;
+        @include mobilescreen {
+          display: table;
+          position: absolute;
+          width: 36%;
+          right: -8px;
+          top: 10%;
+          th,
+          td {
+            padding: 5px 8px;
+          }
+        }
+      }
       .chart {
         @include flex-num(1);
         @include flex-flow(column);
+        position: relative;
         .graph {
           @include flex-num(1);
+          @include mobilescreen {
+            height: 340px;
+          }
         }
       }
     }
@@ -39,9 +63,21 @@
       @include flex-num(2);
       border: 1px solid #DDD;
       padding: 10px 10px 0;
+      @include mobilescreen {
+        margin: 0;
+        border: 0;
+        padding: 15px 5px;
+        display: none;
+        .table-lg-screen {
+          display: none;
+        }
+      }
       .title {
         text-align: center;
         font-family: 微软雅黑;
+        @include mobilescreen {
+          display: none;
+        }
       }
     }
     .table {
@@ -100,6 +136,9 @@
     align-items: center;
     min-height: 0;
     @include flex-flow(row);
+    @include mobilescreen {
+      display: none;
+    }
     .label-icon {
       @include flex-num(1);
       border-right: 1px solid #DDD;

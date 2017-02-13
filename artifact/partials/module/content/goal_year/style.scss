@@ -5,7 +5,7 @@
   padding-right: 1rem;
   position: relative;
   @include mobilescreen {
-    padding:0;
+    padding: 0;
   }
   .right-top {
     position: absolute;
@@ -23,6 +23,18 @@
     &.items-down {
       @include flex-num(4);
     }
+    &.table-items-pc {
+      @include mobilescreen {
+        display: none;
+      }
+    }
+    &.table-items-touch {
+      display: none;
+      @include mobilescreen {
+        @include flex-flow(row);
+        margin-bottom: 15px;
+      }
+    }
     .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
     .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
       background-color: rgba(156, 156, 156, 0.5);
@@ -33,6 +45,13 @@
       margin-right: 5px;
       border: 1px solid #DDD;
       padding: 8px 5px;
+      @include mobilescreen {
+        width: 80%;
+        margin: 0 auto;
+        height: 390px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+      }
       h5 {
         @include smallscreen {
           margin: 2px 0;
@@ -55,6 +74,10 @@
           @include smallscreen {
             padding: 3px 8px;
           }
+          @include mobilescreen {
+            padding: 6px 4px;
+            font-size:0.8rem;
+          }
           &:first-child {
             text-align: left;
             min-width: 40%;
@@ -76,6 +99,10 @@
             padding: 6px 8px;
             @include smallscreen {
               padding: 3px 8px;
+            }
+            @include mobilescreen {
+              padding: 6px 4px;
+              font-size:0.8rem;
             }
             &:first-child {
               text-align: left;

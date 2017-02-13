@@ -19,7 +19,7 @@
   @include flex-flow(column);
   @include flex-num(1);
   @include mobilescreen {
-    display: block;
+    @include flex-flow(column);
   }
 }
 .search-box {

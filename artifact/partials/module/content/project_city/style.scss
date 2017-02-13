@@ -6,7 +6,7 @@
   }
   position: relative;
   .statistic {
-    @include flex-num(1);
+    // @include flex-num(1);
     position: absolute;
     right: 23px;
     top: -40px;
@@ -47,10 +47,16 @@
       .font_color {
         color: #33a6e5;
         font-size: 34px;
+        @include mobilescreen {
+          font-size:1.4rem;
+        }
       }
       .font_color2 {
         color: #20b3a9;
         font-size: 34px;
+        @include mobilescreen {
+          font-size:1.4rem;
+        }
       }
       .border_r {
         border-right: 1px solid #dddddd;

@@ -42,7 +42,7 @@
       border-bottom: 1px solid #DDD;
       padding: 12px 0;
       color: rgb(37,99,200);
-      font-weight: 100;
+      font-weight: 600;
       background: #f2f2f2;
     }
     &.active {
@@ -63,6 +63,5 @@
   position:relative;
   @include mobilescreen {
     @include flex-flow(column);
-    display: block;
   }
 }

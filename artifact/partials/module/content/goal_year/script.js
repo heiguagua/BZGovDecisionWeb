@@ -1,6 +1,6 @@
 (function() {
   /** Module */
-  var goalyear = angular.module('app.main.module.content.goalyear', ['ui.bootstrap', 'cgBusy']);
+  var goalyear = angular.module('app.main.module.content.goalyear', ['ui.bootstrap', 'cgBusy','angular-carousel']);
   /** Controller */
   goalyear.controller('goalyearController', [
     '$scope', 'goalyearService', '$stateParams','$rootScope',
@@ -60,7 +60,10 @@
             if(item.area == 'foreign') {
               $scope.foreignDatas = item.data;
             }
-            $('.y-item').mCustomScrollbar();
+            var screen_width = screen.width;
+            if(screen_width>1200) {
+              $('.y-item').mCustomScrollbar();
+            }
           })
         })
       }
