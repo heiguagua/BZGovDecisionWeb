@@ -41,6 +41,9 @@
                     margin: 15px 7px 0;
                     display: inline-block;
                     cursor: pointer;
+                    @include mobilescreen {
+                      margin: 10px 2px 0;
+                    }
                     &:hover {
                         background: #33a6e5;
                         color: #fff;
@@ -61,6 +64,7 @@
     td {
         text-align: center;
         vertical-align: middle;
+        padding: 8px 1px !important;
     }
     .font_back {
         font-weight: bold;
