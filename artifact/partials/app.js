@@ -15,6 +15,7 @@
       'app.profile.agri',
       'app.profile.service',
       'app.profile.travel',
+      'app.profile.spot',
       'app.file',
       'app.main.preview',
       'app.main.module',
@@ -113,6 +114,12 @@
         templateUrl: 'partials/profile/travel/view.html',
         controller: 'travelController',
         controllerAs: 'travel',
+      })
+      .state('profile.spot', {
+        url: '/spot/:proid',
+        templateUrl: 'partials/profile/spot/view.html',
+        controller: 'spotController',
+        controllerAs: 'spot',
       })
       .state('main', {
         url: '/main/:mid',

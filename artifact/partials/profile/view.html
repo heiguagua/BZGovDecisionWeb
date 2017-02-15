@@ -15,7 +15,9 @@
               <a ng-if='menu.name != "经济概况" && menu.name != "经济形势分析"' >{{menu.name}}</a> -->
               <a ng-if='menu.profile_sref' ui-sref='{{menu.profile_sref}}({proid:menu.id})' ui-sref-opts="{reload:menu.profile_sref}" ng-click='profile.currentMenu(menu)'>{{menu.name}}</a>
               <a ng-if='!menu.profile_sref' >{{menu.name}}</a>
-
+            </li>
+            <li ui-sref-active>
+              <a ui-sref='profile.spot' ui-sref-opts='{reload:profile.spot}'>经济形势分析</a>
             </li>
           </ul>
         </nav>
