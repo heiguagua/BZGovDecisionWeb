@@ -20,6 +20,8 @@
         $scope.isActive = num;
         $scope.rankdata = 2;
         $scope.rankrate = 2;
+        $scope.targetcrt = 3;
+        $scope.targetgoal = 3;
       }
 
       $scope.quarterOptions = [{
@@ -189,7 +191,7 @@
               axisLabel: {
                 textStyle: {
                   color: 'rgb(246,246,246)',
-                  fontSize:14
+                  fontSize: 14
                 }
               },
               inverse: 'true', //排序
@@ -211,7 +213,7 @@
                   formatter: '{c}%',
                   textStyle: {
                     color: 'rgb(246,246,246)',
-                    fontSize:14
+                    fontSize: 14
                   }
                 }
               },
@@ -316,7 +318,7 @@
               axisLabel: {
                 textStyle: {
                   color: 'rgb(246,246,246)',
-                  fontSize:14
+                  fontSize: 14
                 }
               },
               inverse: 'true', //排序
@@ -339,7 +341,7 @@
                   formatter: '{c}',
                   textStyle: {
                     color: 'rgb(246,246,246)',
-                    fontSize:14
+                    fontSize: 14
                   }
                 }
               },
@@ -348,7 +350,7 @@
                   color: 'rgb(7,83,181)'
                 }
               },
-              data: [42, 36, 35, 28,45]
+              data: [42, 36, 35, 28, 45]
             }]
           };
 
@@ -359,7 +361,7 @@
             chartInstance1.setOption(option);
           }, 600);
 
-          scope.onResize1 = function() {
+          scope.onResize2 = function() {
             if (chartInstance1) {
               chartInstance1.clear();
               chartInstance1.resize();
@@ -368,7 +370,7 @@
           }
 
           angular.element($window).bind('resize', function() {
-              scope.onResize1();
+              scope.onResize2();
             })
             // })
         }
@@ -376,6 +378,192 @@
     }
   ]);
 
+  spot.directive('chartTargetCrt', ['spotService', '$window',
+    function(spotService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          targetcrtdata: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance = null;
+          // if (!scope.targetcrtdata || !scope.targetcrtdata.url) {
+          //   return;
+          // }
+          // spotService.getDetail(scope.targetcrtdata.url, {
+          //   picCode: scope.targetcrtdata.picCode
+          // }).then(function(result) {
+          //   var opt = result.data;
+          //   if (!opt || !opt.series) {
+          //     return;
+          //   }
+          var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
 
+          var option = {
+            title: {
+              text: '2016年：530亿元',
+              left: 'center',
+              top: 'bottom',
+              textStyle: {
+                color: 'rgb(240,240,240)',
+                fontWeight:'normal'
+              }
+            },
+            series: [{
+              type: 'liquidFill',
+              data: [0.6],
+              radius: '62%',
+              outline: {
+                borderDistance: 0,
+                itemStyle: {
+                  borderWidth: 5,
+                  borderColor: '#156ACF',
+                }
+              },
+              label: {
+                normal: {
+                  show: false,
+                  textStyle: {
+                    fontSize: 30
+                  }
+                }
+              }
+            }]
+          };
+
+
+          setTimeout(function() {
+            chartInstance = echarts.init((element.find('div'))[0]);
+            chartInstance.clear();
+            chartInstance.resize();
+            chartInstance.setOption(option);
+          }, 600);
+
+          scope.onResize3 = function() {
+            if (chartInstance) {
+              chartInstance.clear();
+              chartInstance.resize();
+              chartInstance.setOption(option);
+            }
+          }
+
+          angular.element($window).bind('resize', function() {
+              scope.onResize3();
+            })
+            // })
+        }
+      }
+    }
+  ]);
+
+  spot.directive('chartTargetGoal', ['spotService', '$window',
+    function(spotService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          targetgoaldata: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance = null;
+          // if (!scope.targetgoaldata || !scope.targetgoaldata.url) {
+          //   return;
+          // }
+          // spotService.getDetail(scope.targetgoaldata.url, {
+          //   picCode: scope.targetgoaldata.picCode
+          // }).then(function(result) {
+          //   var opt = result.data;
+          //   if (!opt || !opt.series) {
+          //     return;
+          //   }
+          var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
+          var percent = 0.6;
+
+          function getData() {
+            return [{
+              value: percent,
+              itemStyle: {
+                normal: {
+                  color: '#f2c967',
+                  shadowBlur: 10,
+                  shadowColor: '#f2c967'
+                }
+              }
+            }, {
+              value: 1 - percent,
+              itemStyle: {
+                normal: {
+                  color: 'transparent'
+                }
+              }
+            }];
+          }
+          var option = {
+            title: {
+              text: '2020年：800亿元',
+              left: 'center',
+              top: 'bottom',
+              textStyle: {
+                color: 'rgb(240,240,240)',
+                fontWeight:'normal'
+              }
+            },
+            series: [{
+              type: 'liquidFill',
+              data: [0.6],
+              radius: '62%',
+              outline: {
+                borderDistance: 0,
+                itemStyle: {
+                  borderWidth: 5,
+                  borderColor: '#156ACF',
+                }
+              },
+              label: {
+                normal: {
+                  show: false,
+                  textStyle: {
+                    fontSize: 30
+                  }
+                }
+              }
+            }, {
+              name: 'main',
+              type: 'pie',
+              radius: ['64%', '68%'],
+              label: {
+                normal: {
+                  show: false
+                }
+              },
+              data: getData()
+            }]
+          };
+
+
+          setTimeout(function() {
+            chartInstance = echarts.init((element.find('div'))[0]);
+            chartInstance.clear();
+            chartInstance.resize();
+            chartInstance.setOption(option);
+          }, 600);
+
+          scope.onResize = function() {
+            if (chartInstance) {
+              chartInstance.clear();
+              chartInstance.resize();
+              chartInstance.setOption(option);
+            }
+          }
+
+          angular.element($window).bind('resize', function() {
+              scope.onResize();
+            })
+            // })
+        }
+      }
+    }
+  ]);
 
 })();

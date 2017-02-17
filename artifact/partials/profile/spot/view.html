@@ -77,7 +77,7 @@
               <h3 class='text-center'>总产值<strong>364.5</strong>亿元</h3>
               <h4 class='text-center'>总体同比去年增加 27.37 亿元</strong></h4>
             </div>
-            <div class='graph-wrap'>
+            <div class='graph-wrap' chart-increase-rate>
             </div>
           </div>
           <div class='chart-wrap'>
@@ -108,7 +108,7 @@
           </div>
           <div class='chart-wrap'>
             <div class='chart-title c-left'>
-              <div class='title-left'>
+              <div class='title-left rank'>
                 <h3 class='text-center'>
                   <strong>7.5%</strong>
                 </h3>
@@ -124,16 +124,18 @@
         </div>
         <div class='s-chart' ng-show='isActive == 3'>
           <div class='chart-wrap'>
-            <div class='chart-title'>
+            <div class='chart-title target'>
               <h3 class='text-center'>总产值<strong>364.5</strong>亿元</h3>
               <h4 class='text-center'>占2016年目标<strong>70%</strong>&nbsp;&nbsp;占2020年的<strong>40%</strong></h4>
             </div>
-            <div class='graph-wrap'>
+            <div class='graph-wrap double-chart'>
+              <div chart-target-crt targetcrtdata=targetcrt ng-if="targetcrt != void(0)"></div>
+              <div chart-target-goal targetcrtdata=targetgoal ng-if="targetgoal != void(0)"></div>
             </div>
           </div>
           <div class='chart-wrap'>
             <div class='chart-title c-left'>
-              <div class='title-left'>
+              <div class='title-left target'>
                 <h3 class='text-center'>
                   <strong>7.5%</strong>
                 </h3>
@@ -145,7 +147,7 @@
                 <div class='compare'><label>与"十三五川东北目标"比</label><div class='c-num'><span class='lower'>低</span>&nbsp;&nbsp;1.80%</div></div>
               </div>
             </div>
-            <div class='graph-wrap'></div>
+            <div class='graph-wrap' chart-rank-total targetcrtdata=targetgoal ng-if="targetgoal != void(0)"></div>
           </div>
         </div>
         <div class='s-from'>
