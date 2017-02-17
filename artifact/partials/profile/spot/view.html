@@ -7,45 +7,13 @@
       <span class='box-right-bottom'></span>
       <div class='s-nav-menu'>
         <ul class='s-mlist'>
-          <li class='s-m-item active'>
-            <div class='s-m-name'>GDP</div>
-            <div class='s-m-star'>
-              <i class='fa fa-star'></i>
-              <i class='fa fa-star'></i>
-              <i class='fa fa-star dark'></i>
-            </div>
-          </li>
-          <li class='s-m-item'>
-            <div class='s-m-name'>投资</div>
-            <div class='s-m-star'>
+          <li class='s-m-item' ng-click='tabMenu($index)' ng-class="{true: 'active', false: 'inactive'}[menuactive == $index]" ng-repeat='menu in menus'>
+            <div class='s-m-name'>{{menu.name}}</div>
+            <div class='s-m-star num_{{menu.star}}'>
               <i class='fa fa-star'></i>
               <i class='fa fa-star'></i>
               <i class='fa fa-star'></i>
             </div>
-          </li>
-          <li class='s-m-item'>
-            <div class='s-m-name'>工业</div>
-            <div class='s-m-star'></div>
-          </li>
-          <li class='s-m-item'>
-            <div class='s-m-name'>社会消费</div>
-            <div class='s-m-star'></div>
-          </li>
-          <li class='s-m-item'>
-            <div class='s-m-name'>财政收支</div>
-            <div class='s-m-star'></div>
-          </li>
-          <li class='s-m-item'>
-            <div class='s-m-name'>金融</div>
-            <div class='s-m-star'></div>
-          </li>
-          <li class='s-m-item'>
-            <div class='s-m-name'>居民收支</div>
-            <div class='s-m-star'></div>
-          </li>
-          <li class='s-m-item'>
-            <div class='s-m-name'>物价</div>
-            <div class='s-m-star'></div>
           </li>
         </ul>
       </div>
@@ -60,9 +28,9 @@
           <div class='statistic'>
             <div class='time-pick'>
               <p class="input-group">
-                <input type="text" ng-change='changed($index)' readonly class="form-control input-time" uib-datepicker-popup="{{popups[$index].format}}" ng-model="popups[$index].model" is-open="popups[$index].opened" datepicker-options="popups[$index].dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
+                <input type="text" ng-change='changed($index)' readonly class="form-control input-time" uib-datepicker-popup="{{datepick.format}}" popup-placement='bottom' ng-model="datepick.model" is-open="datepick.opened" datepicker-options="datepick.dateOptions" ng-required="true" clear-text="清除" current-text='' close-text='关闭' alt-input-formats="altInputFormats"/>
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default btn-time" ng-click="open($index)">
+                  <button type="button" class="btn btn-default btn-time" ng-click="open()">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>

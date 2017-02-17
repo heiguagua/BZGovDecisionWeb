@@ -163,9 +163,16 @@
   }
 }
 .uib-datepicker {
+  table.uib-yearpicker {
+    outline: none;
+    th,
+    td {
+      border: 1px solid #e1e1e1;
+    }
+  }
   .btn-default {
     background-color: #f8f8f8;
-    border-color: #e1e1e1;
+    border: none;
     @include mobilescreen {
       padding: 6px 8px;
       font-size: 0.8rem;
@@ -188,6 +195,8 @@
   }
   .btn-success {
     background-color: #20b3a9;
+    padding: 4px 10px;
+    margin-bottom: 4px;
     @include mobilescreen {
       padding: 4px 10px;
     }

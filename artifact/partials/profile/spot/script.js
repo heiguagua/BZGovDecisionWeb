@@ -24,6 +24,45 @@
         $scope.targetgoal = 3;
       }
 
+      $scope.menuactive = 0;
+      $scope.tabMenu = function(index) {
+        $scope.menuactive = index;
+      }
+
+      $scope.menus = [{
+        'id':1,
+        'name':'GDP',
+        'star':1
+      },{
+        'id':2,
+        'name':'投资',
+        'star':2
+      },{
+        'id':3,
+        'name':'工业',
+        'star':3
+      },{
+        'id':4,
+        'name':'社会消费',
+        'star':2
+      },{
+        'id':5,
+        'name':'财政收支',
+        'star':2
+      },{
+        'id':6,
+        'name':'金融',
+        'star':3
+      },{
+        'id':7,
+        'name':'居民收支',
+        'star':1
+      },{
+        'id':8,
+        'name':'物价',
+        'star':3
+      },]
+
       $scope.quarterOptions = [{
         'id': 3,
         "name": "第1季度"
@@ -39,6 +78,18 @@
       }];
 
       $scope.quarter = 3;
+
+      $scope.datepick = {};
+      $scope.datepick.format = 'yyyy';
+      $scope.datepick.model = new Date();
+      $scope.datepick.dateOptions = {};
+      $scope.datepick.dateOptions.minMode = 'year';
+      $scope.datepick.dateOptions.datepickerMode = 'year';
+      $scope.altInputFormats = ['M!/d!/yyyy'];
+
+      $scope.open = function() {
+        $scope.datepick.opened = true;
+      };
 
       $scope.spotlist = [];
       var menuId = $stateParams.proid;
