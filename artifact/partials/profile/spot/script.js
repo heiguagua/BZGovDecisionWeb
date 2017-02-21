@@ -17,11 +17,30 @@
       });
 
       $scope.showChart = function(num) {
+        if(num == 1) {
+          $scope.rankdata = null;
+          $scope.rankrate = null;
+          $scope.targetcrt = null;
+          $scope.targetgoal = null;
+          $scope.targetrate = null;
+        }
+        if(num == 2) {
+          $scope.rankdata = 2;
+          $scope.rankrate = 2;
+          $scope.targetcrt = null;
+          $scope.targetgoal = null;
+          $scope.targetrate = null;
+        }
+        if( num == 3) {
+          $scope.rankdata = null;
+          $scope.rankrate = null;
+          $scope.targetcrt = 3;
+          $scope.targetgoal = 3;
+          $scope.targetrate = 3;
+        }
         $scope.isActive = num;
-        $scope.rankdata = 2;
-        $scope.rankrate = 2;
-        $scope.targetcrt = 3;
-        $scope.targetgoal = 3;
+
+
       }
 
       $scope.menuactive = 0;
@@ -30,38 +49,38 @@
       }
 
       $scope.menus = [{
-        'id':1,
-        'name':'GDP',
-        'star':1
-      },{
-        'id':2,
-        'name':'投资',
-        'star':2
-      },{
-        'id':3,
-        'name':'工业',
-        'star':3
-      },{
-        'id':4,
-        'name':'社会消费',
-        'star':2
-      },{
-        'id':5,
-        'name':'财政收支',
-        'star':2
-      },{
-        'id':6,
-        'name':'金融',
-        'star':3
-      },{
-        'id':7,
-        'name':'居民收支',
-        'star':1
-      },{
-        'id':8,
-        'name':'物价',
-        'star':3
-      },]
+        'id': 1,
+        'name': 'GDP',
+        'star': 1
+      }, {
+        'id': 2,
+        'name': '投资',
+        'star': 2
+      }, {
+        'id': 3,
+        'name': '工业',
+        'star': 3
+      }, {
+        'id': 4,
+        'name': '社会消费',
+        'star': 2
+      }, {
+        'id': 5,
+        'name': '财政收支',
+        'star': 2
+      }, {
+        'id': 6,
+        'name': '金融',
+        'star': 3
+      }, {
+        'id': 7,
+        'name': '居民收支',
+        'star': 1
+      }, {
+        'id': 8,
+        'name': '物价',
+        'star': 3
+      }, ]
 
       $scope.quarterOptions = [{
         'id': 3,
@@ -322,86 +341,136 @@
           //     return;
           //   }
           var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
+          // var option = {
+          //   tooltip: {
+          //     trigger: 'axis',
+          //     axisPointer: {
+          //       type: 'shadow'
+          //     },
+          //     formatter: "{a} <br/>{b} : {c}"
+          //   },
+          //   grid: {
+          //     left: '12%',
+          //     right: '12%',
+          //     bottom: '12%',
+          //     top: '12%',
+          //     containLabel: true
+          //   },
+          //   yAxis: {
+          //     type: 'value',
+          //     axisTick: {
+          //       show: false
+          //     },
+          //     axisLabel: {
+          //       show: false
+          //     },
+          //     axisLine: {
+          //       show: false
+          //     },
+          //     splitLine: {
+          //       show: false
+          //     }
+          //   },
+          //   xAxis: {
+          //     type: '',
+          //     name: '',
+          //     nameLocation: 'start',
+          //     boundaryGap: true,
+          //     axisTick: {
+          //       show: false
+          //     },
+          //     axisLine: {
+          //       show: true,
+          //       lineStyle: {
+          //         color: 'rgba(0, 120, 255, 0.5)'
+          //       }
+          //     },
+          //     axisLabel: {
+          //       textStyle: {
+          //         color: 'rgb(246,246,246)',
+          //         fontSize: 14
+          //       }
+          //     },
+          //     inverse: 'true', //排序
+          //     data: [
+          //       '广元',
+          //       '广安',
+          //       '南充',
+          //       '达州',
+          //       '巴中'
+          //     ]
+          //   },
+          //   series: [{
+          //     name: '同比增速',
+          //     type: 'bar',
+          //     barMaxWidth: '30%',
+          //     label: {
+          //       normal: {
+          //         show: true,
+          //         position: 'top',
+          //         formatter: '{c}',
+          //         textStyle: {
+          //           color: 'rgb(246,246,246)',
+          //           fontSize: 14
+          //         }
+          //       }
+          //     },
+          //     itemStyle: {
+          //       normal: {
+          //         color: 'rgb(7,83,181)'
+          //       }
+          //     },
+          //     data: [42, 36, 35, 28, 45]
+          //   }]
+          // };
+
           var option = {
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: {
-                type: 'shadow'
-              },
-              formatter: "{a} <br/>{b} : {c}"
-            },
-            grid: {
-              left: '12%',
-              right: '12%',
-              bottom: '12%',
-              top: '12%',
-              containLabel: true
-            },
-            yAxis: {
-              type: 'value',
-              axisTick: {
-                show: false
-              },
-              axisLabel: {
-                show: false
-              },
-              axisLine: {
-                show: false
-              },
-              splitLine: {
-                show: false
-              }
-            },
-            xAxis: {
-              type: '',
-              name: '',
-              nameLocation: 'start',
-              boundaryGap: true,
-              axisTick: {
-                show: false
-              },
-              axisLine: {
-                show: true,
-                lineStyle: {
-                  color: 'rgba(0, 120, 255, 0.5)'
-                }
-              },
-              axisLabel: {
-                textStyle: {
-                  color: 'rgb(246,246,246)',
-                  fontSize: 14
-                }
-              },
-              inverse: 'true', //排序
-              data: [
-                '广元',
-                '广安',
-                '南充',
-                '达州',
-                '巴中'
-              ]
+            // color:['rgb(195,211,234)','rgb(2,230,239)'],
+            legend: {
+              orient: 'vertical',
+              left: 'left'
             },
             series: [{
-              name: '同比增速',
-              type: 'bar',
-              barMaxWidth: '30%',
+              name: '川东北经济区排位',
+              type: 'map',
+              map: 'chuan_east_north',
+              left: '20%',
+              top: 20,
+              right: '20%',
+              bottom: 10,
+              selectedMode: 'single',
               label: {
                 normal: {
                   show: true,
-                  position: 'top',
-                  formatter: '{c}',
                   textStyle: {
-                    color: 'rgb(246,246,246)',
-                    fontSize: 14
+                    color: '#FFF',
+                    fontSize: 16
                   }
+                },
+                emphasis: {
+                  show: true
                 }
               },
               itemStyle: {
                 normal: {
-                  color: 'rgb(7,83,181)'
+                  areaColor: 'rgba(0, 120, 255, 0.8)',
+                  // color: 'rgb(195,211,234)',
+                  color: new echarts.graphic.RadialGradient(0, 0, 8, [{
+                    offset: 0,
+                    color: 'rgb(195,211,234)' // 0% 处的颜色
+                  }, {
+                    offset: 1,
+                    color: 'rgb(195,211,234)' // 0% 处的颜色
+                  }], false),
+                  borderColor: 'rgba(42,180,238,1)',
+                  borderType: 'solid',
                 }
               },
-              data: [42, 36, 35, 28, 45]
+              markPoint: {
+                symbol: 'pin',
+                symbolSize: 50
+              }
+
             }]
           };
 
@@ -458,7 +527,7 @@
               top: 'bottom',
               textStyle: {
                 color: 'rgb(240,240,240)',
-                fontWeight:'normal'
+                fontWeight: 'normal'
               }
             },
             series: [{
@@ -557,12 +626,12 @@
               top: 'bottom',
               textStyle: {
                 color: 'rgb(240,240,240)',
-                fontWeight:'normal'
+                fontWeight: 'normal'
               }
             },
             series: [{
               type: 'liquidFill',
-              data: [0.6],
+              data: [1.6],
               radius: '62%',
               outline: {
                 borderDistance: 0,
@@ -592,6 +661,135 @@
             }]
           };
 
+
+          setTimeout(function() {
+            chartInstance = echarts.init((element.find('div'))[0]);
+            chartInstance.clear();
+            chartInstance.resize();
+            chartInstance.setOption(option);
+          }, 600);
+
+          scope.onResize = function() {
+            if (chartInstance) {
+              chartInstance.clear();
+              chartInstance.resize();
+              chartInstance.setOption(option);
+            }
+          }
+
+          angular.element($window).bind('resize', function() {
+              scope.onResize();
+            })
+            // })
+        }
+      }
+    }
+  ]);
+
+  spot.directive('chartTargetRate', ['spotService', '$window',
+    function(spotService, $window) {
+      return {
+        restrict: 'ACE',
+        scope: {
+          targetrate: '='
+        },
+        template: "<div style='width:100%;height:100%'></div>",
+        link: function(scope, element, attrs) {
+          var chartInstance = null;
+          // if (!scope.targetrate || !scope.targetrate.url) {
+          //   return;
+          // }
+          // spotService.getDetail(scope.targetrate.url, {
+          //   picCode: scope.targetrate.picCode
+          // }).then(function(result) {
+          //   var opt = result.data;
+          //   if (!opt || !opt.series) {
+          //     return;
+          //   }
+          var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
+          var option = {
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow'
+              },
+              formatter: "{a} <br/>{b} : {c}"
+            },
+            grid: {
+              left: '9%',
+              right: '8%',
+              bottom: '8%',
+              top: '8%',
+              containLabel: true
+            },
+            xAxis: {
+              type: 'value',
+              name: '%',
+              nameLocation: 'end',
+              position: 'top',
+              axisTick: {
+                show: false
+              },
+              axisLabel: {
+                show: false
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                show: false
+              }
+            },
+            yAxis: {
+              type: 'category',
+              name: '',
+              nameLocation: 'start',
+              boundaryGap: true,
+              axisTick: {
+                show: false
+              },
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: 'rgba(0, 120, 255, 0.5)'
+                }
+              },
+              axisLabel: {
+                textStyle: {
+                  color: 'rgb(246,246,246)',
+                  fontSize: 14
+                }
+              },
+              inverse: 'true', //排序
+              data: [
+                '与2016年目标比',
+                '与 "十三五" 巴中目标比',
+                '与 "十三五" 川东北目标比'
+              ]
+            },
+            series: [{
+              name: '同比增速',
+              type: 'bar',
+              barMaxWidth: '50%',
+              label: {
+                normal: {
+                  show: true,
+                  position: 'right',
+                  formatter: '{c}%',
+                  textStyle: {
+                    color: 'rgb(246,246,246)',
+                    fontSize: 14
+                  }
+                }
+              },
+              itemStyle: {
+                normal: {
+                  color: 'rgb(7,83,181)'
+                }
+              },
+              data: [42, 36, 35]
+            }]
+          };
 
           setTimeout(function() {
             chartInstance = echarts.init((element.find('div'))[0]);
