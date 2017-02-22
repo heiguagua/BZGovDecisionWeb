@@ -25,6 +25,7 @@
           $scope.targetrate = null;
         }
         if(num == 2) {
+          $scope.month = 3;
           $scope.rankdata = 2;
           $scope.rankrate = 2;
           $scope.targetcrt = null;
@@ -34,8 +35,8 @@
         if( num == 3) {
           $scope.rankdata = null;
           $scope.rankrate = null;
-          $scope.targetcrt = 3;
-          $scope.targetgoal = 3;
+          $scope.targetcrt = 0.8;
+          $scope.targetgoal = 1.8;
           $scope.targetrate = 3;
         }
         $scope.isActive = num;
@@ -48,6 +49,7 @@
         $scope.menuactive = index;
       }
 
+      $scope.byMonth = true;
       $scope.menus = [{
         'id': 1,
         'name': 'GDP',
@@ -96,7 +98,46 @@
         "name": "1-4季度"
       }];
 
+      $scope.monthOptions = [{
+        'id': 1,
+        "name": "1月"
+      },{
+        'id': 2,
+        "name": "2月"
+      },{
+        'id': 3,
+        "name": "3月"
+      },{
+        'id': 4,
+        "name": "4月"
+      },{
+        'id': 5,
+        "name": "5月"
+      },{
+        'id': 6,
+        "name": "6月"
+      },{
+        'id': 7,
+        "name": "7月"
+      },{
+        'id': 8,
+        "name": "8月"
+      },{
+        'id': 9,
+        "name": "9月"
+      },{
+        'id': 10,
+        "name": "10月"
+      },{
+        'id': 11,
+        "name": "11月"
+      },{
+        'id': 12,
+        "name": "12月"
+      }];
+
       $scope.quarter = 3;
+      $scope.month = 1;
 
       $scope.datepick = {};
       $scope.datepick.format = 'yyyy';
@@ -127,20 +168,52 @@
       //
       // });
 
-      // 主要经济指标
-      // spotService.getspotData({
-      //   picCode: 5003
-      // }).then(function(result) {
-      //   vm.spotData = result.data;
-      //   $('.datalist').mCustomScrollbar();
-      // })
+      $scope.changed = function() {
+        // TODO send http request for data of current menu width time parameters
+        getTimeParams();
+        console.log($scope.time_params);
+      }
 
-      // spotService.getspotData({
-      //   picCode: 5007
-      // }).then(function(result) {
-      //   vm.spotDataDown = result.data;
-      //   $('.datalist').mCustomScrollbar();
-      // })
+      $scope.quarterChanged = function() {
+        // TODO send http request for data of current menu with time parameters
+        getTimeParams();
+        console.log($scope.time_params);
+      }
+
+      $scope.monthChanged = function() {
+        // TODO send http request for data of current menu with time paramters
+        getTimeParams();
+        console.log($scope.time_params);
+      }
+
+      function getTimeParams() {
+        $scope.time_params = {};
+        $scope.time_params.year = spotService.getDateFormat($scope.datepick.model, 'yyyy');
+        if($scope.byMonth) {
+          $scope.time_params.month = $scope.month;
+        }
+        else {
+          $scope.time_params.quarter = $scope.quarter;
+        }
+      }
+
+      Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+          "M+": this.getMonth() + 1, //月份
+          "d+": this.getDate(), //日
+          "h+": this.getHours(), //小时
+          "m+": this.getMinutes(), //分
+          "s+": this.getSeconds(), //秒
+          "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+          "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt))
+          fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+          if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+      }
 
     }
   ]);
@@ -228,7 +301,7 @@
             },
             xAxis: {
               type: 'value',
-              name: '%',
+
               nameLocation: 'end',
               position: 'top',
               axisTick: {
@@ -341,90 +414,90 @@
           //     return;
           //   }
           var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
-          // var option = {
-          //   tooltip: {
-          //     trigger: 'axis',
-          //     axisPointer: {
-          //       type: 'shadow'
-          //     },
-          //     formatter: "{a} <br/>{b} : {c}"
-          //   },
-          //   grid: {
-          //     left: '12%',
-          //     right: '12%',
-          //     bottom: '12%',
-          //     top: '12%',
-          //     containLabel: true
-          //   },
-          //   yAxis: {
-          //     type: 'value',
-          //     axisTick: {
-          //       show: false
-          //     },
-          //     axisLabel: {
-          //       show: false
-          //     },
-          //     axisLine: {
-          //       show: false
-          //     },
-          //     splitLine: {
-          //       show: false
-          //     }
-          //   },
-          //   xAxis: {
-          //     type: '',
-          //     name: '',
-          //     nameLocation: 'start',
-          //     boundaryGap: true,
-          //     axisTick: {
-          //       show: false
-          //     },
-          //     axisLine: {
-          //       show: true,
-          //       lineStyle: {
-          //         color: 'rgba(0, 120, 255, 0.5)'
-          //       }
-          //     },
-          //     axisLabel: {
-          //       textStyle: {
-          //         color: 'rgb(246,246,246)',
-          //         fontSize: 14
-          //       }
-          //     },
-          //     inverse: 'true', //排序
-          //     data: [
-          //       '广元',
-          //       '广安',
-          //       '南充',
-          //       '达州',
-          //       '巴中'
-          //     ]
-          //   },
-          //   series: [{
-          //     name: '同比增速',
-          //     type: 'bar',
-          //     barMaxWidth: '30%',
-          //     label: {
-          //       normal: {
-          //         show: true,
-          //         position: 'top',
-          //         formatter: '{c}',
-          //         textStyle: {
-          //           color: 'rgb(246,246,246)',
-          //           fontSize: 14
-          //         }
-          //       }
-          //     },
-          //     itemStyle: {
-          //       normal: {
-          //         color: 'rgb(7,83,181)'
-          //       }
-          //     },
-          //     data: [42, 36, 35, 28, 45]
-          //   }]
-          // };
-
           var option = {
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow'
+              },
+              formatter: "{a} <br/>{b} : {c}"
+            },
+            grid: {
+              left: '12%',
+              right: '12%',
+              bottom: '12%',
+              top: '12%',
+              containLabel: true
+            },
+            yAxis: {
+              type: 'value',
+              axisTick: {
+                show: false
+              },
+              axisLabel: {
+                show: false
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                show: false
+              }
+            },
+            xAxis: {
+              type: '',
+              name: '',
+              nameLocation: 'start',
+              boundaryGap: true,
+              axisTick: {
+                show: false
+              },
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: 'rgba(0, 120, 255, 0.5)'
+                }
+              },
+              axisLabel: {
+                textStyle: {
+                  color: 'rgb(246,246,246)',
+                  fontSize: 14
+                }
+              },
+              inverse: 'true', //排序
+              data: [
+                '广元',
+                '广安',
+                '南充',
+                '达州',
+                '巴中'
+              ]
+            },
+            series: [{
+              name: '同比增速',
+              type: 'bar',
+              barMaxWidth: '30%',
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top',
+                  formatter: '{c}',
+                  textStyle: {
+                    color: 'rgb(246,246,246)',
+                    fontSize: 14
+                  }
+                }
+              },
+              itemStyle: {
+                normal: {
+                  color: 'rgb(7,83,181)'
+                }
+              },
+              data: [42, 36, 35, 28, 45]
+            }]
+          };
+
+          var optionMap = {
             // color:['rgb(195,211,234)','rgb(2,230,239)'],
             legend: {
               orient: 'vertical',
@@ -453,7 +526,7 @@
               },
               itemStyle: {
                 normal: {
-                  areaColor: 'rgba(0, 120, 255, 0.8)',
+                  areaColor: 'rgba(0, 120, 255, 0.5)',
                   // color: 'rgb(195,211,234)',
                   color: new echarts.graphic.RadialGradient(0, 0, 8, [{
                     offset: 0,
@@ -464,6 +537,7 @@
                   }], false),
                   borderColor: 'rgba(42,180,238,1)',
                   borderType: 'solid',
+                  borderWidth:1
                 }
               },
               markPoint: {
@@ -478,7 +552,12 @@
             chartInstance1 = echarts.init((element.find('div'))[0]);
             chartInstance1.clear();
             chartInstance1.resize();
-            chartInstance1.setOption(option);
+            if(scope.rankdata.data && scope.rankdata.data != 'undefined') {
+              chartInstance1.setOption(option);
+            }
+            else{
+              chartInstance1.setOption(optionMap);
+            }
           }, 600);
 
           scope.onResize2 = function() {
@@ -498,84 +577,190 @@
     }
   ]);
 
-  spot.directive('chartTargetCrt', ['spotService', '$window',
+  spot.directive('chartRankRate', ['spotService', '$window',
     function(spotService, $window) {
       return {
         restrict: 'ACE',
         scope: {
-          targetcrtdata: '='
+          rankrate: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-          var chartInstance = null;
-          // if (!scope.targetcrtdata || !scope.targetcrtdata.url) {
+          var chartInstance1 = null;
+          // if (!scope.rankrate || !scope.rankrate.url) {
           //   return;
           // }
-          // spotService.getDetail(scope.targetcrtdata.url, {
-          //   picCode: scope.targetcrtdata.picCode
+          // spotService.getDetail(scope.rankrate.url, {
+          //   picCode: scope.rankrate.picCode
           // }).then(function(result) {
           //   var opt = result.data;
           //   if (!opt || !opt.series) {
           //     return;
           //   }
           var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
-
           var option = {
-            title: {
-              text: '2016年：530亿元',
-              left: 'center',
-              top: 'bottom',
-              textStyle: {
-                color: 'rgb(240,240,240)',
-                fontWeight: 'normal'
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow'
+              },
+              formatter: "{a} <br/>{b} : {c}"
+            },
+            grid: {
+              left: '12%',
+              right: '12%',
+              bottom: '12%',
+              top: '12%',
+              containLabel: true
+            },
+            yAxis: {
+              type: 'value',
+              axisTick: {
+                show: false
+              },
+              axisLabel: {
+                show: false
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                show: false
               }
             },
-            series: [{
-              type: 'liquidFill',
-              data: [0.6],
-              radius: '62%',
-              outline: {
-                borderDistance: 0,
-                itemStyle: {
-                  borderWidth: 5,
-                  borderColor: '#156ACF',
+            xAxis: {
+              type: '',
+              name: '',
+              nameLocation: 'start',
+              boundaryGap: true,
+              axisTick: {
+                show: false
+              },
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: 'rgba(0, 120, 255, 0.5)'
                 }
               },
+              axisLabel: {
+                textStyle: {
+                  color: 'rgb(246,246,246)',
+                  fontSize: 14
+                }
+              },
+              inverse: 'true', //排序
+              data: [
+                '广元',
+                '广安',
+                '南充',
+                '达州',
+                '巴中'
+              ]
+            },
+            series: [{
+              name: '同比增速',
+              type: 'bar',
+              barMaxWidth: '30%',
               label: {
                 normal: {
-                  show: false,
+                  show: true,
+                  position: 'top',
+                  formatter: '{c}',
                   textStyle: {
-                    fontSize: 30
+                    color: 'rgb(246,246,246)',
+                    fontSize: 14
                   }
                 }
-              }
+              },
+              itemStyle: {
+                normal: {
+                  color: 'rgb(7,83,181)'
+                }
+              },
+              data: [42, 36, 35, 28, 45]
             }]
           };
 
+          var optionMap = {
+            // color:['rgb(195,211,234)','rgb(2,230,239)'],
+            legend: {
+              orient: 'vertical',
+              left: 'left'
+            },
+            series: [{
+              name: '川东北经济区排位',
+              type: 'map',
+              map: 'bz_single',
+              left: '20%',
+              top: 20,
+              right: '20%',
+              bottom: 10,
+              selectedMode: 'single',
+              label: {
+                normal: {
+                  show: true,
+                  textStyle: {
+                    color: '#FFF',
+                    fontSize: 16
+                  }
+                },
+                emphasis: {
+                  show: true
+                }
+              },
+              itemStyle: {
+                normal: {
+                  areaColor: 'rgba(0, 120, 255, 0.5)',
+                  // color: 'rgb(195,211,234)',
+                  color: new echarts.graphic.RadialGradient(0, 0, 8, [{
+                    offset: 0,
+                    color: 'rgb(195,211,234)' // 0% 处的颜色
+                  }, {
+                    offset: 1,
+                    color: 'rgb(195,211,234)' // 0% 处的颜色
+                  }], false),
+                  borderColor: 'rgba(42,180,238,1)',
+                  borderType: 'solid',
+                  borderWidth:1
+                }
+              },
+              markPoint: {
+                symbol: 'pin',
+                symbolSize: 50
+              }
+
+            }]
+          };
 
           setTimeout(function() {
-            chartInstance = echarts.init((element.find('div'))[0]);
-            chartInstance.clear();
-            chartInstance.resize();
-            chartInstance.setOption(option);
+            chartInstance1 = echarts.init((element.find('div'))[0]);
+            chartInstance1.clear();
+            chartInstance1.resize();
+            if(scope.rankrate.data) {
+              chartInstance1.setOption(option);
+            }
+            else{
+              chartInstance1.setOption(optionMap);
+            }
           }, 600);
 
-          scope.onResize3 = function() {
-            if (chartInstance) {
-              chartInstance.clear();
-              chartInstance.resize();
-              chartInstance.setOption(option);
+          scope.onResize2 = function() {
+            if (chartInstance1) {
+              chartInstance1.clear();
+              chartInstance1.resize();
+              chartInstance1.setOption(option);
             }
           }
 
           angular.element($window).bind('resize', function() {
-              scope.onResize3();
+              scope.onResize2();
             })
             // })
         }
       }
     }
   ]);
+
 
   spot.directive('chartTargetGoal', ['spotService', '$window',
     function(spotService, $window) {
@@ -587,6 +772,7 @@
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance = null;
+          console.log(scope.targetgoaldata);
           // if (!scope.targetgoaldata || !scope.targetgoaldata.url) {
           //   return;
           // }
@@ -598,11 +784,13 @@
           //     return;
           //   }
           var colors = ['rgb(0,255,161)', 'rgb(245,225,67)', 'rgb(252,128,20)', 'rgba(0, 120, 215, 0.6)', 'rgba(0, 120, 215, 0.06)', 'rgb(3,204,215)'];
-          var percent = 0.6;
+          var percent = scope.targetgoaldata;
+
+
 
           function getData() {
             return [{
-              value: percent,
+              value: percent-Math.floor(percent),
               itemStyle: {
                 normal: {
                   color: '#f2c967',
@@ -611,7 +799,7 @@
                 }
               }
             }, {
-              value: 1 - percent,
+              value: 1 - (percent-Math.floor(percent)),
               itemStyle: {
                 normal: {
                   color: 'transparent'
@@ -631,7 +819,7 @@
             },
             series: [{
               type: 'liquidFill',
-              data: [1.6],
+              data: [percent],
               radius: '62%',
               outline: {
                 borderDistance: 0,
@@ -648,8 +836,11 @@
                   }
                 }
               }
-            }, {
-              name: 'main',
+            } ]
+          };
+          if(percent>1) {
+            option.series[1] = {
+              name: '超额',
               type: 'pie',
               radius: ['64%', '68%'],
               label: {
@@ -658,8 +849,8 @@
                 }
               },
               data: getData()
-            }]
-          };
+            }
+          }
 
 
           setTimeout(function() {
@@ -691,16 +882,16 @@
       return {
         restrict: 'ACE',
         scope: {
-          targetrate: '='
+          targetratedata: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
           var chartInstance = null;
-          // if (!scope.targetrate || !scope.targetrate.url) {
+          // if (!scope.targetratedata || !scope.targetratedata.url) {
           //   return;
           // }
-          // spotService.getDetail(scope.targetrate.url, {
-          //   picCode: scope.targetrate.picCode
+          // spotService.getDetail(scope.targetratedata.url, {
+          //   picCode: scope.targetratedata.picCode
           // }).then(function(result) {
           //   var opt = result.data;
           //   if (!opt || !opt.series) {
@@ -724,7 +915,7 @@
             },
             xAxis: {
               type: 'value',
-              name: '%',
+
               nameLocation: 'end',
               position: 'top',
               axisTick: {
