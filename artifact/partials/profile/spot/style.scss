@@ -130,7 +130,7 @@
           .uib-datepicker-popup.dropdown-menu {
             background-color: rgba(9, 90, 187, 0.86);
             table.uib-yearpicker {
-              outline:none;
+              outline: none;
               td,
               th {
                 border: 1px solid;
@@ -139,7 +139,7 @@
             }
             .uib-datepicker .btn-default {
               background: transparent;
-              border:none;
+              border: none;
               color: #cdd0d7;
             }
           }
@@ -318,10 +318,14 @@
       }
       .s-from {
         padding: 1rem 0;
-        p {
+        ul {
           color: #a4b3c8;
           font-size: 0.7rem;
-          padding: 0 20px;
+          padding: 0 30px;
+          li {
+            float: left;
+            padding-right: 46px;
+          }
         }
       }
     }
