@@ -33,6 +33,7 @@
       @include mobilescreen {
         @include flex-flow(row);
         margin-bottom: 15px;
+        min-height: 420px;
       }
     }
     .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
@@ -76,7 +77,7 @@
           }
           @include mobilescreen {
             padding: 6px 4px;
-            font-size:0.8rem;
+            font-size: 0.8rem;
           }
           &:first-child {
             text-align: left;
@@ -102,7 +103,7 @@
             }
             @include mobilescreen {
               padding: 6px 4px;
-              font-size:0.8rem;
+              font-size: 0.8rem;
             }
             &:first-child {
               text-align: left;
