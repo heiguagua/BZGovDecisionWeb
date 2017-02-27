@@ -9,9 +9,12 @@
       var vm = this;
       homeService.getMenus({parentId:"0"}).then(function(result) {
         vm.menus = result.data;
-        _.remove(vm.menus,function(item){
-          return item.type == '2' || item.type == '3';
+        _.remove(vm.menus, function(item) {
+            return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' ||  item.name == '经济形势分析';
         });
+        // _.remove(vm.menus,function(item){
+        //   return item.type == '2' || item.type == '3';
+        // });
       });
 
     }

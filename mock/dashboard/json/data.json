@@ -1,1 +1,71 @@
-"hello"
+{
+  "series": [{
+    "level": "0",
+    "yAxisIndex": "0",
+    "name": "今年目标",
+    "data": [{
+      "unit": "亿元",
+      "name": "总产值",
+      "value": "544.66",
+      "floatValue": "",
+      "highLight": "1"
+    }, {
+      "unit": "亿元",
+      "name": "目标",
+      "value": "",
+      "floatValue": "",
+      "highLight": "0"
+    }, {
+      "unit": "年",
+      "name": "查询时间",
+      "value": "2016",
+      "floatValue": "",
+      "highLight": ""
+    }],
+    "type": "pie"
+  }, {
+    "level": "",
+    "yAxisIndex": "",
+    "name": "未来五年目标",
+    "data": [{
+      "unit": "",
+      "name": "总产值",
+      "value": "",
+      "floatValue": "",
+      "highLight": ""
+    }, {
+      "unit": "",
+      "name": "目标",
+      "value": "",
+      "floatValue": "",
+      "highLight": ""
+    }, {
+      "unit": "年",
+      "name": "查询时间",
+      "value": "2020",
+      "floatValue": "",
+      "highLight": ""
+    }, {
+      "unit": "亿元",
+      "name": "总产值",
+      "value": "544.66",
+      "floatValue": "",
+      "highLight": "1"
+    }],
+    "type": "pie"
+  }],
+  "init_query_time": "2016-12",
+  "dataItems": [],
+  "need_group": "0",
+  "code": "10131",
+  "table_type": "same",
+  "table_url": "",
+  "title": "巴中市地区生产总值(GDP)",
+  "x_data": ["总产值", "目标"],
+  "dep_name": "目督办",
+  "legend": ["今年目标", "未来五年目标"],
+  "auto_count": "percent",
+  "max_and_min": null,
+  "y_name": ["亿元"],
+  "time_scope": "quarter"
+}

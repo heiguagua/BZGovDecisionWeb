@@ -2,7 +2,7 @@
   <div class='outer-line'>
     <div class='inner-line'>
       <div class='header' >
-        <h3 ui-sref='main({mid:profile.menus[2].id})'></h3>
+        <h3 ui-sref='main({mid:profile.menus[3].id})'></h3>
         <a class='toDetail' ui-sref='main({mid:currentMenu})' ng-show=currentMenu>查看详情</a>
       </div>
       <div class='main'>
@@ -16,9 +16,9 @@
               <a ng-if='menu.profile_sref' ui-sref='{{menu.profile_sref}}({proid:menu.id})' ui-sref-opts="{reload:menu.profile_sref}" ng-click='profile.currentMenu(menu)'>{{menu.name}}</a>
               <a ng-if='!menu.profile_sref' >{{menu.name}}</a>
             </li>
-            <li ui-sref-active>
+            <!-- <li ui-sref-active>
               <a ui-sref='profile.spot' ui-sref-opts='{reload:profile.spot}'>经济形势分析</a>
-            </li>
+            </li> -->
           </ul>
         </nav>
         <div ui-view class='wrap'></div>

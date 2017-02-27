@@ -4,8 +4,8 @@
   profile.$inject = ['$location'];
   /** Controller */
   profile.controller('profileController', [
-    '$scope', 'profileService', '$state', '$stateParams','$rootScope',
-    function($scope, profileService, $state, $stateParams,$rootScope) {
+    '$scope', 'profileService', '$state', '$stateParams', '$rootScope',
+    function($scope, profileService, $state, $stateParams, $rootScope) {
       var vm = this;
       $rootScope.showMenu = true;
       profileService.getMenus({
@@ -18,13 +18,16 @@
           var mname = item.name;
           switch (mname) {
             case '首页':
-            item.profile_sref = 'profile.index';
-            break;
+              item.profile_sref = 'profile.index';
+              break;
             case '经济概况':
               item.profile_sref = 'profile.menu';
               break;
-            case '经济形势分析':
+            case '经济详情':
               item.profile_sref = 'profile.eco';
+              break;
+            case '经济形势分析':
+              item.profile_sref = 'profile.spot';
               break;
             case '工业管理':
               item.profile_sref = 'profile.industry';
@@ -49,7 +52,9 @@
           $('.profile').css({
             'background': 'url(assets/images/bg_profile.png)'
           });
-          $state.go('profile.index',{proid: vm.menus[0].id});
+          $state.go('profile.index', {
+            proid: vm.menus[0].id
+          });
           // if()
           // if($stateParams.proid == 8) {
           //   $state.go('profile.menu');
