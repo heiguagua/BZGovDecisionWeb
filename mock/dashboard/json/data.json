@@ -2,70 +2,57 @@
   "series": [{
     "level": "0",
     "yAxisIndex": "0",
-    "name": "今年目标",
+    "name": "总产值同比增速",
     "data": [{
-      "unit": "亿元",
-      "name": "总产值",
-      "value": "544.66",
-      "floatValue": "",
-      "highLight": "1"
-    }, {
-      "unit": "亿元",
-      "name": "目标",
-      "value": "",
+      "unit": "%",
+      "name": "广元",
+      "value": "8.00",
       "floatValue": "",
       "highLight": "0"
     }, {
-      "unit": "年",
-      "name": "查询时间",
-      "value": "2016",
+      "unit": "%",
+      "name": "广安",
+      "value": "7.90",
       "floatValue": "",
-      "highLight": ""
-    }],
-    "type": "pie"
-  }, {
-    "level": "",
-    "yAxisIndex": "",
-    "name": "未来五年目标",
-    "data": [{
-      "unit": "",
-      "name": "总产值",
-      "value": "",
-      "floatValue": "",
-      "highLight": ""
+      "highLight": "0"
     }, {
-      "unit": "",
-      "name": "目标",
-      "value": "",
+      "unit": "%",
+      "name": "南充",
+      "value": "7.80",
       "floatValue": "",
-      "highLight": ""
+      "highLight": "0"
     }, {
-      "unit": "年",
-      "name": "查询时间",
-      "value": "2020",
+      "unit": "%",
+      "name": "达州",
+      "value": "7.50",
       "floatValue": "",
-      "highLight": ""
+      "highLight": "0"
     }, {
-      "unit": "亿元",
-      "name": "总产值",
-      "value": "544.66",
+      "unit": "%",
+      "name": "巴中",
+      "value": "7.80",
       "floatValue": "",
       "highLight": "1"
     }],
-    "type": "pie"
+    "type": "bar"
   }],
   "init_query_time": "2016-12",
   "dataItems": [],
   "need_group": "0",
-  "code": "10131",
-  "table_type": "same",
-  "table_url": "",
+  "code": "10122",
+  "table_type": "different",
+  "table_url": "/identity/table",
   "title": "巴中市地区生产总值(GDP)",
-  "x_data": ["总产值", "目标"],
-  "dep_name": "目督办",
-  "legend": ["今年目标", "未来五年目标"],
-  "auto_count": "percent",
-  "max_and_min": null,
-  "y_name": ["亿元"],
+  "x_data": ["广元", "广安", "南充", "达州", "巴中"],
+  "dep_name": "统计局",
+  "legend": ["总产值同比增速"],
+  "auto_count": "ranking",
+  "max_and_min": {
+    "0": {
+      "minValue": "6.75",
+      "maxValue": "8.8"
+    }
+  },
+  "y_name": ["%"],
   "time_scope": "quarter"
 }

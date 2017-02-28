@@ -18,9 +18,9 @@
 
       $scope.showChart = function(num, id) {
         $scope.isActive = num;
-
         spotService.getContent({
-          menuId: id
+          menuId: id,
+          groupId: $scope.group
         }).then(function(data) {
           $scope.commondata = {};
 
@@ -43,22 +43,58 @@
       }
 
       $scope.menuactive = 0;
-      $scope.tabMenu = function(index, id) {
+      $scope.tabMenu = function(index, id,type) {
         $scope.menuactive = index;
-        spotService.getMenus({
-          parentId: id
-        }).then(function(res) {
-          $scope.submenus = _.sortBy(res.data, ['id']);
+        $scope.isActive = 1;
+        if(type == 6) {// 包含其他分类指标
+          $scope.hasGroup = true;
+          spotService.getGroups({
+            menuId: id
+          }).then(function(result) {
+            $scope.groupOptions = _.sortBy(result.data, ['groupId']);;
+            $scope.group = $scope.groupOptions[0].groupId;
+            spotService.getMenus({
+              parentId: id
+            }).then(function(res) {
+              $scope.submenus = _.sortBy(res.data, ['id']);
+              spotService.getContent({
+                menuId: $scope.submenus[0].id,
+                groupId: $scope.groupOptions[0].groupId
+              }).then(function(data) {
+                $scope.commondata = {};
+                $scope.increasedata = _.sortBy(data.data, ['picCode']);
+              })
+            })
+          })
+        }
+        else if(type == 5) {// 物价，不包含三级菜单，直接请求数据
+          $scope.submenus = null;
           spotService.getContent({
-            menuId: $scope.submenus[0].id
+            menuId: id
           }).then(function(data) {
             $scope.commondata = {};
             $scope.increasedata = _.sortBy(data.data, ['picCode']);
           })
-        })
+        }
+        else {
+          $scope.hasGroup = false;
+          $scope.group = null;
+          spotService.getMenus({
+            parentId: id
+          }).then(function(res) {
+            $scope.submenus = _.sortBy(res.data, ['id']);
+            spotService.getContent({
+              menuId: $scope.submenus[0].id
+            }).then(function(data) {
+              $scope.commondata = {};
+              $scope.increasedata = _.sortBy(data.data, ['picCode']);
+            })
+          })
+        }
+
       }
 
-      $scope.byMonth = true;
+
 
       $scope.quarterOptions = [{
         'id': 3,
@@ -111,20 +147,19 @@
         'id': 12,
         "name": "12月"
       }];
+      $scope.commondata = {};
 
-      $scope.quarter = 3;
-      $scope.month = 1;
 
-      $scope.datepick = {};
-      $scope.datepick.format = 'yyyy';
-      $scope.datepick.model = new Date();
-      $scope.datepick.dateOptions = {};
-      $scope.datepick.dateOptions.minMode = 'year';
-      $scope.datepick.dateOptions.datepickerMode = 'year';
+      $scope.dateOptions = {};
+      $scope.dateOptions.format = 'yyyy';
+      $scope.dateOptions.minMode = 'year';
+      $scope.dateOptions.datepickerMode = 'year';
       $scope.altInputFormats = ['M!/d!/yyyy'];
 
+      $scope.commondata.byMonth = false;
+
       $scope.open = function() {
-        $scope.datepick.opened = true;
+        $scope.dateOptions.opened = true;
       };
 
       $scope.spotlist = [];
@@ -141,7 +176,6 @@
           spotService.getContent({
             menuId: $scope.submenus[0].id
           }).then(function(data) {
-            $scope.commondata = {};
             $scope.increasedata = _.sortBy(data.data, ['picCode']);
           })
         })
@@ -163,13 +197,17 @@
         getTimeParams();
       }
 
+      $scope.groupChanged = function() {
+        $scope.showChart($scope.isActive,$scope.submenus[$scope.isActive-1].id);
+      }
+
       function getTimeParams() {
         $scope.time_params = {};
-        $scope.time_params.year = spotService.getDateFormat($scope.datepick.model, 'yyyy');
-        if ($scope.byMonth) {
-          $scope.time_params.month = $scope.month;
+        $scope.time_params.year = spotService.getDateFormat($scope.commondata.model, 'yyyy');
+        if ($scope.commondata.byMonth) {
+          $scope.time_params.month = $scope.commondata.month;
         } else {
-          $scope.time_params.quarter = $scope.quarter;
+          $scope.time_params.quarter = $scope.commondata.quarter;
         }
       }
 
@@ -201,7 +239,8 @@
         getMenus: getMenus,
         getDetail: getDetail,
         getContent: getContent,
-        getDateFormat: getDateFormat
+        getDateFormat: getDateFormat,
+        getGroups: getGroups
       }
 
       function getMenus(params) {
@@ -228,9 +267,16 @@
         )
       }
 
+      function getGroups(params) {
+        return $http.get(
+          URL + '/main/showGroup', {
+            params: params
+          }
+        )
+      }
       function getDateFormat(parseDate, format) {
         var date = angular.copy(parseDate);
-        if (angular.isDate(date) && !isNaN(date.getTime())) {
+        if (date && angular.isDate(date) && !isNaN(date.getTime())) {
           return date.Format(format);
         } else {
           return '';
@@ -249,163 +295,285 @@
         },
         template: "<div style='width:100%;height:100%'></div>",
         link: function(scope, element, attrs) {
-
-          scope.$watch('increasetotal', function(newValue, oldValue) {
-            if (newValue === oldValue || !newValue || !oldValue) {
-              return;
-            } 
-          });
-
-
           var chartInstance = null;
           if (!scope.increasetotal || !scope.increasetotal.url) {
             return;
           }
-          spotService.getDetail(scope.increasetotal.url, {
-            picCode: scope.increasetotal.picCode
-          }).then(function(result) {
-            var opt = result.data;
-            if (!opt || !opt.series) {
+
+          scope.$watch('increasetotal', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
+            redraw();
+          }, true);
 
-            var resData = opt.series[0].data;
-            var data = [];
-            _.forEach(resData, function(item) {
-              var obj = {};
-              obj.value = item.value;
-              if (item.highLight == '1') {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(9,146,76)',
-                    borderColor: 'rgb(7,218,63)',
-                    borderWidth: 1
-                  }
-                }
-                scope.commoninfo.totalAmount = item.value;
+          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
 
-              } else {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(7,83,181)',
-                    borderColor: 'rgb(0,119,255)',
-                    borderWidth: 1
-                  }
-                }
-                scope.commoninfo.totalLastAmount = item.value;
+          // init
+          redraw();
+
+          function redraw() {
+            //  set time params;
+            var timeParam = null;
+            if (scope.commoninfo && scope.commoninfo.model) {
+              timeParam = angular.copy(scope.commoninfo.model);
+              if (scope.commoninfo.time_scope == 'quarter') {
+                timeParam.setMonth(scope.commoninfo.quarter - 1);
+              } else if (scope.commoninfo.time_scope == 'month') {
+                timeParam.setMonth(scope.commoninfo.month - 1);
               }
-              scope.commoninfo.title = opt.title;
-              scope.commoninfo.totalTitle = '总产值';
-              scope.commoninfo.totalUnit = opt.y_name[0];
-              scope.commoninfo.floatNum = (scope.commoninfo.totalAmount - scope.commoninfo.totalLastAmount).toFixed(2);
-              if (scope.commoninfo.floatNum >= 0) {
-                scope.commoninfo.floatDesc = '增加';
-              } else {
-                scope.commoninfo.floatDesc = '减少';
+            }
+            scope.commoninfo.promiseIncrease = spotService.getDetail(scope.increasetotal.url, {
+              queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
+              picCode: scope.increasetotal.picCode
+            }).then(function(result) {
+              var opt = result.data;
+              if (!opt || !opt.series) {
+                return;
               }
-              data.push(obj);
-            });
-            var option = {
-              tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                  type: 'shadow'
-                },
-                formatter: "{a} <br/>{b} : {c}"
-              },
-              grid: {
-                left: '9%',
-                right: '8%',
-                bottom: '25%',
-                top: '20%',
-                containLabel: true
-              },
-              xAxis: {
-                type: 'value',
-
-                nameLocation: 'end',
-                position: 'top',
-                axisTick: {
-                  show: false
-                },
-                axisLabel: {
-                  show: false
-                },
-                axisLine: {
-                  show: false
-                },
-                splitLine: {
-                  show: false
+              scope.increasetotal.active = true; // 为了再次点击菜单时能触发increasetotal change事件
+              if (opt.time_scope == 'quarter') {
+                scope.commoninfo.byMonth = false;
+              } else {
+                scope.commoninfo.byMonth = true;
+              }
+              if (!scope.commoninfo.model && opt.init_query_time != '') {
+                scope.commoninfo.time_scope = opt.time_scope;
+                scope.commoninfo.model = new Date(opt.init_query_time);
+                var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-') + 1);
+                if (opt.time_scope == 'quarter') {
+                  scope.commoninfo.byMonth = false;
+                  scope.commoninfo.quarter = Number(quarterMonth);
+                } else {
+                  scope.commoninfo.byMonth = true;
+                  scope.commoninfo.month = Number(quarterMonth);
                 }
-              },
-              yAxis: {
-                type: 'category',
-                name: '',
-                nameLocation: 'start',
-                boundaryGap: true,
-                axisTick: {
-                  show: false
+              }
+              console.log(scope.commoninfo.month);
+              var resData = opt.series[0].data;
+              var data = [];
+              var hasData = false;
+              _.forEach(resData, function(item) {
+                var obj = {};
+                obj.value = item.value;
+                if (item.highLight == '1') {
+                  obj.itemStyle = {
+                    normal: {
+                      color: 'rgb(9,146,76)',
+                      borderColor: 'rgb(7,218,63)',
+                      borderWidth: 1
+                    }
+                  }
+                  if(item.value != '') {
+                    hasData = true;
+                  }
+                  scope.commoninfo.totalAmount = item.value;
+
+                } else {
+                  obj.itemStyle = {
+                    normal: {
+                      color: 'rgb(7,83,181)',
+                      borderColor: 'rgb(0,119,255)',
+                      borderWidth: 1
+                    }
+                  }
+                  scope.commoninfo.totalLastAmount = item.value;
+                }
+                scope.commoninfo.title = opt.title;
+                scope.commoninfo.totalTitle = '总产值';
+                scope.commoninfo.totalUnit = opt.y_name[0];
+                scope.commoninfo.floatNum = (scope.commoninfo.totalAmount - scope.commoninfo.totalLastAmount).toFixed(2);
+                if (scope.commoninfo.floatNum >= 0) {
+                  scope.commoninfo.floatDesc = '增加';
+                } else {
+                  scope.commoninfo.floatDesc = '减少';
+                }
+                data.push(obj);
+              });
+              scope.commoninfo.othertotal = _.filter(resData, function(o) {
+                return o.highLight != '1';
+              })
+              var option = {
+                tooltip: {
+                  trigger: 'axis',
+                  axisPointer: {
+                    type: 'shadow'
+                  },
+                  formatter: "{a} <br/>{b} : {c}" + opt.y_name[0]
                 },
-                axisLine: {
-                  show: true,
-                  lineStyle: {
-                    color: 'rgba(0, 120, 255, 0.5)'
+                grid: {
+                  left: '9%',
+                  right: '8%',
+                  bottom: '8%',
+                  top: '8%',
+                  containLabel: true
+                },
+                xAxis: {
+                  type: 'value',
+
+                  nameLocation: 'end',
+                  position: 'top',
+                  axisTick: {
+                    show: false
+                  },
+                  axisLabel: {
+                    show: false
+                  },
+                  axisLine: {
+                    show: false
+                  },
+                  splitLine: {
+                    show: false
                   }
                 },
-                axisLabel: {
-                  textStyle: {
-                    color: 'rgb(246,246,246)',
-                    fontSize: 14
-                  }
-                },
-                inverse: 'false', //排序
-                data: opt.x_data
-              },
-              series: [{
-                name: opt.series[0].name,
-                type: 'bar',
-                barMaxWidth: '40%',
-                label: {
-                  normal: {
+                yAxis: {
+                  type: 'category',
+                  name: '',
+                  nameLocation: 'start',
+                  boundaryGap: true,
+                  axisTick: {
+                    show: false
+                  },
+                  axisLine: {
                     show: true,
-                    position: 'right',
-                    formatter: '{c}',
+                    lineStyle: {
+                      color: 'rgba(0, 120, 255, 0.5)'
+                    }
+                  },
+                  axisLabel: {
                     textStyle: {
                       color: 'rgb(246,246,246)',
                       fontSize: 14
                     }
-                  }
+                  },
+                  inverse: 'false', //排序
+                  data: opt.x_data
                 },
-                itemStyle: {
-                  normal: {
-                    color: 'rgb(7,83,181)',
-                    borderColor: 'rgb(0,119,255)',
-                    borderWidth: 1
-                  }
+                series: [{
+                  name: opt.series[0].name,
+                  type: 'bar',
+                  barMaxWidth: '40%',
+                  label: {
+                    normal: {
+                      show: true,
+                      position: 'right',
+                      formatter: '{c}',
+                      textStyle: {
+                        color: 'rgb(246,246,246)',
+                        fontSize: 14
+                      }
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      color: 'rgb(7,83,181)',
+                      borderColor: 'rgb(0,119,255)',
+                      borderWidth: 1
+                    }
+                  },
+                  data: data
+                }]
+              };
+
+              var optionMap = {
+                // color:['rgb(195,211,234)','rgb(2,230,239)'],
+                legend: {
+                  orient: 'vertical',
+                  left: 'left'
                 },
-                data: data
-              }]
-            };
+                series: [{
+                  name: '川东北经济区排位',
+                  type: 'map',
+                  map: 'chuan_east_north',
+                  left: '20%',
+                  top: 20,
+                  right: '20%',
+                  bottom: 10,
+                  selectedMode: 'single',
+                  label: {
+                    normal: {
+                      show: true,
+                      textStyle: {
+                        color: '#FFF',
+                        fontSize: 16
+                      }
+                    },
+                    emphasis: {
+                      show: true
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      areaColor: 'rgba(0, 120, 255, 0.5)',
+                      // color: 'rgb(195,211,234)',
+                      color: new echarts.graphic.RadialGradient(0, 0, 8, [{
+                        offset: 0,
+                        color: 'rgb(195,211,234)' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: 'rgb(195,211,234)' // 0% 处的颜色
+                      }], false),
+                      borderColor: 'rgba(42,180,238,1)',
+                      borderType: 'solid',
+                      borderWidth: 1
+                    }
+                  },
+                  markPoint: {
+                    symbol: 'pin',
+                    symbolSize: 50
+                  }
 
-            setTimeout(function() {
-              chartInstance = echarts.init((element.find('div'))[0]);
-              chartInstance.clear();
-              chartInstance.resize();
-              chartInstance.setOption(option);
-            }, 600);
+                }]
+              };
 
-            scope.onResize = function() {
-              if (chartInstance) {
+              setTimeout(function() {
+                chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
-                chartInstance.setOption(option);
-              }
-            }
+                if(hasData) {
+                  chartInstance.setOption(option);
+                }
+                else {
+                  chartInstance.setOption(optionMap);
+                }
+              }, 600);
 
-            angular.element($window).bind('resize', function() {
-              scope.onResize();
+              scope.onResize = function() {
+                if (chartInstance) {
+                  chartInstance.clear();
+                  chartInstance.resize();
+                  if(hasData) {
+                    chartInstance.setOption(option);
+                  }
+                  else {
+                    chartInstance.setOption(optionMap);
+                  }
+                }
+              }
+
+              angular.element($window).bind('resize', function() {
+                scope.onResize();
+              })
             })
-          })
+          }
+
         }
       }
     }
@@ -425,138 +593,268 @@
           if (!scope.increaserate || !scope.increaserate.url) {
             return;
           }
-          spotService.getDetail(scope.increaserate.url, {
-            picCode: scope.increaserate.picCode
-          }).then(function(result) {
-            var opt = result.data;
-            if (!opt || !opt.series) {
+
+          scope.$watch('increaserate', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
-            scope.commoninfo.title = opt.title;
-            var resData = opt.series[0].data;
-            var data = [];
-            var rateItems = '';
-            _.forEach(resData, function(item) {
-              var obj = {};
-              obj.value = item.value;
-              if (item.highLight == '1') {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(9,146,76)',
-                    borderColor: 'rgb(7,218,63)',
-                    borderWidth: 1
-                  }
-                }
-                scope.commoninfo.rateTotal = item.value;
-                scope.commoninfo.rateUnit = opt.y_name[0];
-              } else {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(7,83,181)',
-                    borderColor: 'rgb(0,119,255)',
-                    borderWidth: 1
-                  }
+            redraw();
+          }, true);
+
+          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+
+          // init
+          redraw();
+
+          function redraw() {
+            scope.commoninfo.promiseIncrease.then(function() {
+              var timeParam = null;
+              if (scope.commoninfo && scope.commoninfo.model) {
+                timeParam = angular.copy(scope.commoninfo.model);
+                if (scope.commoninfo.time_scope == 'quarter') {
+                  timeParam.setMonth(scope.commoninfo.quarter - 1);
+                } else if (scope.commoninfo.time_scope == 'month') {
+                  timeParam.setMonth(scope.commoninfo.month - 1);
                 }
               }
-              data.push(obj);
-            });
-            scope.commoninfo.otherrate = _.filter(resData, function(o) {
-              return o.highLight != '1';
-            })
-            var option = {
-              tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                  type: 'shadow'
-                },
-                formatter: "{a} <br/>{b} : {c}"
-              },
-              grid: {
-                left: '9%',
-                right: '8%',
-                bottom: '8%',
-                top: '8%',
-                containLabel: true
-              },
-              xAxis: {
-                type: 'value',
-
-                nameLocation: 'end',
-                position: 'top',
-                axisTick: {
-                  show: false
-                },
-                axisLabel: {
-                  show: false
-                },
-                axisLine: {
-                  show: false
-                },
-                splitLine: {
-                  show: false
+              spotService.getDetail(scope.increaserate.url, {
+                queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
+                picCode: scope.increaserate.picCode
+              }).then(function(result) {
+                var opt = result.data;
+                if (!opt || !opt.series) {
+                  return;
                 }
-              },
-              yAxis: {
-                type: 'category',
-                name: '',
-                nameLocation: 'start',
-                boundaryGap: true,
-                axisTick: {
-                  show: false
-                },
-                axisLine: {
-                  show: true,
-                  lineStyle: {
-                    color: 'rgba(0, 120, 255, 0.5)'
+                scope.increaserate.active = true; // 为了再次点击菜单时能触发increaserate change事件
+                if (opt.time_scope == 'quarter') {
+                  scope.commoninfo.byMonth = false;
+                } else {
+                  scope.commoninfo.byMonth = true;
+                }
+                if (!scope.commoninfo.model && opt.init_query_time != '') {
+                  scope.commoninfo.time_scope = opt.time_scope;
+                  scope.commoninfo.model = new Date(opt.init_query_time);
+                  var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-') + 1);
+                  if (opt.time_scope == 'quarter') {
+                    scope.commoninfo.byMonth = false;
+                    scope.commoninfo.quarter = Number(quarterMonth);
+                  } else {
+                    scope.commoninfo.byMonth = true;
+                    scope.commoninfo.month = Number(quarterMonth);
                   }
-                },
-                axisLabel: {
-                  textStyle: {
-                    color: 'rgb(246,246,246)',
-                    fontSize: 14
-                  }
-                },
-                inverse: 'false', //排序
-                data: opt.x_data
-              },
-              series: [{
-                name: '同比增速',
-                type: 'bar',
-                barMaxWidth: '50%',
-                label: {
-                  normal: {
-                    show: true,
-                    position: 'right',
-                    formatter: '{c}%',
-                    textStyle: {
-                      color: 'rgb(246,246,246)',
-                      fontSize: 14
+                }
+                scope.commoninfo.title = opt.title;
+                var resData = opt.series[0].data;
+                var data = [];
+                var rateItems = '';
+                var hasData = false;
+                _.forEach(resData, function(item) {
+                  var obj = {};
+                  obj.value = item.value;
+                  if (item.highLight == '1') {
+                    obj.itemStyle = {
+                      normal: {
+                        color: 'rgb(9,146,76)',
+                        borderColor: 'rgb(7,218,63)',
+                        borderWidth: 1
+                      }
+                    }
+                    if(item.value != '') {
+                      hasData = true;
+                    }
+                    scope.commoninfo.rateTotal = item.value;
+                    scope.commoninfo.rateUnit = opt.y_name[0];
+                  } else {
+                    obj.itemStyle = {
+                      normal: {
+                        color: 'rgb(7,83,181)',
+                        borderColor: 'rgb(0,119,255)',
+                        borderWidth: 1
+                      }
                     }
                   }
-                },
-                data: data
-              }]
-            };
+                  data.push(obj);
+                });
+                scope.commoninfo.otherrate = _.filter(resData, function(o) {
+                  return o.highLight != '1';
+                })
+                var option = {
+                  tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                      type: 'shadow'
+                    },
+                    formatter: "{a} <br/>{b} : {c}" + opt.y_name[0]
+                  },
+                  grid: {
+                    left: '9%',
+                    right: '8%',
+                    bottom: '8%',
+                    top: '8%',
+                    containLabel: true
+                  },
+                  xAxis: {
+                    type: 'value',
 
-            setTimeout(function() {
-              chartInstance = echarts.init((element.find('div'))[0]);
-              chartInstance.clear();
-              chartInstance.resize();
-              chartInstance.setOption(option);
-            }, 600);
+                    nameLocation: 'end',
+                    position: 'top',
+                    axisTick: {
+                      show: false
+                    },
+                    axisLabel: {
+                      show: false
+                    },
+                    axisLine: {
+                      show: false
+                    },
+                    splitLine: {
+                      show: false
+                    }
+                  },
+                  yAxis: {
+                    type: 'category',
+                    name: '',
+                    nameLocation: 'start',
+                    boundaryGap: true,
+                    axisTick: {
+                      show: false
+                    },
+                    axisLine: {
+                      show: true,
+                      lineStyle: {
+                        color: 'rgba(0, 120, 255, 0.5)'
+                      }
+                    },
+                    axisLabel: {
+                      textStyle: {
+                        color: 'rgb(246,246,246)',
+                        fontSize: 14
+                      }
+                    },
+                    inverse: 'false', //排序
+                    data: opt.x_data
+                  },
+                  series: [{
+                    name: '同比增速',
+                    type: 'bar',
+                    barMaxWidth: '50%',
+                    label: {
+                      normal: {
+                        show: true,
+                        position: 'right',
+                        formatter: '{c}%',
+                        textStyle: {
+                          color: 'rgb(246,246,246)',
+                          fontSize: 14
+                        }
+                      }
+                    },
+                    data: data
+                  }]
+                };
 
-            scope.onResize = function() {
-              if (chartInstance) {
-                chartInstance.clear();
-                chartInstance.resize();
-                chartInstance.setOption(option);
-              }
-            }
+                var optionMap = {
+                  // color:['rgb(195,211,234)','rgb(2,230,239)'],
+                  legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                  },
+                  series: [{
+                    name: '川东北经济区排位',
+                    type: 'map',
+                    map: 'bz_single',
+                    left: '20%',
+                    top: 20,
+                    right: '20%',
+                    bottom: 10,
+                    selectedMode: 'single',
+                    label: {
+                      normal: {
+                        show: true,
+                        textStyle: {
+                          color: '#FFF',
+                          fontSize: 16
+                        }
+                      },
+                      emphasis: {
+                        show: true
+                      }
+                    },
+                    itemStyle: {
+                      normal: {
+                        areaColor: 'rgba(0, 120, 255, 0.5)',
+                        // color: 'rgb(195,211,234)',
+                        color: new echarts.graphic.RadialGradient(0, 0, 8, [{
+                          offset: 0,
+                          color: 'rgb(195,211,234)' // 0% 处的颜色
+                        }, {
+                          offset: 1,
+                          color: 'rgb(195,211,234)' // 0% 处的颜色
+                        }], false),
+                        borderColor: 'rgba(42,180,238,1)',
+                        borderType: 'solid',
+                        borderWidth: 1
+                      }
+                    },
+                    markPoint: {
+                      symbol: 'pin',
+                      symbolSize: 50
+                    }
 
-            angular.element($window).bind('resize', function() {
-              scope.onResize();
+                  }]
+                };
+
+                setTimeout(function() {
+                  chartInstance = echarts.init((element.find('div'))[0]);
+                  chartInstance.clear();
+                  chartInstance.resize();
+                  if(hasData) {
+                    chartInstance.setOption(option);
+                  }
+                  else {
+                    chartInstance.setOption(optionMap);
+                  }
+                }, 600);
+
+                scope.onResize = function() {
+                  if (chartInstance) {
+                    chartInstance.clear();
+                    chartInstance.resize();
+                    if(hasData) {
+                      chartInstance.setOption(option);
+                    }
+                    else {
+                      chartInstance.setOption(optionMap);
+                    }
+                  }
+                }
+
+                angular.element($window).bind('resize', function() {
+                  scope.onResize();
+                })
+              })
             })
-          })
+
+
+          }
+
         }
       }
     }
@@ -576,192 +874,272 @@
           if (!scope.rankdata || !scope.rankdata.url) {
             return;
           }
-          spotService.getDetail(scope.rankdata.url, {
-            picCode: scope.rankdata.picCode
-          }).then(function(result) {
-            var opt = result.data;
-            if (!opt || !opt.series) {
+
+          scope.$watch('rankdata', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
-            var resData = opt.series[0].data;
-            var data = [];
-            resData = _.sortBy(resData, [function(o) {
-              return -o.value;
-            }]);
-            _.forEach(resData, function(item, index) {
-              var obj = {};
-              obj.value = item.value;
-              obj.name = item.name;
-              if (item.highLight == '1') {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(9,146,76)',
-                    borderColor: 'rgb(7,218,63)',
-                    borderWidth: 1
-                  }
-                }
-                scope.commoninfo.totalAmount = item.value;
-                scope.commoninfo.rankNum = index + 1;
-              } else {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(7,83,181)',
-                    borderColor: 'rgb(0,119,255)',
-                    borderWidth: 1
-                  }
+            redraw();
+          });
+
+          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+
+          // init
+          redraw();
+
+          function redraw() {
+            //  set time params;
+            var timeParam = null;
+            if (scope.commoninfo && scope.commoninfo.model) {
+              timeParam = angular.copy(scope.commoninfo.model);
+              if (scope.commoninfo.time_scope == 'quarter') {
+                timeParam.setMonth(scope.commoninfo.quarter - 1);
+              } else if (scope.commoninfo.time_scope == 'month') {
+                timeParam.setMonth(scope.commoninfo.month - 1);
+              }
+            }
+
+            scope.commoninfo.promiseRank = spotService.getDetail(scope.rankdata.url, {
+              queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
+              picCode: scope.rankdata.picCode
+            }).then(function(result) {
+              var opt = result.data;
+              if (!opt || !opt.series) {
+                return;
+              }
+              scope.rankdata.active = true; // 为了再次点击菜单时能触发 rankdata change事件
+              if (!scope.commoninfo.model && opt.init_query_time != '') {
+                scope.commoninfo.time_scope = opt.time_scope;
+                scope.commoninfo.byMonth = true;
+                scope.commoninfo.model = new Date(opt.init_query_time);
+                var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-') + 1);
+                if (opt.time_scope == 'quarter') {
+                  scope.commoninfo.quarter = Number(quarterMonth);
+                  scope.commoninfo.byMonth = false;
+                } else {
+                  scope.commoninfo.month = Number(quarterMonth);
+                  scope.commoninfo.byMonth = true;
                 }
               }
-              scope.commoninfo.title = opt.title;
-              scope.commoninfo.totalTitle = '总产值';
-              scope.commoninfo.totalUnit = opt.y_name[0];
-              data.push(obj);
-            });
-
-            var option = {
-              tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                  type: 'shadow'
-                },
-                formatter: "{a} <br/>{b} : {c}"
-              },
-              grid: {
-                left: '10%',
-                right: '12%',
-                bottom: '12%',
-                top: '12%',
-                containLabel: true
-              },
-              yAxis: {
-                type: 'value',
-                axisTick: {
-                  show: false
-                },
-                axisLabel: {
-                  show: false
-                },
-                axisLine: {
-                  show: false
-                },
-                splitLine: {
-                  show: false
+              // 查询排位信息
+              if (opt.table_type == 'different' && opt.table_url != '') {
+                spotService.getDetail(opt.table_url, {
+                  queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
+                  picCode: scope.rankdata.picCode
+                }).then(function(result) {
+                  scope.commoninfo.rankdetail = result.data;
+                  _.forEach(scope.commoninfo.rankdetail, function(data) {
+                    data.floatValue = parseInt(data.floatValue);
+                    data.value = parseInt(data.value);
+                  })
+                })
+              }
+              var resData = opt.series[0].data;
+              var data = [];
+              resData = _.sortBy(resData, [function(o) {
+                return -o.value;
+              }]);
+              var hasData = false;
+              _.forEach(resData, function(item, index) {
+                var obj = {};
+                obj.value = item.value;
+                obj.name = item.name;
+                if (item.highLight == '1') {
+                  obj.itemStyle = {
+                    normal: {
+                      color: 'rgb(9,146,76)',
+                      borderColor: 'rgb(7,218,63)',
+                      borderWidth: 1
+                    }
+                  }
+                  if(item.value != '') {
+                    hasData = true;
+                  }
+                  scope.commoninfo.totalAmount = item.value;
+                  scope.commoninfo.rankNum = index + 1;
+                } else {
+                  obj.itemStyle = {
+                    normal: {
+                      color: 'rgb(7,83,181)',
+                      borderColor: 'rgb(0,119,255)',
+                      borderWidth: 1
+                    }
+                  }
                 }
-              },
-              xAxis: {
-                type: '',
-                name: '',
-                nameLocation: 'start',
-                boundaryGap: true,
-                axisTick: {
-                  show: false
+                scope.commoninfo.title = opt.title;
+                scope.commoninfo.totalTitle = '总产值';
+                scope.commoninfo.totalUnit = opt.y_name[0];
+                data.push(obj);
+              });
+              var option = {
+                tooltip: {
+                  trigger: 'axis',
+                  axisPointer: {
+                    type: 'shadow'
+                  },
+                  formatter: "{a} <br/>{b} : {c}" + opt.y_name[0]
                 },
-                axisLine: {
-                  show: true,
-                  lineStyle: {
-                    color: 'rgba(0, 120, 255, 0.5)'
+                grid: {
+                  left: '10%',
+                  right: '12%',
+                  bottom: '12%',
+                  top: '12%',
+                  containLabel: true
+                },
+                yAxis: {
+                  type: 'value',
+                  axisTick: {
+                    show: false
+                  },
+                  axisLabel: {
+                    show: false
+                  },
+                  axisLine: {
+                    show: false
+                  },
+                  splitLine: {
+                    show: false
                   }
                 },
-                axisLabel: {
-                  textStyle: {
-                    color: 'rgb(246,246,246)',
-                    fontSize: 14
-                  }
-                },
-                data: _.map(data, 'name')
-              },
-              series: [{
-                name: '同比增速',
-                type: 'bar',
-                barMaxWidth: '30%',
-                label: {
-                  normal: {
+                xAxis: {
+                  type: '',
+                  name: '',
+                  nameLocation: 'start',
+                  boundaryGap: true,
+                  axisTick: {
+                    show: false
+                  },
+                  axisLine: {
                     show: true,
-                    position: 'top',
-                    formatter: '{c}',
+                    lineStyle: {
+                      color: 'rgba(0, 120, 255, 0.5)'
+                    }
+                  },
+                  axisLabel: {
                     textStyle: {
                       color: 'rgb(246,246,246)',
                       fontSize: 14
                     }
-                  }
+                  },
+                  data: _.map(data, 'name')
                 },
-                data: data
-              }]
-            };
-
-            var optionMap = {
-              // color:['rgb(195,211,234)','rgb(2,230,239)'],
-              legend: {
-                orient: 'vertical',
-                left: 'left'
-              },
-              series: [{
-                name: '川东北经济区排位',
-                type: 'map',
-                map: 'chuan_east_north',
-                left: '20%',
-                top: 20,
-                right: '20%',
-                bottom: 10,
-                selectedMode: 'single',
-                label: {
-                  normal: {
-                    show: true,
-                    textStyle: {
-                      color: '#FFF',
-                      fontSize: 16
+                series: [{
+                  name: '同比增速',
+                  type: 'bar',
+                  barMaxWidth: '30%',
+                  label: {
+                    normal: {
+                      show: true,
+                      position: 'top',
+                      formatter: '{c}',
+                      textStyle: {
+                        color: 'rgb(246,246,246)',
+                        fontSize: 14
+                      }
                     }
                   },
-                  emphasis: {
-                    show: true
-                  }
+                  data: data
+                }]
+              };
+
+              var optionMap = {
+                // color:['rgb(195,211,234)','rgb(2,230,239)'],
+                legend: {
+                  orient: 'vertical',
+                  left: 'left'
                 },
-                itemStyle: {
-                  normal: {
-                    areaColor: 'rgba(0, 120, 255, 0.5)',
-                    // color: 'rgb(195,211,234)',
-                    color: new echarts.graphic.RadialGradient(0, 0, 8, [{
-                      offset: 0,
-                      color: 'rgb(195,211,234)' // 0% 处的颜色
-                    }, {
-                      offset: 1,
-                      color: 'rgb(195,211,234)' // 0% 处的颜色
-                    }], false),
-                    borderColor: 'rgba(42,180,238,1)',
-                    borderType: 'solid',
-                    borderWidth: 1
+                series: [{
+                  name: '川东北经济区排位',
+                  type: 'map',
+                  map: 'chuan_east_north',
+                  left: '20%',
+                  top: 20,
+                  right: '20%',
+                  bottom: 10,
+                  selectedMode: 'single',
+                  label: {
+                    normal: {
+                      show: true,
+                      textStyle: {
+                        color: '#FFF',
+                        fontSize: 16
+                      }
+                    },
+                    emphasis: {
+                      show: true
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      areaColor: 'rgba(0, 120, 255, 0.5)',
+                      // color: 'rgb(195,211,234)',
+                      color: new echarts.graphic.RadialGradient(0, 0, 8, [{
+                        offset: 0,
+                        color: 'rgb(195,211,234)' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: 'rgb(195,211,234)' // 0% 处的颜色
+                      }], false),
+                      borderColor: 'rgba(42,180,238,1)',
+                      borderType: 'solid',
+                      borderWidth: 1
+                    }
+                  },
+                  markPoint: {
+                    symbol: 'pin',
+                    symbolSize: 50
                   }
-                },
-                markPoint: {
-                  symbol: 'pin',
-                  symbolSize: 50
-                }
 
-              }]
-            };
+                }]
+              };
 
-            setTimeout(function() {
-              chartInstance1 = echarts.init((element.find('div'))[0]);
-              chartInstance1.clear();
-              chartInstance1.resize();
-              if (opt.series[0].data) {
-                chartInstance1.setOption(option);
-              } else {
-                chartInstance1.setOption(optionMap);
-              }
-            }, 600);
-
-            scope.onResize2 = function() {
-              if (chartInstance1) {
+              setTimeout(function() {
+                chartInstance1 = echarts.init((element.find('div'))[0]);
                 chartInstance1.clear();
                 chartInstance1.resize();
-                chartInstance1.setOption(option);
-              }
-            }
+                if (hasData) {
+                  chartInstance1.setOption(option);
+                } else {
+                  chartInstance1.setOption(optionMap);
+                }
+              }, 600);
 
-            angular.element($window).bind('resize', function() {
-              scope.onResize2();
+              scope.onResize2 = function() {
+                if (chartInstance1) {
+                  chartInstance1.clear();
+                  chartInstance1.resize();
+                  if(hasData) {
+                    chartInstance1.setOption(option);
+                  }
+                  else {
+                    chartInstance1.setOption(optionMap);
+                  }
+                }
+              }
+
+              angular.element($window).bind('resize', function() {
+                scope.onResize2();
+              })
             })
-          })
+          }
+
         }
       }
     }
@@ -781,191 +1159,273 @@
           if (!scope.rankrate || !scope.rankrate.url) {
             return;
           }
-          spotService.getDetail(scope.rankrate.url, {
-            picCode: scope.rankrate.picCode
-          }).then(function(result) {
-            var opt = result.data;
-            if (!opt || !opt.series) {
+          scope.$watch('rankrate', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
-            scope.commoninfo.title = opt.title;
-            var resData = opt.series[0].data;
-            resData = _.sortBy(resData, [function(o) {
-              return -o.value;
-            }]);
-            var data = [];
-            _.forEach(resData, function(item) {
-              var obj = {};
-              obj.value = item.value;
-              obj.name = item.name;
-              if (item.highLight == '1') {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(9,146,76)',
-                    borderColor: 'rgb(7,218,63)',
-                    borderWidth: 1
-                  }
-                }
-                scope.commoninfo.rateTotal = item.value;
-                scope.commoninfo.rateUnit = opt.y_name[0];
-              } else {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(7,83,181)',
-                    borderColor: 'rgb(0,119,255)',
-                    borderWidth: 1
-                  }
+            redraw();
+          });
+
+          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+
+          // init
+          redraw();
+
+          function redraw() {
+            scope.commoninfo.promiseRank.then(function() {
+              //  set time params;
+              var timeParam = null;
+              if (scope.commoninfo && scope.commoninfo.model) {
+                timeParam = angular.copy(scope.commoninfo.model);
+                if (scope.commoninfo.time_scope == 'quarter') {
+                  timeParam.setMonth(scope.commoninfo.quarter - 1);
+                } else if (scope.commoninfo.time_scope == 'month') {
+                  timeParam.setMonth(scope.commoninfo.month - 1);
                 }
               }
-              data.push(obj);
-            });
-
-
-            var option = {
-              tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                  type: 'shadow'
-                },
-                formatter: "{a} <br/>{b} : {c}"
-              },
-              grid: {
-                left: '12%',
-                right: '12%',
-                bottom: '12%',
-                top: '12%',
-                containLabel: true
-              },
-              yAxis: {
-                type: 'value',
-                axisTick: {
-                  show: false
-                },
-                axisLabel: {
-                  show: false
-                },
-                axisLine: {
-                  show: false
-                },
-                splitLine: {
-                  show: false
+              spotService.getDetail(scope.rankrate.url, {
+                queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
+                picCode: scope.rankrate.picCode
+              }).then(function(result) {
+                var opt = result.data;
+                if (!opt || !opt.series) {
+                  return;
                 }
-              },
-              xAxis: {
-                type: '',
-                name: '',
-                nameLocation: 'start',
-                boundaryGap: true,
-                axisTick: {
-                  show: false
-                },
-                axisLine: {
-                  show: true,
-                  lineStyle: {
-                    color: 'rgba(0, 120, 255, 0.5)'
+                scope.rankrate.active = true; // 为了再次点击菜单时能触发 rankrate change事件
+                if (!scope.commoninfo.model && opt.init_query_time != '') {
+                  scope.commoninfo.time_scope = opt.time_scope;
+                  scope.commoninfo.byMonth = true;
+                  scope.commoninfo.model = new Date(opt.init_query_time);
+                  var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-') + 1);
+                  if (opt.time_scope == 'quarter') {
+                    scope.commoninfo.quarter = Number(quarterMonth);
+                    scope.commoninfo.byMonth = false;
+                  } else {
+                    scope.commoninfo.month = Number(quarterMonth);
+                    scope.commoninfo.byMonth = true;
                   }
-                },
-                axisLabel: {
-                  textStyle: {
-                    color: 'rgb(246,246,246)',
-                    fontSize: 14
-                  }
-                },
-                data: _.map(data, 'name')
-              },
-              series: [{
-                name: '同比增速',
-                type: 'bar',
-                barMaxWidth: '30%',
-                label: {
-                  normal: {
-                    show: true,
-                    position: 'top',
-                    formatter: '{c}%',
-                    textStyle: {
-                      color: 'rgb(246,246,246)',
-                      fontSize: 14
+                }
+                // 查询排位信息
+                if (opt.table_type == 'different' && opt.table_url != '') {
+                  spotService.getDetail(opt.table_url, {
+                    queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
+                    picCode: scope.rankrate.picCode
+                  }).then(function(result) {
+                    scope.commoninfo.rankratedetail = result.data;
+                    _.forEach(scope.commoninfo.rankratedetail, function(data) {
+                      data.floatValue = parseInt(data.floatValue);
+                      data.value = parseInt(data.value);
+                    })
+                  })
+                }
+
+                scope.commoninfo.title = opt.title;
+                var resData = opt.series[0].data;
+                resData = _.sortBy(resData, [function(o) {
+                  return -o.value;
+                }]);
+                var data = [];
+                var hasData = false;
+                _.forEach(resData, function(item) {
+                  var obj = {};
+                  obj.value = item.value;
+                  obj.name = item.name;
+                  if (item.highLight == '1') {
+                    obj.itemStyle = {
+                      normal: {
+                        color: 'rgb(9,146,76)',
+                        borderColor: 'rgb(7,218,63)',
+                        borderWidth: 1
+                      }
+                    }
+                    if(item.value != '') {
+                      hasData = true;
+                    }
+                    scope.commoninfo.rateTotal = item.value;
+                    scope.commoninfo.rateUnit = opt.y_name[0];
+                  } else {
+                    obj.itemStyle = {
+                      normal: {
+                        color: 'rgb(7,83,181)',
+                        borderColor: 'rgb(0,119,255)',
+                        borderWidth: 1
+                      }
                     }
                   }
-                },
-                data: data
-              }]
-            };
+                  data.push(obj);
+                });
 
-            var optionMap = {
-              // color:['rgb(195,211,234)','rgb(2,230,239)'],
-              legend: {
-                orient: 'vertical',
-                left: 'left'
-              },
-              series: [{
-                name: '川东北经济区排位',
-                type: 'map',
-                map: 'bz_single',
-                left: '20%',
-                top: 20,
-                right: '20%',
-                bottom: 10,
-                selectedMode: 'single',
-                label: {
-                  normal: {
-                    show: true,
-                    textStyle: {
-                      color: '#FFF',
-                      fontSize: 16
+
+                var option = {
+                  tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                      type: 'shadow'
+                    },
+                    formatter: "{a} <br/>{b} : {c}" + opt.y_name[0]
+                  },
+                  grid: {
+                    left: '12%',
+                    right: '12%',
+                    bottom: '12%',
+                    top: '12%',
+                    containLabel: true
+                  },
+                  yAxis: {
+                    type: 'value',
+                    axisTick: {
+                      show: false
+                    },
+                    axisLabel: {
+                      show: false
+                    },
+                    axisLine: {
+                      show: false
+                    },
+                    splitLine: {
+                      show: false
                     }
                   },
-                  emphasis: {
-                    show: true
+                  xAxis: {
+                    type: '',
+                    name: '',
+                    nameLocation: 'start',
+                    boundaryGap: true,
+                    axisTick: {
+                      show: false
+                    },
+                    axisLine: {
+                      show: true,
+                      lineStyle: {
+                        color: 'rgba(0, 120, 255, 0.5)'
+                      }
+                    },
+                    axisLabel: {
+                      textStyle: {
+                        color: 'rgb(246,246,246)',
+                        fontSize: 14
+                      }
+                    },
+                    data: _.map(data, 'name')
+                  },
+                  series: [{
+                    name: '同比增速',
+                    type: 'bar',
+                    barMaxWidth: '30%',
+                    label: {
+                      normal: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}%',
+                        textStyle: {
+                          color: 'rgb(246,246,246)',
+                          fontSize: 14
+                        }
+                      }
+                    },
+                    data: data
+                  }]
+                };
+
+                var optionMap = {
+                  // color:['rgb(195,211,234)','rgb(2,230,239)'],
+                  legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                  },
+                  series: [{
+                    name: '川东北经济区排位',
+                    type: 'map',
+                    map: 'bz_single',
+                    left: '20%',
+                    top: 20,
+                    right: '20%',
+                    bottom: 10,
+                    selectedMode: 'single',
+                    label: {
+                      normal: {
+                        show: true,
+                        textStyle: {
+                          color: '#FFF',
+                          fontSize: 16
+                        }
+                      },
+                      emphasis: {
+                        show: true
+                      }
+                    },
+                    itemStyle: {
+                      normal: {
+                        areaColor: 'rgba(0, 120, 255, 0.5)',
+                        // color: 'rgb(195,211,234)',
+                        color: new echarts.graphic.RadialGradient(0, 0, 8, [{
+                          offset: 0,
+                          color: 'rgb(195,211,234)' // 0% 处的颜色
+                        }, {
+                          offset: 1,
+                          color: 'rgb(195,211,234)' // 0% 处的颜色
+                        }], false),
+                        borderColor: 'rgba(42,180,238,1)',
+                        borderType: 'solid',
+                        borderWidth: 1
+                      }
+                    },
+                    markPoint: {
+                      symbol: 'pin',
+                      symbolSize: 50
+                    }
+
+                  }]
+                };
+
+                setTimeout(function() {
+                  chartInstance1 = echarts.init((element.find('div'))[0]);
+                  chartInstance1.clear();
+                  chartInstance1.resize();
+                  if (hasData) {
+                    chartInstance1.setOption(option);
+                  } else {
+                    chartInstance1.setOption(optionMap);
                   }
-                },
-                itemStyle: {
-                  normal: {
-                    areaColor: 'rgba(0, 120, 255, 0.5)',
-                    // color: 'rgb(195,211,234)',
-                    color: new echarts.graphic.RadialGradient(0, 0, 8, [{
-                      offset: 0,
-                      color: 'rgb(195,211,234)' // 0% 处的颜色
-                    }, {
-                      offset: 1,
-                      color: 'rgb(195,211,234)' // 0% 处的颜色
-                    }], false),
-                    borderColor: 'rgba(42,180,238,1)',
-                    borderType: 'solid',
-                    borderWidth: 1
+                }, 600);
+
+                scope.onResize2 = function() {
+                  if (chartInstance1) {
+                    chartInstance1.clear();
+                    chartInstance1.resize();
+                    if(hasData) {
+                      chartInstance1.setOption(option);
+                    }
+                    else {
+                      chartInstance1.setOption(optionMap);
+                    }
                   }
-                },
-                markPoint: {
-                  symbol: 'pin',
-                  symbolSize: 50
                 }
 
-              }]
-            };
-
-            setTimeout(function() {
-              chartInstance1 = echarts.init((element.find('div'))[0]);
-              chartInstance1.clear();
-              chartInstance1.resize();
-              if (opt.series[0].data) {
-                chartInstance1.setOption(option);
-              } else {
-                chartInstance1.setOption(optionMap);
-              }
-            }, 600);
-
-            scope.onResize2 = function() {
-              if (chartInstance1) {
-                chartInstance1.clear();
-                chartInstance1.resize();
-                chartInstance1.setOption(option);
-              }
-            }
-
-            angular.element($window).bind('resize', function() {
-              scope.onResize2();
+                angular.element($window).bind('resize', function() {
+                  scope.onResize2();
+                })
+              })
             })
-          })
+          }
+
         }
       }
     }
@@ -986,133 +1446,254 @@
           if (!scope.targetgoaldata || !scope.targetgoaldata.url) {
             return;
           }
-          spotService.getDetail(scope.targetgoaldata.url, {
-            picCode: scope.targetgoaldata.picCode
-          }).then(function(result) {
-            var opt = result.data;
-            if (!opt || !opt.series) {
+
+          scope.$watch('targetgoaldata', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
-            var resData = opt.series;
-            var data = [];
-            _.forEach(resData, function(item) {
-              if (item.name == '今年目标') {
-                _.forEach(item.data, function(data) {
-                  if (data.highLight == '1') {
-                    scope.commoninfo.totalTitle = '总产值';
-                    scope.commoninfo.totalAmount = data.value;
-                    scope.commoninfo.totalUnit = data.unit;
-                  }
-                  if (data.name == '查询时间') {
-                    scope.commoninfo.targetThisYear = data.value;
-                  }
-                  if (data.name == '目标') {
-                    scope.commoninfo.targetThisValue = data.value;
-                    scope.commoninfo.targetThisUnit = data.unit; // 目标单位
-                  }
-                })
-              } else {
-                _.forEach(item.data, function(data) {
-                  if (data.name == '查询时间') {
-                    scope.commoninfo.targetFutureYear = data.value;
-                  }
-                  if (data.name == '五年目标') {
-                    scope.commoninfo.targetFutureValue = data.value;
-                    scope.commoninfo.targetFutureUnit = data.unit; // 目标单位
-                  }
-                })
-              }
-            })
+            redraw();
+          });
 
-
-            var percent = (scope.commoninfo.totalAmount / scope.commoninfo.targetThisValue).toFixed(2);
-
-
-
-            function getData() {
-              return [{
-                value: percent - Math.floor(percent),
-                itemStyle: {
-                  normal: {
-                    color: '#f2c967',
-                    shadowBlur: 10,
-                    shadowColor: '#f2c967'
-                  }
-                }
-              }, {
-                value: 1 - (percent - Math.floor(percent)),
-                itemStyle: {
-                  normal: {
-                    color: 'transparent'
-                  }
-                }
-              }];
+          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
             }
-            var option = {
-              title: {
-                text: scope.commoninfo.targetThisYear + '年：' + scope.commoninfo.targetThisValue + scope.commoninfo.targetThisUnit,
-                left: 'center',
-                top: 'bottom',
-                textStyle: {
-                  color: 'rgb(240,240,240)',
-                  fontWeight: 'normal'
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          // init
+          redraw();
+
+          function redraw() {
+            //  set time params;
+            var timeParam = null;
+            if (scope.commoninfo && scope.commoninfo.model) {
+              timeParam = angular.copy(scope.commoninfo.model);
+              if (scope.commoninfo.time_scope == 'quarter') {
+                timeParam.setMonth(scope.commoninfo.quarter - 1);
+              } else if (scope.commoninfo.time_scope == 'month') {
+                timeParam.setMonth(scope.commoninfo.month - 1);
+              }
+            }
+
+            scope.commoninfo.promiseTarget = spotService.getDetail(scope.targetgoaldata.url, {
+              queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
+              picCode: scope.targetgoaldata.picCode
+            }).then(function(result) {
+              var opt = result.data;
+              if (!opt || !opt.series) {
+                return;
+              }
+              scope.targetgoaldata.active = true; // 为了再次点击菜单时能触发 targetgoaldata change事件
+              if (!scope.commoninfo.model && opt.init_query_time != '') {
+                scope.commoninfo.time_scope = opt.time_scope;
+                scope.commoninfo.byMonth = true;
+                scope.commoninfo.model = new Date(opt.init_query_time);
+                var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-') + 1);
+                if (opt.time_scope == 'quarter') {
+                  scope.commoninfo.quarter = Number(quarterMonth);
+                  scope.commoninfo.byMonth = false;
+                } else {
+                  scope.commoninfo.month = Number(quarterMonth);
+                  scope.commoninfo.byMonth = true;
                 }
-              },
-              series: [{
-                type: 'liquidFill',
-                data: [percent],
-                radius: '62%',
-                outline: {
-                  borderDistance: 0,
+              }
+              var resData = opt.series;
+              var data = [];
+              var hasData = false;
+              _.forEach(resData, function(item) {
+                if (item.name == '今年目标') {
+                  _.forEach(item.data, function(data) {
+                    if (data.highLight == '1') {
+                      scope.commoninfo.totalTitle = '总产值';
+                      scope.commoninfo.totalAmount = data.value;
+                      scope.commoninfo.totalUnit = data.unit;
+                      if(data.value != '') {
+                        hasData =  true;
+                      }
+                    }
+                    if (data.name == '查询时间') {
+                      scope.commoninfo.targetThisYear = data.value;
+                    }
+                    if (data.name == '目标') {
+                      scope.commoninfo.targetThisValue = data.value;
+                      scope.commoninfo.targetThisUnit = data.unit; // 目标单位
+                    }
+                  })
+                } else {
+                  _.forEach(item.data, function(data) {
+                    if (data.name == '查询时间') {
+                      scope.commoninfo.targetFutureYear = data.value;
+                    }
+                    if (data.name == '五年目标') {
+                      scope.commoninfo.targetFutureValue = data.value;
+                      scope.commoninfo.targetFutureUnit = data.unit; // 目标单位
+                    }
+                  })
+                }
+              })
+
+              var percent = 0;
+              if (scope.commoninfo.totalAmount != '' && scope.commoninfo.targetThisValue != '') {
+                percent = (parseFloat(scope.commoninfo.totalAmount) / parseFloat(scope.commoninfo.targetThisValue)).toFixed(2);
+              }
+              scope.commoninfo.percentThisYear = percent * 100;
+
+              function getData() {
+                return [{
+                  value: percent - Math.floor(percent),
                   itemStyle: {
-                    borderWidth: 5,
-                    borderColor: '#156ACF',
-                  }
-                },
-                label: {
-                  normal: {
-                    show: false,
-                    textStyle: {
-                      fontSize: 30
+                    normal: {
+                      color: '#f2c967',
+                      shadowBlur: 10,
+                      shadowColor: '#f2c967'
                     }
                   }
-                }
-              }]
-            };
-            if (percent > 1) {
-              option.series[1] = {
-                name: '超额',
-                type: 'pie',
-                radius: ['64%', '68%'],
-                label: {
-                  normal: {
-                    show: false
+                }, {
+                  value: 1 - (percent - Math.floor(percent)),
+                  itemStyle: {
+                    normal: {
+                      color: 'transparent'
+                    }
+                  }
+                }];
+              }
+              var option = {
+                title: {
+                  text: scope.commoninfo.targetThisYear + '年：' + scope.commoninfo.targetThisValue + scope.commoninfo.targetThisUnit,
+                  left: 'center',
+                  top: 'bottom',
+                  textStyle: {
+                    color: 'rgb(240,240,240)',
+                    fontWeight: 'normal'
                   }
                 },
-                data: getData()
+                series: [{
+                  type: 'liquidFill',
+                  data: [percent],
+                  radius: '62%',
+                  outline: {
+                    borderDistance: 0,
+                    itemStyle: {
+                      borderWidth: 5,
+                      borderColor: '#156ACF',
+                    }
+                  },
+                  label: {
+                    normal: {
+                      show: false,
+                      textStyle: {
+                        fontSize: 30
+                      }
+                    }
+                  }
+                }]
+              };
+              if (percent > 1) {
+                option.series[1] = {
+                  name: '超额',
+                  type: 'pie',
+                  radius: ['64%', '68%'],
+                  label: {
+                    normal: {
+                      show: false
+                    }
+                  },
+                  data: getData()
+                }
               }
-            }
 
+              var optionMap = {
+                // color:['rgb(195,211,234)','rgb(2,230,239)'],
+                legend: {
+                  orient: 'vertical',
+                  left: 'left'
+                },
+                series: [{
+                  name: '川东北经济区排位',
+                  type: 'map',
+                  map: 'chuan_east_north',
+                  left: '20%',
+                  top: 20,
+                  right: '20%',
+                  bottom: 10,
+                  selectedMode: 'single',
+                  label: {
+                    normal: {
+                      show: true,
+                      textStyle: {
+                        color: '#FFF',
+                        fontSize: 16
+                      }
+                    },
+                    emphasis: {
+                      show: true
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      areaColor: 'rgba(0, 120, 255, 0.5)',
+                      // color: 'rgb(195,211,234)',
+                      color: new echarts.graphic.RadialGradient(0, 0, 8, [{
+                        offset: 0,
+                        color: 'rgb(195,211,234)' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: 'rgb(195,211,234)' // 0% 处的颜色
+                      }], false),
+                      borderColor: 'rgba(42,180,238,1)',
+                      borderType: 'solid',
+                      borderWidth: 1
+                    }
+                  },
+                  markPoint: {
+                    symbol: 'pin',
+                    symbolSize: 50
+                  }
 
-            setTimeout(function() {
-              chartInstance = echarts.init((element.find('div'))[0]);
-              chartInstance.clear();
-              chartInstance.resize();
-              chartInstance.setOption(option);
-            }, 600);
-
-            scope.onResize = function() {
-              if (chartInstance) {
+                }]
+              };
+              setTimeout(function() {
+                chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
-                chartInstance.setOption(option);
-              }
-            }
+                if(hasData) {
+                  chartInstance.setOption(option);
+                } else {
+                  chartInstance.setOption(optionMap);
+                }
+              }, 600);
 
-            angular.element($window).bind('resize', function() {
-              scope.onResize();
+              scope.onResize = function() {
+                if (chartInstance) {
+                  chartInstance.clear();
+                  chartInstance.resize();
+                  if(hasData) {
+                    chartInstance.setOption(option);
+                  } else {
+                    chartInstance.setOption(optionMap);
+                  }
+
+                }
+              }
+
+              angular.element($window).bind('resize', function() {
+                scope.onResize();
+              })
             })
-          })
+          }
+
         }
       }
     }
@@ -1132,135 +1713,254 @@
           if (!scope.targetgoaldata || !scope.targetgoaldata.url) {
             return;
           }
-          spotService.getDetail(scope.targetgoaldata.url, {
-            picCode: scope.targetgoaldata.picCode
-          }).then(function(result) {
-            var opt = result.data;
-            if (!opt || !opt.series) {
+
+          scope.$watch('targetgoaldata', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
-            var resData = opt.series;
-            var data = [];
-            scope.commoninfo.title = opt.title;
-            _.forEach(resData, function(item) {
-              if (item.name == '今年目标') {
-                _.forEach(item.data, function(data) {
-                  if (data.highLight == '1') {
+            redraw();
+          });
 
-                    scope.commoninfo.totalTitle = '总产值';
-                    scope.commoninfo.totalAmount = data.value;
-                    scope.commoninfo.totalUnit = data.unit;
-                  }
-                  if (data.name == '查询时间') {
-                    scope.commoninfo.targetThisYear = data.value;
-                  }
-                  if (data.name == '目标') {
-                    scope.commoninfo.targetThisValue = data.value;
-                    scope.commoninfo.targetThisUnit = data.unit; // 目标单位
-                  }
-                })
-              } else {
-                _.forEach(item.data, function(data) {
-                  if (data.name == '查询时间') {
-                    scope.commoninfo.targetFutureYear = data.value;
-                  }
-                  if (data.name == '五年目标') {
-                    scope.commoninfo.targetFutureValue = data.value;
-                    scope.commoninfo.targetFutureUnit = data.unit; // 目标单位
-                  }
-                })
-              }
-            })
-
-
-            var percent = (scope.commoninfo.totalAmount / scope.commoninfo.targetFutureValue).toFixed(2);
-
-
-
-            function getData() {
-              return [{
-                value: percent - Math.floor(percent),
-                itemStyle: {
-                  normal: {
-                    color: '#f2c967',
-                    shadowBlur: 10,
-                    shadowColor: '#f2c967'
-                  }
-                }
-              }, {
-                value: 1 - (percent - Math.floor(percent)),
-                itemStyle: {
-                  normal: {
-                    color: 'transparent'
-                  }
-                }
-              }];
+          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
             }
-            var option = {
-              title: {
-                text: scope.commoninfo.targetFutureYear + '年：' + scope.commoninfo.targetFutureValue + scope.commoninfo.targetFutureUnit,
-                left: 'center',
-                top: 'bottom',
-                textStyle: {
-                  color: 'rgb(240,240,240)',
-                  fontWeight: 'normal'
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          // init
+          redraw();
+
+          function redraw() {
+            //  set time params;
+            var timeParam = null;
+            if (scope.commoninfo && scope.commoninfo.model) {
+              timeParam = angular.copy(scope.commoninfo.model);
+              if (scope.commoninfo.time_scope == 'quarter') {
+                timeParam.setMonth(scope.commoninfo.quarter - 1);
+              } else if (scope.commoninfo.time_scope == 'month') {
+                timeParam.setMonth(scope.commoninfo.month - 1);
+              }
+            }
+            scope.commoninfo.promiseTarget = spotService.getDetail(scope.targetgoaldata.url, {
+              queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
+              picCode: scope.targetgoaldata.picCode
+            }).then(function(result) {
+              var opt = result.data;
+              if (!opt || !opt.series) {
+                return;
+              }
+              scope.targetgoaldata.active = true; // 为了再次点击菜单时能触发 targetgoaldata change事件
+              if (!scope.commoninfo.model && opt.init_query_time != '') {
+                scope.commoninfo.time_scope = opt.time_scope;
+                scope.commoninfo.byMonth = true;
+                scope.commoninfo.model = new Date(opt.init_query_time);
+                var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-') + 1);
+                if (opt.time_scope == 'quarter') {
+                  scope.commoninfo.quarter = Number(quarterMonth);
+                  scope.commoninfo.byMonth = false;
+                } else {
+                  scope.commoninfo.month = Number(quarterMonth);
+                  scope.commoninfo.byMonth = true;
                 }
-              },
-              series: [{
-                type: 'liquidFill',
-                data: [percent],
-                radius: '62%',
-                outline: {
-                  borderDistance: 0,
+              }
+              var resData = opt.series;
+              var data = [];
+              var hasData = false;
+              scope.commoninfo.title = opt.title;
+              _.forEach(resData, function(item) {
+                if (item.name == '今年目标') {
+                  _.forEach(item.data, function(data) {
+                    if (data.highLight == '1') {
+
+                      scope.commoninfo.totalTitle = '总产值';
+                      scope.commoninfo.totalAmount = data.value;
+                      scope.commoninfo.totalUnit = data.unit;
+                      if(data.value != '') {
+                        hasData = true;
+                      }
+                    }
+                    if (data.name == '查询时间') {
+                      scope.commoninfo.targetThisYear = data.value;
+                    }
+                    if (data.name == '目标') {
+                      scope.commoninfo.targetThisValue = data.value;
+                      scope.commoninfo.targetThisUnit = data.unit; // 目标单位
+                    }
+                  })
+                } else {
+                  _.forEach(item.data, function(data) {
+                    if (data.name == '查询时间') {
+                      scope.commoninfo.targetFutureYear = data.value;
+                    }
+                    if (data.name == '五年目标') {
+                      scope.commoninfo.targetFutureValue = data.value;
+                      scope.commoninfo.targetFutureUnit = data.unit; // 目标单位
+                    }
+                  })
+                }
+              })
+              var percent = 0;
+              if (scope.commoninfo.totalAmount != '' && scope.commoninfo.targetFutureValue != '') {
+                percent = (parseFloat(scope.commoninfo.totalAmount) / parseFloat(scope.commoninfo.targetFutureValue)).toFixed(2);
+              }
+              scope.commoninfo.percentFutureYear = percent * 100;
+
+
+              function getData() {
+                return [{
+                  value: percent - Math.floor(percent),
                   itemStyle: {
-                    borderWidth: 5,
-                    borderColor: '#156ACF',
-                  }
-                },
-                label: {
-                  normal: {
-                    show: false,
-                    textStyle: {
-                      fontSize: 30
+                    normal: {
+                      color: '#f2c967',
+                      shadowBlur: 10,
+                      shadowColor: '#f2c967'
                     }
                   }
-                }
-              }]
-            };
-            if (percent > 1) {
-              option.series[1] = {
-                name: '超额',
-                type: 'pie',
-                radius: ['64%', '68%'],
-                label: {
-                  normal: {
-                    show: false
+                }, {
+                  value: 1 - (percent - Math.floor(percent)),
+                  itemStyle: {
+                    normal: {
+                      color: 'transparent'
+                    }
+                  }
+                }];
+              }
+              var option = {
+                title: {
+                  text: scope.commoninfo.targetFutureYear + '年：' + scope.commoninfo.targetFutureValue + scope.commoninfo.targetFutureUnit,
+                  left: 'center',
+                  top: 'bottom',
+                  textStyle: {
+                    color: 'rgb(240,240,240)',
+                    fontWeight: 'normal'
                   }
                 },
-                data: getData()
+                series: [{
+                  type: 'liquidFill',
+                  data: [percent],
+                  radius: '62%',
+                  outline: {
+                    borderDistance: 0,
+                    itemStyle: {
+                      borderWidth: 5,
+                      borderColor: '#156ACF',
+                    }
+                  },
+                  label: {
+                    normal: {
+                      show: false,
+                      textStyle: {
+                        fontSize: 30
+                      }
+                    }
+                  }
+                }]
+              };
+              if (percent > 1) {
+                option.series[1] = {
+                  name: '超额',
+                  type: 'pie',
+                  radius: ['64%', '68%'],
+                  label: {
+                    normal: {
+                      show: false
+                    }
+                  },
+                  data: getData()
+                }
               }
-            }
 
+              var optionMap = {
+                // color:['rgb(195,211,234)','rgb(2,230,239)'],
+                legend: {
+                  orient: 'vertical',
+                  left: 'left'
+                },
+                series: [{
+                  name: '川东北经济区排位',
+                  type: 'map',
+                  map: 'chuan_east_north',
+                  left: '20%',
+                  top: 20,
+                  right: '20%',
+                  bottom: 10,
+                  selectedMode: 'single',
+                  label: {
+                    normal: {
+                      show: true,
+                      textStyle: {
+                        color: '#FFF',
+                        fontSize: 16
+                      }
+                    },
+                    emphasis: {
+                      show: true
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      areaColor: 'rgba(0, 120, 255, 0.5)',
+                      // color: 'rgb(195,211,234)',
+                      color: new echarts.graphic.RadialGradient(0, 0, 8, [{
+                        offset: 0,
+                        color: 'rgb(195,211,234)' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: 'rgb(195,211,234)' // 0% 处的颜色
+                      }], false),
+                      borderColor: 'rgba(42,180,238,1)',
+                      borderType: 'solid',
+                      borderWidth: 1
+                    }
+                  },
+                  markPoint: {
+                    symbol: 'pin',
+                    symbolSize: 50
+                  }
 
-            setTimeout(function() {
-              chartInstance = echarts.init((element.find('div'))[0]);
-              chartInstance.clear();
-              chartInstance.resize();
-              chartInstance.setOption(option);
-            }, 600);
-
-            scope.onResize = function() {
-              if (chartInstance) {
+                }]
+              };
+              setTimeout(function() {
+                chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
-                chartInstance.setOption(option);
-              }
-            }
+                if(hasData) {
+                  chartInstance.setOption(option);
+                } else {
+                  chartInstance.setOption(optionMap);
+                }
+              }, 600);
 
-            angular.element($window).bind('resize', function() {
-              scope.onResize();
+              scope.onResize = function() {
+                if (chartInstance) {
+                  chartInstance.clear();
+                  chartInstance.resize();
+                  if(hasData) {
+                    chartInstance.setOption(option);
+                  } else {
+                    chartInstance.setOption(optionMap);
+                  }
+                }
+              }
+
+              angular.element($window).bind('resize', function() {
+                scope.onResize();
+              })
             })
-          })
+          }
+
         }
       }
     }
@@ -1280,137 +1980,263 @@
           if (!scope.targetratedata || !scope.targetratedata.url) {
             return;
           }
-          spotService.getDetail(scope.targetratedata.url, {
-            picCode: scope.targetratedata.picCode
-          }).then(function(result) {
-            var opt = result.data;
-            if (!opt || !opt.series) {
+
+          scope.$watch('targetratedata', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
-            scope.commoninfo.title = opt.title;
-            var resData = opt.series[0].data;
-            var data = [];
-            _.forEach(resData, function(item) {
-              var obj = {};
-              obj.value = item.value;
-              obj.name = item.name;
-              if (item.highLight == '1') {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(155,157,82)',
-                    borderColor: 'rgb(245,222,68)',
-                    borderWidth: 1
-                  }
-                }
-                scope.commoninfo.rateTotal = item.value;
-                scope.commoninfo.rateUnit = opt.y_name[0];
-              } else {
-                obj.itemStyle = {
-                  normal: {
-                    color: 'rgb(7,83,181)',
-                    borderColor: 'rgb(0,119,255)',
-                    borderWidth: 1
-                  }
+            redraw();
+          });
+
+          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+            if (newValue === oldValue || !newValue || !oldValue) {
+              return;
+            }
+            redraw();
+          }, true);
+
+          // init
+          redraw();
+
+          function redraw() {
+            scope.commoninfo.promiseTarget.then(function() {
+              //  set time params;
+              var timeParam = null;
+              if (scope.commoninfo && scope.commoninfo.model) {
+                timeParam = angular.copy(scope.commoninfo.model);
+                if (scope.commoninfo.time_scope == 'quarter') {
+                  timeParam.setMonth(scope.commoninfo.quarter - 1);
+                } else if (scope.commoninfo.time_scope == 'month') {
+                  timeParam.setMonth(scope.commoninfo.month - 1);
                 }
               }
-              data.push(obj);
-            });
-            scope.commoninfo.othertargetrate = _.filter(resData, function(o) {
-              return o.highLight != '1';
-            })
-            var option = {
-              tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                  type: 'shadow'
-                },
-                formatter: "{a} <br/>{b} : {c}"
-              },
-              grid: {
-                left: '9%',
-                right: '8%',
-                bottom: '8%',
-                top: '8%',
-                containLabel: true
-              },
-              xAxis: {
-                type: 'value',
-
-                nameLocation: 'end',
-                position: 'top',
-                axisTick: {
-                  show: false
-                },
-                axisLabel: {
-                  show: false
-                },
-                axisLine: {
-                  show: false
-                },
-                splitLine: {
-                  show: false
+              spotService.getDetail(scope.targetratedata.url, {
+                queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
+                picCode: scope.targetratedata.picCode
+              }).then(function(result) {
+                var opt = result.data;
+                if (!opt || !opt.series) {
+                  return;
                 }
-              },
-              yAxis: {
-                type: 'category',
-                name: '',
-                nameLocation: 'start',
-                boundaryGap: true,
-                axisTick: {
-                  show: false
-                },
-                axisLine: {
-                  show: true,
-                  lineStyle: {
-                    color: 'rgba(0, 120, 255, 0.5)'
+                scope.targetratedata.active = true; // 为了再次点击菜单时能触发 targetratedata change事件
+                if (!scope.commoninfo.model && opt.init_query_time != '') {
+                  scope.commoninfo.time_scope = opt.time_scope;
+                  scope.commoninfo.byMonth = true;
+                  scope.commoninfo.model = new Date(opt.init_query_time);
+                  var quarterMonth = opt.init_query_time.substring(opt.init_query_time.indexOf('-') + 1);
+                  if (opt.time_scope == 'quarter') {
+                    scope.commoninfo.quarter = Number(quarterMonth);
+                    scope.commoninfo.byMonth = false;
+                  } else {
+                    scope.commoninfo.month = Number(quarterMonth);
+                    scope.commoninfo.byMonth = true;
                   }
-                },
-                axisLabel: {
-                  textStyle: {
-                    color: 'rgb(246,246,246)',
-                    fontSize: 14
-                  }
-                },
-                data: _.map(data, 'name')
-              },
-              series: [{
-                name: '同比增速',
-                type: 'bar',
-                barMaxWidth: '50%',
-                label: {
-                  normal: {
-                    show: true,
-                    position: 'right',
-                    formatter: '{c}%',
-                    textStyle: {
-                      color: 'rgb(246,246,246)',
-                      fontSize: 14
+                }
+
+                scope.commoninfo.title = opt.title;
+                var resData = opt.series[0].data;
+                var data = [];
+                var hasData =  false;
+                _.forEach(resData, function(item) {
+                  var obj = {};
+                  obj.value = item.value;
+                  obj.name = item.name;
+                  if (item.highLight == '1') {
+                    obj.itemStyle = {
+                      normal: {
+                        color: 'rgb(155,157,82)',
+                        borderColor: 'rgb(245,222,68)',
+                        borderWidth: 1
+                      }
+                    }
+                    if(item.value != '') {
+                      hasData = true;
+                    }
+                    scope.commoninfo.rateTotal = item.value;
+                    scope.commoninfo.rateUnit = opt.y_name[0];
+                  } else {
+                    obj.itemStyle = {
+                      normal: {
+                        color: 'rgb(7,83,181)',
+                        borderColor: 'rgb(0,119,255)',
+                        borderWidth: 1
+                      }
                     }
                   }
-                },
-                data: data
-              }]
-            };
+                  data.push(obj);
+                });
+                scope.commoninfo.othertargetrate = _.filter(resData, function(o) {
+                  return o.highLight != '1';
+                })
+                var option = {
+                  tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                      type: 'shadow'
+                    },
+                    formatter: "{a} <br/>{b} : {c}" + opt.y_name[0]
+                  },
+                  grid: {
+                    left: '9%',
+                    right: '8%',
+                    bottom: '8%',
+                    top: '8%',
+                    containLabel: true
+                  },
+                  xAxis: {
+                    type: 'value',
 
-            setTimeout(function() {
-              chartInstance = echarts.init((element.find('div'))[0]);
-              chartInstance.clear();
-              chartInstance.resize();
-              chartInstance.setOption(option);
-            }, 600);
+                    nameLocation: 'end',
+                    position: 'top',
+                    axisTick: {
+                      show: false
+                    },
+                    axisLabel: {
+                      show: false
+                    },
+                    axisLine: {
+                      show: false
+                    },
+                    splitLine: {
+                      show: false
+                    }
+                  },
+                  yAxis: {
+                    type: 'category',
+                    name: '',
+                    nameLocation: 'start',
+                    boundaryGap: true,
+                    axisTick: {
+                      show: false
+                    },
+                    axisLine: {
+                      show: true,
+                      lineStyle: {
+                        color: 'rgba(0, 120, 255, 0.5)'
+                      }
+                    },
+                    axisLabel: {
+                      textStyle: {
+                        color: 'rgb(246,246,246)',
+                        fontSize: 14
+                      }
+                    },
+                    data: _.map(data, 'name')
+                  },
+                  series: [{
+                    name: '同比增速',
+                    type: 'bar',
+                    barMaxWidth: '50%',
+                    label: {
+                      normal: {
+                        show: true,
+                        position: 'right',
+                        formatter: '{c}%',
+                        textStyle: {
+                          color: 'rgb(246,246,246)',
+                          fontSize: 14
+                        }
+                      }
+                    },
+                    data: data
+                  }]
+                };
 
-            scope.onResize = function() {
-              if (chartInstance) {
-                chartInstance.clear();
-                chartInstance.resize();
-                chartInstance.setOption(option);
-              }
-            }
+                var optionMap = {
+                  // color:['rgb(195,211,234)','rgb(2,230,239)'],
+                  legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                  },
+                  series: [{
+                    name: '川东北经济区排位',
+                    type: 'map',
+                    map: 'bz_single',
+                    left: '20%',
+                    top: 20,
+                    right: '20%',
+                    bottom: 10,
+                    selectedMode: 'single',
+                    label: {
+                      normal: {
+                        show: true,
+                        textStyle: {
+                          color: '#FFF',
+                          fontSize: 16
+                        }
+                      },
+                      emphasis: {
+                        show: true
+                      }
+                    },
+                    itemStyle: {
+                      normal: {
+                        areaColor: 'rgba(0, 120, 255, 0.5)',
+                        // color: 'rgb(195,211,234)',
+                        color: new echarts.graphic.RadialGradient(0, 0, 8, [{
+                          offset: 0,
+                          color: 'rgb(195,211,234)' // 0% 处的颜色
+                        }, {
+                          offset: 1,
+                          color: 'rgb(195,211,234)' // 0% 处的颜色
+                        }], false),
+                        borderColor: 'rgba(42,180,238,1)',
+                        borderType: 'solid',
+                        borderWidth: 1
+                      }
+                    },
+                    markPoint: {
+                      symbol: 'pin',
+                      symbolSize: 50
+                    }
 
-            angular.element($window).bind('resize', function() {
-              scope.onResize();
+                  }]
+                };
+
+                setTimeout(function() {
+                  chartInstance = echarts.init((element.find('div'))[0]);
+                  chartInstance.clear();
+                  chartInstance.resize();
+                  if(hasData ) {
+                    chartInstance.setOption(option);
+                  }
+                  else {
+                    chartInstance.setOption(optionMap);
+                  }
+                }, 600);
+
+                scope.onResize = function() {
+                  if (chartInstance) {
+                    chartInstance.clear();
+                    chartInstance.resize();
+                    if(hasData ) {
+                      chartInstance.setOption(option);
+                    }
+                    else {
+                      chartInstance.setOption(optionMap);
+                    }
+                  }
+                }
+
+                angular.element($window).bind('resize', function() {
+                  scope.onResize();
+                })
+              })
             })
-          })
+          }
+
         }
       }
     }
