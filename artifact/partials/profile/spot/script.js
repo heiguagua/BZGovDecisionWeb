@@ -68,6 +68,7 @@
           })
         }
         else if(type == 5) {// 物价，不包含三级菜单，直接请求数据
+          $scope.hasGroup = false;
           $scope.submenus = null;
           spotService.getContent({
             menuId: id
@@ -669,6 +670,9 @@
                 var hasData = false;
                 _.forEach(resData, function(item) {
                   var obj = {};
+                  if(item.value != '') {
+                    item.value = parseFloat(item.value);
+                  }
                   obj.value = item.value;
                   if (item.highLight == '1') {
                     obj.itemStyle = {
@@ -1003,7 +1007,7 @@
                   left: '10%',
                   right: '12%',
                   bottom: '12%',
-                  top: '12%',
+                  top: '16%',
                   containLabel: true
                 },
                 yAxis: {
@@ -1289,7 +1293,7 @@
                     left: '12%',
                     right: '12%',
                     bottom: '12%',
-                    top: '12%',
+                    top: '16%',
                     containLabel: true
                   },
                   yAxis: {
@@ -1305,7 +1309,8 @@
                     },
                     splitLine: {
                       show: false
-                    }
+                    },
+                    max:opt.max_and_min['0'].maxValue
                   },
                   xAxis: {
                     type: '',
@@ -1581,7 +1586,8 @@
                   top: 'bottom',
                   textStyle: {
                     color: 'rgb(240,240,240)',
-                    fontWeight: 'normal'
+                    fontWeight: 'normal',
+                    fontSize:14
                   }
                 },
                 series: [{
@@ -1850,7 +1856,8 @@
                   top: 'bottom',
                   textStyle: {
                     color: 'rgb(240,240,240)',
-                    fontWeight: 'normal'
+                    fontWeight: 'normal',
+                    fontSize:14
                   }
                 },
                 series: [{
@@ -2058,6 +2065,9 @@
                 var hasData =  false;
                 _.forEach(resData, function(item) {
                   var obj = {};
+                  if(item.value != '') {
+                    item.value = parseFloat(item.value);
+                  }
                   obj.value = item.value;
                   obj.name = item.name;
                   if (item.highLight == '1') {
@@ -2071,8 +2081,8 @@
                     if(item.value != '') {
                       hasData = true;
                     }
-                    scope.commoninfo.rateTotal = item.value;
-                    scope.commoninfo.rateUnit = opt.y_name[0];
+                    scope.commoninfo.targetRateTotal = item.value;
+                    scope.commoninfo.targetRateUnit = opt.y_name[0];
                   } else {
                     obj.itemStyle = {
                       normal: {
@@ -2248,5 +2258,11 @@
       }
     }
   ]);
+
+  spot.filter('toPositive',function(){
+    return function(num) {
+      return Math.abs(num);
+    }
+  })
 
 })();
