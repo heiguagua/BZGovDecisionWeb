@@ -348,6 +348,7 @@
               if (!opt || !opt.series) {
                 return;
               }
+              scope.commoninfo.dep_name = opt.dep_name;
               scope.increasetotal.active = true; // 为了再次点击菜单时能触发increasetotal change事件
               if (opt.time_scope == 'quarter') {
                 scope.commoninfo.byMonth = false;
@@ -469,7 +470,7 @@
                 series: [{
                   name: opt.series[0].name,
                   type: 'bar',
-                  barMaxWidth: '40%',
+                  barMaxWidth: (data.length<3)?'30%':'50%',
                   label: {
                     normal: {
                       show: true,
@@ -642,6 +643,7 @@
                 if (!opt || !opt.series) {
                   return;
                 }
+                scope.commoninfo.dep_name = opt.dep_name;
                 scope.increaserate.active = true; // 为了再次点击菜单时能触发increaserate change事件
                 if (opt.time_scope == 'quarter') {
                   scope.commoninfo.byMonth = false;
@@ -754,7 +756,7 @@
                   series: [{
                     name: '同比增速',
                     type: 'bar',
-                    barMaxWidth: '50%',
+                    barMaxWidth: (data.length<3)?'30%':'50%',
                     label: {
                       normal: {
                         show: true,
@@ -924,6 +926,7 @@
               if (!opt || !opt.series) {
                 return;
               }
+              scope.commoninfo.dep_name = opt.dep_name;
               scope.rankdata.active = true; // 为了再次点击菜单时能触发 rankdata change事件
               if (!scope.commoninfo.model && opt.init_query_time != '') {
                 scope.commoninfo.time_scope = opt.time_scope;
@@ -1043,7 +1046,7 @@
                 series: [{
                   name: '同比增速',
                   type: 'bar',
-                  barMaxWidth: '30%',
+                  barMaxWidth: (data.length<3)?'20%':'30%',
                   label: {
                     normal: {
                       show: true,
@@ -1208,6 +1211,7 @@
                 if (!opt || !opt.series) {
                   return;
                 }
+                scope.commoninfo.dep_name = opt.dep_name;
                 scope.rankrate.active = true; // 为了再次点击菜单时能触发 rankrate change事件
                 if (!scope.commoninfo.model && opt.init_query_time != '') {
                   scope.commoninfo.time_scope = opt.time_scope;
@@ -1328,7 +1332,7 @@
                   series: [{
                     name: '同比增速',
                     type: 'bar',
-                    barMaxWidth: '30%',
+                    barMaxWidth: (data.length<3)?'20%':'30%',
                     label: {
                       normal: {
                         show: true,
@@ -1495,6 +1499,7 @@
               if (!opt || !opt.series) {
                 return;
               }
+              scope.commoninfo.dep_name = opt.dep_name;
               scope.targetgoaldata.active = true; // 为了再次点击菜单时能触发 targetgoaldata change事件
               if (!scope.commoninfo.model && opt.init_query_time != '') {
                 scope.commoninfo.time_scope = opt.time_scope;
@@ -1761,6 +1766,7 @@
               if (!opt || !opt.series) {
                 return;
               }
+              scope.commoninfo.dep_name = opt.dep_name;
               scope.targetgoaldata.active = true; // 为了再次点击菜单时能触发 targetgoaldata change事件
               if (!scope.commoninfo.model && opt.init_query_time != '') {
                 scope.commoninfo.time_scope = opt.time_scope;
@@ -2030,6 +2036,7 @@
                 if (!opt || !opt.series) {
                   return;
                 }
+                scope.commoninfo.dep_name = opt.dep_name;
                 scope.targetratedata.active = true; // 为了再次点击菜单时能触发 targetratedata change事件
                 if (!scope.commoninfo.model && opt.init_query_time != '') {
                   scope.commoninfo.time_scope = opt.time_scope;
@@ -2138,7 +2145,7 @@
                   series: [{
                     name: '同比增速',
                     type: 'bar',
-                    barMaxWidth: '50%',
+                    barMaxWidth: (data.length<3)?'30%':'50%',
                     label: {
                       normal: {
                         show: true,

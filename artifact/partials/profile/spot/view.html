@@ -137,7 +137,7 @@
               <h3 class='text-center' ng-show='!commondata.totalAmount'>{{commondata.totalTitle}}
                 <strong>--</strong>{{commondata.totalUnit}}</h3>
             <h4 class='text-center' ng-repeat='data in commondata.rankdetail'>{{data.name}}
-              <strong>第&nbsp;{{data.value}}&nbsp;名</strong>&nbsp;&nbsp;
+              <strong>第&nbsp;{{data.value?data.value:'-'}}&nbsp;名</strong>&nbsp;&nbsp;
               <span ng-if="data.floatValue > 0" class='rank-up'>
                 <span class='rank-num'>{{data.floatValue}}</span>
               </span>
@@ -177,7 +177,7 @@
           <div class='chart-wrap'>
             <div class='chart-title target'>
               <h3 class='text-center'>{{commondata.totalTitle}}
-                <strong>{{commondata.totalAmount}}</strong>{{commondata.totalUnit}}</h3>
+                <strong>{{commondata.totalAmount?commondata.totalAmount:'-'}}</strong>{{commondata.totalUnit}}</h3>
               <h4 class='text-center'>占{{commondata.targetThisYear}}年目标
                 <strong>{{commondata.percentThisYear}}%</strong>&nbsp;&nbsp;占{{commondata.targetFutureYear}}年的
                 <strong>{{commondata.percentFutureYear}}%</strong>
@@ -212,7 +212,7 @@
         </div>
         <div class='s-from'>
           <ul>
-            <li>数据来自统计部门</li>
+            <li>数据来自{{commondata.dep_name}}</li>
             <li>对比数据为去年同期数据</li>
           </ul>
         </div>
