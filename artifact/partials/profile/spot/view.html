@@ -88,7 +88,7 @@
           <div class='chart-title c-left'  ng-show='submenus.length == 3'>
             <div class='title-left'>
               <h3 class='text-center'>
-                <strong>{{commondata.rateTotal}}{{commondata.rateUnit}}</strong>
+                <strong>{{commondata.rateTotal?commondata.rateTotal:'--'}}{{commondata.rateUnit}}</strong>
               </h3>
               <p class='text-center'>同比增速</p>
             </div>
