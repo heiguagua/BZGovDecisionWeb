@@ -20,10 +20,13 @@
       <div class='menu-content'>
         <div class='s-title'>
           <h4 class='text-center title'>{{commondata.title}}</h4>
-          <ul class='s-m-tab' ng-show='submenus.length == 3'>
-            <li ng-class="{true: 'active', false: 'inactive'}[isActive == 1]" ng-click='showChart(1,submenus[0].id)'><img src='assets/images/spot_chart.png' alt='increase'/>{{submenus[0].name}}</li>
-            <li ng-class="{true: 'active', false: 'inactive'}[isActive == 2]" ng-click='showChart(2,submenus[1].id)'><img src='assets/images/spot_bmk.png' alt='rank'/>{{submenus[1].name}}</li>
-            <li ng-class="{true: 'active', false: 'inactive'}[isActive == 3]" ng-click='showChart(3,submenus[2].id)'><img src='assets/images/spot_flag.png' alt='target'/>{{submenus[2].name}}</li>
+          <ul class='s-m-tab' ng-show='submenus != null'>
+            <li  ng-repeat='item in submenus'  ng-class="{true: 'active', false: 'inactive'}[isActive == $index+1]" ng-click='showChart($index+1,item.id)'>
+              <img ng-if='item.name=="增长" ' src='assets/images/spot_chart.png' alt='increase'/>
+              <img ng-if='item.name=="排位" ' src='assets/images/spot_bmk.png' alt='rank'/>
+              <img ng-if='item.name=="目标" ' src='assets/images/spot_flag.png' alt='rank'/>
+              {{item.name}}
+            </li>
           </ul>
           <div class='statistic'>
             <div class='time-pick'>
@@ -34,7 +37,7 @@
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
-                <div class='select-group' ng-if='hasGroup' ng-if="groupOptions != void(0)"><select  selectpicker ng-model='$parent.group' ng-change='groupChanged()' class='quarter' ng-options='x.groupId as x.groupName for x in groupOptions'></select></div>
+                <div class='select-group' ng-if='hasGroup' ng-if="groupOptions != void(0) && groupOptions[0].groupId != void(0) "><select  selectpicker ng-model='$parent.group' ng-change='groupChanged()' class='quarter' ng-options='x.groupId as x.groupName for x in groupOptions track by x.groupId'></select></div>
                 <div class='select-wrapper' ng-if=!commondata.byMonth><select selectpicker ng-model='commondata.quarter' ng-change='quarterChanged()' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select></div>
                 <div class='select-wrapper' ng-if=commondata.byMonth><select selectpicker ng-model='commondata.month'  ng-change='monthChanged()' class='quarter' ng-options='x.id as x.name for x in monthOptions'></select></div>
               </p>
@@ -139,10 +142,10 @@
             <h4 class='text-center' ng-repeat='data in commondata.rankdetail'>{{data.name}}
               <strong>第&nbsp;{{data.value?data.value:'-'}}&nbsp;名</strong>&nbsp;&nbsp;
               <span ng-if="data.floatValue > 0" class='rank-up'>
-                <span class='rank-num'>{{data.floatValue}}</span>
+                <span class='rank-num'>{{data.floatValue}}位</span>
               </span>
               <span ng-if="data.floatValue < 0" class='rank-down'>
-                <span class='rank-num'>{{data.floatValue | toPositive}}</span>
+                <span class='rank-num'>{{data.floatValue | toPositive}}位</span>
               </span>
             </h4>
           </div>
@@ -161,10 +164,10 @@
                 <label>{{data.name}}</label>
                 <div class='c-num rank'>第&nbsp;&nbsp;{{data.value?data.value:'-'}}&nbsp;&nbsp;名&nbsp;&nbsp;
                   <span ng-if="data.floatValue > 0" class='rank-up'>
-                    <span class='rank-num'>{{data.floatValue}}</span>
+                    <span class='rank-num'>{{data.floatValue}}位</span>
                   </span>
                   <span ng-if="data.floatValue < 0" class='rank-down'>
-                    <span class='rank-num'>{{data.floatValue | toPositive}}</span>
+                    <span class='rank-num'>{{data.floatValue | toPositive}}位</span>
                   </span>
                 </div>
               </div>

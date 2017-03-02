@@ -182,7 +182,6 @@
         })
 
       });
-
       $scope.changed = function() {
         // TODO send http request for data of current menu width time parameters
         getTimeParams();
@@ -368,7 +367,6 @@
                   scope.commoninfo.month = Number(quarterMonth);
                 }
               }
-              console.log(scope.commoninfo.month);
               var resData = opt.series[0].data;
               var data = [];
               var hasData = false;
@@ -460,6 +458,7 @@
                     }
                   },
                   axisLabel: {
+                    interval:0,
                     textStyle: {
                       color: 'rgb(246,246,246)',
                       fontSize: 14
@@ -749,6 +748,7 @@
                       }
                     },
                     axisLabel: {
+                      interval:0,
                       textStyle: {
                         color: 'rgb(246,246,246)',
                         fontSize: 14
@@ -1040,6 +1040,7 @@
                     }
                   },
                   axisLabel: {
+                    interval:0,
                     textStyle: {
                       color: 'rgb(246,246,246)',
                       fontSize: 14
@@ -1327,6 +1328,7 @@
                       }
                     },
                     axisLabel: {
+                      interval:0,
                       textStyle: {
                         color: 'rgb(246,246,246)',
                         fontSize: 14
@@ -2145,6 +2147,7 @@
                       }
                     },
                     axisLabel: {
+                      interval:0,
                       textStyle: {
                         color: 'rgb(246,246,246)',
                         fontSize: 14
