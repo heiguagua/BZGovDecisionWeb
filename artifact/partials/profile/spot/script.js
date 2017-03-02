@@ -18,10 +18,13 @@
 
       $scope.showChart = function(num, id) {
         $scope.isActive = num;
-        spotService.getContent({
-          menuId: id,
-          groupId: $scope.group
-        }).then(function(data) {
+        var params = {};
+        params.menuId = id;
+        console.log($scope.groupOptions);
+        if($scope.group) {
+          params.groupId = $scope.group.groupId?$scope.group.groupId:$scope.group // 解决select option.id 为undefined与as in 的冲突
+        }
+        spotService.getContent(params).then(function(data) {
           $scope.commondata = {};
 
           if (num == 1) {
@@ -51,8 +54,8 @@
           spotService.getGroups({
             menuId: id
           }).then(function(result) {
-            $scope.groupOptions = _.sortBy(result.data, ['groupId']);;
-            $scope.group = $scope.groupOptions[0].groupId;
+            $scope.groupOptions = _.sortBy(result.data, ['groupId']);
+            $scope.group = $scope.groupOptions[0];
             spotService.getMenus({
               parentId: id
             }).then(function(res) {
@@ -397,7 +400,7 @@
                   scope.commoninfo.totalLastAmount = item.value;
                 }
                 scope.commoninfo.title = opt.title;
-                scope.commoninfo.totalTitle = '总产值';
+                scope.commoninfo.totalTitle = '总量';
                 scope.commoninfo.totalUnit = opt.y_name[0];
                 scope.commoninfo.floatNum = (scope.commoninfo.totalAmount - scope.commoninfo.totalLastAmount).toFixed(2);
                 if (scope.commoninfo.floatNum >= 0) {
@@ -420,9 +423,9 @@
                 },
                 grid: {
                   left: '9%',
-                  right: '8%',
+                  right: '19%',
                   bottom: '8%',
-                  top: '8%',
+                  top: '0',
                   containLabel: true
                 },
                 xAxis: {
@@ -475,7 +478,7 @@
                     normal: {
                       show: true,
                       position: 'right',
-                      formatter: '{c}',
+                      formatter: '{c}'+opt.y_name[0],
                       textStyle: {
                         color: 'rgb(246,246,246)',
                         fontSize: 14
@@ -710,9 +713,9 @@
                   },
                   grid: {
                     left: '9%',
-                    right: '8%',
+                    right: '15%',
                     bottom: '8%',
-                    top: '8%',
+                    top: '0',
                     containLabel: true
                   },
                   xAxis: {
@@ -758,14 +761,14 @@
                     data: opt.x_data
                   },
                   series: [{
-                    name: '同比增速',
+                    name: opt.series[0].name,
                     type: 'bar',
                     barMaxWidth: (data.length<3)?'30%':'50%',
                     label: {
                       normal: {
                         show: true,
                         position: 'right',
-                        formatter: '{c}%',
+                        formatter: '{c}' +opt.y_name[0],
                         textStyle: {
                           color: 'rgb(246,246,246)',
                           fontSize: 14
@@ -991,7 +994,7 @@
                   }
                 }
                 scope.commoninfo.title = opt.title;
-                scope.commoninfo.totalTitle = '总产值';
+                scope.commoninfo.totalTitle = '总量';
                 scope.commoninfo.totalUnit = opt.y_name[0];
                 data.push(obj);
               });
@@ -1049,7 +1052,7 @@
                   data: _.map(data, 'name')
                 },
                 series: [{
-                  name: '同比增速',
+                  name: opt.series[0].name,
                   type: 'bar',
                   barMaxWidth: (data.length<3)?'20%':'30%',
                   label: {
@@ -1122,7 +1125,7 @@
                 chartInstance1 = echarts.init((element.find('div'))[0]);
                 chartInstance1.clear();
                 chartInstance1.resize();
-                if (hasData) {
+                if (hasData && scope.rankdata.picCode != '10721' && scope.rankdata.picCode != '10723') { // 10721为居民收支
                   chartInstance1.setOption(option);
                 } else {
                   chartInstance1.setOption(optionMap);
@@ -1133,7 +1136,7 @@
                 if (chartInstance1) {
                   chartInstance1.clear();
                   chartInstance1.resize();
-                  if(hasData) {
+                  if (hasData && scope.rankdata.picCode != '10721' && scope.rankdata.picCode != '10723') { // 10721为居民收支
                     chartInstance1.setOption(option);
                   }
                   else {
@@ -1310,8 +1313,7 @@
                     },
                     splitLine: {
                       show: false
-                    },
-                    max:opt.max_and_min['0'].maxValue
+                    }
                   },
                   xAxis: {
                     type: '',
@@ -1337,7 +1339,7 @@
                     data: _.map(data, 'name')
                   },
                   series: [{
-                    name: '同比增速',
+                    name: opt.series[0].name,
                     type: 'bar',
                     barMaxWidth: (data.length<3)?'20%':'30%',
                     label: {
@@ -1410,7 +1412,7 @@
                   chartInstance1 = echarts.init((element.find('div'))[0]);
                   chartInstance1.clear();
                   chartInstance1.resize();
-                  if (hasData) {
+                  if (hasData && scope.rankrate.picCode != '10722' && scope.rankrate.picCode != '10724') { // 10721为居民收支
                     chartInstance1.setOption(option);
                   } else {
                     chartInstance1.setOption(optionMap);
@@ -1421,7 +1423,7 @@
                   if (chartInstance1) {
                     chartInstance1.clear();
                     chartInstance1.resize();
-                    if(hasData) {
+                    if (hasData && scope.rankrate.picCode != '10722' && scope.rankrate.picCode != '10724') { // 10721为居民收支
                       chartInstance1.setOption(option);
                     }
                     else {
@@ -1528,7 +1530,7 @@
                 if (item.name == '今年目标') {
                   _.forEach(item.data, function(data) {
                     if (data.highLight == '1') {
-                      scope.commoninfo.totalTitle = '总产值';
+                      scope.commoninfo.totalTitle = '总量';
                       scope.commoninfo.totalAmount = data.value;
                       scope.commoninfo.totalUnit = data.unit;
                       if(data.value != '') {
@@ -1798,7 +1800,7 @@
                   _.forEach(item.data, function(data) {
                     if (data.highLight == '1') {
 
-                      scope.commoninfo.totalTitle = '总产值';
+                      scope.commoninfo.totalTitle = '总量';
                       scope.commoninfo.totalAmount = data.value;
                       scope.commoninfo.totalUnit = data.unit;
                       if(data.value != '') {
@@ -2111,7 +2113,7 @@
                     left: '9%',
                     right: '8%',
                     bottom: '8%',
-                    top: '8%',
+                    top: '0',
                     containLabel: true
                   },
                   xAxis: {
@@ -2156,7 +2158,7 @@
                     data: _.map(data, 'name')
                   },
                   series: [{
-                    name: '同比增速',
+                    name: opt.series[0].name,
                     type: 'bar',
                     barMaxWidth: (data.length<3)?'30%':'50%',
                     label: {
