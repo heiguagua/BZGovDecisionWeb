@@ -33,7 +33,7 @@
         &.inactive {
           border-bottom: none;
           .s-m-name {
-            color: #a2a2a2;
+            color: #dcdcdc;
           }
         }
         .s-m-name {
@@ -42,7 +42,7 @@
         .s-m-star {
           text-align: center;
           .fa-star {
-            color: rgb(0, 119, 225);
+            color: #1b94ff;
             padding: 4px;
             font-size: 0.8rem;
           }
@@ -50,14 +50,14 @@
             .fa-star {
               &:nth-child(3),
               &:nth-child(2) {
-                color: rgb(11, 60, 139);
+                color: #004fce;
               }
             }
           }
           &.num_2 {
             .fa-star {
               &:nth-child(3) {
-                color: rgb(11, 60, 139);
+                color: #004fce;
               }
             }
           }

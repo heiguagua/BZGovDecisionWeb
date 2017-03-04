@@ -21,8 +21,8 @@
         var params = {};
         params.menuId = id;
         console.log($scope.groupOptions);
-        if($scope.group) {
-          params.groupId = $scope.group.groupId?$scope.group.groupId:$scope.group // 解决select option.id 为undefined与as in 的冲突
+        if ($scope.group) {
+          params.groupId = $scope.group.groupId ? $scope.group.groupId : $scope.group // 解决select option.id 为undefined与as in 的冲突
         }
         spotService.getContent(params).then(function(data) {
           $scope.commondata = {};
@@ -46,10 +46,10 @@
       }
 
       $scope.menuactive = 0;
-      $scope.tabMenu = function(index, id,type) {
+      $scope.tabMenu = function(index, id, type) {
         $scope.menuactive = index;
         $scope.isActive = 1;
-        if(type == 6) {// 包含其他分类指标
+        if (type == 6) { // 包含其他分类指标
           $scope.hasGroup = true;
           spotService.getGroups({
             menuId: id
@@ -69,8 +69,7 @@
               })
             })
           })
-        }
-        else if(type == 5) {// 物价，不包含三级菜单，直接请求数据
+        } else if (type == 5) { // 物价，不包含三级菜单，直接请求数据
           $scope.hasGroup = false;
           $scope.submenus = null;
           spotService.getContent({
@@ -79,8 +78,7 @@
             $scope.commondata = {};
             $scope.increasedata = _.sortBy(data.data, ['picCode']);
           })
-        }
-        else {
+        } else {
           $scope.hasGroup = false;
           $scope.group = null;
           spotService.getMenus({
@@ -201,7 +199,7 @@
       }
 
       $scope.groupChanged = function() {
-        $scope.showChart($scope.isActive,$scope.submenus[$scope.isActive-1].id);
+        $scope.showChart($scope.isActive, $scope.submenus[$scope.isActive - 1].id);
       }
 
       function getTimeParams() {
@@ -277,6 +275,7 @@
           }
         )
       }
+
       function getDateFormat(parseDate, format) {
         var date = angular.copy(parseDate);
         if (date && angular.isDate(date) && !isNaN(date.getTime())) {
@@ -384,7 +383,7 @@
                       borderWidth: 1
                     }
                   }
-                  if(item.value != '') {
+                  if (item.value != '') {
                     hasData = true;
                   }
                   scope.commoninfo.totalAmount = item.value;
@@ -461,7 +460,7 @@
                     }
                   },
                   axisLabel: {
-                    interval:0,
+                    interval: 0,
                     textStyle: {
                       color: 'rgb(246,246,246)',
                       fontSize: 14
@@ -473,12 +472,12 @@
                 series: [{
                   name: opt.series[0].name,
                   type: 'bar',
-                  barMaxWidth: (data.length<3)?'30%':'50%',
+                  barMaxWidth: (data.length < 3) ? '30%' : '50%',
                   label: {
                     normal: {
                       show: true,
                       position: 'right',
-                      formatter: '{c}'+opt.y_name[0],
+                      formatter: '{c}' + opt.y_name[0],
                       textStyle: {
                         color: 'rgb(246,246,246)',
                         fontSize: 14
@@ -551,10 +550,9 @@
                 chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
-                if(hasData) {
+                if (hasData) {
                   chartInstance.setOption(option);
-                }
-                else {
+                } else {
                   chartInstance.setOption(optionMap);
                 }
               }, 600);
@@ -563,10 +561,9 @@
                 if (chartInstance) {
                   chartInstance.clear();
                   chartInstance.resize();
-                  if(hasData) {
+                  if (hasData) {
                     chartInstance.setOption(option);
-                  }
-                  else {
+                  } else {
                     chartInstance.setOption(optionMap);
                   }
                 }
@@ -672,7 +669,7 @@
                 var hasData = false;
                 _.forEach(resData, function(item) {
                   var obj = {};
-                  if(item.value != '') {
+                  if (item.value != '') {
                     item.value = parseFloat(item.value);
                   }
                   obj.value = item.value;
@@ -684,7 +681,7 @@
                         borderWidth: 1
                       }
                     }
-                    if(item.value != '') {
+                    if (item.value != '') {
                       hasData = true;
                     }
                     scope.commoninfo.rateTotal = item.value;
@@ -751,7 +748,7 @@
                       }
                     },
                     axisLabel: {
-                      interval:0,
+                      interval: 0,
                       textStyle: {
                         color: 'rgb(246,246,246)',
                         fontSize: 14
@@ -763,12 +760,12 @@
                   series: [{
                     name: opt.series[0].name,
                     type: 'bar',
-                    barMaxWidth: (data.length<3)?'30%':'50%',
+                    barMaxWidth: (data.length < 3) ? '30%' : '50%',
                     label: {
                       normal: {
                         show: true,
                         position: 'right',
-                        formatter: '{c}' +opt.y_name[0],
+                        formatter: '{c}' + opt.y_name[0],
                         textStyle: {
                           color: 'rgb(246,246,246)',
                           fontSize: 14
@@ -834,10 +831,9 @@
                   chartInstance = echarts.init((element.find('div'))[0]);
                   chartInstance.clear();
                   chartInstance.resize();
-                  if(hasData) {
+                  if (hasData) {
                     chartInstance.setOption(option);
-                  }
-                  else {
+                  } else {
                     chartInstance.setOption(optionMap);
                   }
                 }, 600);
@@ -846,10 +842,9 @@
                   if (chartInstance) {
                     chartInstance.clear();
                     chartInstance.resize();
-                    if(hasData) {
+                    if (hasData) {
                       chartInstance.setOption(option);
-                    }
-                    else {
+                    } else {
                       chartInstance.setOption(optionMap);
                     }
                   }
@@ -979,7 +974,7 @@
                       borderWidth: 1
                     }
                   }
-                  if(item.value != '') {
+                  if (item.value != '') {
                     hasData = true;
                   }
                   scope.commoninfo.totalAmount = item.value;
@@ -1043,7 +1038,7 @@
                     }
                   },
                   axisLabel: {
-                    interval:0,
+                    interval: 0,
                     textStyle: {
                       color: 'rgb(246,246,246)',
                       fontSize: 14
@@ -1054,7 +1049,7 @@
                 series: [{
                   name: opt.series[0].name,
                   type: 'bar',
-                  barMaxWidth: (data.length<3)?'20%':'30%',
+                  barMaxWidth: (data.length < 3) ? '20%' : '30%',
                   label: {
                     normal: {
                       show: true,
@@ -1138,8 +1133,7 @@
                   chartInstance1.resize();
                   if (hasData && scope.rankdata.picCode != '10721' && scope.rankdata.picCode != '10723') { // 10721为居民收支
                     chartInstance1.setOption(option);
-                  }
-                  else {
+                  } else {
                     chartInstance1.setOption(optionMap);
                   }
                 }
@@ -1267,7 +1261,7 @@
                         borderWidth: 1
                       }
                     }
-                    if(item.value != '') {
+                    if (item.value != '') {
                       hasData = true;
                     }
                     scope.commoninfo.rateTotal = item.value;
@@ -1330,7 +1324,7 @@
                       }
                     },
                     axisLabel: {
-                      interval:0,
+                      interval: 0,
                       textStyle: {
                         color: 'rgb(246,246,246)',
                         fontSize: 14
@@ -1341,7 +1335,7 @@
                   series: [{
                     name: opt.series[0].name,
                     type: 'bar',
-                    barMaxWidth: (data.length<3)?'20%':'30%',
+                    barMaxWidth: (data.length < 3) ? '20%' : '30%',
                     label: {
                       normal: {
                         show: true,
@@ -1425,8 +1419,7 @@
                     chartInstance1.resize();
                     if (hasData && scope.rankrate.picCode != '10722' && scope.rankrate.picCode != '10724') { // 10721为居民收支
                       chartInstance1.setOption(option);
-                    }
-                    else {
+                    } else {
                       chartInstance1.setOption(optionMap);
                     }
                   }
@@ -1533,8 +1526,8 @@
                       scope.commoninfo.totalTitle = '总量';
                       scope.commoninfo.totalAmount = data.value;
                       scope.commoninfo.totalUnit = data.unit;
-                      if(data.value != '') {
-                        hasData =  true;
+                      if (data.value != '') {
+                        hasData = true;
                       }
                     }
                     if (data.name == '查询时间') {
@@ -1560,9 +1553,9 @@
 
               var percent = 0;
               if (scope.commoninfo.totalAmount != '' && scope.commoninfo.targetThisValue != '') {
-                percent = (parseFloat(scope.commoninfo.totalAmount) / parseFloat(scope.commoninfo.targetThisValue)).toFixed(2);
+                percent = (parseFloat(scope.commoninfo.totalAmount) / parseFloat(scope.commoninfo.targetThisValue)).toFixed(3);
               }
-              scope.commoninfo.percentThisYear = percent * 100;
+              scope.commoninfo.percentThisYear = (percent * 100).toFixed(1);
 
               function getData() {
                 return [{
@@ -1591,7 +1584,7 @@
                   textStyle: {
                     color: 'rgb(240,240,240)',
                     fontWeight: 'normal',
-                    fontSize:14
+                    fontSize: 14
                   }
                 },
                 series: [{
@@ -1610,7 +1603,10 @@
                       show: false,
                       textStyle: {
                         fontSize: 30
-                      }
+                      },
+                      formatter: function(param) {
+                        return scope.commoninfo.percentThisYear + '%';
+                      },
                     }
                   }
                 }]
@@ -1683,7 +1679,7 @@
                 chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
-                if(hasData) {
+                if (hasData) {
                   chartInstance.setOption(option);
                 } else {
                   chartInstance.setOption(optionMap);
@@ -1694,7 +1690,7 @@
                 if (chartInstance) {
                   chartInstance.clear();
                   chartInstance.resize();
-                  if(hasData) {
+                  if (hasData) {
                     chartInstance.setOption(option);
                   } else {
                     chartInstance.setOption(optionMap);
@@ -1803,7 +1799,7 @@
                       scope.commoninfo.totalTitle = '总量';
                       scope.commoninfo.totalAmount = data.value;
                       scope.commoninfo.totalUnit = data.unit;
-                      if(data.value != '') {
+                      if (data.value != '') {
                         hasData = true;
                       }
                     }
@@ -1829,10 +1825,9 @@
               })
               var percent = 0;
               if (scope.commoninfo.totalAmount != '' && scope.commoninfo.targetFutureValue != '') {
-                percent = (parseFloat(scope.commoninfo.totalAmount) / parseFloat(scope.commoninfo.targetFutureValue)).toFixed(2);
+                percent = (parseFloat(scope.commoninfo.totalAmount) / parseFloat(scope.commoninfo.targetFutureValue));
               }
-              scope.commoninfo.percentFutureYear = percent * 100;
-
+              scope.commoninfo.percentFutureYear = (percent * 100).toFixed(1);
 
               function getData() {
                 return [{
@@ -1861,7 +1856,7 @@
                   textStyle: {
                     color: 'rgb(240,240,240)',
                     fontWeight: 'normal',
-                    fontSize:14
+                    fontSize: 14
                   }
                 },
                 series: [{
@@ -1880,6 +1875,9 @@
                       show: false,
                       textStyle: {
                         fontSize: 30
+                      },
+                      formatter: function(param) {
+                        return scope.commoninfo.percentFutureYear + '%';
                       }
                     }
                   }
@@ -1953,7 +1951,7 @@
                 chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
-                if(hasData) {
+                if (hasData) {
                   chartInstance.setOption(option);
                 } else {
                   chartInstance.setOption(optionMap);
@@ -1964,7 +1962,7 @@
                 if (chartInstance) {
                   chartInstance.clear();
                   chartInstance.resize();
-                  if(hasData) {
+                  if (hasData) {
                     chartInstance.setOption(option);
                   } else {
                     chartInstance.setOption(optionMap);
@@ -2066,10 +2064,10 @@
                 scope.commoninfo.title = opt.title;
                 var resData = opt.series[0].data;
                 var data = [];
-                var hasData =  false;
+                var hasData = false;
                 _.forEach(resData, function(item) {
                   var obj = {};
-                  if(item.value != '') {
+                  if (item.value != '') {
                     item.value = parseFloat(item.value);
                   }
                   obj.value = item.value;
@@ -2082,7 +2080,7 @@
                         borderWidth: 1
                       }
                     }
-                    if(item.value != '') {
+                    if (item.value != '') {
                       hasData = true;
                     }
                     scope.commoninfo.targetRateTotal = item.value;
@@ -2149,7 +2147,7 @@
                       }
                     },
                     axisLabel: {
-                      interval:0,
+                      interval: 0,
                       textStyle: {
                         color: 'rgb(246,246,246)',
                         fontSize: 14
@@ -2160,7 +2158,7 @@
                   series: [{
                     name: opt.series[0].name,
                     type: 'bar',
-                    barMaxWidth: (data.length<3)?'30%':'50%',
+                    barMaxWidth: (data.length < 3) ? '30%' : '50%',
                     label: {
                       normal: {
                         show: true,
@@ -2231,10 +2229,9 @@
                   chartInstance = echarts.init((element.find('div'))[0]);
                   chartInstance.clear();
                   chartInstance.resize();
-                  if(hasData ) {
+                  if (hasData) {
                     chartInstance.setOption(option);
-                  }
-                  else {
+                  } else {
                     chartInstance.setOption(optionMap);
                   }
                 }, 600);
@@ -2243,10 +2240,9 @@
                   if (chartInstance) {
                     chartInstance.clear();
                     chartInstance.resize();
-                    if(hasData ) {
+                    if (hasData) {
                       chartInstance.setOption(option);
-                    }
-                    else {
+                    } else {
                       chartInstance.setOption(optionMap);
                     }
                   }
@@ -2264,7 +2260,7 @@
     }
   ]);
 
-  spot.filter('toPositive',function(){
+  spot.filter('toPositive', function() {
     return function(num) {
       return Math.abs(num);
     }
