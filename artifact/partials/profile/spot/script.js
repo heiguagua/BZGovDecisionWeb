@@ -20,7 +20,6 @@
         $scope.isActive = num;
         var params = {};
         params.menuId = id;
-        console.log($scope.groupOptions);
         if ($scope.group) {
           params.groupId = $scope.group.groupId ? $scope.group.groupId : $scope.group // 解决select option.id 为undefined与as in 的冲突
         }
@@ -546,16 +545,14 @@
                 }]
               };
 
-              setTimeout(function() {
-                chartInstance = echarts.init((element.find('div'))[0]);
-                chartInstance.clear();
-                chartInstance.resize();
-                if (hasData) {
-                  chartInstance.setOption(option);
-                } else {
-                  chartInstance.setOption(optionMap);
-                }
-              }, 600);
+              chartInstance = echarts.init((element.find('div'))[0]);
+              chartInstance.clear();
+              chartInstance.resize();
+              if (hasData) {
+                chartInstance.setOption(option);
+              } else {
+                chartInstance.setOption(optionMap);
+              }
 
               scope.onResize = function() {
                 if (chartInstance) {
@@ -827,16 +824,14 @@
                   }]
                 };
 
-                setTimeout(function() {
-                  chartInstance = echarts.init((element.find('div'))[0]);
-                  chartInstance.clear();
-                  chartInstance.resize();
-                  if (hasData) {
-                    chartInstance.setOption(option);
-                  } else {
-                    chartInstance.setOption(optionMap);
-                  }
-                }, 600);
+                chartInstance = echarts.init((element.find('div'))[0]);
+                chartInstance.clear();
+                chartInstance.resize();
+                if (hasData) {
+                  chartInstance.setOption(option);
+                } else {
+                  chartInstance.setOption(optionMap);
+                }
 
                 scope.onResize = function() {
                   if (chartInstance) {
@@ -1116,16 +1111,14 @@
                 }]
               };
 
-              setTimeout(function() {
-                chartInstance1 = echarts.init((element.find('div'))[0]);
-                chartInstance1.clear();
-                chartInstance1.resize();
-                if (hasData && scope.rankdata.picCode != '10721' && scope.rankdata.picCode != '10723') { // 10721为居民收支
-                  chartInstance1.setOption(option);
-                } else {
-                  chartInstance1.setOption(optionMap);
-                }
-              }, 600);
+              chartInstance1 = echarts.init((element.find('div'))[0]);
+              chartInstance1.clear();
+              chartInstance1.resize();
+              if (hasData && scope.rankdata.picCode != '10721' && scope.rankdata.picCode != '10723') { // 10721为居民收支
+                chartInstance1.setOption(option);
+              } else {
+                chartInstance1.setOption(optionMap);
+              }
 
               scope.onResize2 = function() {
                 if (chartInstance1) {
@@ -1402,16 +1395,14 @@
                   }]
                 };
 
-                setTimeout(function() {
-                  chartInstance1 = echarts.init((element.find('div'))[0]);
-                  chartInstance1.clear();
-                  chartInstance1.resize();
-                  if (hasData && scope.rankrate.picCode != '10722' && scope.rankrate.picCode != '10724') { // 10721为居民收支
-                    chartInstance1.setOption(option);
-                  } else {
-                    chartInstance1.setOption(optionMap);
-                  }
-                }, 600);
+                chartInstance1 = echarts.init((element.find('div'))[0]);
+                chartInstance1.clear();
+                chartInstance1.resize();
+                if (hasData && scope.rankrate.picCode != '10722' && scope.rankrate.picCode != '10724') { // 10721为居民收支
+                  chartInstance1.setOption(option);
+                } else {
+                  chartInstance1.setOption(optionMap);
+                }
 
                 scope.onResize2 = function() {
                   if (chartInstance1) {
@@ -1675,7 +1666,7 @@
 
                 }]
               };
-              setTimeout(function() {
+              setTimeout(function(){
                 chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
@@ -1684,7 +1675,7 @@
                 } else {
                   chartInstance.setOption(optionMap);
                 }
-              }, 600);
+              },200);
 
               scope.onResize = function() {
                 if (chartInstance) {
@@ -1947,7 +1938,7 @@
 
                 }]
               };
-              setTimeout(function() {
+              setTimeout(function(){
                 chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
@@ -1956,7 +1947,7 @@
                 } else {
                   chartInstance.setOption(optionMap);
                 }
-              }, 600);
+              },200);
 
               scope.onResize = function() {
                 if (chartInstance) {
@@ -2225,16 +2216,14 @@
                   }]
                 };
 
-                setTimeout(function() {
-                  chartInstance = echarts.init((element.find('div'))[0]);
-                  chartInstance.clear();
-                  chartInstance.resize();
-                  if (hasData) {
-                    chartInstance.setOption(option);
-                  } else {
-                    chartInstance.setOption(optionMap);
-                  }
-                }, 600);
+                chartInstance = echarts.init((element.find('div'))[0]);
+                chartInstance.clear();
+                chartInstance.resize();
+                if (hasData) {
+                  chartInstance.setOption(option);
+                } else {
+                  chartInstance.setOption(optionMap);
+                }
 
                 scope.onResize = function() {
                   if (chartInstance) {
