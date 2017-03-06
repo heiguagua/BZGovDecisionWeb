@@ -96,7 +96,7 @@
             top: -34px;
             .quarter {
               max-width: 200px;
-              height:28px;
+              height: 28px;
             }
             .bootstrap-select .dropdown-menu {
               background-color: rgba(3, 113, 199, 0.66);
@@ -119,9 +119,17 @@
               li {
                 a {
                   color: #cdd0d7;
+                  background: rgba(33, 150, 243, 0.46);
                   &:hover,
                   &:focus {
-                    background-color: #094c9b;
+                    background-color: #077cda;
+                    color: #FFF;
+                  }
+                }
+                &.selected{
+                  a{
+                    background: #077cda;
+                    color: #FFF;
                   }
                 }
               }
@@ -229,7 +237,7 @@
               .title-right {
                 @include flex-num(2);
                 @include flex-flow(column);
-                padding: 0.8rem 0.5rem 0.8rem 1rem;
+                padding: 0.8rem 0.2rem 0.8rem 1rem;
                 .compare {
                   @include flex-num(1);
                   @include flex-flow(row);
