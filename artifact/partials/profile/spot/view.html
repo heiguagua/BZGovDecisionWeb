@@ -19,7 +19,7 @@
       </div>
       <div class='menu-content'>
         <div class='s-title'>
-          <h4 class='text-center title'>{{commondata.title}}</h4>
+          <h4 class='text-center title'>&nbsp;{{commondata.title}}&nbsp;</h4>
           <ul class='s-m-tab' ng-show='submenus != null'>
             <li  ng-repeat='item in submenus'  ng-class="{true: 'active', false: 'inactive'}[isActive == $index+1]" ng-click='showChart($index+1,item.id)'>
               <img ng-if='item.name=="增长" ' src='assets/images/spot_chart.png' alt='increase'/>
@@ -181,8 +181,8 @@
             <div class='chart-title target'>
               <h3 class='text-center'>{{commondata.totalTitle}}
                 <strong>{{commondata.totalAmount?commondata.totalAmount:'--'}}</strong>{{commondata.totalUnit}}</h3>
-              <h4 class='text-center'>占{{commondata.targetThisYear}}年目标
-                <strong>{{commondata.percentThisYear!=''?commondata.percentThisYear:'--'}}%</strong>&nbsp;&nbsp;占{{commondata.targetFutureYear}}年的
+              <h4 class='text-center'>占{{commondata.targetThisYear != '' ? commondata.targetThisYear:'--'}}年目标
+                <strong>{{commondata.percentThisYear!=''?commondata.percentThisYear:'--'}}%</strong>&nbsp;&nbsp;占{{commondata.targetFutureYear != '' ? commondata.targetFutureYear:'--'}}年的
                 <strong>{{commondata.percentFutureYear!=''?commondata.percentFutureYear:'--'}}%</strong>
               </h4>
             </div>
