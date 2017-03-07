@@ -246,7 +246,7 @@
                   color: #c2ccda;
                   label,
                   .c-num {
-                    @include flex-num(5);
+                    @include flex-num(7);
                     text-align: left;
                     font-size: 0.8rem;
                     margin: 0;
@@ -254,7 +254,7 @@
                   .c-num {
                     color: #FFF;
                     text-align: left;
-                    @include flex-num(3);
+                    @include flex-num(5);
                     .higher {
                       color: rgb(8, 220, 60);
                     }
