@@ -667,7 +667,7 @@
                 _.forEach(resData, function(item) {
                   var obj = {};
                   if (item.value != '') {
-                    item.value = parseFloat(item.value);
+                  //  item.value = parseFloat(item.value);
                   }
                   obj.value = item.value;
                   if (item.highLight == '1') {
@@ -2059,7 +2059,7 @@
                 _.forEach(resData, function(item) {
                   var obj = {};
                   if (item.value != '') {
-                    item.value = parseFloat(item.value);
+                  //  item.value = parseFloat(item.value);
                   }
                   obj.value = item.value;
                   obj.name = item.name;
