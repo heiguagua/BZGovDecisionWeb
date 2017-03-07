@@ -2251,6 +2251,9 @@
 
   spot.filter('toPositive', function() {
     return function(num) {
+      if(num && typeof(num) == 'string' && num.indexOf('.')>-1) {
+        return Math.abs(num).toFixed(2);
+      }
       return Math.abs(num);
     }
   })
