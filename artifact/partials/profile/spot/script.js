@@ -170,6 +170,11 @@
         parentId: menuId
       }).then(function(result) {
         $scope.menus = result.data;
+        _.forEach($scope.menus,function(item) {
+          if(item.name.length == 2) {
+            item.name = item.name.split('').join(' ');
+          }
+        })
         spotService.getMenus({
           parentId: $scope.menus[0].id
         }).then(function(res) {
@@ -377,7 +382,7 @@
                 if (item.highLight == '1') {
                   obj.itemStyle = {
                     normal: {
-                      color: 'rgb(9,146,76)',
+                      color: '#08dc3c',
                       borderColor: 'rgb(7,218,63)',
                       borderWidth: 1
                     }
@@ -390,8 +395,8 @@
                 } else {
                   obj.itemStyle = {
                     normal: {
-                      color: 'rgb(7,83,181)',
-                      borderColor: 'rgb(0,119,255)',
+                      color: 'rgb(0,168,228)',
+                      borderColor: 'rgba(16,185,214,1)',
                       borderWidth: 1
                     }
                   }
@@ -400,12 +405,19 @@
                 scope.commoninfo.title = opt.title;
                 scope.commoninfo.totalTitle = '总量';
                 scope.commoninfo.totalUnit = opt.y_name[0];
-                scope.commoninfo.floatNum = (scope.commoninfo.totalAmount - scope.commoninfo.totalLastAmount).toFixed(2);
-                if (scope.commoninfo.floatNum >= 0) {
-                  scope.commoninfo.floatDesc = '增加';
-                } else {
-                  scope.commoninfo.floatDesc = '减少';
+                scope.commoninfo.floatNum ='';
+                if(scope.commoninfo.totalLastAmount == '') {
+                  scope.commoninfo.floatDesc = '--';
                 }
+                else {
+                  scope.commoninfo.floatNum = (parseFloat(scope.commoninfo.totalAmount) - parseFloat(scope.commoninfo.totalLastAmount)).toFixed(2);
+                  if (scope.commoninfo.floatNum >= 0) {
+                    scope.commoninfo.floatDesc = '增加';
+                  } else {
+                    scope.commoninfo.floatDesc = '减少';
+                  }
+                }
+
                 data.push(obj);
               });
               scope.commoninfo.othertotal = _.filter(resData, function(o) {
@@ -485,8 +497,8 @@
                   },
                   itemStyle: {
                     normal: {
-                      color: 'rgb(7,83,181)',
-                      borderColor: 'rgb(0,119,255)',
+                      color: '#00fef8',
+                      borderColor: '#30fef9',
                       borderWidth: 1
                     }
                   },
@@ -667,13 +679,13 @@
                 _.forEach(resData, function(item) {
                   var obj = {};
                   if (item.value != '') {
-                  //  item.value = parseFloat(item.value);
+                    item.value = parseFloat(item.value).toFixed(2);
                   }
                   obj.value = item.value;
                   if (item.highLight == '1') {
                     obj.itemStyle = {
                       normal: {
-                        color: 'rgb(9,146,76)',
+                        color: '#08dc3c',
                         borderColor: 'rgb(7,218,63)',
                         borderWidth: 1
                       }
@@ -686,8 +698,8 @@
                   } else {
                     obj.itemStyle = {
                       normal: {
-                        color: 'rgb(7,83,181)',
-                        borderColor: 'rgb(0,119,255)',
+                        color: 'rgb(0,168,228)',
+                        borderColor: 'rgba(16,185,214,1)',
                         borderWidth: 1
                       }
                     }
@@ -962,10 +974,11 @@
                 obj.value = item.value;
                 obj.name = item.name;
                 if (item.highLight == '1') {
+
                   obj.itemStyle = {
                     normal: {
-                      color: 'rgb(9,146,76)',
-                      borderColor: 'rgb(7,218,63)',
+                      color: '#00fef8',
+                      borderColor: '#30fef9',
                       borderWidth: 1
                     }
                   }
@@ -977,10 +990,11 @@
                 } else {
                   obj.itemStyle = {
                     normal: {
-                      color: 'rgb(7,83,181)',
-                      borderColor: 'rgb(0,119,255)',
+                      color: 'rgb(0,168,228)',
+                      borderColor: 'rgba(16,185,214,1)',
                       borderWidth: 1
                     }
+
                   }
                 }
                 scope.commoninfo.title = opt.title;
@@ -988,6 +1002,11 @@
                 scope.commoninfo.totalUnit = opt.y_name[0];
                 data.push(obj);
               });
+              var screen_width = screen.width;
+              var grid_top = '16%';
+              if(screen_width<1400) {
+                grid_top = '28%';
+              }
               var option = {
                 tooltip: {
                   trigger: 'axis',
@@ -1000,7 +1019,7 @@
                   left: '10%',
                   right: '12%',
                   bottom: '12%',
-                  top: '16%',
+                  top: grid_top,
                   containLabel: true
                 },
                 yAxis: {
@@ -1248,9 +1267,10 @@
                   obj.name = item.name;
                   if (item.highLight == '1') {
                     obj.itemStyle = {
+
                       normal: {
-                        color: 'rgb(9,146,76)',
-                        borderColor: 'rgb(7,218,63)',
+                        color: '#00fef8',
+                        borderColor: '#30fef9',
                         borderWidth: 1
                       }
                     }
@@ -1262,8 +1282,8 @@
                   } else {
                     obj.itemStyle = {
                       normal: {
-                        color: 'rgb(7,83,181)',
-                        borderColor: 'rgb(0,119,255)',
+                        color: 'rgb(0,168,228)',
+                        borderColor: 'rgba(16,185,214,1)',
                         borderWidth: 1
                       }
                     }
@@ -1271,7 +1291,11 @@
                   data.push(obj);
                 });
 
-
+                var screen_width = screen.width;
+                var grid_top = '16%';
+                if(screen_width<1400) {
+                  grid_top = '28%';
+                }
                 var option = {
                   tooltip: {
                     trigger: 'axis',
@@ -1284,7 +1308,7 @@
                     left: '12%',
                     right: '12%',
                     bottom: '12%',
-                    top: '16%',
+                    top: grid_top,
                     containLabel: true
                   },
                   yAxis: {
@@ -1839,9 +1863,13 @@
                   }
                 }];
               }
+              var add_str = '';
+              if(scope.targetgoaldata.picCode == "10231") {
+                add_str = '累计';
+              }
               var option = {
                 title: {
-                  text: scope.commoninfo.targetFutureYear + '年：' + scope.commoninfo.targetFutureValue + scope.commoninfo.targetFutureUnit,
+                  text: scope.commoninfo.targetFutureYear + '年'+add_str +'：' + scope.commoninfo.targetFutureValue + scope.commoninfo.targetFutureUnit,
                   left: 'center',
                   top: 'bottom',
                   textStyle: {
@@ -2066,7 +2094,7 @@
                   if (item.highLight == '1') {
                     obj.itemStyle = {
                       normal: {
-                        color: 'rgb(155,157,82)',
+                        color: 'rgb(245,222,68)',
                         borderColor: 'rgb(245,222,68)',
                         borderWidth: 1
                       }
@@ -2079,8 +2107,8 @@
                   } else {
                     obj.itemStyle = {
                       normal: {
-                        color: 'rgb(7,83,181)',
-                        borderColor: 'rgb(0,119,255)',
+                        color: 'rgb(0,168,228)',
+                        borderColor: 'rgba(16,185,214,1)',
                         borderWidth: 1
                       }
                     }
@@ -2100,7 +2128,7 @@
                   },
                   grid: {
                     left: '9%',
-                    right: '8%',
+                    right: '18%',
                     bottom: '8%',
                     top: '0',
                     containLabel: true
@@ -2254,7 +2282,7 @@
       if(num && typeof(num) == 'string' && num.indexOf('.')>-1) {
         return Math.abs(num).toFixed(2);
       }
-      return Math.abs(num);
+      return num==''?'':Math.abs(num);
     }
   })
 

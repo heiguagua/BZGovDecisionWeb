@@ -52,7 +52,7 @@
                 <h3 class='text-center' ng-show='!commondata.totalAmount'>{{commondata.totalTitle}}
                   <strong>--</strong>{{commondata.totalUnit}}</h3>
               <h4 class='text-center' ng-show='commondata.totalAmount'>总体同比去年{{commondata.floatDesc}}
-                {{commondata.floatNum}}
+                {{commondata.floatNum|toPositive}}
                 {{commondata.totalUnit}}</strong>
             </h4>
           </div>
@@ -67,18 +67,20 @@
               <div class='compare'>
                 <label>CPI总水平环比</label>
                 <div class='c-num'>
-                  <span class='higher' ng-if='100 < commondata.totalAmount'>上涨</span>
-                  <span class='equal' ng-if='100 == commondata.totalAmount'>持平</span>
-                  <span class='lower' ng-if='100 > commondata.totalAmount'>下降</span>
-                  &nbsp;&nbsp;{{(commondata.totalAmount-100).toFixed(2) | toPositive}}{{commondata.totalUnit}}</div>
+                  <span ng-if='commondata.totalAmount == "" '>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <span class='higher' ng-if='commondata.totalAmount != "" && 100 < commondata.totalAmount'>上涨</span>
+                  <span class='equal' ng-if='commondata.totalAmount != "" && 100 == commondata.totalAmount'>持平</span>
+                  <span class='lower' ng-if='commondata.totalAmount != "" && 100 > commondata.totalAmount'>下降</span>
+                  &nbsp;&nbsp;{{commondata.totalAmount == "" ? '--' :((commondata.totalAmount-100).toFixed(2) | toPositive)}}{{commondata.totalUnit}}</div>
               </div>
               <div class='compare' ng-repeat='item in commondata.othertotal'>
                 <label>与{{item.name}}比</label>
                 <div class='c-num'>
-                  <span class='higher' ng-if='item.value < commondata.totalAmount'>高</span>
-                  <span class='equal' ng-if='item.value == commondata.totalAmount'>持平</span>
-                  <span class='lower' ng-if='item.value > commondata.totalAmount'>低</span>
-                  &nbsp;&nbsp;{{(commondata.totalAmount-item.value).toFixed(2) | toPositive}}{{commondata.totalUnit}}</div>
+                  <span ng-if='item.value == "" '>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <span class='higher' ng-if='item.value != "" && (item.value - commondata.totalAmount<0)'>高</span>
+                  <span class='equal' ng-if='item.value != "" && item.value == commondata.totalAmount'>持平</span>
+                  <span class='lower' ng-if='item.value != "" && (item.value - commondata.totalAmount>0)'>低</span>
+                  &nbsp;&nbsp;{{(item.value == "" || commondata.totalAmount == "")? '--':((commondata.totalAmount-item.value).toFixed(2) | toPositive)}}{{commondata.totalUnit}}</div>
               </div>
             </div>
         </div>
@@ -96,10 +98,11 @@
               <div class='compare' ng-repeat='item in commondata.otherrate'>
                 <label>与{{item.name}}比</label>
                 <div class='c-num'>
-                  <span class='higher' ng-if='item.value < commondata.rateTotal'>高</span>
-                  <span class='equal' ng-if='item.value == commondata.rateTotal'>持平</span>
-                  <span class='lower' ng-if='item.value > commondata.rateTotal'>低</span>
-                  &nbsp;&nbsp;{{(commondata.rateTotal-item.value).toFixed(2) | toPositive}}{{commondata.rateUnit}}</div>
+                  <span ng-if='(item.value == "") '>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <span class='higher' ng-if='(item.value != "") && (item.value -commondata.rateTotal<0)'>高</span>
+                  <span class='equal' ng-if='(item.value != "") && item.value == commondata.rateTotal'>持平</span>
+                  <span class='lower' ng-if='(item.value != "") && (item.value - commondata.rateTotal>0)'>低</span>
+                  &nbsp;&nbsp;{{(item.value == '' || commondata.rateTotal == "") ? '--':((commondata.rateTotal-item.value).toFixed(2) | toPositive)}}{{commondata.rateUnit}}</div>
               </div>
             </div>
           </div>
@@ -112,20 +115,22 @@
             </div>
             <div class='title-right'>
               <div class='compare'>
-                <label>CPI总水平环比</label>
+                <label>CPI总水平同比</label>
                 <div class='c-num'>
-                  <span class='higher' ng-if='100 < commondata.rateTotal'>上涨</span>
-                  <span class='equal' ng-if='100 == commondata.rateTotal'>持平</span>
-                  <span class='lower' ng-if='100 > commondata.rateTotal'>下降</span>
-                  &nbsp;&nbsp;{{(commondata.rateTotal-100).toFixed(2) | toPositive}}{{commondata.rateUnit}}</div>
+                  <span ng-if='commondata.rateTotal == "" '>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <span class='higher' ng-if='commondata.rateTotal != "" && (100 -commondata.rateTotal<0)'>上涨</span>
+                  <span class='equal' ng-if='commondata.rateTotal != "" && 100 == commondata.rateTotal'>持平</span>
+                  <span class='lower' ng-if='commondata.rateTotal != "" && (100 - commondata.rateTotal>0)'>下降</span>
+                  &nbsp;&nbsp;{{commondata.rateTotal == "" ?'--':((commondata.rateTotal-100).toFixed(2) | toPositive)}}{{commondata.rateUnit}}</div>
               </div>
               <div class='compare' ng-repeat='item in commondata.otherrate'>
                 <label>与{{item.name}}比</label>
                 <div class='c-num'>
-                  <span class='higher' ng-if='item.value < commondata.rateTotal'>高</span>
-                  <span class='equal' ng-if='item.value == commondata.rateTotal'>持平</span>
-                  <span class='lower' ng-if='item.value > commondata.rateTotal'>低</span>
-                  &nbsp;&nbsp;{{(commondata.rateTotal-item.value).toFixed(2) | toPositive}}{{commondata.rateUnit}}</div>
+                  <span ng-if='item.value == "" '>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <span class='higher' ng-if='item.value != "" && (item.value - commondata.rateTotal<0)'>高</span>
+                  <span class='equal' ng-if='item.value != "" && item.value == commondata.rateTotal'>持平</span>
+                  <span class='lower' ng-if='item.value != "" && (item.value - commondata.rateTotal>0)'>低</span>
+                  &nbsp;&nbsp;{{(item.value == "" || commondata.rateTotal == "")?'--':((commondata.rateTotal-item.value).toFixed(2) | toPositive)}}{{commondata.rateUnit}}</div>
               </div>
             </div>
           </div>
@@ -140,12 +145,12 @@
               <h3 class='text-center' ng-show='!commondata.totalAmount'>{{commondata.totalTitle}}
                 <strong>--</strong>{{commondata.totalUnit}}</h3>
             <h4 class='text-center' ng-repeat='data in commondata.rankdetail'>{{data.name}}
-              <strong>第&nbsp;{{data.value?data.value:'--'}}&nbsp;名</strong>&nbsp;&nbsp;
-              <span ng-if="data.floatValue > 0" class='rank-up'>
-                <span class='rank-num'>{{data.floatValue}}位</span>
-              </span>
-              <span ng-if="data.floatValue < 0" class='rank-down'>
+              <strong>第&nbsp;{{data.value?data.value:'--'}}&nbsp;位</strong>&nbsp;&nbsp;
+              <span ng-if="data.floatValue < 0" class='rank-up'>
                 <span class='rank-num'>{{data.floatValue | toPositive}}位</span>
+              </span>
+              <span ng-if="data.floatValue > 0" class='rank-down'>
+                <span class='rank-num'>{{data.floatValue}}位</span>
               </span>
             </h4>
           </div>
@@ -162,12 +167,12 @@
             <div class='title-right'>
               <div class='compare' ng-repeat='data in commondata.rankratedetail'>
                 <label>{{data.name}}</label>
-                <div class='c-num rank'>第&nbsp;&nbsp;{{data.value?data.value:'--'}}&nbsp;&nbsp;名&nbsp;&nbsp;
-                  <span ng-if="data.floatValue > 0" class='rank-up'>
-                    <span class='rank-num'>{{data.floatValue}}位</span>
-                  </span>
-                  <span ng-if="data.floatValue < 0" class='rank-down'>
+                <div class='c-num rank'>第&nbsp;&nbsp;{{data.value?data.value:'--'}}&nbsp;&nbsp;位&nbsp;&nbsp;
+                  <span ng-if="data.floatValue < 0" class='rank-up'>
                     <span class='rank-num'>{{data.floatValue | toPositive}}位</span>
+                  </span>
+                  <span ng-if="data.floatValue > 0" class='rank-down'>
+                    <span class='rank-num'>{{data.floatValue}}位</span>
                   </span>
                 </div>
               </div>
@@ -203,10 +208,11 @@
                 <div class='compare' ng-repeat='item in commondata.othertargetrate'>
                   <label>与{{item.name}}比</label>
                   <div class='c-num' ng-if='commondata.targetRateTotal != ""'>
-                    <span class='higher' ng-if='item.value < commondata.targetRateTotal'>高</span>
-                    <span class='equal' ng-if='item.value == commondata.targetRateTotal'>持平</span>
-                    <span class='lower' ng-if='item.value > commondata.targetRateTotal'>低</span>
-                    &nbsp;&nbsp;{{(commondata.targetRateTotal-item.value).toFixed(2)?((commondata.targetRateTotal-item.value).toFixed(2)| toPositive):'--'}}{{commondata.targetRateUnit}}</div>
+                    <span ng-if='(item.value == "") '>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span class='higher' ng-if='(item.value != "") &&(item.value - commondata.targetRateTotal<0)'>高</span>
+                    <span class='equal' ng-if='(item.value != "") && item.value == commondata.targetRateTotal'>持平</span>
+                    <span class='lower' ng-if='(item.value != "") && (item.value - commondata.targetRateTotal>0)'>低</span>
+                    &nbsp;&nbsp;{{(item.value =='' || commondata.targetRateTotal == "")?'--':((commondata.targetRateTotal-item.value).toFixed(2)| toPositive)}}{{commondata.targetRateUnit}}</div>
                 </div>
               </div>
             </div>

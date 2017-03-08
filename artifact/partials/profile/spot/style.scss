@@ -20,7 +20,7 @@
       li {
         @include flex-num(1);
         padding: 1rem 0 0.4rem;
-        font-size: 1rem;
+        font-size: 1.1rem;
         color: #a2a2a2;
         margin: 0 1.8rem;
         cursor: pointer;
@@ -33,7 +33,7 @@
         &.inactive {
           border-bottom: none;
           .s-m-name {
-            color: #dcdcdc;
+            color: #f7f7f7;
           }
         }
         .s-m-name {
@@ -221,6 +221,9 @@
             @include flex-flow(column);
             -webkit-align-items: stretch;
             align-items: stretch;
+            @include smallscreen {
+              height:90px;
+            }
             &.c-left {
               @include flex-flow(row);
               .title-left {
@@ -243,7 +246,7 @@
                   @include flex-flow(row);
                   -webkit-align-items: center;
                   align-items: center;
-                  color: #c2ccda;
+                  color: #eaeaea;
                   label,
                   .c-num {
                     @include flex-num(7);
@@ -252,7 +255,7 @@
                     margin: 0;
                   }
                   .c-num {
-                    color: #FFF;
+                    color: #eaeaea;
                     text-align: left;
                     @include flex-num(5);
                     .higher {
@@ -291,7 +294,7 @@
             h4 {
               margin: 0;
               padding: 15px 0 20px;
-              color: #c2ccda;
+              color: #eaeaea;
               font-size: 0.8rem;
               @include flex-num(2);
               strong {
@@ -352,7 +355,7 @@
       .s-from {
         padding: 1rem 0;
         ul {
-          color: #a4b3c8;
+          color: #eaeaea;
           font-size: 0.7rem;
           padding: 0 30px;
           li {

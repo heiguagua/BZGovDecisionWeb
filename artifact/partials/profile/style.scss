@@ -60,7 +60,7 @@
           @include flex-num(1);
           @include flex-flow(row);
         }
-        padding: 0 15px 20px;
+        padding: 0 15px 10px;
         @include bigscreen {
           padding: 0 1.2rem 20px;
         }
