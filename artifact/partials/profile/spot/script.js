@@ -71,6 +71,8 @@
         } else if (type == 5) { // 物价，不包含三级菜单，直接请求数据
           $scope.hasGroup = false;
           $scope.submenus = null;
+          $scope.targetdata = null;
+          $scope.rankdata = null;
           spotService.getContent({
             menuId: id
           }).then(function(data) {
@@ -382,7 +384,7 @@
                 if (item.highLight == '1') {
                   obj.itemStyle = {
                     normal: {
-                      color: '#08dc3c',
+                      color: 'rgba(8, 220, 60, 0.83)',
                       borderColor: 'rgb(7,218,63)',
                       borderWidth: 1
                     }
@@ -685,7 +687,7 @@
                   if (item.highLight == '1') {
                     obj.itemStyle = {
                       normal: {
-                        color: '#08dc3c',
+                        color: 'rgba(8, 220, 60, 0.83)',
                         borderColor: 'rgb(7,218,63)',
                         borderWidth: 1
                       }
