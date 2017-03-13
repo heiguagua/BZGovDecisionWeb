@@ -73,6 +73,8 @@
           $scope.submenus = null;
           $scope.targetdata = null;
           $scope.rankdata = null;
+          $scope.commondata.totalAmount = null;
+          $scope.commondata.totalUnit = null;
           spotService.getContent({
             menuId: id
           }).then(function(data) {
