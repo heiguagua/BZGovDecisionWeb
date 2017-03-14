@@ -39,7 +39,8 @@
     /** UI-Router Config */
     $urlRouterProvider.otherwise('/profile');
     var screen_width = screen.width;
-    if (screen_width < 1024) {
+    var client_width = document.body.clientWidth;
+    if (screen_width < 1024 || client_width <1024) {
       $urlRouterProvider.otherwise('/home');
     } else {
       $urlRouterProvider.otherwise('/profile');

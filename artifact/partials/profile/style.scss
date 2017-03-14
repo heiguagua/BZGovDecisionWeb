@@ -8,7 +8,9 @@
   background-repeat: no-repeat !important;
   background-position: center !important;
   @include smallscreen {
-    padding:24px;
+    padding: 24px;
+    min-width: 1224px;
+    min-height: 600px;
   }
   .chart {
     padding: 4px;
@@ -24,13 +26,12 @@
       //border: 1px solid $innerline;
       @include flex-flow(column);
       .header {
-
-        position:relative;
+        position: relative;
         h3 {
           cursor: pointer;
           background: url("../assets/images/header.png") no-repeat center;
           width: 50%;
-          margin:0 auto;
+          margin: 0 auto;
           height: 50px;
           margin-top: 0;
           margin-bottom: 0;
@@ -39,22 +40,22 @@
             margin-top: 10px;
           }
         }
-        .toDetail{
-          position:absolute;
-          right:4px;
-          top:6px;
+        .toDetail {
+          position: absolute;
+          right: 4px;
+          top: 6px;
         }
       }
       .main {
         @include flex-flow(row);
         @include flex-num(1);
-        min-height:0;
+        min-height: 0;
         .wrap,
         .inner-wrap {
           &.menu {
             padding: 3rem 0 2rem;
             @include smallscreen {
-              padding: 2rem 0 2rem;
+              padding: 2rem 0;
             }
           }
           @include flex-num(1);
@@ -87,7 +88,7 @@
       @include flex-justify(center);
       &.active {
         background: url("../assets/images/nav_bg_active.png") no-repeat center;
-        background-size:100% 100%;
+        background-size: 100% 100%;
       }
       a {
         padding: 0 20px;

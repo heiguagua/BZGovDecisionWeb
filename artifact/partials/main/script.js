@@ -20,9 +20,10 @@
 
       var screen_width = screen.width;
       var screen_height = screen.height;
+      var client_width = document.body.clientWidth;
       var main_height = $('.mobile-content').height();
       $scope.showMobile = false;
-      if (screen_width < 1024) { // mobile
+      if (screen_width < 1024 || client_width < 1024) { // mobile
         $scope.showMobile = true;
         $('.mobile-content').css({
           'min-height': screen_height + 'px'
@@ -45,7 +46,7 @@
           });
         }
 
-        if (screen_width < 1200) { // mobile
+        if (screen_width < 1024) { // mobile
           var current_menu_index = 0;
           mainService.getSubMenus(vm.menus).then(function(res) {
             _.forEach(vm.menus, function(menu, index) {

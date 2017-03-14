@@ -469,6 +469,11 @@
                   axisLabel.textStyle = {
                     fontWeight: 'bolder'
                   };
+                  if(screen_width < 1200) {
+                    axisLabel.textStyle = {
+                      fontWeight: 'normal'
+                    };
+                  }
                   _.forEach(opt.series, function(item, index) {
                     item.label = {
                       normal: {
@@ -571,8 +576,8 @@
                   var grid_top = '15%';
                   if (screen_width < 1600) {
                     if(screen_width<1200) {
-                      grid_left = '18%';
-                      grid_right = '20%';
+                      grid_left = '16%';
+                      grid_right = '14%';
                       grid_top = '18%';
                     }
                     else {

@@ -34,8 +34,10 @@
       padding: 5px;
       @include flex-num(1);
       @include mobilescreen {
+        max-height: 400px;
         &>div {
-          min-height: 300px;
+          min-height: 300px !important;
+          max-height: 400px;
         }
       }
     }

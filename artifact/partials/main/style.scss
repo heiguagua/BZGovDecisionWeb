@@ -11,6 +11,10 @@ $chartHeightBig: 540px;
   overflow-x: hidden;
   @include flex-flow(column);
   @include flex-num(1);
+  @include smallscreen {
+    min-width: 1224px;
+    min-height: 600px;
+  }
   @include mobilescreen {
     overflow-x: hidden;
     overflow-y: auto;
@@ -42,7 +46,7 @@ $chartHeightBig: 540px;
       font-family: 微软雅黑;
     }
     @include mobilescreen {
-      display: none;
+      // display: none;
     }
   }
 }
@@ -57,7 +61,7 @@ $chartHeightBig: 540px;
   @include flex-flow(column);
   @include flex-num(1);
   @include mobilescreen {
-    display: none;
+    // display: none;
   }
   .side-nav {
     width: $sidebarWidth;
