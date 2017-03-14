@@ -480,7 +480,7 @@
                         }
                       }
                     };
-                    if (scope.content.picCode == '4211' || scope.content.picCode == '4221') {
+                    if (scope.content.picCode == '4211' || scope.content.picCode == '4221'  || scope.content.picCode == '4231') {
                       item.label.normal = {
                         show: false
                       };
