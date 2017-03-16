@@ -430,7 +430,7 @@
                   var axisLabel = {};
                   var grid_btm = 70;
                   if(screen_width<1200) {
-                    grid_btm = 80;
+                    grid_btm = 90;
                   }
                   if (opt.need_group == "1") {
                     stack_name = 'group';

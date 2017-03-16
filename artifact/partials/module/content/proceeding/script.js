@@ -158,7 +158,7 @@
               text: '纳入各月督办事项数目',
               subtext: '数据来源：市委目督办',
               left: 'center',
-              top: '4%'
+              top: '2%'
             },
             color: ['rgb(49,167,229)', 'rgb(40,200,202)'],
             tooltip: {
@@ -249,7 +249,7 @@
               text: '纳入各月督办事项办结率',
               subtext: '数据来源：市委目督办',
               left: 'center',
-              top: '4%'
+              top: '2%'
             },
             color: ['rgb(49,167,229)', 'rgb(40,200,202)'],
             tooltip: {

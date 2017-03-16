@@ -36,7 +36,7 @@
       @include mobilescreen {
         max-height: 400px;
         &>div {
-          min-height: 300px !important;
+          min-height: 360px !important;
           max-height: 400px;
         }
       }

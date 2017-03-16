@@ -53,7 +53,10 @@
         .graph {
           @include flex-num(1);
           @include mobilescreen {
-            height: 340px;
+            height: 400px !important;
+            >div{
+              height:380px !important;
+            }
           }
         }
       }
