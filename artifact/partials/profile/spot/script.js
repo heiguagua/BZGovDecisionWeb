@@ -11,7 +11,7 @@
       var vm = this;
       $rootScope.showMenu = true;
       $scope.isActive = 1;
-
+      $rootScope.currentMenu = false;
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
       });
@@ -169,7 +169,6 @@
 
       $scope.spotlist = [];
       var menuId = $stateParams.proid;
-      $rootScope.currentMenu = menuId;
       spotService.getMenus({
         parentId: menuId
       }).then(function(result) {
