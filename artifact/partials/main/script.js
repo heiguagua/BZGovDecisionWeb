@@ -42,7 +42,7 @@
         }
         else{
           _.remove(vm.menus, function(item) {
-              return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' ||  item.name == '经济形势分析';
+              return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' ||  item.name == '经济形势分析' || item.name == '目标工作分析';
           });
         }
 

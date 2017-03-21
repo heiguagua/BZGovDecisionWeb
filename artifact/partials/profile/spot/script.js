@@ -1596,7 +1596,7 @@
               }
               var option = {
                 title: {
-                  text: scope.commoninfo.targetThisYear + '年：' + scope.commoninfo.targetThisValue + scope.commoninfo.targetThisUnit,
+                  text: scope.commoninfo.targetThisYear + '年目标：' + scope.commoninfo.targetThisValue + scope.commoninfo.targetThisUnit,
                   left: 'center',
                   top: 'bottom',
                   textStyle: {
@@ -1872,7 +1872,7 @@
               }
               var option = {
                 title: {
-                  text: scope.commoninfo.targetFutureYear + '年'+add_str +'：' + scope.commoninfo.targetFutureValue + scope.commoninfo.targetFutureUnit,
+                  text: '巴中“十三五”目标：' + add_str+scope.commoninfo.targetFutureValue + scope.commoninfo.targetFutureUnit,
                   left: 'center',
                   top: 'bottom',
                   textStyle: {

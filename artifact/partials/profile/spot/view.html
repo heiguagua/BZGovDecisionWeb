@@ -51,7 +51,7 @@
                 <strong>{{commondata.totalAmount}}</strong>{{commondata.totalUnit}}</h3>
                 <h3 class='text-center' ng-show='!commondata.totalAmount'>{{commondata.totalTitle}}
                   <strong>--</strong>{{commondata.totalUnit}}</h3>
-              <h4 class='text-center' ng-show='commondata.totalAmount'>总体同比去年{{commondata.floatDesc}}
+              <h4 class='text-center' ng-show='commondata.totalAmount'>比上年同期{{commondata.floatDesc}}
                 {{commondata.floatNum|toPositive}}
                 {{commondata.totalUnit}}</strong>
             </h4>
@@ -65,7 +65,7 @@
             </div>
             <div class='title-right'>
               <div class='compare'>
-                <label>CPI总水平环比</label>
+                <label>居民消费价格环比</label>
                 <div class='c-num'>
                   <span ng-if='commondata.totalAmount == "" '></span>
                   <span class='higher' ng-if='commondata.totalAmount != "" && 100 < commondata.totalAmount'>上涨</span>
@@ -115,7 +115,7 @@
             </div>
             <div class='title-right'>
               <div class='compare'>
-                <label>CPI总水平同比</label>
+                <label>居民消费价格同比</label>
                 <div class='c-num'>
                   <span ng-if='commondata.rateTotal == "" '></span>
                   <span class='higher' ng-if='commondata.rateTotal != "" && (100 -commondata.rateTotal<0)'>上涨</span>
@@ -186,8 +186,8 @@
             <div class='chart-title target'>
               <h3 class='text-center'>{{commondata.totalTitle}}
                 <strong>{{commondata.totalAmount?commondata.totalAmount:'--'}}</strong>{{commondata.totalUnit}}</h3>
-              <h4 class='text-center'>占{{commondata.targetThisYear != '' ? commondata.targetThisYear:'--'}}年目标
-                <strong>{{commondata.percentThisYear!=''?commondata.percentThisYear:'--'}}%</strong>&nbsp;&nbsp;占{{commondata.targetFutureYear != '' ? commondata.targetFutureYear:'--'}}年的
+              <h4 class='text-center'>占{{commondata.targetThisYear != '' ? commondata.targetThisYear:'--'}}年目标的
+                <strong>{{commondata.percentThisYear!=''?commondata.percentThisYear:'--'}}%</strong>&nbsp;&nbsp;占巴中“十三五”目标的
                 <strong>{{commondata.percentFutureYear!=''?commondata.percentFutureYear:'--'}}%</strong>
               </h4>
             </div>
@@ -222,7 +222,7 @@
         <div class='s-from'>
           <ul>
             <li>数据来自{{commondata.dep_name}}</li>
-            <li>对比数据为去年同期数据</li>
+            <li>对比数据为上年同期数据</li>
           </ul>
         </div>
       </div>
