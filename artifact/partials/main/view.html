@@ -8,17 +8,6 @@
               <a class="navbar-brand" href="#">巴中市政务决策系统</a>
             </div>
 
-            <!-- <ul class="nav navbar-nav navbar-right">
-              <li>
-                <a href="#">张三</a>
-              </li>
-              <li>
-                <a href="#">退出系统
-                  <span class="fa fa-power-off"></span>
-                </a>
-              </li>
-            </ul> -->
-
           </div>
         </div>
       </div>
@@ -26,12 +15,8 @@
       <div class="main-content" ng-if='!showMobile'>
         <ul class="nav navbar-nav side-nav">
           <li ng-repeat='menu in main.menus' ui-sref-active="active">
-            <!-- <a ng-if='menu.type == 0' ui-sref='main.preview({preid:menu.id})' ui-sref-opts="{reload:'main.preview'}">{{menu.name}}</a> -->
-            <a ng-if='(menu.type != 0 && menu.type != 2)' ui-sref='main.module({id:menu.id})' ui-sref-opts="{reload:'main.module'}">{{menu.name}}</a>
-            <!-- <a ng-if='menu.type == 2' ui-sref='main.file({furl:menu.url})' ui-sref-opts="{reload:'main.file'}">{{menu.name}}</a> -->
-            <!-- <a ng-if='menu.name == "精准扶贫"' href='http://124.161.245.148:8099/' target='_blank'>{{menu.name}}</a> -->
+            <a ui-sref='main.module({id:menu.id})' ui-sref-opts="{reload:'main.module'}">{{menu.name}}</a>
           </li>
-          <!-- <li ui-sref-active="active"><a ui-sref='main.module.content'>目标工作分析</a></li> -->
         </ul>
         <div class='content-main left5' ui-view></div>
       </div>
