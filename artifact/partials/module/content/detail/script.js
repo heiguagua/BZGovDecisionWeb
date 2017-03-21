@@ -361,13 +361,37 @@
                         }
                       });
                     }
-
                     indicator.max = max;
                     indicator.min = min * 0.8;
                     indicators.push(indicator);
                   });
+                  _.forEach(opt.series[0].data, function(data, index) {
+                    var trueValue = angular.copy(data.value);
+                    data.trueValue = trueValue;
+                     _.forEach(data.value,function(value,index2) {
+                      data.value[index2] = _.toNumber(value);;
+                    })
+                  })
+                  // 避免出现不同分类相差值太大，不能在雷达图中体现倾向，按各分类与最大值的比例扩大较小的分类值，但鼠标滑过时，显示真实值
+                  _.forEach(opt.series[0].data, function(data, index) {
+                    var item_max = _.max(data.value);
+                    if(indicators[0].max > item_max) {
+                      var discuss = parseInt(indicators[0].max/item_max);
+                      _.forEach(data.value,function(value,index2) {
+                        data.value[index2] = (value *discuss).toFixed(2);
+                      })
+                    }
+                  });
                   option.color = colors;
-                  option.tooltip = {};
+                  option.tooltip = {
+                    formatter: function(data) {
+                      var text = data.name + "<br/>";
+                      _.forEach(opt.x_data, function(item,index) {
+                        text += item + ":" + data.data.trueValue[index] + "<br/>";
+                      })
+                      return text;
+                    }
+                  };
                   option.legend = {
                     top: 'bottom',
                     bottom: 20,
@@ -633,7 +657,7 @@
                       var dataObj = {};
                       dataObj.rowName = serData.name;
                       var cellDatas = [];
-                      _.forEach(serData.value, function(data) {
+                      _.forEach(serData.trueValue, function(data) {
                         var cellData = {};
                         cellData.value = data;
                         cellDatas.push(cellData);
@@ -662,7 +686,7 @@
                       _.forEach(opt.series[0].data, function(serData, index2) {
                         var cellData = {};
                         cellData.name = serData.name;
-                        cellData.value = serData.value[index];
+                        cellData.value = serData.trueValue[index];
                         cellDatas.push(cellData);
                       });
                     } else {
