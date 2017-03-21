@@ -295,7 +295,7 @@
               chartInstance1.clear();
               chartInstance1.resize();
               chartInstance1.setOption(option);
-            }, 600);
+            }, 0);
 
             scope.onResize1 = function() {
               if (chartInstance1) {
@@ -446,7 +446,7 @@
               chartInstance2.clear();
               chartInstance2.resize();
               chartInstance2.setOption(option);
-            }, 600);
+            }, 0);
 
             scope.onResize2 = function() {
               if (chartInstance2) {
@@ -659,7 +659,7 @@
               chartInstance3.clear();
               chartInstance3.resize();
               chartInstance3.setOption(option);
-            }, 600);
+            }, 0);
 
             scope.onResize3 = function() {
               if (chartInstance3) {
@@ -835,7 +835,7 @@
               chartInstance4.clear();
               chartInstance4.resize();
               chartInstance4.setOption(option);
-            }, 600);
+            }, 0);
 
             scope.onResize4 = function() {
               if (chartInstance4) {
@@ -1020,7 +1020,7 @@
               chartInstance5.clear();
               chartInstance5.resize();
               chartInstance5.setOption(option);
-            }, 600);
+            }, 0);
 
             scope.onResize5 = function() {
               if (chartInstance5) {

@@ -15,6 +15,7 @@
     @include flex-num(1);
     margin: 0 auto;
     padding: 1rem 0;
+    @include flex-flow(column);
     @include smallscreen {
       width: 62%;
     }
@@ -24,6 +25,7 @@
       background-size: 100% 100% !important;
       background-repeat: no-repeat !important;
       background-position: center !important;
+      @include flex-num(1);
     }
     div {
       width: 100% !important;

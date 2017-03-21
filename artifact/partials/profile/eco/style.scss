@@ -35,6 +35,7 @@
       }
       >div {
         @include flex-num(1);
+        @include flex-flow(column);
       }
       .center-left,
       .center-right {
@@ -75,6 +76,7 @@
   background: rgba(0, 120, 215, 0.1);
   height: 100%;
   @include flex-flow(column);
+  @include flex-num(1);
   .box-title {
     padding: 14px 10px 12px 2px;
     margin: 0;

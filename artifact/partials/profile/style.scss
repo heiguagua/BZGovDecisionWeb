@@ -16,6 +16,9 @@
     padding: 4px;
     @include flex-num(1);
     @include flex-flow(column);
+    >div{
+      @include flex-num(1);
+    }
   }
   .outer-line {
     height: 100%;
@@ -70,6 +73,7 @@
   }
 }
 .nav-menu {
+  @include flex-flow(column);
   .menu-list {
     list-style: none;
     height: 100%;
