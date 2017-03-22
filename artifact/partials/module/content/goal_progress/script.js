@@ -351,7 +351,7 @@
                   left: 'center',
                   top: '4%'
                 },
-                color: ['rgb(49,167,229)', 'rgb(40,200,202)', 'rgb(221,129,142)'],
+                color: ['rgb(49,167,229)', 'rgb(40,200,202)', 'rgb(221,129,142)','rgb(97,160,168)'],
                 tooltip: {
                   trigger: 'axis',
                   axisPointer: { // 坐标轴指示器，坐标轴触发有效
