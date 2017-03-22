@@ -1,4 +1,4 @@
-(function() {
+(function () {
   /** Module */
   var spot = angular.module('app.profile.spot', ['angular-bootstrap-select',
     'angular-bootstrap-select.extra'
@@ -7,7 +7,7 @@
   /** Controller */
   spot.controller('spotController', [
     '$scope', 'spotService', '$state', '$stateParams', '$window', '$rootScope',
-    function($scope, spotService, $state, $stateParams, $window, $rootScope) {
+    function ($scope, spotService, $state, $stateParams, $window, $rootScope) {
       var vm = this;
       $rootScope.showMenu = true;
       $scope.isActive = 1;
@@ -16,16 +16,45 @@
         'background': 'url(assets/images/bg.png)'
       });
 
-      $scope.showChart = function(num, id) {
+      $scope.showChart = function (num, id) {
         $scope.isActive = num;
         var params = {};
         params.menuId = id;
         if ($scope.group) {
           params.groupId = $scope.group.groupId ? $scope.group.groupId : $scope.group // 解决select option.id 为undefined与as in 的冲突
         }
-        spotService.getContent(params).then(function(data) {
-          $scope.commondata = {};
 
+        var model = null;
+        var quarter = null;
+        var month = null;
+        var time_scope = null;
+        var byMonth = false;
+        if ($scope.commondata && $scope.commondata.model) {
+          model = angular.copy($scope.commondata.model);
+          time_scope = $scope.commondata.time_scope;
+          byMonth = $scope.commondata.byMonth;
+          if ($scope.commondata.time_scope == 'quarter') {
+            quarter = $scope.commondata.quarter;
+          } else if ($scope.commondata.time_scope == 'month') {
+            month = $scope.commondata.month;
+          }
+        }
+        $scope.commondata = {};
+        $scope.commondata.byMonth = byMonth;
+        if(time_scope) {
+          $scope.commondata.time_scope = time_scope;
+        }
+        if (model) {
+          $scope.commondata.model = model;
+        }
+        if (quarter) {
+          $scope.commondata.quarter = quarter;
+        }
+        if (month) {
+          $scope.commondata.month = month;
+        }
+
+        spotService.getContent(params).then(function (data) {
           if (num == 1) {
             $scope.increasedata = _.sortBy(data.data, ['picCode']);
             $scope.rankdata = null;
@@ -45,24 +74,24 @@
       }
 
       $scope.menuactive = 0;
-      $scope.tabMenu = function(index, id, type) {
+      $scope.tabMenu = function (index, id, type) {
         $scope.menuactive = index;
         $scope.isActive = 1;
         if (type == 6) { // 包含其他分类指标
           $scope.hasGroup = true;
           spotService.getGroups({
             menuId: id
-          }).then(function(result) {
+          }).then(function (result) {
             $scope.groupOptions = _.sortBy(result.data, ['groupId']);
             $scope.group = $scope.groupOptions[0];
             spotService.getMenus({
               parentId: id
-            }).then(function(res) {
+            }).then(function (res) {
               $scope.submenus = _.sortBy(res.data, ['id']);
               spotService.getContent({
                 menuId: $scope.submenus[0].id,
                 groupId: $scope.groupOptions[0].groupId
-              }).then(function(data) {
+              }).then(function (data) {
                 $scope.commondata = {};
                 $scope.increasedata = _.sortBy(data.data, ['picCode']);
               })
@@ -77,7 +106,7 @@
           $scope.commondata.totalUnit = null;
           spotService.getContent({
             menuId: id
-          }).then(function(data) {
+          }).then(function (data) {
             $scope.commondata = {};
             $scope.increasedata = _.sortBy(data.data, ['picCode']);
           })
@@ -86,11 +115,11 @@
           $scope.group = null;
           spotService.getMenus({
             parentId: id
-          }).then(function(res) {
+          }).then(function (res) {
             $scope.submenus = _.sortBy(res.data, ['id']);
             spotService.getContent({
               menuId: $scope.submenus[0].id
-            }).then(function(data) {
+            }).then(function (data) {
               $scope.commondata = {};
               $scope.increasedata = _.sortBy(data.data, ['picCode']);
             })
@@ -163,7 +192,7 @@
 
       $scope.commondata.byMonth = false;
 
-      $scope.open = function() {
+      $scope.open = function () {
         $scope.dateOptions.opened = true;
       };
 
@@ -171,41 +200,41 @@
       var menuId = $stateParams.proid;
       spotService.getMenus({
         parentId: menuId
-      }).then(function(result) {
+      }).then(function (result) {
         $scope.menus = result.data;
-        _.forEach($scope.menus,function(item) {
-          if(item.name.length == 2) {
+        _.forEach($scope.menus, function (item) {
+          if (item.name.length == 2) {
             item.name = item.name.split('').join(' ');
           }
         })
         spotService.getMenus({
           parentId: $scope.menus[0].id
-        }).then(function(res) {
+        }).then(function (res) {
           $scope.submenus = _.sortBy(res.data, ['id']);
           spotService.getContent({
             menuId: $scope.submenus[0].id
-          }).then(function(data) {
+          }).then(function (data) {
             $scope.increasedata = _.sortBy(data.data, ['picCode']);
           })
         })
 
       });
-      $scope.changed = function() {
+      $scope.changed = function () {
         // TODO send http request for data of current menu width time parameters
         getTimeParams();
       }
 
-      $scope.quarterChanged = function() {
+      $scope.quarterChanged = function () {
         // TODO send http request for data of current menu with time parameters
         getTimeParams();
       }
 
-      $scope.monthChanged = function() {
+      $scope.monthChanged = function () {
         // TODO send http request for data of current menu with time paramters
         getTimeParams();
       }
 
-      $scope.groupChanged = function() {
+      $scope.groupChanged = function () {
         $scope.showChart($scope.isActive, $scope.submenus[$scope.isActive - 1].id);
       }
 
@@ -219,7 +248,7 @@
         }
       }
 
-      Date.prototype.Format = function(fmt) { //author: meizz
+      Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
           "M+": this.getMonth() + 1, //月份
           "d+": this.getDate(), //日
@@ -242,7 +271,7 @@
 
   /** spot */
   spot.factory('spotService', ['$http', 'URL',
-    function($http, URL) {
+    function ($http, URL) {
       return {
         getMenus: getMenus,
         getDetail: getDetail,
@@ -295,7 +324,7 @@
   ]);
 
   spot.directive('chartIncreaseTotal', ['spotService', '$window',
-    function(spotService, $window) {
+    function (spotService, $window) {
       return {
         restrict: 'ACE',
         scope: {
@@ -303,32 +332,32 @@
           commoninfo: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
           var chartInstance = null;
           if (!scope.increasetotal || !scope.increasetotal.url) {
             return;
           }
 
-          scope.$watch('increasetotal', function(newValue, oldValue) {
+          scope.$watch('increasetotal', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
             redraw();
           }, true);
 
-          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+          scope.$watch('commoninfo.model', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+          scope.$watch('commoninfo.quarter', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+          scope.$watch('commoninfo.month', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
@@ -352,7 +381,7 @@
             scope.commoninfo.promiseIncrease = spotService.getDetail(scope.increasetotal.url, {
               queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
               picCode: scope.increasetotal.picCode
-            }).then(function(result) {
+            }).then(function (result) {
               var opt = result.data;
               if (!opt || !opt.series) {
                 return;
@@ -379,7 +408,7 @@
               var resData = opt.series[0].data;
               var data = [];
               var hasData = false;
-              _.forEach(resData, function(item) {
+              _.forEach(resData, function (item) {
                 var obj = {};
                 obj.value = item.value;
                 if (item.highLight == '1') {
@@ -408,11 +437,10 @@
                 scope.commoninfo.title = opt.title;
                 scope.commoninfo.totalTitle = '总量';
                 scope.commoninfo.totalUnit = opt.y_name[0];
-                scope.commoninfo.floatNum ='';
-                if(scope.commoninfo.totalLastAmount == '') {
+                scope.commoninfo.floatNum = '';
+                if (scope.commoninfo.totalLastAmount == '') {
                   scope.commoninfo.floatDesc = '--';
-                }
-                else {
+                } else {
                   scope.commoninfo.floatNum = (parseFloat(scope.commoninfo.totalAmount) - parseFloat(scope.commoninfo.totalLastAmount)).toFixed(2);
                   if (scope.commoninfo.floatNum >= 0) {
                     scope.commoninfo.floatDesc = '增加';
@@ -423,7 +451,7 @@
 
                 data.push(obj);
               });
-              scope.commoninfo.othertotal = _.filter(resData, function(o) {
+              scope.commoninfo.othertotal = _.filter(resData, function (o) {
                 return o.highLight != '1';
               })
               var option = {
@@ -569,7 +597,7 @@
                 chartInstance.setOption(optionMap);
               }
 
-              scope.onResize = function() {
+              scope.onResize = function () {
                 if (chartInstance) {
                   chartInstance.clear();
                   chartInstance.resize();
@@ -581,7 +609,7 @@
                 }
               }
 
-              angular.element($window).bind('resize', function() {
+              angular.element($window).bind('resize', function () {
                 scope.onResize();
               })
             })
@@ -593,7 +621,7 @@
   ]);
 
   spot.directive('chartIncreaseRate', ['spotService', '$window',
-    function(spotService, $window) {
+    function (spotService, $window) {
       return {
         restrict: 'ACE',
         scope: {
@@ -601,32 +629,32 @@
           commoninfo: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
           var chartInstance = null;
           if (!scope.increaserate || !scope.increaserate.url) {
             return;
           }
 
-          scope.$watch('increaserate', function(newValue, oldValue) {
+          scope.$watch('increaserate', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
             redraw();
           }, true);
 
-          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+          scope.$watch('commoninfo.model', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+          scope.$watch('commoninfo.quarter', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+          scope.$watch('commoninfo.month', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
@@ -637,7 +665,7 @@
           redraw();
 
           function redraw() {
-            scope.commoninfo.promiseIncrease.then(function() {
+            scope.commoninfo.promiseIncrease.then(function () {
               var timeParam = null;
               if (scope.commoninfo && scope.commoninfo.model) {
                 timeParam = angular.copy(scope.commoninfo.model);
@@ -650,7 +678,7 @@
               spotService.getDetail(scope.increaserate.url, {
                 queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
                 picCode: scope.increaserate.picCode
-              }).then(function(result) {
+              }).then(function (result) {
                 var opt = result.data;
                 if (!opt || !opt.series) {
                   return;
@@ -679,7 +707,7 @@
                 var data = [];
                 var rateItems = '';
                 var hasData = false;
-                _.forEach(resData, function(item) {
+                _.forEach(resData, function (item) {
                   var obj = {};
                   if (item.value != '') {
                     item.value = parseFloat(item.value).toFixed(2);
@@ -709,7 +737,7 @@
                   }
                   data.push(obj);
                 });
-                scope.commoninfo.otherrate = _.filter(resData, function(o) {
+                scope.commoninfo.otherrate = _.filter(resData, function (o) {
                   return o.highLight != '1';
                 })
                 var option = {
@@ -848,7 +876,7 @@
                   chartInstance.setOption(optionMap);
                 }
 
-                scope.onResize = function() {
+                scope.onResize = function () {
                   if (chartInstance) {
                     chartInstance.clear();
                     chartInstance.resize();
@@ -860,7 +888,7 @@
                   }
                 }
 
-                angular.element($window).bind('resize', function() {
+                angular.element($window).bind('resize', function () {
                   scope.onResize();
                 })
               })
@@ -875,7 +903,7 @@
   ]);
 
   spot.directive('chartRankTotal', ['spotService', '$window',
-    function(spotService, $window) {
+    function (spotService, $window) {
       return {
         restrict: 'ACE',
         scope: {
@@ -883,32 +911,32 @@
           commoninfo: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
           var chartInstance1 = null;
           if (!scope.rankdata || !scope.rankdata.url) {
             return;
           }
 
-          scope.$watch('rankdata', function(newValue, oldValue) {
+          scope.$watch('rankdata', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
             redraw();
           });
 
-          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+          scope.$watch('commoninfo.model', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+          scope.$watch('commoninfo.quarter', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+          scope.$watch('commoninfo.month', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
@@ -933,7 +961,7 @@
             scope.commoninfo.promiseRank = spotService.getDetail(scope.rankdata.url, {
               queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
               picCode: scope.rankdata.picCode
-            }).then(function(result) {
+            }).then(function (result) {
               var opt = result.data;
               if (!opt || !opt.series) {
                 return;
@@ -958,9 +986,9 @@
                 spotService.getDetail(opt.table_url, {
                   queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
                   picCode: scope.rankdata.picCode
-                }).then(function(result) {
+                }).then(function (result) {
                   scope.commoninfo.rankdetail = result.data;
-                  _.forEach(scope.commoninfo.rankdetail, function(data) {
+                  _.forEach(scope.commoninfo.rankdetail, function (data) {
                     data.floatValue = parseInt(data.floatValue);
                     data.value = parseInt(data.value);
                   })
@@ -968,11 +996,11 @@
               }
               var resData = opt.series[0].data;
               var data = [];
-              resData = _.sortBy(resData, [function(o) {
+              resData = _.sortBy(resData, [function (o) {
                 return -o.value;
               }]);
               var hasData = false;
-              _.forEach(resData, function(item, index) {
+              _.forEach(resData, function (item, index) {
                 var obj = {};
                 obj.value = item.value;
                 obj.name = item.name;
@@ -1007,7 +1035,7 @@
               });
               var screen_width = screen.width;
               var grid_top = '16%';
-              if(screen_width<1400) {
+              if (screen_width < 1400) {
                 grid_top = '28%';
               }
               var option = {
@@ -1142,7 +1170,7 @@
                 chartInstance1.setOption(optionMap);
               }
 
-              scope.onResize2 = function() {
+              scope.onResize2 = function () {
                 if (chartInstance1) {
                   chartInstance1.clear();
                   chartInstance1.resize();
@@ -1154,7 +1182,7 @@
                 }
               }
 
-              angular.element($window).bind('resize', function() {
+              angular.element($window).bind('resize', function () {
                 scope.onResize2();
               })
             })
@@ -1166,7 +1194,7 @@
   ]);
 
   spot.directive('chartRankRate', ['spotService', '$window',
-    function(spotService, $window) {
+    function (spotService, $window) {
       return {
         restrict: 'ACE',
         scope: {
@@ -1174,31 +1202,31 @@
           commoninfo: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
           var chartInstance1 = null;
           if (!scope.rankrate || !scope.rankrate.url) {
             return;
           }
-          scope.$watch('rankrate', function(newValue, oldValue) {
+          scope.$watch('rankrate', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
             redraw();
           });
 
-          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+          scope.$watch('commoninfo.model', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+          scope.$watch('commoninfo.quarter', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+          scope.$watch('commoninfo.month', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
@@ -1209,7 +1237,7 @@
           redraw();
 
           function redraw() {
-            scope.commoninfo.promiseRank.then(function() {
+            scope.commoninfo.promiseRank.then(function () {
               //  set time params;
               var timeParam = null;
               if (scope.commoninfo && scope.commoninfo.model) {
@@ -1223,7 +1251,7 @@
               spotService.getDetail(scope.rankrate.url, {
                 queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
                 picCode: scope.rankrate.picCode
-              }).then(function(result) {
+              }).then(function (result) {
                 var opt = result.data;
                 if (!opt || !opt.series) {
                   return;
@@ -1248,9 +1276,9 @@
                   spotService.getDetail(opt.table_url, {
                     queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
                     picCode: scope.rankrate.picCode
-                  }).then(function(result) {
+                  }).then(function (result) {
                     scope.commoninfo.rankratedetail = result.data;
-                    _.forEach(scope.commoninfo.rankratedetail, function(data) {
+                    _.forEach(scope.commoninfo.rankratedetail, function (data) {
                       data.floatValue = parseInt(data.floatValue);
                       data.value = parseInt(data.value);
                     })
@@ -1259,12 +1287,12 @@
 
                 scope.commoninfo.title = opt.title;
                 var resData = opt.series[0].data;
-                resData = _.sortBy(resData, [function(o) {
+                resData = _.sortBy(resData, [function (o) {
                   return -o.value;
                 }]);
                 var data = [];
                 var hasData = false;
-                _.forEach(resData, function(item) {
+                _.forEach(resData, function (item) {
                   var obj = {};
                   obj.value = item.value;
                   obj.name = item.name;
@@ -1296,7 +1324,7 @@
 
                 var screen_width = screen.width;
                 var grid_top = '16%';
-                if(screen_width<1400) {
+                if (screen_width < 1400) {
                   grid_top = '28%';
                 }
                 var option = {
@@ -1431,7 +1459,7 @@
                   chartInstance1.setOption(optionMap);
                 }
 
-                scope.onResize2 = function() {
+                scope.onResize2 = function () {
                   if (chartInstance1) {
                     chartInstance1.clear();
                     chartInstance1.resize();
@@ -1443,7 +1471,7 @@
                   }
                 }
 
-                angular.element($window).bind('resize', function() {
+                angular.element($window).bind('resize', function () {
                   scope.onResize2();
                 })
               })
@@ -1457,7 +1485,7 @@
 
 
   spot.directive('chartTargetGoal', ['spotService', '$window',
-    function(spotService, $window) {
+    function (spotService, $window) {
       return {
         restrict: 'ACE',
         scope: {
@@ -1465,32 +1493,32 @@
           commoninfo: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
           var chartInstance = null;
           if (!scope.targetgoaldata || !scope.targetgoaldata.url) {
             return;
           }
 
-          scope.$watch('targetgoaldata', function(newValue, oldValue) {
+          scope.$watch('targetgoaldata', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
             redraw();
           });
 
-          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+          scope.$watch('commoninfo.model', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+          scope.$watch('commoninfo.quarter', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+          scope.$watch('commoninfo.month', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
@@ -1514,7 +1542,7 @@
             scope.commoninfo.promiseTarget = spotService.getDetail(scope.targetgoaldata.url, {
               queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
               picCode: scope.targetgoaldata.picCode
-            }).then(function(result) {
+            }).then(function (result) {
               var opt = result.data;
               if (!opt || !opt.series) {
                 return;
@@ -1537,9 +1565,9 @@
               var resData = opt.series;
               var data = [];
               var hasData = false;
-              _.forEach(resData, function(item) {
+              _.forEach(resData, function (item) {
                 if (item.name == '今年目标') {
-                  _.forEach(item.data, function(data) {
+                  _.forEach(item.data, function (data) {
                     if (data.highLight == '1') {
                       scope.commoninfo.totalTitle = '总量';
                       scope.commoninfo.totalAmount = data.value;
@@ -1557,7 +1585,7 @@
                     }
                   })
                 } else {
-                  _.forEach(item.data, function(data) {
+                  _.forEach(item.data, function (data) {
                     if (data.name == '查询时间') {
                       scope.commoninfo.targetFutureYear = data.value;
                     }
@@ -1609,6 +1637,7 @@
                   type: 'liquidFill',
                   data: [percent],
                   radius: '62%',
+                  waveAnimation: false,
                   outline: {
                     borderDistance: 0,
                     itemStyle: {
@@ -1622,7 +1651,7 @@
                       textStyle: {
                         fontSize: 30
                       },
-                      formatter: function(param) {
+                      formatter: function (param) {
                         return scope.commoninfo.percentThisYear + '%';
                       },
                     }
@@ -1693,7 +1722,7 @@
 
                 }]
               };
-              setTimeout(function(){
+              setTimeout(function () {
                 chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
@@ -1702,9 +1731,9 @@
                 } else {
                   chartInstance.setOption(optionMap);
                 }
-              },200);
+              }, 200);
 
-              scope.onResize = function() {
+              scope.onResize = function () {
                 if (chartInstance) {
                   chartInstance.clear();
                   chartInstance.resize();
@@ -1717,7 +1746,7 @@
                 }
               }
 
-              angular.element($window).bind('resize', function() {
+              angular.element($window).bind('resize', function () {
                 scope.onResize();
               })
             })
@@ -1729,7 +1758,7 @@
   ]);
 
   spot.directive('chartTargetGoalFuture', ['spotService', '$window',
-    function(spotService, $window) {
+    function (spotService, $window) {
       return {
         restrict: 'ACE',
         scope: {
@@ -1737,32 +1766,32 @@
           commoninfo: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
           var chartInstance = null;
           if (!scope.targetgoaldata || !scope.targetgoaldata.url) {
             return;
           }
 
-          scope.$watch('targetgoaldata', function(newValue, oldValue) {
+          scope.$watch('targetgoaldata', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
             redraw();
           });
 
-          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+          scope.$watch('commoninfo.model', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+          scope.$watch('commoninfo.quarter', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+          scope.$watch('commoninfo.month', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
@@ -1785,7 +1814,7 @@
             scope.commoninfo.promiseTarget = spotService.getDetail(scope.targetgoaldata.url, {
               queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
               picCode: scope.targetgoaldata.picCode
-            }).then(function(result) {
+            }).then(function (result) {
               var opt = result.data;
               if (!opt || !opt.series) {
                 return;
@@ -1809,9 +1838,9 @@
               var data = [];
               var hasData = false;
               scope.commoninfo.title = opt.title;
-              _.forEach(resData, function(item) {
+              _.forEach(resData, function (item) {
                 if (item.name == '今年目标') {
-                  _.forEach(item.data, function(data) {
+                  _.forEach(item.data, function (data) {
                     if (data.highLight == '1') {
 
                       scope.commoninfo.totalTitle = '总量';
@@ -1830,7 +1859,7 @@
                     }
                   })
                 } else {
-                  _.forEach(item.data, function(data) {
+                  _.forEach(item.data, function (data) {
                     if (data.name == '查询时间') {
                       scope.commoninfo.targetFutureYear = data.value;
                     }
@@ -1867,12 +1896,12 @@
                 }];
               }
               var add_str = '';
-              if(scope.targetgoaldata.picCode == "10231") {
+              if (scope.targetgoaldata.picCode == "10231") {
                 add_str = '累计';
               }
               var option = {
                 title: {
-                  text: '巴中“十三五”目标：' + add_str+scope.commoninfo.targetFutureValue + scope.commoninfo.targetFutureUnit,
+                  text: '巴中“十三五”目标：' + add_str + scope.commoninfo.targetFutureValue + scope.commoninfo.targetFutureUnit,
                   left: 'center',
                   top: 'bottom',
                   textStyle: {
@@ -1885,6 +1914,7 @@
                   type: 'liquidFill',
                   data: [percent],
                   radius: '62%',
+                  waveAnimation: false,
                   outline: {
                     borderDistance: 0,
                     itemStyle: {
@@ -1898,7 +1928,7 @@
                       textStyle: {
                         fontSize: 30
                       },
-                      formatter: function(param) {
+                      formatter: function (param) {
                         return scope.commoninfo.percentFutureYear + '%';
                       }
                     }
@@ -1969,7 +1999,7 @@
 
                 }]
               };
-              setTimeout(function(){
+              setTimeout(function () {
                 chartInstance = echarts.init((element.find('div'))[0]);
                 chartInstance.clear();
                 chartInstance.resize();
@@ -1978,9 +2008,9 @@
                 } else {
                   chartInstance.setOption(optionMap);
                 }
-              },200);
+              }, 200);
 
-              scope.onResize = function() {
+              scope.onResize = function () {
                 if (chartInstance) {
                   chartInstance.clear();
                   chartInstance.resize();
@@ -1992,7 +2022,7 @@
                 }
               }
 
-              angular.element($window).bind('resize', function() {
+              angular.element($window).bind('resize', function () {
                 scope.onResize();
               })
             })
@@ -2004,7 +2034,7 @@
   ]);
 
   spot.directive('chartTargetRate', ['spotService', '$window',
-    function(spotService, $window) {
+    function (spotService, $window) {
       return {
         restrict: 'ACE',
         scope: {
@@ -2012,32 +2042,32 @@
           commoninfo: '='
         },
         template: "<div style='width:100%;height:100%'></div>",
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
           var chartInstance = null;
           if (!scope.targetratedata || !scope.targetratedata.url) {
             return;
           }
 
-          scope.$watch('targetratedata', function(newValue, oldValue) {
+          scope.$watch('targetratedata', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue || newValue.active) {
               return;
             }
             redraw();
           });
 
-          scope.$watch('commoninfo.model', function(newValue, oldValue) {
+          scope.$watch('commoninfo.model', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.quarter', function(newValue, oldValue) {
+          scope.$watch('commoninfo.quarter', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
             redraw();
           }, true);
-          scope.$watch('commoninfo.month', function(newValue, oldValue) {
+          scope.$watch('commoninfo.month', function (newValue, oldValue) {
             if (newValue === oldValue || !newValue || !oldValue) {
               return;
             }
@@ -2048,7 +2078,7 @@
           redraw();
 
           function redraw() {
-            scope.commoninfo.promiseTarget.then(function() {
+            scope.commoninfo.promiseTarget.then(function () {
               //  set time params;
               var timeParam = null;
               if (scope.commoninfo && scope.commoninfo.model) {
@@ -2062,7 +2092,7 @@
               spotService.getDetail(scope.targetratedata.url, {
                 queryTime: spotService.getDateFormat(timeParam, 'yyyy-MM'),
                 picCode: scope.targetratedata.picCode
-              }).then(function(result) {
+              }).then(function (result) {
                 var opt = result.data;
                 if (!opt || !opt.series) {
                   return;
@@ -2087,10 +2117,10 @@
                 var resData = opt.series[0].data;
                 var data = [];
                 var hasData = false;
-                _.forEach(resData, function(item) {
+                _.forEach(resData, function (item) {
                   var obj = {};
                   if (item.value != '') {
-                  //  item.value = parseFloat(item.value);
+                    //  item.value = parseFloat(item.value);
                   }
                   obj.value = item.value;
                   obj.name = item.name;
@@ -2118,7 +2148,7 @@
                   }
                   data.push(obj);
                 });
-                scope.commoninfo.othertargetrate = _.filter(resData, function(o) {
+                scope.commoninfo.othertargetrate = _.filter(resData, function (o) {
                   return o.highLight != '1';
                 })
                 var option = {
@@ -2256,7 +2286,7 @@
                   chartInstance.setOption(optionMap);
                 }
 
-                scope.onResize = function() {
+                scope.onResize = function () {
                   if (chartInstance) {
                     chartInstance.clear();
                     chartInstance.resize();
@@ -2268,7 +2298,7 @@
                   }
                 }
 
-                angular.element($window).bind('resize', function() {
+                angular.element($window).bind('resize', function () {
                   scope.onResize();
                 })
               })
@@ -2280,12 +2310,12 @@
     }
   ]);
 
-  spot.filter('toPositive', function() {
-    return function(num) {
-      if(num && typeof(num) == 'string' && num.indexOf('.')>-1) {
+  spot.filter('toPositive', function () {
+    return function (num) {
+      if (num && typeof (num) == 'string' && num.indexOf('.') > -1) {
         return Math.abs(num).toFixed(2);
       }
-      return num==''?'':Math.abs(num);
+      return num == '' ? '' : Math.abs(num);
     }
   })
 
