@@ -212,6 +212,10 @@
               var title_size = 18;
               var item_width = 25;
               var legend_padding = 5;
+              var item_gap = 10;
+              if(screen_width < 1400) {
+                item_gap = 5;
+              }
               if(screen_width< 1200) {
                 radar_center = ['32%', '40%'];
                 radius = '40%';
@@ -253,6 +257,7 @@
                   orient: legend_orient,
                   data: legend,
                   itemWidth: item_width,
+                  itemGap:item_gap,
                   padding: legend_padding
                 },
 
