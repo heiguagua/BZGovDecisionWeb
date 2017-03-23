@@ -162,11 +162,18 @@
             },
             color: ['rgb(49,167,229)', 'rgb(40,200,202)'],
             tooltip: {
-              trigger: 'axis',
-              axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-              }
-            },
+                      trigger: 'axis',
+                      position: function (point, params, dom) {
+                        if(screen.width*0.56 < $(dom).outerWidth()) { // 悬浮框宽度大于屏幕宽度56%
+                          return ['20%', '40%'];
+                        }
+                        if(params[0].dataIndex >= (scope.numdata.month.length/2)) {
+                          return [point[0]-$(dom).outerWidth(), '40%'];
+                        }
+                        // 固定在顶部
+                        return [point[0], '40%'];
+                      },
+                    },
             legend: {
               data: _.map(data_nums,'name'),
               top: legend_top,
@@ -253,11 +260,18 @@
             },
             color: ['rgb(49,167,229)', 'rgb(40,200,202)'],
             tooltip: {
-              trigger: 'axis',
-              axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-              }
-            },
+                      trigger: 'axis',
+                      position: function (point, params, dom) {
+                        if(screen.width*0.56 < $(dom).outerWidth()) { // 悬浮框宽度大于屏幕宽度56%
+                          return ['20%', '40%'];
+                        }
+                        if(params[0].dataIndex >= (scope.ratedata.month.length/2)) {
+                          return [point[0]-$(dom).outerWidth(), '40%'];
+                        }
+                        // 固定在顶部
+                        return [point[0], '40%'];
+                      },
+                    },
             legend: {
               data: ['办结率'],
               top: '19%',

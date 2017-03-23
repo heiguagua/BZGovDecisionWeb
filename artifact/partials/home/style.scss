@@ -1,9 +1,10 @@
 .header_img {
-  box-shadow: 0 5px 20px rgba(3,3,3,.5);
+  box-shadow: 0 5px 20px rgba(3, 3, 3, .5);
   img {
     max-height: 240px;
   }
 }
+
 .bg_huise {
   background: #f0f3f4;
   height: 100%;
@@ -16,9 +17,11 @@
   -webkit-flex-flow: column;
   flex-flow: column;
 }
+
 .bg_white {
   background: #FFFFFF;
 }
+
 .body_nav {
   margin: 20px 0;
   -webkit-flex: 1;
@@ -27,13 +30,16 @@
   min-height: 0;
   @include flex-flow(column);
 }
+
 .cont-wrap {
   @include flex-num(1);
   @include flex-flow(column);
   .cont-inner {
     @include flex-num(1);
+    min-height: 360px;
   }
 }
+
 .border-b {
   border-radius: 15px;
   flex: 1;
@@ -52,16 +58,19 @@
   -webkit-justify-content: center;
   justify-content: center;
 }
+
 .body_nav .center {
   display: inline-block;
   vertical-align: middle;
   text-align: center;
   color: #8C8C8C;
 }
+
 .body_nav .center:hover {
   text-decoration: none;
   color: #70e9fc;
 }
+
 .body_nav dl dd {
   overflow: hidden;
   white-space: nowrap;
@@ -69,9 +78,11 @@
   margin-top: 12px;
   font-size: 1rem;
 }
+
 .padding_border:hover {
   background: #f0f3f4;
 }
+
 .auto_height {
   height: 100%;
   display: -webkit-box;
@@ -84,6 +95,7 @@
   -webkit-align-items: stretch;
   align-items: stretch;
 }
+
 .child {
   -webkit-flex: 1;
   -ms-flex: 1;
@@ -99,6 +111,7 @@
   // justify-content: center;
   min-height: 0;
 }
+
 .back {
   margin-bottom: 10px;
   .btn-m-back {
