@@ -1,13 +1,13 @@
 (function() {
   /** Module */
-  var home = angular.module('app.home', []);
+  var home = angular.module('app.home', ['cgBusy']);
   home.$inject = ['$location'];
   /** Controller */
   home.controller('homeController', [
     '$scope', 'homeService','$state',
     function($scope, homeService,$state) {
       var vm = this;
-      homeService.getMenus({parentId:"0"}).then(function(result) {
+      vm.promise = homeService.getMenus({parentId:"0"}).then(function(result) {
         vm.menus = result.data;
         _.remove(vm.menus, function(item) {
             return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' ;
