@@ -1,76 +1,115 @@
 .header_img {
-  box-shadow: 0 5px 20px rgba(3, 3, 3, .5);
+  box-shadow: 0 5px 20px rgba(3,3,3,.5);
   img {
     max-height: 240px;
   }
 }
-
 .bg_huise {
   background: #f0f3f4;
   height: 100%;
   width: 100%;
-  display: -webkit-box;
+    display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
   display: -ms-flexbox;
+  /* TWEENER - IE 10 */
   display: -webkit-flex;
+  /* NEW - Chrome */
   display: flex;
-  -webkit-flex-flow: column;
-  flex-flow: column;
+  -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
 }
-
 .bg_white {
   background: #FFFFFF;
 }
-
 .body_nav {
   margin: 20px 0;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex: 1.0;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
   min-height: 0;
-  @include flex-flow(column);
+  display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Chrome */
+  display: flex;
+  -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
 }
-
 .cont-wrap {
-  @include flex-num(1);
-  @include flex-flow(column);
+  -webkit-box-flex: 1.0;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+   display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;
+  /* TWEENER - IE 10 */
+  display: -webkit-flex;
+  /* NEW - Chrome */
+  display: flex;
+  -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
   .cont-inner {
-    @include flex-num(1);
-    min-height: 360px;
+    -webkit-box-flex: 1.0;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
   }
 }
-
 .border-b {
   border-radius: 15px;
-  flex: 1;
+  -webkit-box-flex: 1.0;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
   margin-right: 10px;
   background: white;
   margin-bottom: 10px;
-  display: -webkit-box;
+   display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
   display: -ms-flexbox;
+  /* TWEENER - IE 10 */
   display: -webkit-flex;
+  /* NEW - Chrome */
   display: flex;
-  -webkit-flex-flow: column;
-  flex-flow: column;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
+  -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  @include flex-align(center);
+  @include flex-justify(center);
 }
-
 .body_nav .center {
   display: inline-block;
   vertical-align: middle;
   text-align: center;
   color: #8C8C8C;
 }
-
 .body_nav .center:hover {
   text-decoration: none;
   color: #70e9fc;
 }
-
 .body_nav dl dd {
   overflow: hidden;
   white-space: nowrap;
@@ -78,40 +117,49 @@
   margin-top: 12px;
   font-size: 1rem;
 }
-
 .padding_border:hover {
   background: #f0f3f4;
 }
-
 .auto_height {
   height: 100%;
-  display: -webkit-box;
+   display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
   display: -ms-flexbox;
+  /* TWEENER - IE 10 */
   display: -webkit-flex;
+  /* NEW - Chrome */
   display: flex;
-  -webkit-flex-flow: column;
-  flex-flow: column;
-  -webkit-align-items: stretch;
-  align-items: stretch;
+  -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  @include flex-align(stretch);
 }
-
 .child {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
+ -webkit-box-flex: 1.0;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+   display: -webkit-box;
+  /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box;
+  /* OLD - Firefox 19- (buggy but mostly works) */
   display: -ms-flexbox;
+  /* TWEENER - IE 10 */
   display: -webkit-flex;
+  /* NEW - Chrome */
   display: flex;
-  flex-flow: row;
-  -webkit-align-items: stretch;
-  align-items: stretch;
-  // justify-content: center;
+  -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+  @include flex-align(stretch);
   min-height: 0;
 }
-
 .back {
   margin-bottom: 10px;
   .btn-m-back {

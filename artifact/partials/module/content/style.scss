@@ -11,12 +11,12 @@
     background: #FFF;
     right: 0;
     opacity: 0;
-    top: 38px;
+    top: -10px;
     width: 100%;
     padding: 0;
     &.m-collapse {
       opacity: 1;
-      top: 42px;
+      top: 0;
       z-index: 999;
     }
   }

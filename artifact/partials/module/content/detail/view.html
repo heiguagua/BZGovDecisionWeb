@@ -20,7 +20,7 @@
         <label>数据来源：{{popups[$index].dep_name}}</label>
       </div>
     </div>
-    <div class='graph' wiserv-chart content=popups[$index] ></div>
+    <div class='graph' wiserv-chart content=popups[$index]  ng-if="popups[$index] != void(0)"></div>
   </div>
   <div class='table-data'>
     <table class="table  table-striped top10 table-hover text-center" ng-hide='popups[$index].formTable'>

@@ -620,8 +620,6 @@
                     tooltip: {
                       trigger: 'axis',
                       position: function (point, params, dom) {
-                        console.log(screen_width);
-                        console.log($(dom).outerWidth());
                         if(screen_width*0.56 < $(dom).outerWidth()) { // 悬浮框宽度大于屏幕宽度56%
                           return ['20%', '40%'];
                         }
@@ -792,22 +790,28 @@
 
 
                   }, 600);
+
+
                 }
+
+                scope.onResize = function () {
+                  if (chartInstance) {
+                    chartInstance.clear();
+                    chartInstance.resize();
+                    chartInstance.setOption(option);
+                  }
+                }
+
+                angular.element($window).bind('resize', function () {
+                  scope.onResize();
+                })
 
               }
 
             });
           }
 
-          scope.onResize = function () {
-            if (chartInstance) {
-              chartInstance.resize();
-            }
-          }
 
-          angular.element($window).bind('resize', function () {
-            scope.onResize();
-          })
 
 
         }
