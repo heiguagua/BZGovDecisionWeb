@@ -157,6 +157,7 @@ $chartHeightBig: 540px;
       &.sidebar-collapse {
         opacity: 1;
         margin-bottom: 0;
+        position: fixed;
       }
       >li {
         border-bottom: 1px solid #0063b1;
@@ -213,6 +214,10 @@ $chartHeightBig: 540px;
       margin-bottom: 0;
       font-size: 1.2rem;
       text-align: center;
+      position: fixed;
+      z-index: 999;
+      width: 100%;
+      background: #FFF;
       .fa-bars {
         position: absolute;
         left: 4px;
@@ -234,6 +239,7 @@ $chartHeightBig: 540px;
       @include flex-flow(column);
       padding-left: 0;
       position: relative;
+      top: 47px;
     }
     padding-top: 0;
   }

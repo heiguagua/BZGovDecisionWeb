@@ -7,7 +7,6 @@
 .bg_huise {
   background: #f0f3f4;
   height: 100%;
-  width: 100%;
     display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box;
@@ -22,6 +21,7 @@
     -moz-flex-direction: column;
     -webkit-flex-direction: column;
     flex-direction: column;
+    min-height:520px;
 }
 .bg_white {
   background: #FFFFFF;
@@ -49,6 +49,7 @@
     flex-direction: column;
 }
 .cont-wrap {
+  width:100%;
   -webkit-box-flex: 1.0;
     -moz-flex-grow: 1;
     -webkit-flex-grow: 1;
@@ -82,7 +83,6 @@
     flex-grow: 1;
   margin-right: 10px;
   background: white;
-  margin-bottom: 10px;
    display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box;
@@ -158,7 +158,38 @@
     -webkit-flex-direction: row;
     flex-direction: row;
   @include flex-align(stretch);
-  min-height: 0;
+  min-height: 120px;
+  margin-bottom:10px;
+  .fw-pic{
+    background:url("../assets/images/home_ico.png") no-repeat 0 0;
+    width:80px;
+    height:80px;
+  }
+  .gy-pic{
+    background:url("../assets/images/home_ico.png") no-repeat -80px 0;
+    width:80px;
+    height:80px;
+  }
+  .mb-pic{
+    background:url("../assets/images/home_ico.png") no-repeat 0 -160px;
+    width:80px;
+    height:80px;
+  }
+  .qt-pic{
+    background:url("../assets/images/home_ico.png") no-repeat -80px -160px;
+    width:80px;
+    height:80px;
+  }
+  .ly-pic{
+    background:url("../assets/images/home_ico.png") no-repeat -80px -80px;
+    width:80px;
+    height:80px;
+  }
+  .jj-pic{
+    background:url("../assets/images/home_ico.png") no-repeat 0 -80px;
+    width:80px;
+    height:80px;
+  }
 }
 .back {
   margin-bottom: 10px;
