@@ -29,7 +29,7 @@
             </a>
             <ul aria-expanded="false" class="collapse" >
               <li ng-repeat='submenu in menu.subMenus' >
-                <a class='submenu' ui-sref='main.module.content({tid:submenu.id})' ui-sref-opts="{reload:'main.module.content'}" ui-sref-active="active">
+                <a class='submenu' ui-sref='main.module.content({tid:submenu.id,smname:submenu.name})' ui-sref-opts="{reload:'main.module.content'}" ui-sref-active="active">
                   {{submenu.name}}
                 </a>
               </li>
@@ -38,7 +38,7 @@
         </ul>
         <div class='m-header' ng-click='main.showMenu()'>
           <i class='fa fa-bars'></i>&nbsp;
-          <h5 class='menu-title'>{{mname}}</h5>
+          <h5 class='menu-title'>{{smname}}</h5>
         </div>
         <div class='content-main left5' ui-view ng-click='main.hideMenu()'></div>
       </div>

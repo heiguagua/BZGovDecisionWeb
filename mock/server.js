@@ -9,9 +9,9 @@ const Express = require('express'),
 App.use('/dev', Express.static('./artifact'));
 App.use('/pro', Express.static('./release'));
 App.use(Cors({
-  origin: 'http://localhost:5252',
+  origin: '*',
   methods: 'GET, POST, PUT, DELETE, OPTIONS',
-  allowedHeaders: ['Content-Type', 'Authorization','Accept-Ranges'],
+  allowedHeaders: ['Content-Type', 'Authorization','Accept-Ranges','isAjax','isMobile'],
   credentials: true,
   maxAge: 1728000
 }));

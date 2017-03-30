@@ -57,7 +57,8 @@
             });
           }).then(function(){
             $state.go('main.module.content', {
-              tid: vm.menus[current_menu_index].subMenus[0].id
+              tid: vm.menus[current_menu_index].subMenus[0].id,
+              smname:vm.menus[current_menu_index].subMenus[0].name
             });
           });
 
@@ -144,26 +145,5 @@
       }
     }
   ]);
-
-  // main.directive('wiservSideMenu', [
-  //   function() {
-  //     return {
-  //       restrict: 'ACE',
-  //       link: function(scope, element, attrs) {
-  //         console.log(element);
-  //         element.metisMenu({
-  //           preventDefault: false
-  //         });
-  //         element.bind('click', function(ev) {
-  //             ev.stopPropagation();
-  //           })
-  //           // element.sidr({
-  //           //   name: 'sidebar',
-  //           //   side: 'left'
-  //           // });
-  //       }
-  //     }
-  //   }
-  // ]);
 
 })();

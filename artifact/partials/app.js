@@ -33,14 +33,15 @@
     ])
     .config(config);
 
-  config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
+  config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider'];
 
-  function config($stateProvider, $urlRouterProvider, $httpProvider) {
+  function config($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
     /** UI-Router Config */
+    // $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/profile');
     var screen_width = screen.width;
     var client_width = document.body.clientWidth;
-    if (screen_width < 1024 || client_width <1024) {
+    if (screen_width < 1024 || client_width < 1024) {
       $urlRouterProvider.otherwise('/home');
     } else {
       $urlRouterProvider.otherwise('/profile');
@@ -153,7 +154,7 @@
         controllerAs: 'file',
       })
       .state('main.module.content', {
-        url: '/content/:tid',
+        url: '/content/:tid/:smname',
         templateUrl: 'partials/module/content/view.html',
         controller: 'contentController',
         controllerAs: 'content',
@@ -164,55 +165,55 @@
         controller: 'detailController',
         controllerAs: 'detail',
       })
-      .state('main.module.content.goalprogress',{
+      .state('main.module.content.goalprogress', {
         url: '/goalprogress/:pid/:mname',
         templateUrl: 'partials/module/content/goal_progress/view.html',
         controller: 'goalprogressController',
         controllerAs: 'goalprogress'
       })
-      .state('main.module.content.goalquater',{
+      .state('main.module.content.goalquater', {
         url: '/goalquater/:pid/:mname',
         templateUrl: 'partials/module/content/goal_quater/view.html',
         controller: 'goalquaterController',
         controllerAs: 'goalquater'
       })
-      .state('main.module.content.goalyear',{
+      .state('main.module.content.goalyear', {
         url: '/goalyear/:pid/:mname',
         templateUrl: 'partials/module/content/goal_year/view.html',
         controller: 'goalyearController',
         controllerAs: 'goalyear'
       })
-      .state('main.module.content.proceeding',{
+      .state('main.module.content.proceeding', {
         url: '/proceeding/:pid/:mname',
         templateUrl: 'partials/module/content/proceeding/view.html',
         controller: 'proceedingController',
         controllerAs: 'proceeding'
       })
-      .state('main.module.content.ecocity',{
+      .state('main.module.content.ecocity', {
         url: '/ecocity/:pid/:mname',
         templateUrl: 'partials/module/content/eco_city/view.html',
         controller: 'ecocityController',
         controllerAs: 'ecocity'
       })
-      .state('main.module.content.ecocounty',{
+      .state('main.module.content.ecocounty', {
         url: '/ecocounty/:pid/:mname',
         templateUrl: 'partials/module/content/eco_county/view.html',
         controller: 'ecocountyController',
         controllerAs: 'ecocounty'
       })
-      .state('main.module.content.ecogdp',{
+      .state('main.module.content.ecogdp', {
         url: '/ecogdp/:pid/:mname',
         templateUrl: 'partials/module/content/eco_gdp/view.html',
         controller: 'ecogdpController',
         controllerAs: 'ecogdp'
       })
-      .state('main.module.content.projectcity',{
+      .state('main.module.content.projectcity', {
         url: '/projectcity/:pid/:mname',
         templateUrl: 'partials/module/content/project_city/view.html',
         controller: 'projectcityController',
         controllerAs: 'projectcity'
       })
-      .state('main.module.content.projectcounty',{
+      .state('main.module.content.projectcounty', {
         url: '/projectcounty/:pid/:mname',
         templateUrl: 'partials/module/content/project_county/view.html',
         controller: 'projectcountyController',
@@ -222,23 +223,33 @@
 
     /** HTTP Interceptor */
     $httpProvider.interceptors.push(interceptor);
-    interceptor.$inject = ['$q', '$location'];
+    interceptor.$inject = ['$q', '$location', '$injector'];
 
-    function interceptor($q, $location) {
+    function interceptor($q, $location, $injector) {
       return {
         'request': function(config) {
-          //config.withCredentials = true;
-          var screen_width = screen.width;
-          var screen_height = screen.height;
-          // var box_height = $('.content-main').height();
-          // console.log(screen_height);
-          // console.log(box_height);
-          // $('.content-box .chart').css({
-          //   'height': box_height
-          // });
-          // $('.content-box .table-data').css({
-          //   'height': $('.content-box').height() * 0.3 + 'px'
-          // });
+          config.withCredentials = true;
+          $injector.get('$http').defaults.headers.common['isAjax'] = 'true';
+          var os = function() {
+            var ua = navigator.userAgent,
+              isWindowsPhone = /(?:Windows Phone)/.test(ua),
+              isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
+              isAndroid = /(?:Android)/.test(ua),
+              isFireFox = /(?:Firefox)/.test(ua),
+              isChrome = /(?:Chrome|CriOS)/.test(ua),
+              isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
+              isPhone = /(?:iPhone)/.test(ua) && !isTablet,
+              isPc = !isPhone && !isAndroid && !isSymbian;
+            return {
+              isTablet: isTablet,
+              isPhone: isPhone,
+              isAndroid: isAndroid,
+              isPc: isPc
+            };
+          }();
+          if (os.isAndroid || os.isPhone) {
+            $injector.get('$http').defaults.headers.common['isMobile'] = 'true';
+          }
           return config;
 
         },
@@ -246,34 +257,35 @@
           return rejection;
         },
         'response': function(response) {
-          $q.when(response, function(result) {
-
-          });
           return response;
         },
         'responseError': function(rejection) {
+          $q.when(rejection, function(result) {
+            if (rejection && rejection.status === 511) {
+              window.location.href = rejection.data.location;
+            };
+          });
           return rejection;
         }
       };
     };
   };
 
-  //  runState.$inject = ['$rootScope'];
-
-  //function runState($rootScope) {
-  // $rootScope.$on('$stateChangeStart',
-  //   function(event, toState, toParams, fromState, fromParams) {
-  //     console.log(toState.name);
+  // runState.$inject = ['$rootScope'];
   //
-  //     if (toState.name !== 'dashboard') {
-  //       if (toState.name !== 'login') {
-  //         if (!sessionStorage.token) {
-  //           event.preventDefault();
-  //           window.location.href = './#/login';
-  //         }
-  //       };
-  //     }
-  //   });
-  //}
+  // function runState($rootScope) {
+  //   $rootScope.$on('$stateChangeStart',
+  //     function(event, toState, toParams, fromState, fromParams) {
+  //
+  //       // if (toState.name !== 'dashboard') {
+  //       //   if (toState.name !== 'login') {
+  //       //     if (!sessionStorage.token) {
+  //       //       event.preventDefault();
+  //       //       window.location.href = './#/login';
+  //       //     }
+  //       //   };
+  //       // }
+  //     });
+  // }
 
 })();

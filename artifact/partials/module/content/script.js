@@ -3,9 +3,10 @@
   var content = angular.module('app.main.module.content', []);
   /** Controller */
   content.controller('contentController', [
-    '$scope', 'contentService', '$stateParams', '$state',
-    function($scope, contentService, $stateParams, $state) {
+    '$scope', 'contentService', '$stateParams', '$state','$rootScope',
+    function($scope, contentService, $stateParams, $state,$rootScope) {
       var vm = this;
+      $rootScope.smname = $stateParams.smname;
       contentService.getSubMenus({
         parentId: $stateParams.tid
       }).then(function(result) {
