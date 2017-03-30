@@ -20,7 +20,8 @@
         if(vm.menuTabs && vm.menuTabs[0] && vm.menuTabs[0].id) {
           $scope.current_menu = vm.menuTabs[0].name;
           $state.go('main.module.content', {
-            tid: vm.menuTabs[0].id
+            tid: vm.menuTabs[0].id,
+            smname:vm.menuTabs[0].name
           });
         }
       })

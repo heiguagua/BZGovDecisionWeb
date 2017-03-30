@@ -3,7 +3,7 @@
 </div>
     <ul class="nav nav-tabs menu-tabs">
       <li ng-repeat='tab in module.menuTabs'  ui-sref-active="active">
-        <a ui-sref='main.module.content({tid:tab.id})' ui-sref-opts="{reload:'main.module.content'}" >{{tab.name}}</a>
+        <a ui-sref='main.module.content({tid:tab.id,smname:tab.name})' ui-sref-opts="{reload:'main.module.content'}" >{{tab.name}}</a>
       </li>
     </ul>
 

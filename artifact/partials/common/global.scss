@@ -93,6 +93,7 @@ $desktop-width: 1400px;
   display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box;
+  display:box;
   /* OLD - Firefox 19- (buggy but mostly works) */
   display: -ms-flexbox;
   /* TWEENER - IE 10 */
@@ -100,8 +101,20 @@ $desktop-width: 1400px;
   /* NEW - Chrome */
   display: flex;
   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  -webkit-box-direction: normal;
+  -moz-flex-direction: $flow;
+  -webkit-flex-direction: $flow;
+  -ms-flex-direction: $flow;
+	-o-flex-direction: $flow;
+  flex-direction: $flow;
   -webkit-flex-flow: $flow;
   flex-flow: $flow;
+
+  @if $flow == row {
+    -webkit-box-orient: horizontal;
+  } @else if $flow == column {
+      -webkit-box-orient: vertical;
+  }
 }
 @mixin flex-align($align:center) {
   -webkit-box-align: $align;
@@ -114,9 +127,12 @@ $desktop-width: 1400px;
     -moz-justify-content: $justify;
     -webkit-justify-content: $justify;
     justify-content: $justify;
-  
+
 }
 @mixin flex-num($num:1) {
+  -moz-flex-grow:  $num;
+  -webkit-flex-grow:  $num;
+  flex-grow:  $num;
   -webkit-box-flex: $num;
   /* OLD - iOS 6-, Safari 3.1-6 */
   -moz-box-flex: $num;
