@@ -1,12 +1,14 @@
 (function() {
 
-  angular.module('app', [
+  var app = angular.module('app', [
       'ui.router',
+      'ngCookies',
       'common.http',
       'app.dashboard',
       'app.login',
       'app.main',
       'app.home',
+      'app.auth',
       'app.profile',
       'app.profile.index',
       'app.profile.menu',
@@ -30,21 +32,59 @@
       'app.main.module.content.ecogdp',
       'app.main.module.content.projectcity',
       'app.main.module.content.projectcounty'
-    ])
-    .config(config);
+    ]);
+
+    app.config(config);
+    app.run(runState);
+
+
+app.factory('deviceService', [ function() {
+  var ua = navigator.userAgent,
+    isWindowsPhone = /(?:Windows Phone)/.test(ua),
+    isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
+    isAndroid = /(?:Android)/.test(ua),
+    isFireFox = /(?:Firefox)/.test(ua),
+    isChrome = /(?:Chrome|CriOS)/.test(ua),
+    isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
+    isPhone = /(?:iPhone)/.test(ua) && !isTablet,
+    isPc = !isPhone && !isAndroid && !isSymbian;
+  return {
+    isTablet: isTablet,
+    isPhone: isPhone,
+    isAndroid: isAndroid,
+    isPc: isPc
+  };
+}]);
 
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider'];
 
   function config($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
     /** UI-Router Config */
     // $locationProvider.html5Mode(true);
-    $urlRouterProvider.otherwise('/profile');
+    var os = function() {
+      var ua = navigator.userAgent,
+        isWindowsPhone = /(?:Windows Phone)/.test(ua),
+        isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
+        isAndroid = /(?:Android)/.test(ua),
+        isFireFox = /(?:Firefox)/.test(ua),
+        isChrome = /(?:Chrome|CriOS)/.test(ua),
+        isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
+        isPhone = /(?:iPhone)/.test(ua) && !isTablet,
+        isPc = !isPhone && !isAndroid && !isSymbian;
+      return {
+        isTablet: isTablet,
+        isPhone: isPhone,
+        isAndroid: isAndroid,
+        isPc: isPc
+      };
+    }();
+    // $urlRouterProvider.otherwise('/profile');
     var screen_width = screen.width;
     var client_width = document.body.clientWidth;
-    if (screen_width < 1024 || client_width < 1024) {
+    if (screen_width < 1024 || client_width < 1024 || os.isAndroid || os.isPhone) {
       $urlRouterProvider.otherwise('/home');
     } else {
-      $urlRouterProvider.otherwise('/profile');
+      $urlRouterProvider.otherwise('/auth');
     }
     // $urlRouterProvider.when('/home', ['$match','$stateParams',function ($match, $stateParams) {
     //   var screen_width = screen.width;
@@ -57,6 +97,12 @@
     // }]);
 
     $stateProvider
+    .state('auth', {
+        url: '/auth',
+        templateUrl: 'partials/auth/view.html',
+        controller: 'authController',
+        controllerAs: 'auth',
+      })
       .state('dashboard', {
         url: '/dashboard',
         templateUrl: 'partials/dashboard/view.html',
@@ -223,31 +269,16 @@
 
     /** HTTP Interceptor */
     $httpProvider.interceptors.push(interceptor);
-    interceptor.$inject = ['$q', '$location', '$injector'];
+    interceptor.$inject = ['$q', '$location', '$injector','deviceService','$cookies'];
 
-    function interceptor($q, $location, $injector) {
+    function interceptor($q, $location, $injector,deviceService,$cookies) {
       return {
         'request': function(config) {
+          console.log(config.headers["isAjax"]);
           config.withCredentials = true;
           $injector.get('$http').defaults.headers.common['isAjax'] = 'true';
-          var os = function() {
-            var ua = navigator.userAgent,
-              isWindowsPhone = /(?:Windows Phone)/.test(ua),
-              isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
-              isAndroid = /(?:Android)/.test(ua),
-              isFireFox = /(?:Firefox)/.test(ua),
-              isChrome = /(?:Chrome|CriOS)/.test(ua),
-              isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
-              isPhone = /(?:iPhone)/.test(ua) && !isTablet,
-              isPc = !isPhone && !isAndroid && !isSymbian;
-            return {
-              isTablet: isTablet,
-              isPhone: isPhone,
-              isAndroid: isAndroid,
-              isPc: isPc
-            };
-          }();
-          if (os.isAndroid || os.isPhone) {
+
+          if (deviceService.isAndroid || deviceService.isPhone) {
             $injector.get('$http').defaults.headers.common['isMobile'] = 'true';
           }
           return config;
@@ -257,12 +288,17 @@
           return rejection;
         },
         'response': function(response) {
+          $cookies.put('cookie',true);
           return response;
         },
         'responseError': function(rejection) {
+          $cookies.put('cookie',false);
           $q.when(rejection, function(result) {
             if (rejection && rejection.status === 511) {
               window.location.href = rejection.data.location;
+            };
+            if (rejection && rejection.status === 404 && rejection.config.url.indexOf('/auth') > -1) {
+              window.location.href = './#/profile';
             };
           });
           return rejection;
@@ -271,21 +307,22 @@
     };
   };
 
-  // runState.$inject = ['$rootScope'];
-  //
-  // function runState($rootScope) {
-  //   $rootScope.$on('$stateChangeStart',
-  //     function(event, toState, toParams, fromState, fromParams) {
-  //
-  //       // if (toState.name !== 'dashboard') {
-  //       //   if (toState.name !== 'login') {
-  //       //     if (!sessionStorage.token) {
-  //       //       event.preventDefault();
-  //       //       window.location.href = './#/login';
-  //       //     }
-  //       //   };
-  //       // }
-  //     });
-  // }
+  runState.$inject = ['$rootScope','$window','deviceService','$cookies'];
+
+  function runState($rootScope,$window,deviceService,$cookies) {
+    $rootScope.$on('$stateChangeStart',
+      function(event, toState, toParams, fromState, fromParams) {
+        if(!deviceService.isAndroid && !deviceService.isPhone && toState.name != 'auth') {
+          if(!$cookies.get('cookie')) {
+            event.preventDefault();
+            $window.location.href = './#/auth';
+          }
+
+        }
+        if((deviceService.isAndroid || deviceService.isPhone) && toState.name.indexOf('profile')>-1) {
+          $window.location.href = './#/home';
+        }
+      });
+  }
 
 })();
