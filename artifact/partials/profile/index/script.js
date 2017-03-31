@@ -4,8 +4,8 @@
   index.$inject = ['$location'];
   /** Controller */
   index.controller('indexController', [
-    '$scope', 'indexService','$stateParams','$rootScope','$window',
-    function($scope, indexService,$stateParams,$rootScope,$window) {
+    '$scope', 'indexService','$stateParams','$rootScope','$window','$filter',
+    function($scope, indexService,$stateParams,$rootScope,$window,$filter) {
       var vm = this;
       $('.profile').css({'background':'url(assets/images/bg_profile.png)'});
       var inner_line_height = $('.inner-line').height();
@@ -23,10 +23,6 @@
           indexService.getDetail(data[0].url, {
             picCode: data[0].picCode
           }).then(function(res) {
-            $scope.dataInfo = res.data;
-            if (!$scope.dataInfo.model && $scope.dataInfo.init_query_time != '') {
-              $scope.dataInfo.model = new Date($scope.dataInfo.init_query_time);
-            }
             var datas = res.data.series;
             $scope.allDatas = [];
             _.forEach(datas,function(item) {
@@ -50,11 +46,13 @@
                   cellData.title = cell.name;
                   cellData.dep_name = cell.dep_name;
                   if (cell.init_query_time && cell.init_query_time != '') {
-                    cellData.model = new Date(cell.init_query_time);
+                    var date = new Date(cell.init_query_time.replace(' ', 'T'));
+                    cellData.model = indexService.getDateFormat(date,'M月');
                   }
                   else{
                     cellData.model = '';
                   }
+                  console.log(cellData.model);
                   cellData.item.push(cell);
                   indicator.data.push(cellData);
                 }
@@ -62,8 +60,25 @@
               $scope.allDatas.push(indicator);
             });
             $scope.qxdata = $scope.allDatas[0];
-            console.log($scope.allDatas);
           })
+        }
+
+        Date.prototype.Format = function (fmt) { //author: meizz
+          var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+          };
+          if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt))
+              fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+          return fmt;
         }
 
       });
@@ -82,7 +97,8 @@
     function($http, URL) {
       return {
         getContent: getContent,
-        getDetail: getDetail
+        getDetail: getDetail,
+        getDateFormat: getDateFormat
       }
 
       function getContent(params) {
@@ -99,6 +115,15 @@
             params: params
           }
         )
+      }
+
+      function getDateFormat(parseDate, format) {
+        var date = angular.copy(parseDate);
+        if (angular.isDate(date) && !isNaN(date.getTime())) {
+          return date.Format(format);
+        } else {
+          return '';
+        }
       }
     }
   ]);
