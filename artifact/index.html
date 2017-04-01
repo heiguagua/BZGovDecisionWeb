@@ -34,16 +34,18 @@
 
       var $doc = $(document);
       $doc.ajaxError(function(event, xhr, options, thrownError) {
+        var errors = JSON.parse(xhr.responseText);
+        if (errors && errors.path && errors.path.indexOf('/auth') > -1) {
+          window.location = './#/profile';
+        };
         if (xhr.status == 511) {
-          var errors = JSON.parse(xhr.responseText);
-          console.info(errors.location);
           window.location = errors.location;
         }
       });
 
       $.ajax({
         async:false,
-        url:location.protocol + '//' + location.host + "/govDecisionServer/auth"
+        url:"location.protocol + '//' + location.host + "/govDecisionServer/auth""
       });
     </script>
     <script src="libraries/bootstrap-select/bootstrap-select.min.js"></script>
