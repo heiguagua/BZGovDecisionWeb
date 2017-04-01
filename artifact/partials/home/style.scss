@@ -1,11 +1,11 @@
 .header_img {
-  box-shadow: 0 5px 20px rgba(3,3,3,.5);
+  // box-shadow: 0 5px 20px rgba(3,3,3,.5);
   img {
     max-height: 240px;
   }
 }
 .bg_huise {
-  background: #f0f3f4;
+  background: #e8f0f6;
   height: 100%;
     display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
@@ -27,7 +27,9 @@
   background: #FFFFFF;
 }
 .body_nav {
-  margin: 20px 0;
+  background: #FFF;
+  border-top: 1px solid #e2ebf2;
+  margin: 20px 0 0 0;
   -webkit-box-flex: 1.0;
     -moz-flex-grow: 1;
     -webkit-flex-grow: 1;
@@ -73,15 +75,17 @@
     -moz-flex-grow: 1;
     -webkit-flex-grow: 1;
     flex-grow: 1;
+        margin: 0;
+        padding: 14px 0;
   }
 }
 .border-b {
-  border-radius: 15px;
+      border-bottom: 1px solid #e2ebf2;
   -webkit-box-flex: 1.0;
     -moz-flex-grow: 1;
     -webkit-flex-grow: 1;
     flex-grow: 1;
-  margin-right: 10px;
+  // margin-right: 10px;
   background: white;
    display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
@@ -115,7 +119,8 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-top: 12px;
-  font-size: 1rem;
+  font-size: 14px;
+  color: #313233;
 }
 .padding_border:hover {
   background: #f0f3f4;
@@ -159,37 +164,37 @@
     flex-direction: row;
   @include flex-align(stretch);
   min-height: 120px;
-  margin-bottom:10px;
-  .fw-pic{
-    background:url("../assets/images/home_ico.png") no-repeat 0 0;
-    width:80px;
-    height:80px;
-  }
-  .gy-pic{
-    background:url("../assets/images/home_ico.png") no-repeat -80px 0;
-    width:80px;
-    height:80px;
-  }
-  .mb-pic{
-    background:url("../assets/images/home_ico.png") no-repeat 0 -160px;
-    width:80px;
-    height:80px;
-  }
-  .qt-pic{
-    background:url("../assets/images/home_ico.png") no-repeat -80px -160px;
-    width:80px;
-    height:80px;
-  }
-  .ly-pic{
-    background:url("../assets/images/home_ico.png") no-repeat -80px -80px;
-    width:80px;
-    height:80px;
-  }
-  .jj-pic{
-    background:url("../assets/images/home_ico.png") no-repeat 0 -80px;
-    width:80px;
-    height:80px;
-  }
+  // margin-bottom:10px;
+  // .fw-pic{
+  //   background:url("../assets/images/home_ico.png") no-repeat 0 0;
+  //   width:80px;
+  //   height:80px;
+  // }
+  // .gy-pic{
+  //   background:url("../assets/images/home_ico.png") no-repeat -80px 0;
+  //   width:80px;
+  //   height:80px;
+  // }
+  // .mb-pic{
+  //   background:url("../assets/images/home_ico.png") no-repeat 0 -160px;
+  //   width:80px;
+  //   height:80px;
+  // }
+  // .qt-pic{
+  //   background:url("../assets/images/home_ico.png") no-repeat -80px -160px;
+  //   width:80px;
+  //   height:80px;
+  // }
+  // .ly-pic{
+  //   background:url("../assets/images/home_ico.png") no-repeat -80px -80px;
+  //   width:80px;
+  //   height:80px;
+  // }
+  // .jj-pic{
+  //   background:url("../assets/images/home_ico.png") no-repeat 0 -80px;
+  //   width:80px;
+  //   height:80px;
+  // }
 }
 .back {
   margin-bottom: 10px;
