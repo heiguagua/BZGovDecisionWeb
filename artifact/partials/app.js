@@ -274,7 +274,6 @@ app.factory('deviceService', [ function() {
     function interceptor($q, $location, $injector,deviceService,$cookies) {
       return {
         'request': function(config) {
-          console.log(config.headers["isAjax"]);
           config.withCredentials = true;
           $injector.get('$http').defaults.headers.common['isAjax'] = 'true';
 
@@ -297,7 +296,7 @@ app.factory('deviceService', [ function() {
             if (rejection && rejection.status === 511) {
               window.location.href = rejection.data.location;
             };
-            if (rejection && rejection.status === 404 && rejection.config.url.indexOf('/auth') > -1) {
+            if (rejection && rejection.config.url.indexOf('/auth') > -1) {
               window.location.href = './#/profile';
             };
           });

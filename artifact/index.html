@@ -6,7 +6,7 @@
     <title>巴中市政务决策系统</title>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no"/>
-    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="telephone=no"/>
     <link href='libraries/bootstrap/css/bootstrap.min.css' rel='stylesheet'/>
     <link href='libraries/font-awesome/css/font-awesome.min.css' rel='stylesheet'/>
     <link href='libraries/angular-busy/angular-busy.min.css' rel='stylesheet'/>
@@ -15,15 +15,37 @@
     <link rel="stylesheet" href="libraries/slick/slick.css">
     <link rel="stylesheet" href="libraries/slick/slick-theme.css">
     <link rel="stylesheet" href="libraries/angular-carousel/angular-carousel.css">
-    <link rel="stylesheet" href="libraries/bootstrap-select/bootstrap-select.min.css" >
+    <link rel="stylesheet" href="libraries/bootstrap-select/bootstrap-select.min.css">
     <link href='bundles/styles.css?ver=1.1' rel='stylesheet'/>
-  </head>
-
-  <body class='page-header-fixed'>
-    <div id='ui-view-index' ui-view></div>
-    <!-- Libraries -->
-    <!-- <script src="libraries/pdf/pdf.js"></script> -->
     <script src='libraries/jquery/jquery.min.js'></script>
+    <script>
+      $.ajaxSetup({
+        global: true,
+        crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
+        beforeSend: function (XMLHttpRequest) {
+                     //HttpUtility.UrlEncode
+                     XMLHttpRequest.withCredentials = true;
+                     XMLHttpRequest.setRequestHeader('isAjax', 'true');
+                 },
+      });
+
+      var $doc = $(document);
+      $doc.ajaxError(function(event, xhr, options, thrownError) {
+        if (xhr.status == 511) {
+          var errors = JSON.parse(xhr.responseText);
+          console.info(errors.location);
+          window.location = errors.location;
+        }
+      });
+
+      $.ajax({
+        async:false,
+        url:'http://172.16.8.66:8080/auth'
+      });
+    </script>
     <script src="libraries/bootstrap-select/bootstrap-select.min.js"></script>
     <script src='libraries/angular/angular.min.js'></script>
     <script src="libraries/angular/angular-animate.js"></script>
@@ -41,14 +63,22 @@
     <script src='libraries/angular-ui-router/angular-ui-router.min.js'></script>
     <script src="libraries/angular-scrollbar/jquery.mCustomScrollbar.min.js"></script>
     <script src='libraries/metisMenu/metisMenu.min.js'></script>
-    <script src="libraries/slick/slick.min.js" ></script>
-    <script src="libraries/angular-slick/slick.min.js" ></script>
-    <script src="libraries/angular-mobile/angular-touch.js" ></script>
-    <script src="libraries/angular-carousel/angular-carousel.min.js" ></script>
+    <script src="libraries/slick/slick.min.js"></script>
+    <script src="libraries/angular-slick/slick.min.js"></script>
+    <script src="libraries/angular-mobile/angular-touch.js"></script>
+    <script src="libraries/angular-carousel/angular-carousel.min.js"></script>
 
     <script src="libraries/angular-bootstrap-select/angular-bootstrap-select.js"></script>
     <script src='libraries/lodash/lodash.min.js'></script>
     <script src="libraries/md5.js"></script>
+
+  </head>
+
+  <body class='page-header-fixed'>
+    <div id='ui-view-index' ui-view></div>
+    <!-- Libraries -->
+    <!-- <script src="libraries/pdf/pdf.js"></script> -->
+
     <!-- Customs -->
     <script src='bundles/scripts.js?ver=1.1'></script>
   </body>
