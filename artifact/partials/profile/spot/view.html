@@ -38,8 +38,8 @@
                   </button>
                 </span>
                 <div class='select-group' ng-if='hasGroup' ng-if="groupOptions != void(0) && groupOptions[0].groupId != void(0) "><select  selectpicker ng-model='$parent.group' ng-change='groupChanged()' data-none-selected-text='未选中任何选项' class='quarter' ng-options='x.groupId as x.groupName for x in groupOptions track by x.groupId'></select></div>
-                <div class='select-wrapper' ng-if=!commondata.byMonth><select selectpicker ng-model='commondata.quarter' ng-change='quarterChanged()' class='quarter' ng-options='x.id as x.name for x in quarterOptions'></select></div>
-                <div class='select-wrapper' ng-if=commondata.byMonth><select selectpicker ng-model='commondata.month'  ng-change='monthChanged()' class='quarter' ng-options='x.id as x.name for x in monthOptions'></select></div>
+                <div class='select-wrapper' ng-if=!commondata.byMonth><select selectpicker ng-model='commondata.quarter' ng-change='quarterChanged()' class='quarter' ng-options='x.id as x.name for x in quarterOptions' data-none-selected-text='未选中任何选项'></select></div>
+                <div class='select-wrapper' ng-if=commondata.byMonth><select selectpicker ng-model='commondata.month'  ng-change='monthChanged()' class='quarter' ng-options='x.id as x.name for x in monthOptions' data-none-selected-text='未选中任何选项'></select></div>
               </p>
             </div>
           </div>
