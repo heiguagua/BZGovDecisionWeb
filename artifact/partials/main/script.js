@@ -3,9 +3,10 @@
   var main = angular.module('app.main', []);
   /** Controller */
   main.controller('mainController', [
-    '$scope', 'mainService', '$state', '$stateParams','$window',
-    function($scope, mainService, $state, $stateParams,$window) {
+    '$scope', 'mainService', '$state', '$stateParams','$window','URL',
+    function($scope, mainService, $state, $stateParams,$window,URL) {
       var vm = this;
+      vm.logout_href = URL + '/ssoClientOnLoginOut.success';
       vm.showMenu = function() {
         $('.side-nav').toggleClass('sidebar-collapse');
         $('.m-header').toggleClass('sidebar-collapse');

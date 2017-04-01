@@ -4,9 +4,10 @@
   profile.$inject = ['$location'];
   /** Controller */
   profile.controller('profileController', [
-    '$scope', 'profileService', '$state', '$stateParams', '$rootScope',
-    function($scope, profileService, $state, $stateParams, $rootScope) {
+    '$scope', 'profileService', '$state', '$stateParams', '$rootScope','URL',
+    function($scope, profileService, $state, $stateParams, $rootScope,URL) {
       var vm = this;
+      vm.logout_href = URL + '/ssoClientOnLoginOut.success';
       $rootScope.showMenu = true;
       profileService.getMenus({
         parentId: "0"
