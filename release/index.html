@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="front-page" ng-app='app' ng-strict-di>
+<html lang="en" class="front-page" ng-app='app' ng-strict-di ng-cloak>
   <head>
     <meta charset="utf-8"/>
     <!-- <base href="/"> -->
@@ -43,7 +43,7 @@
 
       $.ajax({
         async:false,
-        url:'http://172.16.8.66:8080/auth'
+        url:location.protocol + '//' + location.host + "/govDecisionServer/auth"
       });
     </script>
     <script src="libraries/bootstrap-select/bootstrap-select.min.js"></script>
