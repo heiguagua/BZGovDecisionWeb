@@ -11,7 +11,7 @@
       var vm = this;
       $rootScope.showMenu = true;
       $scope.isActive = 1;
-      $rootScope.currentMenu = false;
+      $rootScope.currentMenu = 1;//进入经济详情
       $('.profile').css({
         'background': 'url(assets/images/bg.png)'
       });
