@@ -60,14 +60,14 @@
             $state.go('main.module.content', {
               tid: vm.menus[current_menu_index].subMenus[0].id,
               smname:vm.menus[current_menu_index].subMenus[0].name
-            });
+            },{location: 'replace'});
           });
 
 
         } else {
           $state.go('main.module', {
             id: $stateParams.mid
-          });
+          },{location: 'replace'});
         }
 
 

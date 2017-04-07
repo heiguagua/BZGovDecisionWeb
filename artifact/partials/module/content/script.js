@@ -54,13 +54,13 @@
             $state.go(vm.subMenus[0].content_sref, {
               pid: vm.subMenus[0].id,
               mname: vm.subMenus[0].name
-            });
+            },{location: 'replace'});
 
           } else {
             $state.go('main.module.content.detail', {
               pid: vm.subMenus[0].id,
               mname: vm.subMenus[0].name
-            });
+            },{location: 'replace'});
             vm.flag = false;
           }
 

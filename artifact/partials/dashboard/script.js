@@ -14,7 +14,7 @@
       }).then(function(result) {
         vm.menus = result.data;
         if (vm.menus && vm.menus[0] && vm.menus[0].id) {
-          $state.go('profile');
+          $state.go('profile',{location: 'replace'});
 
           // dashboardService.getContent({
           //   menuId: vm.menus[0].id
@@ -88,5 +88,5 @@
     }
   ]);
 
-  
+
 })();

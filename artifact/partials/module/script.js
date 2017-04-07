@@ -22,7 +22,7 @@
           $state.go('main.module.content', {
             tid: vm.menuTabs[0].id,
             smname:vm.menuTabs[0].name
-          });
+          },{location: 'replace'});
         }
       })
 

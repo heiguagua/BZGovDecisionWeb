@@ -40,7 +40,7 @@
               sessionStorage.token = sessionToken;
             }
             if (200 == result.data.head.status) {
-              $state.go("main.preview");
+              $state.go("main.preview",{location: 'replace'});
             } else {
               $scope.loginError = true;
             }

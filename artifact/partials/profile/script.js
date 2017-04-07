@@ -55,7 +55,7 @@
           });
           $state.go('profile.index', {
             proid: vm.menus[0].id
-          });
+          },{location: 'replace'});
           // if()
           // if($stateParams.proid == 8) {
           //   $state.go('profile.menu');

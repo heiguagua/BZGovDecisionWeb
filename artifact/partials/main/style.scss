@@ -90,6 +90,10 @@ $chartHeightBig: 540px;
           background: #2554a4;
           color: $white;
         }
+        &:focus{
+          background:inherit;
+          outline:none;
+        }
       }
       &.active {
         a {
