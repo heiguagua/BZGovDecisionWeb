@@ -3,17 +3,21 @@
   var main = angular.module('app.main', []);
   /** Controller */
   main.controller('mainController', [
-    '$scope', 'mainService', '$state', '$stateParams','$window','URL',
-    function($scope, mainService, $state, $stateParams,$window,URL) {
+    '$scope', 'mainService', '$state', '$stateParams', '$window', 'URL',
+    function($scope, mainService, $state, $stateParams, $window, URL) {
       var vm = this;
       vm.logout_href = URL + '/ssoClientOnLoginOut.success';
-      vm.showMenu = function() {
+      vm.showMenu = function($event) {
+        $event.stopPropagation();
         $('.side-nav').toggleClass('sidebar-collapse');
         $('.m-header').toggleClass('sidebar-collapse');
         $('.mobile-content').toggleClass('sidebar-collapse');
       }
 
-      vm.hideMenu = function() {
+
+
+      vm.hideMenu = function($event) {
+        $event.stopPropagation();
         $('.side-nav').removeClass('sidebar-collapse');
         $('.m-header').removeClass('sidebar-collapse');
         $('.mobile-content').removeClass('sidebar-collapse');
@@ -38,12 +42,11 @@
         vm.menus = result.data;
         if (screen_width < 1024 || client_width < 1024) { // mobile
           _.remove(vm.menus, function(item) {
-              return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' || item.name == '经济形势分析';
+            return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' || item.name == '经济形势分析';
           });
-        }
-        else{
+        } else {
           _.remove(vm.menus, function(item) {
-              return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' ||  item.name == '经济形势分析';
+            return item.name == '首页' || item.name == '经济概况' || item.name == '精准扶贫' || item.name == '经济形势分析';
           });
         }
 
@@ -56,18 +59,58 @@
                 current_menu_index = index;
               }
             });
-          }).then(function(){
+          }).then(function() {
             $state.go('main.module.content', {
               tid: vm.menus[current_menu_index].subMenus[0].id,
-              smname:vm.menus[current_menu_index].subMenus[0].name
-            },{location: 'replace'});
+              smname: vm.menus[current_menu_index].subMenus[0].name
+            }, {
+              location: 'replace'
+            });
           });
 
+          var main = document.getElementById("mobileContent");
+          var inlit_x = 0; //滑动起始点
+          var move_len = 0; //移动距离
+          main.addEventListener("touchstart", function(event) {
+            event.stopPropagation();
+            move_len = 0;
+            inlit_x = event.targetTouches[0].pageX; //获取初始滑动X值
+          });
+          main.addEventListener("touchmove", function(event) {
+            event.stopPropagation();
+            var move_x = event.targetTouches[0].pageX; //运动滑动X值
+            move_len = move_x - inlit_x;
+
+            // if(move_len>0){
+            // 	main.style.marginLeft = move_len+"px";
+            // }
+          });
+          main.addEventListener("touchend", function(event) {
+            event.stopPropagation();
+            if (move_len == 0) {
+
+            } else {
+              if (move_len >= 50) {
+                console.log('you');
+                $("#mobileContent").addClass('sidebar-collapse');
+                $(".side-nav").addClass('sidebar-collapse');
+                $(".m-header").addClass('sidebar-collapse');
+              } else {
+                console.log('mei');
+                $("#mobileContent").removeClass('sidebar-collapse');
+                $(".side-nav").removeClass('sidebar-collapse');
+                $(".m-header").removeClass('sidebar-collapse');
+              }
+            }
+
+          });
 
         } else {
           $state.go('main.module', {
             id: $stateParams.mid
-          },{location: 'replace'});
+          }, {
+            location: 'replace'
+          });
         }
 
 
@@ -78,7 +121,7 @@
         $('#menu').metisMenu();
       }, 500);
 
-      angular.element($window).bind('resize', function () {
+      angular.element($window).bind('resize', function() {
         var screen_width = screen.width;
         var client_width = document.body.clientWidth;
         if (screen_width < 1024 || client_width < 1024) { // mobile
@@ -92,7 +135,7 @@
             _.forEach(vm.menus, function(menu, index) {
               menu.subMenus = res[index];
             });
-          }).then(function(){
+          }).then(function() {
             setTimeout(function() {
               $('#menu').metisMenu();
             }, 500);
@@ -100,8 +143,7 @@
             //   tid: vm.menus[current_menu_index].subMenus[0].id
             // });
           });
-        }
-        else {
+        } else {
           $scope.$applyAsync(function() {
             $scope.showMobile = false;
           })

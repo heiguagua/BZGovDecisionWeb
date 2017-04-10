@@ -22,7 +22,7 @@
         </ul>
         <div class='content-main left5' ui-view></div>
       </div>
-      <div class="mobile-content" ng-if='showMobile'>
+      <div class="mobile-content" ng-if='showMobile' id='mobileContent'>
         <ul class="nav navbar-nav side-nav metismenu" id="menu">
           <li ui-sref-active="active"><a ui-sref='home'>首页</a></li>
           <li ng-repeat='menu in main.menus' ui-sref-active="active">
@@ -38,10 +38,10 @@
             </ul>
           </li>
         </ul>
-        <div class='m-header' ng-click='main.showMenu()'>
+        <div class='m-header' ng-click='main.showMenu($event)'>
           <i class='fa fa-bars'></i>&nbsp;
           <h5 class='menu-title'>{{smname}}</h5>
         </div>
-        <div class='content-main left5' ui-view ng-click='main.hideMenu()'></div>
+        <div class='content-main left5' ui-view ng-click='main.hideMenu($event)'></div>
       </div>
     </div>
