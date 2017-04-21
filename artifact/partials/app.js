@@ -81,7 +81,7 @@
       // $urlRouterProvider.otherwise('/profile');
       var screen_width = screen.width;
       var client_width = document.body.clientWidth;
-      if (screen_width < 1024 || client_width < 1024 || os.isAndroid || os.isPhone) {
+      if (os.isAndroid || os.isPhone) {
         $urlRouterProvider.otherwise('/home');
       } else {
         $urlRouterProvider.otherwise('/auth');
@@ -297,7 +297,12 @@
                 window.location.href = rejection.data.location;
               };
               if (rejection && rejection.config.url.indexOf('/auth') > -1) {
-                window.location.href = './#/profile';
+                if ((deviceService.isAndroid || deviceService.isPhone)) {
+                  window.location.href = './#/home';
+                }
+                 else {
+                   window.location.href = './#/profile';
+                 }
               };
             });
             return rejection;
